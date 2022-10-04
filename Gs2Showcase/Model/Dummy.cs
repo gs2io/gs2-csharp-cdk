@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Gs2Cdk.Gs2Inventory.Model
+namespace Gs2Cdk.Gs2Showcase.Model
 {
     public class Dummy
     {

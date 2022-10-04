@@ -13,10 +13,10 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-namespace Gs2Cdk.Gs2Inventory.Model
-{
-    public class Dummy
-    {
-    }
-}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Gs2Cdk.Core.Func;
+using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2SerialKey.Model;
+using Gs2Cdk.Gs2SerialKey.Ref;
