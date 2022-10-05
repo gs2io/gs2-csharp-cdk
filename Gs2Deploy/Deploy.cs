@@ -13,10 +13,33 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Gs2Cdk.Core.Func;
+using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2Deploy.Model;
+using Gs2Cdk.Gs2Deploy.Ref;
 
-namespace Gs2Cdk.Gs2Identifier.StampSheet
+namespace Gs2Cdk.Gs2Showcase.StampSheet
 {
-    public class Dummy
+    public class Deploy
     {
+
+        public static StackRef Stack(
+                string stackName
+        ) {
+            return new StackRef(
+                stackName
+            );
+        }
+
+        public static WorkingStackRef WorkingStack(
+                string stackName
+        ) {
+            return new WorkingStackRef(
+                stackName
+            );
+        }
     }
 }

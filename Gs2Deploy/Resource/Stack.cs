@@ -12,11 +12,13 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
-
-namespace Gs2Cdk.Gs2Identifier.StampSheet
-{
-    public class Dummy
-    {
-    }
-}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Gs2Cdk.Core.Func;
+using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2Deploy.Model;
+using Gs2Cdk.Gs2Deploy.Ref;

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Gs2Cdk.Gs2Identifier.StampSheet
+namespace Gs2Cdk.Gs2Auth.Ref
 {
     public class Dummy
     {
