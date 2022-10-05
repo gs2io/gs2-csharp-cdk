@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inbox.Model;
 using Gs2Cdk.Gs2Inbox.Ref;
 
-
 namespace Gs2Cdk.Gs2Inbox.Resource
 {
     public class Namespace : CdkResource

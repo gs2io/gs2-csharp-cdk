@@ -42,11 +42,11 @@ namespace Gs2Cdk.Gs2Lottery.Ref
                 string userId = "#{userId}"
         ) {
             return new DrawByUserId(
-                this._namespaceName,
-                this._lotteryName,
-                userId,
-                count,
-                config
+                namespaceName: this._namespaceName,
+                lotteryName: this._lotteryName,
+                userId: userId,
+                count: count,
+                config: config
             );
         }
 

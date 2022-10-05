@@ -47,14 +47,14 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 string userId = "#{userId}"
         ) {
             return new AcquireItemSetByUserId(
-                this._namespaceName,
-                this._inventoryName,
-                this._itemName,
-                userId,
-                acquireCount,
-                expiresAt,
-                createNewItemSet,
-                itemSetName
+                namespaceName: this._namespaceName,
+                inventoryName: this._inventoryName,
+                itemName: this._itemName,
+                userId: userId,
+                acquireCount: acquireCount,
+                expiresAt: expiresAt,
+                createNewItemSet: createNewItemSet,
+                itemSetName: itemSetName
             );
         }
 
@@ -64,12 +64,12 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 string userId = "#{userId}"
         ) {
             return new AddReferenceOfByUserId(
-                this._namespaceName,
-                this._inventoryName,
-                userId,
-                this._itemName,
-                itemSetName,
-                referenceOf
+                namespaceName: this._namespaceName,
+                inventoryName: this._inventoryName,
+                userId: userId,
+                itemName: this._itemName,
+                itemSetName: itemSetName,
+                referenceOf: referenceOf
             );
         }
 
@@ -79,12 +79,12 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 string userId = "#{userId}"
         ) {
             return new ConsumeItemSetByUserId(
-                this._namespaceName,
-                this._inventoryName,
-                userId,
-                this._itemName,
-                consumeCount,
-                itemSetName
+                namespaceName: this._namespaceName,
+                inventoryName: this._inventoryName,
+                userId: userId,
+                itemName: this._itemName,
+                consumeCount: consumeCount,
+                itemSetName: itemSetName
             );
         }
 

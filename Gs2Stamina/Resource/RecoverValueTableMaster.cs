@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 using Gs2Cdk.Gs2Stamina.Ref;
 
-
 namespace Gs2Cdk.Gs2Stamina.Resource
 {
     public class RecoverValueTableMaster : CdkResource

@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.Ref;
 
-
 namespace Gs2Cdk.Gs2Inventory.Resource
 {
     public class Namespace : CdkResource

@@ -60,15 +60,5 @@ namespace Gs2Cdk.Gs2Showcase.Resource
             }
             return properties;
         }
-
-        public ShowcaseRef Ref(
-                string namespaceName
-        )
-        {
-            return new ShowcaseRef(
-                namespaceName,
-                this._name
-            );
-        }
     }
 }

@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Lottery.Model;
 using Gs2Cdk.Gs2Lottery.Ref;
 
-
 namespace Gs2Cdk.Gs2Lottery.Resource
 {
     public class PrizeTableMaster : CdkResource

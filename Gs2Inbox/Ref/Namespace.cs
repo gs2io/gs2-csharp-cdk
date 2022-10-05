@@ -66,12 +66,12 @@ namespace Gs2Cdk.Gs2Inbox.Ref
                 string userId = "#{userId}"
         ) {
             return new SendMessageByUserId(
-                this._namespaceName,
-                userId,
-                metadata,
-                readAcquireActions,
-                expiresAt,
-                expiresTimeSpan
+                namespaceName: this._namespaceName,
+                userId: userId,
+                metadata: metadata,
+                readAcquireActions: readAcquireActions,
+                expiresAt: expiresAt,
+                expiresTimeSpan: expiresTimeSpan
             );
         }
 

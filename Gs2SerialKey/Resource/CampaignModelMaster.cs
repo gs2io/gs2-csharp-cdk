@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2SerialKey.Model;
 using Gs2Cdk.Gs2SerialKey.Ref;
 
-
 namespace Gs2Cdk.Gs2SerialKey.Resource
 {
     public class CampaignModelMaster : CdkResource

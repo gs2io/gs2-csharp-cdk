@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Showcase.Model;
 using Gs2Cdk.Gs2Showcase.Ref;
 
-
 namespace Gs2Cdk.Gs2Showcase.Resource
 {
     public class SalesItemGroupMaster : CdkResource

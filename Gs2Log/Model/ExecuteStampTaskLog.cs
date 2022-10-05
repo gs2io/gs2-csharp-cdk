@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2Log.Resource;
 
 namespace Gs2Cdk.Gs2Log.Model
 {

@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2JobQueue.Model;
 using Gs2Cdk.Gs2JobQueue.Ref;
 
-
 namespace Gs2Cdk.Gs2JobQueue.Resource
 {
     public class Namespace : CdkResource

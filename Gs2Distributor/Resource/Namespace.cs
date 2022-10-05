@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Distributor.Model;
 using Gs2Cdk.Gs2Distributor.Ref;
 
-
 namespace Gs2Cdk.Gs2Distributor.Resource
 {
     public class Namespace : CdkResource

@@ -41,10 +41,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new RecoverStaminaByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                recoverValue
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                recoverValue: recoverValue
             );
         }
 
@@ -53,10 +53,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new RaiseMaxValueByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                raiseValue
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                raiseValue: raiseValue
             );
         }
 
@@ -65,10 +65,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new SetMaxValueByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                maxValue
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                maxValue: maxValue
             );
         }
 
@@ -77,10 +77,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new SetRecoverIntervalByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                recoverIntervalMinutes
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                recoverIntervalMinutes: recoverIntervalMinutes
             );
         }
 
@@ -89,10 +89,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new SetRecoverValueByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                recoverValue
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                recoverValue: recoverValue
             );
         }
 
@@ -101,10 +101,10 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 string userId = "#{userId}"
         ) {
             return new ConsumeStaminaByUserId(
-                this._namespaceName,
-                this._staminaName,
-                userId,
-                consumeValue
+                namespaceName: this._namespaceName,
+                staminaName: this._staminaName,
+                userId: userId,
+                consumeValue: consumeValue
             );
         }
 

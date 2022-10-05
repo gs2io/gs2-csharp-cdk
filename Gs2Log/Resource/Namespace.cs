@@ -21,7 +21,6 @@ using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Log.Model;
 using Gs2Cdk.Gs2Log.Ref;
 
-
 namespace Gs2Cdk.Gs2Log.Resource
 {
     public class Namespace : CdkResource

@@ -51,10 +51,10 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 string userId = "#{userId}"
         ) {
             return new AddCapacityByUserId(
-                this._namespaceName,
-                this._inventoryName,
-                userId,
-                addCapacityValue
+                namespaceName: this._namespaceName,
+                inventoryName: this._inventoryName,
+                userId: userId,
+                addCapacityValue: addCapacityValue
             );
         }
 
@@ -63,10 +63,10 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 string userId = "#{userId}"
         ) {
             return new SetCapacityByUserId(
-                this._namespaceName,
-                this._inventoryName,
-                userId,
-                newCapacityValue
+                namespaceName: this._namespaceName,
+                inventoryName: this._inventoryName,
+                userId: userId,
+                newCapacityValue: newCapacityValue
             );
         }
 

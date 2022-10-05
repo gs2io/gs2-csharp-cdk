@@ -41,9 +41,9 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
                 string userId = "#{userId}"
         ) {
             return new UseByUserId(
-                this._namespaceName,
-                userId,
-                code
+                namespaceName: this._namespaceName,
+                userId: userId,
+                code: code
             );
         }
 
