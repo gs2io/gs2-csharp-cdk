@@ -53,6 +53,14 @@ namespace Gs2Cdk.Gs2Identifier.Resource
             return properties;
         }
 
+        public static string AdministratorAccessGrn() {
+            return "grn:gs2::system:identifier:securityPolicy:AdministratorAccess";
+        }
+
+        public static string ApplicationAccessGrn() {
+            return "grn:gs2::system:identifier:securityPolicy:ApplicationAccess";
+        }
+
         public GetAttr GetAttrClientId() {
             return new GetAttr(
                 "Item.ClientId"
