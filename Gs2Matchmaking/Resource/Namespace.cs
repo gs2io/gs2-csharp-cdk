@@ -36,6 +36,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Resource
         private readonly string _completeMatchmakingTriggerType;
         private readonly string _completeMatchmakingTriggerRealtimeNamespaceId;
         private readonly string _completeMatchmakingTriggerScriptId;
+        private readonly ScriptSetting _changeRatingScript;
         private readonly NotificationSetting _joinNotification;
         private readonly NotificationSetting _leaveNotification;
         private readonly NotificationSetting _completeNotification;
@@ -52,6 +53,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Resource
                 string completeMatchmakingTriggerRealtimeNamespaceId,
                 string completeMatchmakingTriggerScriptId,
                 string description = null,
+                ScriptSetting changeRatingScript = null,
                 NotificationSetting joinNotification = null,
                 NotificationSetting leaveNotification = null,
                 NotificationSetting completeNotification = null,
@@ -67,6 +69,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Resource
             this._completeMatchmakingTriggerType = completeMatchmakingTriggerType;
             this._completeMatchmakingTriggerRealtimeNamespaceId = completeMatchmakingTriggerRealtimeNamespaceId;
             this._completeMatchmakingTriggerScriptId = completeMatchmakingTriggerScriptId;
+            this._changeRatingScript = changeRatingScript;
             this._joinNotification = joinNotification;
             this._leaveNotification = leaveNotification;
             this._completeNotification = completeNotification;
@@ -107,6 +110,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Resource
             }
             if (this._completeMatchmakingTriggerScriptId != null) {
                 properties["CompleteMatchmakingTriggerScriptId"] = this._completeMatchmakingTriggerScriptId;
+            }
+            if (this._changeRatingScript != null) {
+                properties["ChangeRatingScript"] = this._changeRatingScript.Properties();
             }
             if (this._joinNotification != null) {
                 properties["JoinNotification"] = this._joinNotification.Properties();
