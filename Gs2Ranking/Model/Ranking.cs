@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
     {
 	    private readonly long? _rank;
 	    private readonly long? _index;
+	    private readonly string _categoryName;
 	    private readonly string _userId;
 	    private readonly long? _score;
 	    private readonly string _metadata;
@@ -35,6 +36,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         public Ranking(
                 long? rank,
                 long? index,
+                string categoryName,
                 string userId,
                 long? score,
                 long? createdAt,
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         {
             this._rank = rank;
             this._index = index;
+            this._categoryName = categoryName;
             this._userId = userId;
             this._score = score;
             this._metadata = metadata;
@@ -56,6 +59,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
             if (this._index != null) {
                 properties["Index"] = this._index;
+            }
+            if (this._categoryName != null) {
+                properties["CategoryName"] = this._categoryName;
             }
             if (this._userId != null) {
                 properties["UserId"] = this._userId;
