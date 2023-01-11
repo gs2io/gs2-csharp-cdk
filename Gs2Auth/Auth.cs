@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,17 +13,9 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Auth.Model;
-using Gs2Cdk.Gs2Auth.Ref;
 
-namespace Gs2Cdk.Gs2Showcase.StampSheet
+namespace Gs2Cdk.Gs2Auth
 {
-    public class Auth
-    {
+    public class Auth {
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,76 +13,52 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Mission.Resource;
+using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
+using Gs2Cdk.Gs2Mission.Model.Options;
 
 namespace Gs2Cdk.Gs2Mission.Model
 {
-
-    public static class ScopedValueResetTypeExt
-    {
-        public static string ToString(this ScopedValue.ResetType self)
-        {
-            switch (self) {
-                case ScopedValue.ResetType.NotReset:
-                    return "notReset";
-                case ScopedValue.ResetType.Daily:
-                    return "daily";
-                case ScopedValue.ResetType.Weekly:
-                    return "weekly";
-                case ScopedValue.ResetType.Monthly:
-                    return "monthly";
-            }
-            return "unknown";
-        }
-    }
-
-    public class ScopedValue
-    {
-
-        public enum ResetType
-        {
-            NotReset,
-            Daily,
-            Weekly,
-            Monthly
-        }
-	    private readonly ResetType _resetType;
-	    private readonly long? _value;
-	    private readonly long? _nextResetAt;
-	    private readonly long? _updatedAt;
+    public class ScopedValue {
+        private ScopedValueResetType? resetType;
+        private long? value;
+        private long? updatedAt;
+        private long? nextResetAt;
 
         public ScopedValue(
-                ResetType resetType,
-                long? value,
-                long? updatedAt,
-                long? nextResetAt = null
-        )
-        {
-            this._resetType = resetType;
-            this._value = value;
-            this._nextResetAt = nextResetAt;
-            this._updatedAt = updatedAt;
+            ScopedValueResetType resetType,
+            long? value,
+            long? updatedAt,
+            ScopedValueOptions options = null
+        ){
+            this.resetType = resetType;
+            this.value = value;
+            this.updatedAt = updatedAt;
+            this.nextResetAt = options?.nextResetAt;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._resetType != null) {
-                properties["ResetType"] = this._resetType.ToString();
+
+            if (this.resetType != null) {
+                properties["resetType"] = this.resetType?.Str(
+                );
             }
-            if (this._value != null) {
-                properties["Value"] = this._value;
+            if (this.value != null) {
+                properties["value"] = this.value;
             }
-            if (this._nextResetAt != null) {
-                properties["NextResetAt"] = this._nextResetAt;
+            if (this.nextResetAt != null) {
+                properties["nextResetAt"] = this.nextResetAt;
             }
-            if (this._updatedAt != null) {
-                properties["UpdatedAt"] = this._updatedAt;
+            if (this.updatedAt != null) {
+                properties["updatedAt"] = this.updatedAt;
             }
+
             return properties;
         }
     }

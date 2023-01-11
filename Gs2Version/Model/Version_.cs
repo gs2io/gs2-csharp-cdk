@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Version.Resource;
+using Gs2Cdk.Gs2Version.Model;
+using Gs2Cdk.Gs2Version.Model.Options;
 
 namespace Gs2Cdk.Gs2Version.Model
 {
-
-    public class Version_
-    {
-	    private readonly int? _major;
-	    private readonly int? _minor;
-	    private readonly int? _micro;
+    public class Version_ {
+        private int? major;
+        private int? minor;
+        private int? micro;
 
         public Version_(
-                int? major,
-                int? minor,
-                int? micro
-        )
-        {
-            this._major = major;
-            this._minor = minor;
-            this._micro = micro;
+            int? major,
+            int? minor,
+            int? micro,
+            VersionOptions options = null
+        ){
+            this.major = major;
+            this.minor = minor;
+            this.micro = micro;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._major != null) {
-                properties["Major"] = this._major;
+
+            if (this.major != null) {
+                properties["major"] = this.major;
             }
-            if (this._minor != null) {
-                properties["Minor"] = this._minor;
+            if (this.minor != null) {
+                properties["minor"] = this.minor;
             }
-            if (this._micro != null) {
-                properties["Micro"] = this._micro;
+            if (this.micro != null) {
+                properties["micro"] = this.micro;
             }
+
             return properties;
         }
     }

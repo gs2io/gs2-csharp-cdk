@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,47 +13,52 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2MegaField.Model;
-using Gs2Cdk.Gs2MegaField.StampSheet;
-
 
 namespace Gs2Cdk.Gs2MegaField.Ref
 {
     public class LayerRef {
-        private readonly string _namespaceName;
-        private readonly string _areaModelName;
-        private readonly string _layerModelName;
+        private string namespaceName;
+        private string areaModelName;
+        private string layerModelName;
 
         public LayerRef(
-                string namespaceName,
-                string areaModelName,
-                string layerModelName
-        ) {
-            this._namespaceName = namespaceName;
-            this._areaModelName = areaModelName;
-            this._layerModelName = layerModelName;
+            string namespaceName,
+            string areaModelName,
+            string layerModelName
+        ){
+            this.namespaceName = namespaceName;
+            this.areaModelName = areaModelName;
+            this.layerModelName = layerModelName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "megaField",
-                    this._namespaceName,
+                    this.namespaceName,
                     "layer",
-                    this._areaModelName,
-                    this._layerModelName
+                    this.areaModelName,
+                    this.layerModelName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

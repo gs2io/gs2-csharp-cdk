@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,38 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Experience.Resource;
+using Gs2Cdk.Gs2Experience.Model;
+using Gs2Cdk.Gs2Experience.Model.Options;
 
 namespace Gs2Cdk.Gs2Experience.Model
 {
-
-    public class Threshold
-    {
-	    private readonly string _metadata;
-	    private readonly long[] _values;
+    public class Threshold {
+        private long[] values;
+        private string metadata;
 
         public Threshold(
-                long[] values,
-                string metadata = null
-        )
-        {
-            this._metadata = metadata;
-            this._values = values;
+            long[] values,
+            ThresholdOptions options = null
+        ){
+            this.values = values;
+            this.metadata = options?.metadata;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._metadata != null) {
-                properties["Metadata"] = this._metadata;
+
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
-            if (this._values != null) {
-                properties["Values"] = this._values;
+            if (this.values != null) {
+                properties["values"] = this.values;
             }
+
             return properties;
         }
     }

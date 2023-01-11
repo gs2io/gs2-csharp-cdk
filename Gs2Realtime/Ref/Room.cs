@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Realtime.Model;
-using Gs2Cdk.Gs2Realtime.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Realtime.Ref
 {
     public class RoomRef {
-        private readonly string _namespaceName;
-        private readonly string _roomName;
+        private string namespaceName;
+        private string roomName;
 
         public RoomRef(
-                string namespaceName,
-                string roomName
-        ) {
-            this._namespaceName = namespaceName;
-            this._roomName = roomName;
+            string namespaceName,
+            string roomName
+        ){
+            this.namespaceName = namespaceName;
+            this.roomName = roomName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "realtime",
-                    this._namespaceName,
+                    this.namespaceName,
                     "room",
-                    this._roomName
+                    this.roomName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

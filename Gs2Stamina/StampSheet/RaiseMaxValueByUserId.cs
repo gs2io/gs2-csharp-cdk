@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 
 namespace Gs2Cdk.Gs2Stamina.StampSheet
 {
-    public class RaiseMaxValueByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? raiseValue
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (staminaName != null) {
-                properties["staminaName"] = staminaName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (raiseValue != null) {
-                properties["raiseValue"] = raiseValue;
-            }
-            return properties;
-        }
+    public class RaiseMaxValueByUserId : AcquireAction {
+
 
         public RaiseMaxValueByUserId(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? raiseValue
+            string namespaceName,
+            string staminaName,
+            int? raiseValue,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Stamina:RaiseMaxValueByUserId",
-           Properties(
-                namespaceName,
-                staminaName,
-                userId,
-                raiseValue
-           )
-        ) {
+            "Gs2Stamina:RaiseMaxValueByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["staminaName"] = staminaName,
+                ["raiseValue"] = raiseValue,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

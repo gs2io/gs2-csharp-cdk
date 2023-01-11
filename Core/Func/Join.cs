@@ -16,7 +16,7 @@ namespace Gs2Cdk.Core.Func
             this._values = values;
         }
 
-        public override string ToString() {
+        public string Str() {
             return "!Join ['" + this._separator + "', [" + string.Join(",", this._values) + "]]";
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Money.Resource;
+using Gs2Cdk.Gs2Money.Model;
+using Gs2Cdk.Gs2Money.Model.Options;
 
 namespace Gs2Cdk.Gs2Money.Model
 {
-
-    public class WalletDetail
-    {
-	    private readonly float? _price;
-	    private readonly int? _count;
+    public class WalletDetail {
+        private float? price;
+        private int? count;
 
         public WalletDetail(
-                float? price,
-                int? count
-        )
-        {
-            this._price = price;
-            this._count = count;
+            float? price,
+            int? count,
+            WalletDetailOptions options = null
+        ){
+            this.price = price;
+            this.count = count;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._price != null) {
-                properties["Price"] = this._price;
+
+            if (this.price != null) {
+                properties["price"] = this.price;
             }
-            if (this._count != null) {
-                properties["Count"] = this._count;
+            if (this.count != null) {
+                properties["count"] = this.count;
             }
+
             return properties;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,24 +13,41 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Showcase.Model;
-using Gs2Cdk.Gs2Showcase.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Showcase.Ref
 {
     public class DisplayItemRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
+        private string displayItemId;
 
         public DisplayItemRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
+            string namespaceName,
+            string displayItemId
+        ){
+            this.namespaceName = namespaceName;
+            this.displayItemId = displayItemId;
+        }
+
+        public SalesItemRef SalesItem(
+        ){
+            return (new SalesItemRef(
+                this.namespaceName,
+                this.displayItemId
+            ));
+        }
+
+        public SalesItemGroupRef SalesItemGroup(
+        ){
+            return (new SalesItemGroupRef(
+                this.namespaceName,
+                this.displayItemId
+            ));
         }
     }
 }

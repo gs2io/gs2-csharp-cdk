@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 
 namespace Gs2Cdk.Gs2Stamina.StampSheet
 {
-    public class ConsumeStaminaByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? consumeValue
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (staminaName != null) {
-                properties["staminaName"] = staminaName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (consumeValue != null) {
-                properties["consumeValue"] = consumeValue;
-            }
-            return properties;
-        }
+    public class ConsumeStaminaByUserId : ConsumeAction {
+
 
         public ConsumeStaminaByUserId(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? consumeValue
+            string namespaceName,
+            string staminaName,
+            int? consumeValue,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Stamina:ConsumeStaminaByUserId",
-           Properties(
-                namespaceName,
-                staminaName,
-                userId,
-                consumeValue
-           )
-        ) {
+            "Gs2Stamina:ConsumeStaminaByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["staminaName"] = staminaName,
+                ["consumeValue"] = consumeValue,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

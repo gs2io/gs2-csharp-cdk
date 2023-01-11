@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,56 +13,57 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Auth.Resource;
+using Gs2Cdk.Gs2Auth.Model;
+using Gs2Cdk.Gs2Auth.Model.Options;
 
 namespace Gs2Cdk.Gs2Auth.Model
 {
-
-    public class AccessToken
-    {
-	    private readonly string _ownerId;
-	    private readonly string _token;
-	    private readonly string _userId;
-	    private readonly long? _expire;
-	    private readonly int? _timeOffset;
+    public class AccessToken {
+        private string ownerId;
+        private string token;
+        private string userId;
+        private long? expire;
+        private int? timeOffset;
 
         public AccessToken(
-                string ownerId,
-                string token,
-                string userId,
-                long? expire,
-                int? timeOffset
-        )
-        {
-            this._ownerId = ownerId;
-            this._token = token;
-            this._userId = userId;
-            this._expire = expire;
-            this._timeOffset = timeOffset;
+            string ownerId,
+            string token,
+            string userId,
+            long? expire,
+            int? timeOffset,
+            AccessTokenOptions options = null
+        ){
+            this.ownerId = ownerId;
+            this.token = token;
+            this.userId = userId;
+            this.expire = expire;
+            this.timeOffset = timeOffset;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._ownerId != null) {
-                properties["OwnerId"] = this._ownerId;
+
+            if (this.ownerId != null) {
+                properties["ownerId"] = this.ownerId;
             }
-            if (this._token != null) {
-                properties["Token"] = this._token;
+            if (this.token != null) {
+                properties["token"] = this.token;
             }
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
-            if (this._expire != null) {
-                properties["Expire"] = this._expire;
+            if (this.expire != null) {
+                properties["expire"] = this.expire;
             }
-            if (this._timeOffset != null) {
-                properties["TimeOffset"] = this._timeOffset;
+            if (this.timeOffset != null) {
+                properties["timeOffset"] = this.timeOffset;
             }
+
             return properties;
         }
     }

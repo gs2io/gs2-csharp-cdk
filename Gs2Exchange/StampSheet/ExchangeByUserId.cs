@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,58 +13,33 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Exchange.Model;
 
 namespace Gs2Cdk.Gs2Exchange.StampSheet
 {
-    public class ExchangeByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string rateName,
-                string userId,
-                int? count,
-                Config[] config
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (rateName != null) {
-                properties["rateName"] = rateName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (count != null) {
-                properties["count"] = count;
-            }
-            if (config != null) {
-                properties["config"] = config;
-            }
-            return properties;
-        }
+    public class ExchangeByUserId : AcquireAction {
+
 
         public ExchangeByUserId(
-                string namespaceName,
-                string rateName,
-                string userId,
-                int? count,
-                Config[] config = null
+            string namespaceName,
+            string rateName,
+            int? count,
+            Config[] config = null,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Exchange:ExchangeByUserId",
-           Properties(
-                namespaceName,
-                rateName,
-                userId,
-                count,
-                config
-           )
-        ) {
+            "Gs2Exchange:ExchangeByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["rateName"] = rateName,
+                ["count"] = count,
+                ["config"] = config,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

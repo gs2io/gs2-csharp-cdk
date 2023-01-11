@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,54 +13,59 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2SerialKey.Model;
 using Gs2Cdk.Gs2SerialKey.StampSheet;
 
-
 namespace Gs2Cdk.Gs2SerialKey.Ref
 {
     public class SerialKeyRef {
-        private readonly string _namespaceName;
-        private readonly string _serialKeyCode;
+        private string namespaceName;
+        private string code;
 
         public SerialKeyRef(
-                string namespaceName,
-                string serialKeyCode
-        ) {
-            this._namespaceName = namespaceName;
-            this._serialKeyCode = serialKeyCode;
+            string namespaceName,
+            string code
+        ){
+            this.namespaceName = namespaceName;
+            this.code = code;
         }
 
         public UseByUserId Use(
-                string code,
-                string userId = "#{userId}"
-        ) {
-            return new UseByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                code: code
-            );
+            string userId = "#{userId}"
+        ){
+            return (new UseByUserId(
+                this.namespaceName,
+                this.code,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "serialKey",
-                    this._namespaceName,
+                    this.namespaceName,
                     "serialKey",
-                    this._serialKeyCode
+                    this.code
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

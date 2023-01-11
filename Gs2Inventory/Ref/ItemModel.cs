@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,97 +13,135 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
     public class ItemModelRef {
-        private readonly string _namespaceName;
-        private readonly string _inventoryName;
-        private readonly string _itemName;
+        private string namespaceName;
+        private string inventoryName;
+        private string itemName;
 
         public ItemModelRef(
-                string namespaceName,
-                string inventoryName,
-                string itemName
-        ) {
-            this._namespaceName = namespaceName;
-            this._inventoryName = inventoryName;
-            this._itemName = itemName;
+            string namespaceName,
+            string inventoryName,
+            string itemName
+        ){
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
         }
 
         public AcquireItemSetByUserId AcquireItemSet(
-                long? acquireCount,
-                long? expiresAt,
-                bool? createNewItemSet,
-                string itemSetName = null,
-                string userId = "#{userId}"
-        ) {
-            return new AcquireItemSetByUserId(
-                namespaceName: this._namespaceName,
-                inventoryName: this._inventoryName,
-                itemName: this._itemName,
-                userId: userId,
-                acquireCount: acquireCount,
-                expiresAt: expiresAt,
-                createNewItemSet: createNewItemSet,
-                itemSetName: itemSetName
-            );
+            long? acquireCount,
+            long? expiresAt,
+            bool? createNewItemSet,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireItemSetByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
+                acquireCount,
+                expiresAt,
+                createNewItemSet,
+                itemSetName,
+                userId
+            ));
         }
 
         public AddReferenceOfByUserId AddReferenceOf(
-                string itemSetName,
-                string referenceOf,
-                string userId = "#{userId}"
-        ) {
-            return new AddReferenceOfByUserId(
-                namespaceName: this._namespaceName,
-                inventoryName: this._inventoryName,
-                userId: userId,
-                itemName: this._itemName,
-                itemSetName: itemSetName,
-                referenceOf: referenceOf
-            );
+            string itemSetName,
+            string referenceOf,
+            string userId = "#{userId}"
+        ){
+            return (new AddReferenceOfByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
+                itemSetName,
+                referenceOf,
+                userId
+            ));
+        }
+
+        public DeleteReferenceOfByUserId DeleteReferenceOf(
+            string itemSetName,
+            string referenceOf,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteReferenceOfByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
+                itemSetName,
+                referenceOf,
+                userId
+            ));
         }
 
         public ConsumeItemSetByUserId ConsumeItemSet(
-                long? consumeCount,
-                string itemSetName = null,
-                string userId = "#{userId}"
-        ) {
-            return new ConsumeItemSetByUserId(
-                namespaceName: this._namespaceName,
-                inventoryName: this._inventoryName,
-                userId: userId,
-                itemName: this._itemName,
-                consumeCount: consumeCount,
-                itemSetName: itemSetName
-            );
+            long? consumeCount,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeItemSetByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
+                consumeCount,
+                itemSetName,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public VerifyReferenceOfByUserId VerifyReferenceOf(
+            string itemSetName,
+            string referenceOf,
+            string verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyReferenceOfByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
+                itemSetName,
+                referenceOf,
+                verifyType,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "inventory",
-                    this._namespaceName,
+                    this.namespaceName,
                     "model",
-                    this._inventoryName,
+                    this.inventoryName,
                     "item",
-                    this._itemName
+                    this.itemName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

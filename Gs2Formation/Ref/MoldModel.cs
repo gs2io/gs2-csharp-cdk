@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,68 +13,90 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Formation.Model;
 using Gs2Cdk.Gs2Formation.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Formation.Ref
 {
     public class MoldModelRef {
-        private readonly string _namespaceName;
-        private readonly string _moldName;
+        private string namespaceName;
+        private string moldName;
 
         public MoldModelRef(
-                string namespaceName,
-                string moldName
-        ) {
-            this._namespaceName = namespaceName;
-            this._moldName = moldName;
+            string namespaceName,
+            string moldName
+        ){
+            this.namespaceName = namespaceName;
+            this.moldName = moldName;
         }
 
         public AddMoldCapacityByUserId AddMoldCapacity(
-                int? capacity,
-                string userId = "#{userId}"
-        ) {
-            return new AddMoldCapacityByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                moldName: this._moldName,
-                capacity: capacity
-            );
+            int? capacity,
+            string userId = "#{userId}"
+        ){
+            return (new AddMoldCapacityByUserId(
+                this.namespaceName,
+                this.moldName,
+                capacity,
+                userId
+            ));
         }
 
         public SetMoldCapacityByUserId SetMoldCapacity(
-                int? capacity,
-                string userId = "#{userId}"
-        ) {
-            return new SetMoldCapacityByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                moldName: this._moldName,
-                capacity: capacity
-            );
+            int? capacity,
+            string userId = "#{userId}"
+        ){
+            return (new SetMoldCapacityByUserId(
+                this.namespaceName,
+                this.moldName,
+                capacity,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public AcquireActionsToFormProperties AcquireActionsToFormProperties(
+            int? index,
+            AcquireAction acquireAction,
+            AcquireActionConfig[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireActionsToFormProperties(
+                this.namespaceName,
+                this.moldName,
+                index,
+                acquireAction,
+                config,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "formation",
-                    this._namespaceName,
+                    this.namespaceName,
                     "model",
                     "mold",
-                    this._moldName
+                    this.moldName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

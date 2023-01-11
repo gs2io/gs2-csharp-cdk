@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,57 +13,63 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Lottery.Model;
 using Gs2Cdk.Gs2Lottery.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Lottery.Ref
 {
     public class LotteryModelRef {
-        private readonly string _namespaceName;
-        private readonly string _lotteryName;
+        private string namespaceName;
+        private string lotteryName;
 
         public LotteryModelRef(
-                string namespaceName,
-                string lotteryName
-        ) {
-            this._namespaceName = namespaceName;
-            this._lotteryName = lotteryName;
+            string namespaceName,
+            string lotteryName
+        ){
+            this.namespaceName = namespaceName;
+            this.lotteryName = lotteryName;
         }
 
         public DrawByUserId Draw(
-                int? count,
-                Config[] config = null,
-                string userId = "#{userId}"
-        ) {
-            return new DrawByUserId(
-                namespaceName: this._namespaceName,
-                lotteryName: this._lotteryName,
-                userId: userId,
-                count: count,
-                config: config
-            );
+            int? count,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new DrawByUserId(
+                this.namespaceName,
+                this.lotteryName,
+                count,
+                config,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "lottery",
-                    this._namespaceName,
+                    this.namespaceName,
                     "lotteryModel",
-                    this._lotteryName
+                    this.lotteryName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,53 +13,59 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Quest.Model;
 using Gs2Cdk.Gs2Quest.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Quest.Ref
 {
     public class QuestGroupModelRef {
-        private readonly string _namespaceName;
-        private readonly string _questGroupName;
+        private string namespaceName;
+        private string questGroupName;
 
         public QuestGroupModelRef(
-                string namespaceName,
-                string questGroupName
-        ) {
-            this._namespaceName = namespaceName;
-            this._questGroupName = questGroupName;
+            string namespaceName,
+            string questGroupName
+        ){
+            this.namespaceName = namespaceName;
+            this.questGroupName = questGroupName;
         }
 
         public QuestModelRef QuestModel(
-                string questName
-        ) {
-            return new QuestModelRef(
-                this._namespaceName,
-                this._questGroupName,
+            string questName
+        ){
+            return (new QuestModelRef(
+                this.namespaceName,
+                this.questGroupName,
                 questName
-            );
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "quest",
-                    this._namespaceName,
+                    this.namespaceName,
                     "group",
-                    this._questGroupName
+                    this.questGroupName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

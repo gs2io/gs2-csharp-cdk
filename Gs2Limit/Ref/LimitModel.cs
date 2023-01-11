@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,49 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Limit.Model;
 using Gs2Cdk.Gs2Limit.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Limit.Ref
 {
     public class LimitModelRef {
-        private readonly string _namespaceName;
-        private readonly string _limitName;
+        private string namespaceName;
+        private string limitName;
 
         public LimitModelRef(
-                string namespaceName,
-                string limitName
-        ) {
-            this._namespaceName = namespaceName;
-            this._limitName = limitName;
+            string namespaceName,
+            string limitName
+        ){
+            this.namespaceName = namespaceName;
+            this.limitName = limitName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "limit",
-                    this._namespaceName,
+                    this.namespaceName,
                     "limit",
-                    this._limitName
+                    this.limitName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

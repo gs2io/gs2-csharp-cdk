@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,80 +13,81 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inbox.Model;
 using Gs2Cdk.Gs2Inbox.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Inbox.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentMessageMasterRef CurrentMessageMaster(
-        ) {
-            return new CurrentMessageMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public GlobalMessageRef GlobalMessage(
-                string globalMessageName
-        ) {
-            return new GlobalMessageRef(
-                this._namespaceName,
+            string globalMessageName
+        ){
+            return (new GlobalMessageRef(
+                this.namespaceName,
                 globalMessageName
-            );
-        }
-
-        public GlobalMessageMasterRef GlobalMessageMaster(
-                string globalMessageName
-        ) {
-            return new GlobalMessageMasterRef(
-                this._namespaceName,
-                globalMessageName
-            );
+            ));
         }
 
         public SendMessageByUserId SendMessage(
-                string metadata,
-                AcquireAction[] readAcquireActions = null,
-                long? expiresAt = null,
-                TimeSpan_ expiresTimeSpan = null,
-                string userId = "#{userId}"
-        ) {
-            return new SendMessageByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                metadata: metadata,
-                readAcquireActions: readAcquireActions,
-                expiresAt: expiresAt,
-                expiresTimeSpan: expiresTimeSpan
-            );
+            string metadata,
+            AcquireAction[] readAcquireActions = null,
+            long? expiresAt = null,
+            TimeSpan_ expiresTimeSpan = null,
+            string userId = "#{userId}"
+        ){
+            return (new SendMessageByUserId(
+                this.namespaceName,
+                metadata,
+                readAcquireActions,
+                expiresAt,
+                expiresTimeSpan,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public OpenMessageByUserId OpenMessage(
+            string messageName,
+            string userId = "#{userId}"
+        ){
+            return (new OpenMessageByUserId(
+                this.namespaceName,
+                messageName,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "inbox",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

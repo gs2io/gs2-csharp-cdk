@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,50 +13,51 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2JobQueue.Resource;
+using Gs2Cdk.Gs2JobQueue.Model;
+using Gs2Cdk.Gs2JobQueue.Model.Options;
 
 namespace Gs2Cdk.Gs2JobQueue.Model
 {
-
-    public class JobResultBody
-    {
-	    private readonly int? _tryNumber;
-	    private readonly int? _statusCode;
-	    private readonly string _result;
-	    private readonly long? _tryAt;
+    public class JobResultBody {
+        private int? tryNumber;
+        private int? statusCode;
+        private string result;
+        private long? tryAt;
 
         public JobResultBody(
-                int? tryNumber,
-                int? statusCode,
-                string result,
-                long? tryAt
-        )
-        {
-            this._tryNumber = tryNumber;
-            this._statusCode = statusCode;
-            this._result = result;
-            this._tryAt = tryAt;
+            int? tryNumber,
+            int? statusCode,
+            string result,
+            long? tryAt,
+            JobResultBodyOptions options = null
+        ){
+            this.tryNumber = tryNumber;
+            this.statusCode = statusCode;
+            this.result = result;
+            this.tryAt = tryAt;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._tryNumber != null) {
-                properties["TryNumber"] = this._tryNumber;
+
+            if (this.tryNumber != null) {
+                properties["tryNumber"] = this.tryNumber;
             }
-            if (this._statusCode != null) {
-                properties["StatusCode"] = this._statusCode;
+            if (this.statusCode != null) {
+                properties["statusCode"] = this.statusCode;
             }
-            if (this._result != null) {
-                properties["Result"] = this._result;
+            if (this.result != null) {
+                properties["result"] = this.result;
             }
-            if (this._tryAt != null) {
-                properties["TryAt"] = this._tryAt;
+            if (this.tryAt != null) {
+                properties["tryAt"] = this.tryAt;
             }
+
             return properties;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Inbox.Resource;
+using Gs2Cdk.Gs2Inbox.Model;
+using Gs2Cdk.Gs2Inbox.Model.Options;
 
 namespace Gs2Cdk.Gs2Inbox.Model
 {
-
-    public class TimeSpan_
-    {
-	    private readonly int? _days;
-	    private readonly int? _hours;
-	    private readonly int? _minutes;
+    public class TimeSpan_ {
+        private int? days;
+        private int? hours;
+        private int? minutes;
 
         public TimeSpan_(
-                int? days,
-                int? hours,
-                int? minutes
-        )
-        {
-            this._days = days;
-            this._hours = hours;
-            this._minutes = minutes;
+            int? days,
+            int? hours,
+            int? minutes,
+            TimeSpanOptions options = null
+        ){
+            this.days = days;
+            this.hours = hours;
+            this.minutes = minutes;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._days != null) {
-                properties["Days"] = this._days;
+
+            if (this.days != null) {
+                properties["days"] = this.days;
             }
-            if (this._hours != null) {
-                properties["Hours"] = this._hours;
+            if (this.hours != null) {
+                properties["hours"] = this.hours;
             }
-            if (this._minutes != null) {
-                properties["Minutes"] = this._minutes;
+            if (this.minutes != null) {
+                properties["minutes"] = this.minutes;
             }
+
             return properties;
         }
     }

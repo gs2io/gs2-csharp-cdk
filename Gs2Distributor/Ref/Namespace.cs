@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,63 +13,52 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Distributor.Model;
-using Gs2Cdk.Gs2Distributor.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Distributor.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentDistributorMasterRef CurrentDistributorMaster(
-        ) {
-            return new CurrentDistributorMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public DistributorModelRef DistributorModel(
-                string distributorName
-        ) {
-            return new DistributorModelRef(
-                this._namespaceName,
+            string distributorName
+        ){
+            return (new DistributorModelRef(
+                this.namespaceName,
                 distributorName
-            );
+            ));
         }
 
-        public DistributorModelMasterRef DistributorModelMaster(
-                string distributorName
-        ) {
-            return new DistributorModelMasterRef(
-                this._namespaceName,
-                distributorName
-            );
-        }
-
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "distributor",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

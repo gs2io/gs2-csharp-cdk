@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Showcase.Resource;
+using Gs2Cdk.Gs2Showcase.Model;
+using Gs2Cdk.Gs2Showcase.Model.Options;
 
 namespace Gs2Cdk.Gs2Showcase.Model
 {
-
-    public class SalesItemGroup
-    {
-	    private readonly string _name;
-	    private readonly string _metadata;
-	    private readonly SalesItem[] _salesItems;
+    public class SalesItemGroup {
+        private string name;
+        private SalesItem[] salesItems;
+        private string metadata;
 
         public SalesItemGroup(
-                string name,
-                SalesItem[] salesItems,
-                string metadata = null
-        )
-        {
-            this._name = name;
-            this._metadata = metadata;
-            this._salesItems = salesItems;
+            string name,
+            SalesItem[] salesItems,
+            SalesItemGroupOptions options = null
+        ){
+            this.name = name;
+            this.salesItems = salesItems;
+            this.metadata = options?.metadata;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._name != null) {
-                properties["Name"] = this._name;
+
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this._metadata != null) {
-                properties["Metadata"] = this._metadata;
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
-            if (this._salesItems != null) {
-                properties["SalesItems"] = this._salesItems.Select(v => v.Properties()).ToArray();
+            if (this.salesItems != null) {
+                properties["salesItems"] = this.salesItems.Select(v => v.Properties(
+                        )).ToList();
             }
+
             return properties;
         }
     }

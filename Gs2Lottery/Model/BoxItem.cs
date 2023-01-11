@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Lottery.Resource;
+using Gs2Cdk.Gs2Lottery.Model;
+using Gs2Cdk.Gs2Lottery.Model.Options;
 
 namespace Gs2Cdk.Gs2Lottery.Model
 {
-
-    public class BoxItem
-    {
-	    private readonly AcquireAction[] _acquireActions;
-	    private readonly int? _remaining;
-	    private readonly int? _initial;
+    public class BoxItem {
+        private int? remaining;
+        private int? initial;
+        private AcquireAction[] acquireActions;
 
         public BoxItem(
-                int? remaining,
-                int? initial,
-                AcquireAction[] acquireActions = null
-        )
-        {
-            this._acquireActions = acquireActions;
-            this._remaining = remaining;
-            this._initial = initial;
+            int? remaining,
+            int? initial,
+            BoxItemOptions options = null
+        ){
+            this.remaining = remaining;
+            this.initial = initial;
+            this.acquireActions = options?.acquireActions;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._acquireActions != null) {
-                properties["AcquireActions"] = this._acquireActions.Select(v => v.Properties()).ToArray();
+
+            if (this.acquireActions != null) {
+                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                        )).ToList();
             }
-            if (this._remaining != null) {
-                properties["Remaining"] = this._remaining;
+            if (this.remaining != null) {
+                properties["remaining"] = this.remaining;
             }
-            if (this._initial != null) {
-                properties["Initial"] = this._initial;
+            if (this.initial != null) {
+                properties["initial"] = this.initial;
             }
+
             return properties;
         }
     }

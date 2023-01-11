@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,83 +13,52 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2MegaField.Model;
-using Gs2Cdk.Gs2MegaField.StampSheet;
-
 
 namespace Gs2Cdk.Gs2MegaField.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentFieldMasterRef CurrentFieldMaster(
-        ) {
-            return new CurrentFieldMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public AreaModelRef AreaModel(
-                string areaModelName
-        ) {
-            return new AreaModelRef(
-                this._namespaceName,
+            string areaModelName
+        ){
+            return (new AreaModelRef(
+                this.namespaceName,
                 areaModelName
-            );
+            ));
         }
 
-        public NodeRef Node(
-                string nodeName
-        ) {
-            return new NodeRef(
-                this._namespaceName,
-                nodeName
-            );
-        }
-
-        public LayerRef Layer(
-                string areaModelName,
-                string layerModelName
-        ) {
-            return new LayerRef(
-                this._namespaceName,
-                areaModelName,
-                layerModelName
-            );
-        }
-
-        public AreaModelMasterRef AreaModelMaster(
-                string areaModelName
-        ) {
-            return new AreaModelMasterRef(
-                this._namespaceName,
-                areaModelName
-            );
-        }
-
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "megaField",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

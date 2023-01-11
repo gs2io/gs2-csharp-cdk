@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,49 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inbox.Model;
 using Gs2Cdk.Gs2Inbox.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Inbox.Ref
 {
     public class GlobalMessageRef {
-        private readonly string _namespaceName;
-        private readonly string _globalMessageName;
+        private string namespaceName;
+        private string globalMessageName;
 
         public GlobalMessageRef(
-                string namespaceName,
-                string globalMessageName
-        ) {
-            this._namespaceName = namespaceName;
-            this._globalMessageName = globalMessageName;
+            string namespaceName,
+            string globalMessageName
+        ){
+            this.namespaceName = namespaceName;
+            this.globalMessageName = globalMessageName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "inbox",
-                    this._namespaceName,
+                    this.namespaceName,
                     "globalMessage",
-                    this._globalMessageName
+                    this.globalMessageName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

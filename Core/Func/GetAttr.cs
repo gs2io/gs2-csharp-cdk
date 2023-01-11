@@ -9,29 +9,32 @@ namespace Gs2Cdk.Core.Func
 
         public GetAttr(
             CdkResource resource,
-            string path
-        ) {
-            this._key = resource.ResourceName + "." + path;
-        }
-
-        public GetAttr(
+            string path,
             string key
         ) {
-            this._key = key;
+            if (key != null) {
+                this._key = key;
+            } else {
+                this._key = resource.ResourceName + "." + path;
+            }
         }
 
-        public override string ToString() {
+        public string Str() {
             return "!GetAttr " + this._key;
         }
 
         public static GetAttr Region() {
             return new GetAttr(
+                null,
+                null,
                 "Gs2::Region"
             );
         }
 
         public static GetAttr OwnerId() {
             return new GetAttr(
+                null,
+                null,
                 "Gs2::OwnerId"
             );
         }

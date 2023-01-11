@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Matchmaking.Resource;
+using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.Model.Options;
 
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
-
-    public class Attribute_
-    {
-	    private readonly string _name;
-	    private readonly int? _value;
+    public class Attribute_ {
+        private string name;
+        private int? value;
 
         public Attribute_(
-                string name,
-                int? value
-        )
-        {
-            this._name = name;
-            this._value = value;
+            string name,
+            int? value,
+            AttributeOptions options = null
+        ){
+            this.name = name;
+            this.value = value;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._name != null) {
-                properties["Name"] = this._name;
+
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this._value != null) {
-                properties["Value"] = this._value;
+            if (this.value != null) {
+                properties["value"] = this.value;
             }
+
             return properties;
         }
     }

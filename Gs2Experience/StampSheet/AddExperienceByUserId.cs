@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,58 +13,33 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
 
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
-    public class AddExperienceByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string experienceName,
-                string propertyId,
-                long? experienceValue
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (experienceName != null) {
-                properties["experienceName"] = experienceName;
-            }
-            if (propertyId != null) {
-                properties["propertyId"] = propertyId;
-            }
-            if (experienceValue != null) {
-                properties["experienceValue"] = experienceValue;
-            }
-            return properties;
-        }
+    public class AddExperienceByUserId : AcquireAction {
+
 
         public AddExperienceByUserId(
-                string namespaceName,
-                string userId,
-                string experienceName,
-                string propertyId,
-                long? experienceValue
+            string namespaceName,
+            string experienceName,
+            string propertyId,
+            long? experienceValue,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Experience:AddExperienceByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                experienceName,
-                propertyId,
-                experienceValue
-           )
-        ) {
+            "Gs2Experience:AddExperienceByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["experienceName"] = experienceName,
+                ["propertyId"] = propertyId,
+                ["experienceValue"] = experienceValue,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

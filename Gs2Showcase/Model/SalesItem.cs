@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,50 +13,51 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Showcase.Resource;
+using Gs2Cdk.Gs2Showcase.Model;
+using Gs2Cdk.Gs2Showcase.Model.Options;
 
 namespace Gs2Cdk.Gs2Showcase.Model
 {
-
-    public class SalesItem
-    {
-	    private readonly string _name;
-	    private readonly string _metadata;
-	    private readonly ConsumeAction[] _consumeActions;
-	    private readonly AcquireAction[] _acquireActions;
+    public class SalesItem {
+        private string name;
+        private AcquireAction[] acquireActions;
+        private string metadata;
+        private ConsumeAction[] consumeActions;
 
         public SalesItem(
-                string name,
-                ConsumeAction[] consumeActions,
-                AcquireAction[] acquireActions,
-                string metadata = null
-        )
-        {
-            this._name = name;
-            this._metadata = metadata;
-            this._consumeActions = consumeActions;
-            this._acquireActions = acquireActions;
+            string name,
+            AcquireAction[] acquireActions,
+            SalesItemOptions options = null
+        ){
+            this.name = name;
+            this.acquireActions = acquireActions;
+            this.metadata = options?.metadata;
+            this.consumeActions = options?.consumeActions;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._name != null) {
-                properties["Name"] = this._name;
+
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this._metadata != null) {
-                properties["Metadata"] = this._metadata;
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
-            if (this._consumeActions != null) {
-                properties["ConsumeActions"] = this._consumeActions.Select(v => v.Properties()).ToArray();
+            if (this.consumeActions != null) {
+                properties["consumeActions"] = this.consumeActions.Select(v => v.Properties(
+                        )).ToList();
             }
-            if (this._acquireActions != null) {
-                properties["AcquireActions"] = this._acquireActions.Select(v => v.Properties()).ToArray();
+            if (this.acquireActions != null) {
+                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                        )).ToList();
             }
+
             return properties;
         }
     }

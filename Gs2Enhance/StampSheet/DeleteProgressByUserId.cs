@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,27 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enhance.Model;
 
 namespace Gs2Cdk.Gs2Enhance.StampSheet
 {
-    public class DeleteProgressByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string rateName,
-                string progressName
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (rateName != null) {
-                properties["rateName"] = rateName;
-            }
-            if (progressName != null) {
-                properties["progressName"] = progressName;
-            }
-            return properties;
-        }
+    public class DeleteProgressByUserId : ConsumeAction {
+
 
         public DeleteProgressByUserId(
-                string namespaceName,
-                string userId,
-                string rateName,
-                string progressName
+            string namespaceName,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Enhance:DeleteProgressByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                rateName,
-                progressName
-           )
-        ) {
+            "Gs2Enhance:DeleteProgressByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

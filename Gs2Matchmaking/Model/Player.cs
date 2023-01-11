@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,50 +13,50 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Matchmaking.Resource;
+using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.Model.Options;
 
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
-
-    public class Player
-    {
-	    private readonly string _userId;
-	    private readonly Attribute_[] _attributes;
-	    private readonly string _roleName;
-	    private readonly string[] _denyUserIds;
+    public class Player {
+        private string userId;
+        private string roleName;
+        private Attribute_[] attributes;
+        private string[] denyUserIds;
 
         public Player(
-                string userId,
-                string roleName,
-                Attribute_[] attributes = null,
-                string[] denyUserIds = null
-        )
-        {
-            this._userId = userId;
-            this._attributes = attributes;
-            this._roleName = roleName;
-            this._denyUserIds = denyUserIds;
+            string userId,
+            string roleName,
+            PlayerOptions options = null
+        ){
+            this.userId = userId;
+            this.roleName = roleName;
+            this.attributes = options?.attributes;
+            this.denyUserIds = options?.denyUserIds;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
-            if (this._attributes != null) {
-                properties["Attributes"] = this._attributes.Select(v => v.Properties()).ToArray();
+            if (this.attributes != null) {
+                properties["attributes"] = this.attributes.Select(v => v.Properties(
+                        )).ToList();
             }
-            if (this._roleName != null) {
-                properties["RoleName"] = this._roleName;
+            if (this.roleName != null) {
+                properties["roleName"] = this.roleName;
             }
-            if (this._denyUserIds != null) {
-                properties["DenyUserIds"] = this._denyUserIds;
+            if (this.denyUserIds != null) {
+                properties["denyUserIds"] = this.denyUserIds;
             }
+
             return properties;
         }
     }

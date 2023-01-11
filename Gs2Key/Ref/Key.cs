@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Key.Model;
-using Gs2Cdk.Gs2Key.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Key.Ref
 {
     public class KeyRef {
-        private readonly string _namespaceName;
-        private readonly string _keyName;
+        private string namespaceName;
+        private string keyName;
 
         public KeyRef(
-                string namespaceName,
-                string keyName
-        ) {
-            this._namespaceName = namespaceName;
-            this._keyName = keyName;
+            string namespaceName,
+            string keyName
+        ){
+            this.namespaceName = namespaceName;
+            this.keyName = keyName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "key",
-                    this._namespaceName,
+                    this.namespaceName,
                     "key",
-                    this._keyName
+                    this.keyName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

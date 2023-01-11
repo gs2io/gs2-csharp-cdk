@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money.Model;
 
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
-    public class RecordReceipt : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string contentsId,
-                string receipt
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (contentsId != null) {
-                properties["contentsId"] = contentsId;
-            }
-            if (receipt != null) {
-                properties["receipt"] = receipt;
-            }
-            return properties;
-        }
+    public class RecordReceipt : ConsumeAction {
+
 
         public RecordReceipt(
-                string namespaceName,
-                string userId,
-                string contentsId,
-                string receipt
+            string namespaceName,
+            string contentsId,
+            string receipt,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Money:RecordReceipt",
-           Properties(
-                namespaceName,
-                userId,
-                contentsId,
-                receipt
-           )
-        ) {
+            "Gs2Money:RecordReceipt",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["contentsId"] = contentsId,
+                ["receipt"] = receipt,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

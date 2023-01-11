@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,46 +13,29 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2SerialKey.Model;
 
 namespace Gs2Cdk.Gs2SerialKey.StampSheet
 {
-    public class UseByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string code
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (code != null) {
-                properties["code"] = code;
-            }
-            return properties;
-        }
+    public class UseByUserId : ConsumeAction {
+
 
         public UseByUserId(
-                string namespaceName,
-                string userId,
-                string code
+            string namespaceName,
+            string code,
+            string userId = "#{userId}"
         ): base(
-           "Gs2SerialKey:UseByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                code
-           )
-        ) {
+            "Gs2SerialKey:UseByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["code"] = code,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

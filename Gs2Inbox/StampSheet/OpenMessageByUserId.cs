@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,46 +13,29 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inbox.Model;
 
 namespace Gs2Cdk.Gs2Inbox.StampSheet
 {
-    public class OpenMessageByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string messageName
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (messageName != null) {
-                properties["messageName"] = messageName;
-            }
-            return properties;
-        }
+    public class OpenMessageByUserId : ConsumeAction {
+
 
         public OpenMessageByUserId(
-                string namespaceName,
-                string userId,
-                string messageName
+            string namespaceName,
+            string messageName,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Inbox:OpenMessageByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                messageName
-           )
-        ) {
+            "Gs2Inbox:OpenMessageByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["messageName"] = messageName,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

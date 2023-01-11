@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Enhance.Resource;
+using Gs2Cdk.Gs2Enhance.Model;
+using Gs2Cdk.Gs2Enhance.Model.Options;
 
 namespace Gs2Cdk.Gs2Enhance.Model
 {
-
-    public class Material
-    {
-	    private readonly string _materialItemSetId;
-	    private readonly int? _count;
+    public class Material {
+        private string materialItemSetId;
+        private int? count;
 
         public Material(
-                string materialItemSetId,
-                int? count
-        )
-        {
-            this._materialItemSetId = materialItemSetId;
-            this._count = count;
+            string materialItemSetId,
+            int? count,
+            MaterialOptions options = null
+        ){
+            this.materialItemSetId = materialItemSetId;
+            this.count = count;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._materialItemSetId != null) {
-                properties["MaterialItemSetId"] = this._materialItemSetId;
+
+            if (this.materialItemSetId != null) {
+                properties["materialItemSetId"] = this.materialItemSetId;
             }
-            if (this._count != null) {
-                properties["Count"] = this._count;
+            if (this.count != null) {
+                properties["count"] = this.count;
             }
+
             return properties;
         }
     }

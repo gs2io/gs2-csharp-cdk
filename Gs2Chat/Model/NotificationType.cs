@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Chat.Resource;
+using Gs2Cdk.Gs2Chat.Model;
+using Gs2Cdk.Gs2Chat.Model.Options;
 
 namespace Gs2Cdk.Gs2Chat.Model
 {
-
-    public class NotificationType
-    {
-	    private readonly int? _category;
-	    private readonly bool? _enableTransferMobilePushNotification;
+    public class NotificationType {
+        private int? category;
+        private bool? enableTransferMobilePushNotification;
 
         public NotificationType(
-                int? category,
-                bool? enableTransferMobilePushNotification
-        )
-        {
-            this._category = category;
-            this._enableTransferMobilePushNotification = enableTransferMobilePushNotification;
+            int? category,
+            bool? enableTransferMobilePushNotification,
+            NotificationTypeOptions options = null
+        ){
+            this.category = category;
+            this.enableTransferMobilePushNotification = enableTransferMobilePushNotification;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._category != null) {
-                properties["Category"] = this._category;
+
+            if (this.category != null) {
+                properties["category"] = this.category;
             }
-            if (this._enableTransferMobilePushNotification != null) {
-                properties["EnableTransferMobilePushNotification"] = this._enableTransferMobilePushNotification;
+            if (this.enableTransferMobilePushNotification != null) {
+                properties["enableTransferMobilePushNotification"] = this.enableTransferMobilePushNotification;
             }
+
             return properties;
         }
     }

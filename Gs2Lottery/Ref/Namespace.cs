@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,81 +13,62 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Lottery.Model;
 using Gs2Cdk.Gs2Lottery.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Lottery.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentLotteryMasterRef CurrentLotteryMaster(
-        ) {
-            return new CurrentLotteryMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public PrizeTableRef PrizeTable(
-                string prizeTableName
-        ) {
-            return new PrizeTableRef(
-                this._namespaceName,
+            string prizeTableName
+        ){
+            return (new PrizeTableRef(
+                this.namespaceName,
                 prizeTableName
-            );
+            ));
         }
 
         public LotteryModelRef LotteryModel(
-                string lotteryName
-        ) {
-            return new LotteryModelRef(
-                this._namespaceName,
+            string lotteryName
+        ){
+            return (new LotteryModelRef(
+                this.namespaceName,
                 lotteryName
-            );
+            ));
         }
 
-        public PrizeTableMasterRef PrizeTableMaster(
-                string prizeTableName
-        ) {
-            return new PrizeTableMasterRef(
-                this._namespaceName,
-                prizeTableName
-            );
-        }
-
-        public LotteryModelMasterRef LotteryModelMaster(
-                string lotteryName
-        ) {
-            return new LotteryModelMasterRef(
-                this._namespaceName,
-                lotteryName
-            );
-        }
-
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "lottery",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

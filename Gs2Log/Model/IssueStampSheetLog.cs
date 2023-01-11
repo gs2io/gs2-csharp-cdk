@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,74 +13,74 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Log.Resource;
+using Gs2Cdk.Gs2Log.Model;
+using Gs2Cdk.Gs2Log.Model.Options;
 
 namespace Gs2Cdk.Gs2Log.Model
 {
-
-    public class IssueStampSheetLog
-    {
-	    private readonly long? _timestamp;
-	    private readonly string _transactionId;
-	    private readonly string _service;
-	    private readonly string _method;
-	    private readonly string _userId;
-	    private readonly string _action;
-	    private readonly string _args;
-	    private readonly string[] _tasks;
+    public class IssueStampSheetLog {
+        private long? timestamp;
+        private string transactionId;
+        private string service;
+        private string method;
+        private string userId;
+        private string action;
+        private string args;
+        private string[] tasks;
 
         public IssueStampSheetLog(
-                long? timestamp,
-                string transactionId,
-                string service,
-                string method,
-                string userId,
-                string action,
-                string args,
-                string[] tasks = null
-        )
-        {
-            this._timestamp = timestamp;
-            this._transactionId = transactionId;
-            this._service = service;
-            this._method = method;
-            this._userId = userId;
-            this._action = action;
-            this._args = args;
-            this._tasks = tasks;
+            long? timestamp,
+            string transactionId,
+            string service,
+            string method,
+            string userId,
+            string action,
+            string args,
+            IssueStampSheetLogOptions options = null
+        ){
+            this.timestamp = timestamp;
+            this.transactionId = transactionId;
+            this.service = service;
+            this.method = method;
+            this.userId = userId;
+            this.action = action;
+            this.args = args;
+            this.tasks = options?.tasks;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._timestamp != null) {
-                properties["Timestamp"] = this._timestamp;
+
+            if (this.timestamp != null) {
+                properties["timestamp"] = this.timestamp;
             }
-            if (this._transactionId != null) {
-                properties["TransactionId"] = this._transactionId;
+            if (this.transactionId != null) {
+                properties["transactionId"] = this.transactionId;
             }
-            if (this._service != null) {
-                properties["Service"] = this._service;
+            if (this.service != null) {
+                properties["service"] = this.service;
             }
-            if (this._method != null) {
-                properties["Method"] = this._method;
+            if (this.method != null) {
+                properties["method"] = this.method;
             }
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
-            if (this._action != null) {
-                properties["Action"] = this._action;
+            if (this.action != null) {
+                properties["action"] = this.action;
             }
-            if (this._args != null) {
-                properties["Args"] = this._args;
+            if (this.args != null) {
+                properties["args"] = this.args;
             }
-            if (this._tasks != null) {
-                properties["Tasks"] = this._tasks;
+            if (this.tasks != null) {
+                properties["tasks"] = this.tasks;
             }
+
             return properties;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,53 +13,59 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
 using Gs2Cdk.Gs2Mission.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Mission.Ref
 {
     public class MissionGroupModelRef {
-        private readonly string _namespaceName;
-        private readonly string _missionGroupName;
+        private string namespaceName;
+        private string missionGroupName;
 
         public MissionGroupModelRef(
-                string namespaceName,
-                string missionGroupName
-        ) {
-            this._namespaceName = namespaceName;
-            this._missionGroupName = missionGroupName;
+            string namespaceName,
+            string missionGroupName
+        ){
+            this.namespaceName = namespaceName;
+            this.missionGroupName = missionGroupName;
         }
 
         public MissionTaskModelRef MissionTaskModel(
-                string missionTaskName
-        ) {
-            return new MissionTaskModelRef(
-                this._namespaceName,
-                this._missionGroupName,
+            string missionTaskName
+        ){
+            return (new MissionTaskModelRef(
+                this.namespaceName,
+                this.missionGroupName,
                 missionTaskName
-            );
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "mission",
-                    this._namespaceName,
+                    this.namespaceName,
                     "group",
-                    this._missionGroupName
+                    this.missionGroupName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

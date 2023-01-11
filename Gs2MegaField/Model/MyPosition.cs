@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,47 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2MegaField.Resource;
+using Gs2Cdk.Gs2MegaField.Model;
+using Gs2Cdk.Gs2MegaField.Model.Options;
 
 namespace Gs2Cdk.Gs2MegaField.Model
 {
-
-    public class MyPosition
-    {
-	    private readonly Position _position;
-	    private readonly Vector _vector;
-	    private readonly float? _r;
+    public class MyPosition {
+        private Position position;
+        private Vector vector;
+        private float? r;
 
         public MyPosition(
-                Position position,
-                Vector vector,
-                float? r
-        )
-        {
-            this._position = position;
-            this._vector = vector;
-            this._r = r;
+            Position position,
+            Vector vector,
+            float? r,
+            MyPositionOptions options = null
+        ){
+            this.position = position;
+            this.vector = vector;
+            this.r = r;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._position != null) {
-                properties["Position"] = this._position.Properties();
+
+            if (this.position != null) {
+                properties["position"] = this.position?.Properties(
+                );
             }
-            if (this._vector != null) {
-                properties["Vector"] = this._vector.Properties();
+            if (this.vector != null) {
+                properties["vector"] = this.vector?.Properties(
+                );
             }
-            if (this._r != null) {
-                properties["R"] = this._r;
+            if (this.r != null) {
+                properties["r"] = this.r;
             }
+
             return properties;
         }
     }

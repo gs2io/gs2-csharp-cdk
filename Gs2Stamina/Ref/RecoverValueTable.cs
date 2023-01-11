@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,49 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 using Gs2Cdk.Gs2Stamina.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
     public class RecoverValueTableRef {
-        private readonly string _namespaceName;
-        private readonly string _recoverValueTableName;
+        private string namespaceName;
+        private string recoverValueTableName;
 
         public RecoverValueTableRef(
-                string namespaceName,
-                string recoverValueTableName
-        ) {
-            this._namespaceName = namespaceName;
-            this._recoverValueTableName = recoverValueTableName;
+            string namespaceName,
+            string recoverValueTableName
+        ){
+            this.namespaceName = namespaceName;
+            this.recoverValueTableName = recoverValueTableName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "stamina",
-                    this._namespaceName,
+                    this.namespaceName,
                     "recoverValueTable",
-                    this._recoverValueTableName
+                    this.recoverValueTableName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

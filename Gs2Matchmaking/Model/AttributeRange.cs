@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Matchmaking.Resource;
+using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.Model.Options;
 
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
-
-    public class AttributeRange
-    {
-	    private readonly string _name;
-	    private readonly int? _min;
-	    private readonly int? _max;
+    public class AttributeRange {
+        private string name;
+        private int? min;
+        private int? max;
 
         public AttributeRange(
-                string name,
-                int? min,
-                int? max
-        )
-        {
-            this._name = name;
-            this._min = min;
-            this._max = max;
+            string name,
+            int? min,
+            int? max,
+            AttributeRangeOptions options = null
+        ){
+            this.name = name;
+            this.min = min;
+            this.max = max;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._name != null) {
-                properties["Name"] = this._name;
+
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this._min != null) {
-                properties["Min"] = this._min;
+            if (this.min != null) {
+                properties["min"] = this.min;
             }
-            if (this._max != null) {
-                properties["Max"] = this._max;
+            if (this.max != null) {
+                properties["max"] = this.max;
             }
+
             return properties;
         }
     }

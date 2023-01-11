@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,58 +13,33 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money.Model;
 
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
-    public class WithdrawByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                int? slot,
-                int? count,
-                bool? paidOnly
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (slot != null) {
-                properties["slot"] = slot;
-            }
-            if (count != null) {
-                properties["count"] = count;
-            }
-            if (paidOnly != null) {
-                properties["paidOnly"] = paidOnly;
-            }
-            return properties;
-        }
+    public class WithdrawByUserId : ConsumeAction {
+
 
         public WithdrawByUserId(
-                string namespaceName,
-                string userId,
-                int? slot,
-                int? count,
-                bool? paidOnly
+            string namespaceName,
+            int? slot,
+            int? count,
+            bool? paidOnly,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Money:WithdrawByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                slot,
-                count,
-                paidOnly
-           )
-        ) {
+            "Gs2Money:WithdrawByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["slot"] = slot,
+                ["count"] = count,
+                ["paidOnly"] = paidOnly,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

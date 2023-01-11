@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,27 +13,25 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Identifier.Model;
-using Gs2Cdk.Gs2Identifier.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Identifier.Ref
 {
     public class IdentifierRef {
-        private readonly string _userName;
-        private readonly string _clientId;
+        private string userName;
+        private string clientId;
 
         public IdentifierRef(
-                string userName,
-                string clientId
-        ) {
-            this._userName = userName;
-            this._clientId = clientId;
+            string userName,
+            string clientId
+        ){
+            this.userName = userName;
+            this.clientId = clientId;
         }
     }
 }

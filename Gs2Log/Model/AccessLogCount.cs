@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,50 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Log.Resource;
+using Gs2Cdk.Gs2Log.Model;
+using Gs2Cdk.Gs2Log.Model.Options;
 
 namespace Gs2Cdk.Gs2Log.Model
 {
-
-    public class AccessLogCount
-    {
-	    private readonly string _service;
-	    private readonly string _method;
-	    private readonly string _userId;
-	    private readonly long? _count;
+    public class AccessLogCount {
+        private long? count;
+        private string service;
+        private string method;
+        private string userId;
 
         public AccessLogCount(
-                long? count,
-                string service = null,
-                string method = null,
-                string userId = null
-        )
-        {
-            this._service = service;
-            this._method = method;
-            this._userId = userId;
-            this._count = count;
+            long? count,
+            AccessLogCountOptions options = null
+        ){
+            this.count = count;
+            this.service = options?.service;
+            this.method = options?.method;
+            this.userId = options?.userId;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._service != null) {
-                properties["Service"] = this._service;
+
+            if (this.service != null) {
+                properties["service"] = this.service;
             }
-            if (this._method != null) {
-                properties["Method"] = this._method;
+            if (this.method != null) {
+                properties["method"] = this.method;
             }
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
-            if (this._count != null) {
-                properties["Count"] = this._count;
+            if (this.count != null) {
+                properties["count"] = this.count;
             }
+
             return properties;
         }
     }

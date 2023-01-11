@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,68 +13,68 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Log.Resource;
+using Gs2Cdk.Gs2Log.Model;
+using Gs2Cdk.Gs2Log.Model.Options;
 
 namespace Gs2Cdk.Gs2Log.Model
 {
-
-    public class AccessLog
-    {
-	    private readonly long? _timestamp;
-	    private readonly string _requestId;
-	    private readonly string _service;
-	    private readonly string _method;
-	    private readonly string _userId;
-	    private readonly string _request;
-	    private readonly string _result;
+    public class AccessLog {
+        private long? timestamp;
+        private string requestId;
+        private string service;
+        private string method;
+        private string request;
+        private string result;
+        private string userId;
 
         public AccessLog(
-                long? timestamp,
-                string requestId,
-                string service,
-                string method,
-                string request,
-                string result,
-                string userId = null
-        )
-        {
-            this._timestamp = timestamp;
-            this._requestId = requestId;
-            this._service = service;
-            this._method = method;
-            this._userId = userId;
-            this._request = request;
-            this._result = result;
+            long? timestamp,
+            string requestId,
+            string service,
+            string method,
+            string request,
+            string result,
+            AccessLogOptions options = null
+        ){
+            this.timestamp = timestamp;
+            this.requestId = requestId;
+            this.service = service;
+            this.method = method;
+            this.request = request;
+            this.result = result;
+            this.userId = options?.userId;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._timestamp != null) {
-                properties["Timestamp"] = this._timestamp;
+
+            if (this.timestamp != null) {
+                properties["timestamp"] = this.timestamp;
             }
-            if (this._requestId != null) {
-                properties["RequestId"] = this._requestId;
+            if (this.requestId != null) {
+                properties["requestId"] = this.requestId;
             }
-            if (this._service != null) {
-                properties["Service"] = this._service;
+            if (this.service != null) {
+                properties["service"] = this.service;
             }
-            if (this._method != null) {
-                properties["Method"] = this._method;
+            if (this.method != null) {
+                properties["method"] = this.method;
             }
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
-            if (this._request != null) {
-                properties["Request"] = this._request;
+            if (this.request != null) {
+                properties["request"] = this.request;
             }
-            if (this._result != null) {
-                properties["Result"] = this._result;
+            if (this.result != null) {
+                properties["result"] = this.result;
             }
+
             return properties;
         }
     }

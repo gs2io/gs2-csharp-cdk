@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,64 +13,35 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inbox.Model;
 
 namespace Gs2Cdk.Gs2Inbox.StampSheet
 {
-    public class SendMessageByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string metadata,
-                AcquireAction[] readAcquireActions,
-                long? expiresAt,
-                TimeSpan_ expiresTimeSpan
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (metadata != null) {
-                properties["metadata"] = metadata;
-            }
-            if (readAcquireActions != null) {
-                properties["readAcquireActions"] = readAcquireActions;
-            }
-            if (expiresAt != null) {
-                properties["expiresAt"] = expiresAt;
-            }
-            if (expiresTimeSpan != null) {
-                properties["expiresTimeSpan"] = expiresTimeSpan;
-            }
-            return properties;
-        }
+    public class SendMessageByUserId : AcquireAction {
+
 
         public SendMessageByUserId(
-                string namespaceName,
-                string userId,
-                string metadata,
-                AcquireAction[] readAcquireActions = null,
-                long? expiresAt = null,
-                TimeSpan_ expiresTimeSpan = null
+            string namespaceName,
+            string metadata,
+            AcquireAction[] readAcquireActions = null,
+            long? expiresAt = null,
+            TimeSpan_ expiresTimeSpan = null,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Inbox:SendMessageByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                metadata,
-                readAcquireActions,
-                expiresAt,
-                expiresTimeSpan
-           )
-        ) {
+            "Gs2Inbox:SendMessageByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["metadata"] = metadata,
+                ["readAcquireActions"] = readAcquireActions,
+                ["expiresAt"] = expiresAt,
+                ["expiresTimeSpan"] = expiresTimeSpan,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

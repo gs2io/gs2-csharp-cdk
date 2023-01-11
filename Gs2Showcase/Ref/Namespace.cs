@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,79 +13,52 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Showcase.Model;
-using Gs2Cdk.Gs2Showcase.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Showcase.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentShowcaseMasterRef CurrentShowcaseMaster(
-        ) {
-            return new CurrentShowcaseMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public DisplayItemRef DisplayItem(
-        ) {
-            return new DisplayItemRef(
-                this._namespaceName
-            );
+            string displayItemId
+        ){
+            return (new DisplayItemRef(
+                this.namespaceName,
+                displayItemId
+            ));
         }
 
-        public SalesItemMasterRef SalesItemMaster(
-                string salesItemName
-        ) {
-            return new SalesItemMasterRef(
-                this._namespaceName,
-                salesItemName
-            );
-        }
-
-        public SalesItemGroupMasterRef SalesItemGroupMaster(
-                string salesItemGroupName
-        ) {
-            return new SalesItemGroupMasterRef(
-                this._namespaceName,
-                salesItemGroupName
-            );
-        }
-
-        public ShowcaseMasterRef ShowcaseMaster(
-                string showcaseName
-        ) {
-            return new ShowcaseMasterRef(
-                this._namespaceName,
-                showcaseName
-            );
-        }
-
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "showcase",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

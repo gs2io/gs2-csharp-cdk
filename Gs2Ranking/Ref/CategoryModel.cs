@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Ranking.Model;
-using Gs2Cdk.Gs2Ranking.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Ranking.Ref
 {
     public class CategoryModelRef {
-        private readonly string _namespaceName;
-        private readonly string _categoryName;
+        private string namespaceName;
+        private string categoryName;
 
         public CategoryModelRef(
-                string namespaceName,
-                string categoryName
-        ) {
-            this._namespaceName = namespaceName;
-            this._categoryName = categoryName;
+            string namespaceName,
+            string categoryName
+        ){
+            this.namespaceName = namespaceName;
+            this.categoryName = categoryName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "ranking",
-                    this._namespaceName,
+                    this.namespaceName,
                     "categoryModel",
-                    this._categoryName
+                    this.categoryName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

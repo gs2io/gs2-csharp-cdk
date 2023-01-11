@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,48 +13,54 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Lottery.Model;
 using Gs2Cdk.Gs2Lottery.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Lottery.Ref
 {
     public class PrizeLimitRef {
-        private readonly string _namespaceName;
-        private readonly string _prizeTableName;
-        private readonly string _prizeId;
+        private string namespaceName;
+        private string prizeTableName;
+        private string prizeId;
 
         public PrizeLimitRef(
-                string namespaceName,
-                string prizeTableName,
-                string prizeId
-        ) {
-            this._namespaceName = namespaceName;
-            this._prizeTableName = prizeTableName;
-            this._prizeId = prizeId;
+            string namespaceName,
+            string prizeTableName,
+            string prizeId
+        ){
+            this.namespaceName = namespaceName;
+            this.prizeTableName = prizeTableName;
+            this.prizeId = prizeId;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "lottery",
-                    this._namespaceName,
+                    this.namespaceName,
                     "table",
-                    this._prizeTableName,
+                    this.prizeTableName,
                     "prize",
-                    this._prizeId
+                    this.prizeId
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

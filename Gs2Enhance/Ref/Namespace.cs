@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,80 +13,79 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enhance.Model;
 using Gs2Cdk.Gs2Enhance.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Enhance.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentRateMasterRef CurrentRateMaster(
-        ) {
-            return new CurrentRateMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public RateModelRef RateModel(
-                string rateName
-        ) {
-            return new RateModelRef(
-                this._namespaceName,
+            string rateName
+        ){
+            return (new RateModelRef(
+                this.namespaceName,
                 rateName
-            );
-        }
-
-        public RateModelMasterRef RateModelMaster(
-                string rateName
-        ) {
-            return new RateModelMasterRef(
-                this._namespaceName,
-                rateName
-            );
+            ));
         }
 
         public CreateProgressByUserId CreateProgress(
-                string rateName,
-                string targetItemSetId,
-                bool? force,
-                Material[] materials = null,
-                string userId = "#{userId}"
-        ) {
-            return new CreateProgressByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                rateName: rateName,
-                targetItemSetId: targetItemSetId,
-                materials: materials,
-                force: force
-            );
+            string rateName,
+            string targetItemSetId,
+            bool? force,
+            Material[] materials = null,
+            string userId = "#{userId}"
+        ){
+            return (new CreateProgressByUserId(
+                this.namespaceName,
+                rateName,
+                targetItemSetId,
+                force,
+                materials,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public DeleteProgressByUserId DeleteProgress(
+            string userId = "#{userId}"
+        ){
+            return (new DeleteProgressByUserId(
+                this.namespaceName,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "enhance",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

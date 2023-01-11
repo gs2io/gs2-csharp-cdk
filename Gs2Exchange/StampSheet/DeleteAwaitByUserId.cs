@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Exchange.Model;
 
 namespace Gs2Cdk.Gs2Exchange.StampSheet
 {
-    public class DeleteAwaitByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string rateName,
-                string awaitName
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (rateName != null) {
-                properties["rateName"] = rateName;
-            }
-            if (awaitName != null) {
-                properties["awaitName"] = awaitName;
-            }
-            return properties;
-        }
+    public class DeleteAwaitByUserId : ConsumeAction {
+
 
         public DeleteAwaitByUserId(
-                string namespaceName,
-                string userId,
-                string rateName,
-                string awaitName
+            string namespaceName,
+            string rateName,
+            string awaitName,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Exchange:DeleteAwaitByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                rateName,
-                awaitName
-           )
-        ) {
+            "Gs2Exchange:DeleteAwaitByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["rateName"] = rateName,
+                ["awaitName"] = awaitName,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 
 namespace Gs2Cdk.Gs2Stamina.StampSheet
 {
-    public class SetRecoverIntervalByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? recoverIntervalMinutes
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (staminaName != null) {
-                properties["staminaName"] = staminaName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (recoverIntervalMinutes != null) {
-                properties["recoverIntervalMinutes"] = recoverIntervalMinutes;
-            }
-            return properties;
-        }
+    public class SetRecoverIntervalByUserId : AcquireAction {
+
 
         public SetRecoverIntervalByUserId(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? recoverIntervalMinutes
+            string namespaceName,
+            string staminaName,
+            int? recoverIntervalMinutes,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Stamina:SetRecoverIntervalByUserId",
-           Properties(
-                namespaceName,
-                staminaName,
-                userId,
-                recoverIntervalMinutes
-           )
-        ) {
+            "Gs2Stamina:SetRecoverIntervalByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["staminaName"] = staminaName,
+                ["recoverIntervalMinutes"] = recoverIntervalMinutes,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

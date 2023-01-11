@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,115 +13,121 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 using Gs2Cdk.Gs2Stamina.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
     public class StaminaModelRef {
-        private readonly string _namespaceName;
-        private readonly string _staminaName;
+        private string namespaceName;
+        private string staminaName;
 
         public StaminaModelRef(
-                string namespaceName,
-                string staminaName
-        ) {
-            this._namespaceName = namespaceName;
-            this._staminaName = staminaName;
+            string namespaceName,
+            string staminaName
+        ){
+            this.namespaceName = namespaceName;
+            this.staminaName = staminaName;
         }
 
         public RecoverStaminaByUserId RecoverStamina(
-                int? recoverValue,
-                string userId = "#{userId}"
-        ) {
-            return new RecoverStaminaByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                recoverValue: recoverValue
-            );
+            int? recoverValue,
+            string userId = "#{userId}"
+        ){
+            return (new RecoverStaminaByUserId(
+                this.namespaceName,
+                this.staminaName,
+                recoverValue,
+                userId
+            ));
         }
 
         public RaiseMaxValueByUserId RaiseMaxValue(
-                int? raiseValue,
-                string userId = "#{userId}"
-        ) {
-            return new RaiseMaxValueByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                raiseValue: raiseValue
-            );
+            int? raiseValue,
+            string userId = "#{userId}"
+        ){
+            return (new RaiseMaxValueByUserId(
+                this.namespaceName,
+                this.staminaName,
+                raiseValue,
+                userId
+            ));
         }
 
         public SetMaxValueByUserId SetMaxValue(
-                int? maxValue,
-                string userId = "#{userId}"
-        ) {
-            return new SetMaxValueByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                maxValue: maxValue
-            );
+            int? maxValue,
+            string userId = "#{userId}"
+        ){
+            return (new SetMaxValueByUserId(
+                this.namespaceName,
+                this.staminaName,
+                maxValue,
+                userId
+            ));
         }
 
         public SetRecoverIntervalByUserId SetRecoverInterval(
-                int? recoverIntervalMinutes,
-                string userId = "#{userId}"
-        ) {
-            return new SetRecoverIntervalByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                recoverIntervalMinutes: recoverIntervalMinutes
-            );
+            int? recoverIntervalMinutes,
+            string userId = "#{userId}"
+        ){
+            return (new SetRecoverIntervalByUserId(
+                this.namespaceName,
+                this.staminaName,
+                recoverIntervalMinutes,
+                userId
+            ));
         }
 
         public SetRecoverValueByUserId SetRecoverValue(
-                int? recoverValue,
-                string userId = "#{userId}"
-        ) {
-            return new SetRecoverValueByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                recoverValue: recoverValue
-            );
+            int? recoverValue,
+            string userId = "#{userId}"
+        ){
+            return (new SetRecoverValueByUserId(
+                this.namespaceName,
+                this.staminaName,
+                recoverValue,
+                userId
+            ));
         }
 
         public ConsumeStaminaByUserId ConsumeStamina(
-                int? consumeValue,
-                string userId = "#{userId}"
-        ) {
-            return new ConsumeStaminaByUserId(
-                namespaceName: this._namespaceName,
-                staminaName: this._staminaName,
-                userId: userId,
-                consumeValue: consumeValue
-            );
+            int? consumeValue,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeStaminaByUserId(
+                this.namespaceName,
+                this.staminaName,
+                consumeValue,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "stamina",
-                    this._namespaceName,
+                    this.namespaceName,
                     "model",
-                    this._staminaName
+                    this.staminaName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

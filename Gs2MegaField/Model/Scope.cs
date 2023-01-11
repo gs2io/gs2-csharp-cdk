@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,45 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2MegaField.Resource;
+using Gs2Cdk.Gs2MegaField.Model;
+using Gs2Cdk.Gs2MegaField.Model.Options;
 
 namespace Gs2Cdk.Gs2MegaField.Model
 {
-
-    public class Scope
-    {
-	    private readonly string _layerName;
-	    private readonly float? _r;
-	    private readonly int? _limit;
+    public class Scope {
+        private string layerName;
+        private float? r;
+        private int? limit;
 
         public Scope(
-                string layerName,
-                float? r,
-                int? limit
-        )
-        {
-            this._layerName = layerName;
-            this._r = r;
-            this._limit = limit;
+            string layerName,
+            float? r,
+            int? limit,
+            ScopeOptions options = null
+        ){
+            this.layerName = layerName;
+            this.r = r;
+            this.limit = limit;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._layerName != null) {
-                properties["LayerName"] = this._layerName;
+
+            if (this.layerName != null) {
+                properties["layerName"] = this.layerName;
             }
-            if (this._r != null) {
-                properties["R"] = this._r;
+            if (this.r != null) {
+                properties["r"] = this.r;
             }
-            if (this._limit != null) {
-                properties["Limit"] = this._limit;
+            if (this.limit != null) {
+                properties["limit"] = this.limit;
             }
+
             return properties;
         }
     }

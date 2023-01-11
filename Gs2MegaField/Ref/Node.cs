@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2MegaField.Model;
-using Gs2Cdk.Gs2MegaField.StampSheet;
-
 
 namespace Gs2Cdk.Gs2MegaField.Ref
 {
     public class NodeRef {
-        private readonly string _namespaceName;
-        private readonly string _nodeName;
+        private string namespaceName;
+        private string nodeName;
 
         public NodeRef(
-                string namespaceName,
-                string nodeName
-        ) {
-            this._namespaceName = namespaceName;
-            this._nodeName = nodeName;
+            string namespaceName,
+            string nodeName
+        ){
+            this.namespaceName = namespaceName;
+            this.nodeName = nodeName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "megaField",
-                    this._namespaceName,
+                    this.namespaceName,
                     "node",
-                    this._nodeName
+                    this.nodeName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

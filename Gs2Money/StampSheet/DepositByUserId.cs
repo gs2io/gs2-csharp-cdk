@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,58 +13,33 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money.Model;
 
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
-    public class DepositByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                int? slot,
-                float? price,
-                int? count
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (slot != null) {
-                properties["slot"] = slot;
-            }
-            if (price != null) {
-                properties["price"] = price;
-            }
-            if (count != null) {
-                properties["count"] = count;
-            }
-            return properties;
-        }
+    public class DepositByUserId : AcquireAction {
+
 
         public DepositByUserId(
-                string namespaceName,
-                string userId,
-                int? slot,
-                float? price,
-                int? count
+            string namespaceName,
+            int? slot,
+            float? price,
+            int? count,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Money:DepositByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                slot,
-                price,
-                count
-           )
-        ) {
+            "Gs2Money:DepositByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["slot"] = slot,
+                ["price"] = price,
+                ["count"] = count,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

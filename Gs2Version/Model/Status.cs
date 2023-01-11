@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,40 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Version.Resource;
+using Gs2Cdk.Gs2Version.Model;
+using Gs2Cdk.Gs2Version.Model.Options;
 
 namespace Gs2Cdk.Gs2Version.Model
 {
-
-    public class Status
-    {
-	    private readonly VersionModel _versionModel;
-	    private readonly Version_ _currentVersion;
+    public class Status {
+        private VersionModel versionModel;
+        private Version_ currentVersion;
 
         public Status(
-                VersionModel versionModel,
-                Version_ currentVersion = null
-        )
-        {
-            this._versionModel = versionModel;
-            this._currentVersion = currentVersion;
+            VersionModel versionModel,
+            StatusOptions options = null
+        ){
+            this.versionModel = versionModel;
+            this.currentVersion = options?.currentVersion;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._versionModel != null) {
-                properties["VersionModel"] = this._versionModel.Properties();
+
+            if (this.versionModel != null) {
+                properties["versionModel"] = this.versionModel?.Properties(
+                );
             }
-            if (this._currentVersion != null) {
-                properties["CurrentVersion"] = this._currentVersion.Properties();
+            if (this.currentVersion != null) {
+                properties["currentVersion"] = this.currentVersion?.Properties(
+                );
             }
+
             return properties;
         }
     }

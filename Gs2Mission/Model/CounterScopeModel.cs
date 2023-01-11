@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,111 +13,101 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Mission.Resource;
+using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
+using Gs2Cdk.Gs2Mission.Model.Options;
 
 namespace Gs2Cdk.Gs2Mission.Model
 {
-
-    public static class CounterScopeModelResetTypeExt
-    {
-        public static string ToString(this CounterScopeModel.ResetType self)
-        {
-            switch (self) {
-                case CounterScopeModel.ResetType.NotReset:
-                    return "notReset";
-                case CounterScopeModel.ResetType.Daily:
-                    return "daily";
-                case CounterScopeModel.ResetType.Weekly:
-                    return "weekly";
-                case CounterScopeModel.ResetType.Monthly:
-                    return "monthly";
-            }
-            return "unknown";
-        }
-    }
-
-    public static class CounterScopeModelResetDayOfWeekExt
-    {
-        public static string ToString(this CounterScopeModel.ResetDayOfWeek self)
-        {
-            switch (self) {
-                case CounterScopeModel.ResetDayOfWeek.Sunday:
-                    return "sunday";
-                case CounterScopeModel.ResetDayOfWeek.Monday:
-                    return "monday";
-                case CounterScopeModel.ResetDayOfWeek.Tuesday:
-                    return "tuesday";
-                case CounterScopeModel.ResetDayOfWeek.Wednesday:
-                    return "wednesday";
-                case CounterScopeModel.ResetDayOfWeek.Thursday:
-                    return "thursday";
-                case CounterScopeModel.ResetDayOfWeek.Friday:
-                    return "friday";
-                case CounterScopeModel.ResetDayOfWeek.Saturday:
-                    return "saturday";
-            }
-            return "unknown";
-        }
-    }
-
-    public class CounterScopeModel
-    {
-
-        public enum ResetType
-        {
-            NotReset,
-            Daily,
-            Weekly,
-            Monthly
-        }
-
-        public enum ResetDayOfWeek
-        {
-            Sunday,
-            Monday,
-            Tuesday,
-            Wednesday,
-            Thursday,
-            Friday,
-            Saturday
-        }
-	    private readonly ResetType _resetType;
-	    private readonly int? _resetDayOfMonth;
-	    private readonly ResetDayOfWeek? _resetDayOfWeek;
-	    private readonly int? _resetHour;
+    public class CounterScopeModel {
+        private CounterScopeModelResetType? resetType;
+        private int? resetDayOfMonth;
+        private CounterScopeModelResetDayOfWeek? resetDayOfWeek;
+        private int? resetHour;
 
         public CounterScopeModel(
-                ResetType resetType,
-                int? resetDayOfMonth = null,
-                ResetDayOfWeek? resetDayOfWeek = null,
-                int? resetHour = null
-        )
-        {
-            this._resetType = resetType;
-            this._resetDayOfMonth = resetDayOfMonth;
-            this._resetDayOfWeek = resetDayOfWeek;
-            this._resetHour = resetHour;
+            CounterScopeModelResetType resetType,
+            CounterScopeModelOptions options = null
+        ){
+            this.resetType = resetType;
+            this.resetDayOfMonth = options?.resetDayOfMonth;
+            this.resetDayOfWeek = options?.resetDayOfWeek;
+            this.resetHour = options?.resetHour;
         }
 
-        public Dictionary<string, object> Properties() {
+        public static CounterScopeModel ResetTypeIsNotReset(
+            CounterScopeModelResetTypeIsNotResetOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelResetType.NotReset,
+                new CounterScopeModelOptions {
+                }
+            ));
+        }
+
+        public static CounterScopeModel ResetTypeIsDaily(
+            int? resetHour,
+            CounterScopeModelResetTypeIsDailyOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelResetType.Daily,
+                new CounterScopeModelOptions {
+                    resetHour = resetHour,
+                }
+            ));
+        }
+
+        public static CounterScopeModel ResetTypeIsWeekly(
+            CounterScopeModelResetDayOfWeek resetDayOfWeek,
+            int? resetHour,
+            CounterScopeModelResetTypeIsWeeklyOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelResetType.Weekly,
+                new CounterScopeModelOptions {
+                    resetDayOfWeek = resetDayOfWeek,
+                    resetHour = resetHour,
+                }
+            ));
+        }
+
+        public static CounterScopeModel ResetTypeIsMonthly(
+            int? resetDayOfMonth,
+            int? resetHour,
+            CounterScopeModelResetTypeIsMonthlyOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelResetType.Monthly,
+                new CounterScopeModelOptions {
+                    resetDayOfMonth = resetDayOfMonth,
+                    resetHour = resetHour,
+                }
+            ));
+        }
+
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._resetType != null) {
-                properties["ResetType"] = this._resetType.ToString();
+
+            if (this.resetType != null) {
+                properties["resetType"] = this.resetType?.Str(
+                );
             }
-            if (this._resetDayOfMonth != null) {
-                properties["ResetDayOfMonth"] = this._resetDayOfMonth;
+            if (this.resetDayOfMonth != null) {
+                properties["resetDayOfMonth"] = this.resetDayOfMonth;
             }
-            if (this._resetDayOfWeek != null) {
-                properties["ResetDayOfWeek"] = this._resetDayOfWeek.ToString();
+            if (this.resetDayOfWeek != null) {
+                properties["resetDayOfWeek"] = this.resetDayOfWeek?.Str(
+                );
             }
-            if (this._resetHour != null) {
-                properties["ResetHour"] = this._resetHour;
+            if (this.resetHour != null) {
+                properties["resetHour"] = this.resetHour;
             }
+
             return properties;
         }
     }

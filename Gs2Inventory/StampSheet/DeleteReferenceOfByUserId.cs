@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,64 +13,35 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
-    public class DeleteReferenceOfByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string inventoryName,
-                string userId,
-                string itemName,
-                string itemSetName,
-                string referenceOf
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (inventoryName != null) {
-                properties["inventoryName"] = inventoryName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (itemName != null) {
-                properties["itemName"] = itemName;
-            }
-            if (itemSetName != null) {
-                properties["itemSetName"] = itemSetName;
-            }
-            if (referenceOf != null) {
-                properties["referenceOf"] = referenceOf;
-            }
-            return properties;
-        }
+    public class DeleteReferenceOfByUserId : AcquireAction {
+
 
         public DeleteReferenceOfByUserId(
-                string namespaceName,
-                string inventoryName,
-                string userId,
-                string itemName,
-                string itemSetName,
-                string referenceOf
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            string itemSetName,
+            string referenceOf,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Inventory:DeleteReferenceOfByUserId",
-           Properties(
-                namespaceName,
-                inventoryName,
-                userId,
-                itemName,
-                itemSetName,
-                referenceOf
-           )
-        ) {
+            "Gs2Inventory:DeleteReferenceOfByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["inventoryName"] = inventoryName,
+                ["itemName"] = itemName,
+                ["itemSetName"] = itemSetName,
+                ["referenceOf"] = referenceOf,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

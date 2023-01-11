@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,50 +13,51 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Quest.Resource;
+using Gs2Cdk.Gs2Quest.Model;
+using Gs2Cdk.Gs2Quest.Model.Options;
 
 namespace Gs2Cdk.Gs2Quest.Model
 {
-
-    public class Reward
-    {
-	    private readonly string _action;
-	    private readonly string _request;
-	    private readonly string _itemId;
-	    private readonly int? _value;
+    public class Reward {
+        private string action;
+        private string request;
+        private string itemId;
+        private int? value;
 
         public Reward(
-                string action,
-                string request,
-                string itemId,
-                int? value
-        )
-        {
-            this._action = action;
-            this._request = request;
-            this._itemId = itemId;
-            this._value = value;
+            string action,
+            string request,
+            string itemId,
+            int? value,
+            RewardOptions options = null
+        ){
+            this.action = action;
+            this.request = request;
+            this.itemId = itemId;
+            this.value = value;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._action != null) {
-                properties["Action"] = this._action;
+
+            if (this.action != null) {
+                properties["action"] = this.action;
             }
-            if (this._request != null) {
-                properties["Request"] = this._request;
+            if (this.request != null) {
+                properties["request"] = this.request;
             }
-            if (this._itemId != null) {
-                properties["ItemId"] = this._itemId;
+            if (this.itemId != null) {
+                properties["itemId"] = this.itemId;
             }
-            if (this._value != null) {
-                properties["Value"] = this._value;
+            if (this.value != null) {
+                properties["value"] = this.value;
             }
+
             return properties;
         }
     }

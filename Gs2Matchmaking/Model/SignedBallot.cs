@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Matchmaking.Resource;
+using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.Model.Options;
 
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
-
-    public class SignedBallot
-    {
-	    private readonly string _body;
-	    private readonly string _signature;
+    public class SignedBallot {
+        private string body;
+        private string signature;
 
         public SignedBallot(
-                string body,
-                string signature
-        )
-        {
-            this._body = body;
-            this._signature = signature;
+            string body,
+            string signature,
+            SignedBallotOptions options = null
+        ){
+            this.body = body;
+            this.signature = signature;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._body != null) {
-                properties["Body"] = this._body;
+
+            if (this.body != null) {
+                properties["body"] = this.body;
             }
-            if (this._signature != null) {
-                properties["Signature"] = this._signature;
+            if (this.signature != null) {
+                properties["signature"] = this.signature;
             }
+
             return properties;
         }
     }

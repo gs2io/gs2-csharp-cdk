@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,81 +13,122 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Formation.Model;
 using Gs2Cdk.Gs2Formation.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Formation.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentFormMasterRef CurrentFormMaster(
-        ) {
-            return new CurrentFormMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public FormModelRef FormModel(
-                string formModelName
-        ) {
-            return new FormModelRef(
-                this._namespaceName,
+            string formModelName
+        ){
+            return (new FormModelRef(
+                this.namespaceName,
                 formModelName
-            );
+            ));
         }
 
         public MoldModelRef MoldModel(
-                string moldName
-        ) {
-            return new MoldModelRef(
-                this._namespaceName,
+            string moldName
+        ){
+            return (new MoldModelRef(
+                this.namespaceName,
                 moldName
-            );
+            ));
         }
 
-        public FormModelMasterRef FormModelMaster(
-                string formModelName
-        ) {
-            return new FormModelMasterRef(
-                this._namespaceName,
-                formModelName
-            );
+        public AddMoldCapacityByUserId AddMoldCapacity(
+            string moldName,
+            int? capacity,
+            string userId = "#{userId}"
+        ){
+            return (new AddMoldCapacityByUserId(
+                this.namespaceName,
+                moldName,
+                capacity,
+                userId
+            ));
         }
 
-        public MoldModelMasterRef MoldModelMaster(
-                string moldName
-        ) {
-            return new MoldModelMasterRef(
-                this._namespaceName,
-                moldName
-            );
+        public SetMoldCapacityByUserId SetMoldCapacity(
+            string moldName,
+            int? capacity,
+            string userId = "#{userId}"
+        ){
+            return (new SetMoldCapacityByUserId(
+                this.namespaceName,
+                moldName,
+                capacity,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public AcquireActionsToFormProperties AcquireActionsToFormProperties(
+            string moldName,
+            int? index,
+            AcquireAction acquireAction,
+            AcquireActionConfig[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireActionsToFormProperties(
+                this.namespaceName,
+                moldName,
+                index,
+                acquireAction,
+                config,
+                userId
+            ));
+        }
+
+        public AcquireActionsToPropertyFormProperties AcquireActionsToPropertyFormProperties(
+            string formModelName,
+            string propertyId,
+            AcquireAction acquireAction,
+            AcquireActionConfig[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireActionsToPropertyFormProperties(
+                this.namespaceName,
+                formModelName,
+                propertyId,
+                acquireAction,
+                config,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "formation",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

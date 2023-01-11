@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,117 +13,158 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 using Gs2Cdk.Gs2Stamina.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentStaminaMasterRef CurrentStaminaMaster(
-        ) {
-            return new CurrentStaminaMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public MaxStaminaTableRef MaxStaminaTable(
-                string maxStaminaTableName
-        ) {
-            return new MaxStaminaTableRef(
-                this._namespaceName,
+            string maxStaminaTableName
+        ){
+            return (new MaxStaminaTableRef(
+                this.namespaceName,
                 maxStaminaTableName
-            );
+            ));
         }
 
         public RecoverIntervalTableRef RecoverIntervalTable(
-                string recoverIntervalTableName
-        ) {
-            return new RecoverIntervalTableRef(
-                this._namespaceName,
+            string recoverIntervalTableName
+        ){
+            return (new RecoverIntervalTableRef(
+                this.namespaceName,
                 recoverIntervalTableName
-            );
+            ));
         }
 
         public RecoverValueTableRef RecoverValueTable(
-                string recoverValueTableName
-        ) {
-            return new RecoverValueTableRef(
-                this._namespaceName,
+            string recoverValueTableName
+        ){
+            return (new RecoverValueTableRef(
+                this.namespaceName,
                 recoverValueTableName
-            );
+            ));
         }
 
         public StaminaModelRef StaminaModel(
-                string staminaName
-        ) {
-            return new StaminaModelRef(
-                this._namespaceName,
+            string staminaName
+        ){
+            return (new StaminaModelRef(
+                this.namespaceName,
                 staminaName
-            );
+            ));
         }
 
-        public RecoverIntervalTableMasterRef RecoverIntervalTableMaster(
-                string recoverIntervalTableName
-        ) {
-            return new RecoverIntervalTableMasterRef(
-                this._namespaceName,
-                recoverIntervalTableName
-            );
+        public RecoverStaminaByUserId RecoverStamina(
+            string staminaName,
+            int? recoverValue,
+            string userId = "#{userId}"
+        ){
+            return (new RecoverStaminaByUserId(
+                this.namespaceName,
+                staminaName,
+                recoverValue,
+                userId
+            ));
         }
 
-        public MaxStaminaTableMasterRef MaxStaminaTableMaster(
-                string maxStaminaTableName
-        ) {
-            return new MaxStaminaTableMasterRef(
-                this._namespaceName,
-                maxStaminaTableName
-            );
+        public RaiseMaxValueByUserId RaiseMaxValue(
+            string staminaName,
+            int? raiseValue,
+            string userId = "#{userId}"
+        ){
+            return (new RaiseMaxValueByUserId(
+                this.namespaceName,
+                staminaName,
+                raiseValue,
+                userId
+            ));
         }
 
-        public RecoverValueTableMasterRef RecoverValueTableMaster(
-                string recoverValueTableName
-        ) {
-            return new RecoverValueTableMasterRef(
-                this._namespaceName,
-                recoverValueTableName
-            );
+        public SetMaxValueByUserId SetMaxValue(
+            string staminaName,
+            int? maxValue,
+            string userId = "#{userId}"
+        ){
+            return (new SetMaxValueByUserId(
+                this.namespaceName,
+                staminaName,
+                maxValue,
+                userId
+            ));
         }
 
-        public StaminaModelMasterRef StaminaModelMaster(
-                string staminaName
-        ) {
-            return new StaminaModelMasterRef(
-                this._namespaceName,
-                staminaName
-            );
+        public SetRecoverIntervalByUserId SetRecoverInterval(
+            string staminaName,
+            int? recoverIntervalMinutes,
+            string userId = "#{userId}"
+        ){
+            return (new SetRecoverIntervalByUserId(
+                this.namespaceName,
+                staminaName,
+                recoverIntervalMinutes,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public SetRecoverValueByUserId SetRecoverValue(
+            string staminaName,
+            int? recoverValue,
+            string userId = "#{userId}"
+        ){
+            return (new SetRecoverValueByUserId(
+                this.namespaceName,
+                staminaName,
+                recoverValue,
+                userId
+            ));
+        }
+
+        public ConsumeStaminaByUserId ConsumeStamina(
+            string staminaName,
+            int? consumeValue,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeStaminaByUserId(
+                this.namespaceName,
+                staminaName,
+                consumeValue,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "stamina",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

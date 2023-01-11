@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,55 +13,61 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
 using Gs2Cdk.Gs2Mission.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Mission.Ref
 {
     public class CounterModelRef {
-        private readonly string _namespaceName;
-        private readonly string _counterName;
+        private string namespaceName;
+        private string counterName;
 
         public CounterModelRef(
-                string namespaceName,
-                string counterName
-        ) {
-            this._namespaceName = namespaceName;
-            this._counterName = counterName;
+            string namespaceName,
+            string counterName
+        ){
+            this.namespaceName = namespaceName;
+            this.counterName = counterName;
         }
 
         public IncreaseCounterByUserId IncreaseCounter(
-                long? value,
-                string userId = "#{userId}"
-        ) {
-            return new IncreaseCounterByUserId(
-                namespaceName: this._namespaceName,
-                counterName: this._counterName,
-                userId: userId,
-                value: value
-            );
+            long? value,
+            string userId = "#{userId}"
+        ){
+            return (new IncreaseCounterByUserId(
+                this.namespaceName,
+                this.counterName,
+                value,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "mission",
-                    this._namespaceName,
+                    this.namespaceName,
                     "counter",
-                    this._counterName
+                    this.counterName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 
 namespace Gs2Cdk.Gs2Stamina.StampSheet
 {
-    public class RecoverStaminaByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? recoverValue
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (staminaName != null) {
-                properties["staminaName"] = staminaName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (recoverValue != null) {
-                properties["recoverValue"] = recoverValue;
-            }
-            return properties;
-        }
+    public class RecoverStaminaByUserId : AcquireAction {
+
 
         public RecoverStaminaByUserId(
-                string namespaceName,
-                string staminaName,
-                string userId,
-                int? recoverValue
+            string namespaceName,
+            string staminaName,
+            int? recoverValue,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Stamina:RecoverStaminaByUserId",
-           Properties(
-                namespaceName,
-                staminaName,
-                userId,
-                recoverValue
-           )
-        ) {
+            "Gs2Stamina:RecoverStaminaByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["staminaName"] = staminaName,
+                ["recoverValue"] = recoverValue,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

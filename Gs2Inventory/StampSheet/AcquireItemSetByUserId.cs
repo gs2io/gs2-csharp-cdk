@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,76 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
-    public class AcquireItemSetByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string inventoryName,
-                string itemName,
-                string userId,
-                long? acquireCount,
-                long? expiresAt,
-                bool? createNewItemSet,
-                string itemSetName
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (inventoryName != null) {
-                properties["inventoryName"] = inventoryName;
-            }
-            if (itemName != null) {
-                properties["itemName"] = itemName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (acquireCount != null) {
-                properties["acquireCount"] = acquireCount;
-            }
-            if (expiresAt != null) {
-                properties["expiresAt"] = expiresAt;
-            }
-            if (createNewItemSet != null) {
-                properties["createNewItemSet"] = createNewItemSet;
-            }
-            if (itemSetName != null) {
-                properties["itemSetName"] = itemSetName;
-            }
-            return properties;
-        }
+    public class AcquireItemSetByUserId : AcquireAction {
+
 
         public AcquireItemSetByUserId(
-                string namespaceName,
-                string inventoryName,
-                string itemName,
-                string userId,
-                long? acquireCount,
-                long? expiresAt,
-                bool? createNewItemSet,
-                string itemSetName = null
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            long? acquireCount,
+            long? expiresAt,
+            bool? createNewItemSet,
+            string itemSetName = null,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Inventory:AcquireItemSetByUserId",
-           Properties(
-                namespaceName,
-                inventoryName,
-                itemName,
-                userId,
-                acquireCount,
-                expiresAt,
-                createNewItemSet,
-                itemSetName
-           )
-        ) {
+            "Gs2Inventory:AcquireItemSetByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["inventoryName"] = inventoryName,
+                ["itemName"] = itemName,
+                ["acquireCount"] = acquireCount,
+                ["expiresAt"] = expiresAt,
+                ["createNewItemSet"] = createNewItemSet,
+                ["itemSetName"] = itemSetName,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

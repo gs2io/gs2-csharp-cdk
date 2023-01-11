@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,63 +13,170 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentItemModelMasterRef CurrentItemModelMaster(
-        ) {
-            return new CurrentItemModelMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public InventoryModelRef InventoryModel(
-                string inventoryName
-        ) {
-            return new InventoryModelRef(
-                this._namespaceName,
+            string inventoryName
+        ){
+            return (new InventoryModelRef(
+                this.namespaceName,
                 inventoryName
-            );
+            ));
         }
 
-        public InventoryModelMasterRef InventoryModelMaster(
-                string inventoryName
-        ) {
-            return new InventoryModelMasterRef(
-                this._namespaceName,
-                inventoryName
-            );
+        public AddCapacityByUserId AddCapacity(
+            string inventoryName,
+            int? addCapacityValue,
+            string userId = "#{userId}"
+        ){
+            return (new AddCapacityByUserId(
+                this.namespaceName,
+                inventoryName,
+                addCapacityValue,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public SetCapacityByUserId SetCapacity(
+            string inventoryName,
+            int? newCapacityValue,
+            string userId = "#{userId}"
+        ){
+            return (new SetCapacityByUserId(
+                this.namespaceName,
+                inventoryName,
+                newCapacityValue,
+                userId
+            ));
+        }
+
+        public AcquireItemSetByUserId AcquireItemSet(
+            string inventoryName,
+            string itemName,
+            long? acquireCount,
+            long? expiresAt,
+            bool? createNewItemSet,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireItemSetByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                acquireCount,
+                expiresAt,
+                createNewItemSet,
+                itemSetName,
+                userId
+            ));
+        }
+
+        public AddReferenceOfByUserId AddReferenceOf(
+            string inventoryName,
+            string itemName,
+            string itemSetName,
+            string referenceOf,
+            string userId = "#{userId}"
+        ){
+            return (new AddReferenceOfByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                itemSetName,
+                referenceOf,
+                userId
+            ));
+        }
+
+        public DeleteReferenceOfByUserId DeleteReferenceOf(
+            string inventoryName,
+            string itemName,
+            string itemSetName,
+            string referenceOf,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteReferenceOfByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                itemSetName,
+                referenceOf,
+                userId
+            ));
+        }
+
+        public ConsumeItemSetByUserId ConsumeItemSet(
+            string inventoryName,
+            string itemName,
+            long? consumeCount,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeItemSetByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                consumeCount,
+                itemSetName,
+                userId
+            ));
+        }
+
+        public VerifyReferenceOfByUserId VerifyReferenceOf(
+            string inventoryName,
+            string itemName,
+            string itemSetName,
+            string referenceOf,
+            string verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyReferenceOfByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                itemSetName,
+                referenceOf,
+                verifyType,
+                userId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "inventory",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

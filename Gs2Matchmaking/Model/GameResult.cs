@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Matchmaking.Resource;
+using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.Model.Options;
 
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
-
-    public class GameResult
-    {
-	    private readonly int? _rank;
-	    private readonly string _userId;
+    public class GameResult {
+        private int? rank;
+        private string userId;
 
         public GameResult(
-                int? rank,
-                string userId
-        )
-        {
-            this._rank = rank;
-            this._userId = userId;
+            int? rank,
+            string userId,
+            GameResultOptions options = null
+        ){
+            this.rank = rank;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._rank != null) {
-                properties["Rank"] = this._rank;
+
+            if (this.rank != null) {
+                properties["rank"] = this.rank;
             }
-            if (this._userId != null) {
-                properties["UserId"] = this._userId;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
+
             return properties;
         }
     }

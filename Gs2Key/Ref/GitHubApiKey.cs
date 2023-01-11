@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,43 +13,48 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Key.Model;
-using Gs2Cdk.Gs2Key.StampSheet;
-
 
 namespace Gs2Cdk.Gs2Key.Ref
 {
     public class GitHubApiKeyRef {
-        private readonly string _namespaceName;
-        private readonly string _apiKeyName;
+        private string namespaceName;
+        private string apiKeyName;
 
         public GitHubApiKeyRef(
-                string namespaceName,
-                string apiKeyName
-        ) {
-            this._namespaceName = namespaceName;
-            this._apiKeyName = apiKeyName;
+            string namespaceName,
+            string apiKeyName
+        ){
+            this.namespaceName = namespaceName;
+            this.apiKeyName = apiKeyName;
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "key",
-                    this._namespaceName,
+                    this.namespaceName,
                     "github",
-                    this._apiKeyName
+                    this.apiKeyName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

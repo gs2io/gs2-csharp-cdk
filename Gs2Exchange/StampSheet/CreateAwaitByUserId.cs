@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Exchange.Model;
 
 namespace Gs2Cdk.Gs2Exchange.StampSheet
 {
-    public class CreateAwaitByUserId : AcquireAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string userId,
-                string rateName,
-                int? count
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            if (rateName != null) {
-                properties["rateName"] = rateName;
-            }
-            if (count != null) {
-                properties["count"] = count;
-            }
-            return properties;
-        }
+    public class CreateAwaitByUserId : AcquireAction {
+
 
         public CreateAwaitByUserId(
-                string namespaceName,
-                string userId,
-                string rateName,
-                int? count
+            string namespaceName,
+            string rateName,
+            int? count,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Exchange:CreateAwaitByUserId",
-           Properties(
-                namespaceName,
-                userId,
-                rateName,
-                count
-           )
-        ) {
+            "Gs2Exchange:CreateAwaitByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["rateName"] = rateName,
+                ["count"] = count,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

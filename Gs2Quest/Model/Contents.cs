@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,44 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Quest.Resource;
+using Gs2Cdk.Gs2Quest.Model;
+using Gs2Cdk.Gs2Quest.Model.Options;
 
 namespace Gs2Cdk.Gs2Quest.Model
 {
-
-    public class Contents
-    {
-	    private readonly string _metadata;
-	    private readonly AcquireAction[] _completeAcquireActions;
-	    private readonly int? _weight;
+    public class Contents {
+        private int? weight;
+        private string metadata;
+        private AcquireAction[] completeAcquireActions;
 
         public Contents(
-                int? weight,
-                string metadata = null,
-                AcquireAction[] completeAcquireActions = null
-        )
-        {
-            this._metadata = metadata;
-            this._completeAcquireActions = completeAcquireActions;
-            this._weight = weight;
+            int? weight,
+            ContentsOptions options = null
+        ){
+            this.weight = weight;
+            this.metadata = options?.metadata;
+            this.completeAcquireActions = options?.completeAcquireActions;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._metadata != null) {
-                properties["Metadata"] = this._metadata;
+
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
-            if (this._completeAcquireActions != null) {
-                properties["CompleteAcquireActions"] = this._completeAcquireActions.Select(v => v.Properties()).ToArray();
+            if (this.completeAcquireActions != null) {
+                properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v.Properties(
+                        )).ToList();
             }
-            if (this._weight != null) {
-                properties["Weight"] = this._weight;
+            if (this.weight != null) {
+                properties["weight"] = this.weight;
             }
+
             return properties;
         }
     }

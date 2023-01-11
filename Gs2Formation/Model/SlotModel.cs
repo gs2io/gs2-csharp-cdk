@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,44 +13,44 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Formation.Resource;
+using Gs2Cdk.Gs2Formation.Model;
+using Gs2Cdk.Gs2Formation.Model.Options;
 
 namespace Gs2Cdk.Gs2Formation.Model
 {
-
-    public class SlotModel
-    {
-	    private readonly string _name;
-	    private readonly string _propertyRegex;
-	    private readonly string _metadata;
+    public class SlotModel {
+        private string name;
+        private string propertyRegex;
+        private string metadata;
 
         public SlotModel(
-                string name,
-                string propertyRegex,
-                string metadata = null
-        )
-        {
-            this._name = name;
-            this._propertyRegex = propertyRegex;
-            this._metadata = metadata;
+            string name,
+            string propertyRegex,
+            SlotModelOptions options = null
+        ){
+            this.name = name;
+            this.propertyRegex = propertyRegex;
+            this.metadata = options?.metadata;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._name != null) {
-                properties["Name"] = this._name;
+
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this._propertyRegex != null) {
-                properties["PropertyRegex"] = this._propertyRegex;
+            if (this.propertyRegex != null) {
+                properties["propertyRegex"] = this.propertyRegex;
             }
-            if (this._metadata != null) {
-                properties["Metadata"] = this._metadata;
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
+
             return properties;
         }
     }

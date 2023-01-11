@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,52 +13,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
 
 namespace Gs2Cdk.Gs2Mission.StampSheet
 {
-    public class ReceiveByUserId : ConsumeAction
-    {
-        private static Dictionary<string, object> Properties(
-                string namespaceName,
-                string missionGroupName,
-                string missionTaskName,
-                string userId
-        ) {
-            var properties = new Dictionary<string, object>();
-            if (namespaceName != null) {
-                properties["namespaceName"] = namespaceName;
-            }
-            if (missionGroupName != null) {
-                properties["missionGroupName"] = missionGroupName;
-            }
-            if (missionTaskName != null) {
-                properties["missionTaskName"] = missionTaskName;
-            }
-            if (userId != null) {
-                properties["userId"] = userId;
-            }
-            return properties;
-        }
+    public class ReceiveByUserId : ConsumeAction {
+
 
         public ReceiveByUserId(
-                string namespaceName,
-                string missionGroupName,
-                string missionTaskName,
-                string userId
+            string namespaceName,
+            string missionGroupName,
+            string missionTaskName,
+            string userId = "#{userId}"
         ): base(
-           "Gs2Mission:ReceiveByUserId",
-           Properties(
-                namespaceName,
-                missionGroupName,
-                missionTaskName,
-                userId
-           )
-        ) {
+            "Gs2Mission:ReceiveByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["missionGroupName"] = missionGroupName,
+                ["missionTaskName"] = missionTaskName,
+                ["userId"] = userId,
+            }
+        ){
         }
     }
 }

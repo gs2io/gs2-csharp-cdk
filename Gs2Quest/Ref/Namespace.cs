@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,87 +13,77 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Quest.Model;
 using Gs2Cdk.Gs2Quest.StampSheet;
 
-
 namespace Gs2Cdk.Gs2Quest.Ref
 {
     public class NamespaceRef {
-        private readonly string _namespaceName;
+        private string namespaceName;
 
         public NamespaceRef(
-                string namespaceName
-        ) {
-            this._namespaceName = namespaceName;
-        }
-
-        public CurrentQuestMasterRef CurrentQuestMaster(
-        ) {
-            return new CurrentQuestMasterRef(
-                this._namespaceName
-            );
+            string namespaceName
+        ){
+            this.namespaceName = namespaceName;
         }
 
         public QuestGroupModelRef QuestGroupModel(
-                string questGroupName
-        ) {
-            return new QuestGroupModelRef(
-                this._namespaceName,
+            string questGroupName
+        ){
+            return (new QuestGroupModelRef(
+                this.namespaceName,
                 questGroupName
-            );
-        }
-
-        public QuestGroupModelMasterRef QuestGroupModelMaster(
-                string questGroupName
-        ) {
-            return new QuestGroupModelMasterRef(
-                this._namespaceName,
-                questGroupName
-            );
+            ));
         }
 
         public CreateProgressByUserId CreateProgress(
-                string questModelId,
-                bool? force,
-                Config[] config = null,
-                string userId = "#{userId}"
-        ) {
-            return new CreateProgressByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId,
-                questModelId: questModelId,
-                force: force,
-                config: config
-            );
+            string questModelId,
+            bool? force,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new CreateProgressByUserId(
+                this.namespaceName,
+                questModelId,
+                force,
+                config,
+                userId
+            ));
         }
 
         public DeleteProgressByUserId DeleteProgress(
-                string userId = "#{userId}"
-        ) {
-            return new DeleteProgressByUserId(
-                namespaceName: this._namespaceName,
-                userId: userId
-            );
+            string userId = "#{userId}"
+        ){
+            return (new DeleteProgressByUserId(
+                this.namespaceName,
+                userId
+            ));
         }
 
-        public string Grn() {
-            return new Join(
+        public string Grn(
+        ){
+            return (new Join(
                 ":",
-                new string[] {
+                new []
+                {
                     "grn",
                     "gs2",
-                    GetAttr.Region().ToString(),
-                    GetAttr.OwnerId().ToString(),
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
                     "quest",
-                    this._namespaceName
+                    this.namespaceName
                 }
-            ).ToString();
+            )).Str(
+            );
         }
     }
 }

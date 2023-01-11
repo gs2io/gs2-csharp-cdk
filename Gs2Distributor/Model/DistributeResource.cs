@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Copyright 2016- Game Server Services, Inc. or its affiliates. All Rights
  * Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,38 +13,39 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gs2Cdk.Core.Func;
+
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Distributor.Resource;
+using Gs2Cdk.Gs2Distributor.Model;
+using Gs2Cdk.Gs2Distributor.Model.Options;
 
 namespace Gs2Cdk.Gs2Distributor.Model
 {
-
-    public class DistributeResource
-    {
-	    private readonly string _action;
-	    private readonly string _request;
+    public class DistributeResource {
+        private string action;
+        private string request;
 
         public DistributeResource(
-                string action,
-                string request
-        )
-        {
-            this._action = action;
-            this._request = request;
+            string action,
+            string request,
+            DistributeResourceOptions options = null
+        ){
+            this.action = action;
+            this.request = request;
         }
 
-        public Dictionary<string, object> Properties() {
+        public Dictionary<string, object> Properties(
+        ){
             var properties = new Dictionary<string, object>();
-            if (this._action != null) {
-                properties["Action"] = this._action;
+
+            if (this.action != null) {
+                properties["action"] = this.action;
             }
-            if (this._request != null) {
-                properties["Request"] = this._request;
+            if (this.request != null) {
+                properties["request"] = this.request;
             }
+
             return properties;
         }
     }
