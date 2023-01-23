@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             string namespaceName,
             int? slot,
             int? count,
-            bool? paidOnly,
+            bool? paidOnly = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Money:WithdrawByUserId",

@@ -31,10 +31,10 @@ namespace Gs2Cdk.Gs2Money.Model
         private NamespacePriority? priority;
         private bool? shareFree;
         private NamespaceCurrency? currency;
-        private bool? enableFakeReceipt;
         private string description;
         private string appleKey;
         private string googleKey;
+        private bool? enableFakeReceipt;
         private ScriptSetting createWalletScript;
         private ScriptSetting depositScript;
         private ScriptSetting withdrawScript;
@@ -46,7 +46,6 @@ namespace Gs2Cdk.Gs2Money.Model
             NamespacePriority priority,
             bool? shareFree,
             NamespaceCurrency currency,
-            bool? enableFakeReceipt,
             NamespaceOptions options = null
         ): base(
             "Money_Namespace_" + name
@@ -57,10 +56,10 @@ namespace Gs2Cdk.Gs2Money.Model
             this.priority = priority;
             this.shareFree = shareFree;
             this.currency = currency;
-            this.enableFakeReceipt = enableFakeReceipt;
             this.description = options?.description;
             this.appleKey = options?.appleKey;
             this.googleKey = options?.googleKey;
+            this.enableFakeReceipt = options?.enableFakeReceipt;
             this.createWalletScript = options?.createWalletScript;
             this.depositScript = options?.depositScript;
             this.withdrawScript = options?.withdrawScript;

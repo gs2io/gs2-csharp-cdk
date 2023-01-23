@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         public CreateAwaitByUserId(
             string namespaceName,
             string rateName,
-            int? count,
+            int? count = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Exchange:CreateAwaitByUserId",

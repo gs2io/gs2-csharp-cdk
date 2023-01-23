@@ -29,8 +29,8 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string inventoryName,
             string itemName,
             long? acquireCount,
-            long? expiresAt,
-            bool? createNewItemSet,
+            long? expiresAt = null,
+            bool? createNewItemSet = null,
             string itemSetName = null,
             string userId = "#{userId}"
         ): base(

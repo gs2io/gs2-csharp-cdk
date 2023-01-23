@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         public DeleteAwaitByUserId(
             string namespaceName,
             string rateName,
-            string awaitName,
+            string awaitName = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Exchange:DeleteAwaitByUserId",

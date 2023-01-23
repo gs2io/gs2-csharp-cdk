@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
         public CreateProgressByUserId(
             string namespaceName,
             string questModelId,
-            bool? force,
+            bool? force = null,
             Config[] config = null,
             string userId = "#{userId}"
         ): base(

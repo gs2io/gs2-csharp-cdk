@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string namespaceName,
             string inventoryName,
             string itemName,
-            string itemSetName,
             string referenceOf,
+            string itemSetName = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Inventory:AddReferenceOfByUserId",
@@ -37,8 +37,8 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 ["namespaceName"] = namespaceName,
                 ["inventoryName"] = inventoryName,
                 ["itemName"] = itemName,
-                ["itemSetName"] = itemSetName,
                 ["referenceOf"] = referenceOf,
+                ["itemSetName"] = itemSetName,
                 ["userId"] = userId,
             }
         ){

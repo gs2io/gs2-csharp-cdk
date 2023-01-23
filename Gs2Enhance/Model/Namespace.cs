@@ -27,16 +27,15 @@ namespace Gs2Cdk.Gs2Enhance.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private bool? enableDirectEnhance;
         private TransactionSetting transactionSetting;
         private string description;
+        private bool? enableDirectEnhance;
         private ScriptSetting enhanceScript;
         private LogSetting logSetting;
 
         public Namespace(
             Stack stack,
             string name,
-            bool? enableDirectEnhance,
             TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
@@ -45,9 +44,9 @@ namespace Gs2Cdk.Gs2Enhance.Model
 
             this.stack = stack;
             this.name = name;
-            this.enableDirectEnhance = enableDirectEnhance;
             this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.enableDirectEnhance = options?.enableDirectEnhance;
             this.enhanceScript = options?.enhanceScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(

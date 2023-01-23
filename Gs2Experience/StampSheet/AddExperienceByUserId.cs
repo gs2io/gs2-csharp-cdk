@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string namespaceName,
             string experienceName,
             string propertyId,
-            long? experienceValue,
+            long? experienceValue = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Experience:AddExperienceByUserId",

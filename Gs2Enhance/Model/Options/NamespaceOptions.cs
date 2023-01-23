@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public bool? enableDirectEnhance;
         public ScriptSetting enhanceScript;
         public LogSetting logSetting;
         public string queueNamespaceId;

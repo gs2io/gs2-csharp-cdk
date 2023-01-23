@@ -28,9 +28,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string namespaceName,
             string inventoryName,
             string itemName,
-            string itemSetName,
             string referenceOf,
             string verifyType,
+            string itemSetName = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Inventory:VerifyReferenceOfByUserId",
@@ -38,9 +38,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 ["namespaceName"] = namespaceName,
                 ["inventoryName"] = inventoryName,
                 ["itemName"] = itemName,
-                ["itemSetName"] = itemSetName,
                 ["referenceOf"] = referenceOf,
                 ["verifyType"] = verifyType,
+                ["itemSetName"] = itemSetName,
                 ["userId"] = userId,
             }
         ){

@@ -27,8 +27,8 @@ namespace Gs2Cdk.Gs2Chat.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private bool? allowCreateRoom;
         private string description;
+        private bool? allowCreateRoom;
         private ScriptSetting postMessageScript;
         private ScriptSetting createRoomScript;
         private ScriptSetting deleteRoomScript;
@@ -40,7 +40,6 @@ namespace Gs2Cdk.Gs2Chat.Model
         public Namespace(
             Stack stack,
             string name,
-            bool? allowCreateRoom,
             NamespaceOptions options = null
         ): base(
             "Chat_Namespace_" + name
@@ -48,8 +47,8 @@ namespace Gs2Cdk.Gs2Chat.Model
 
             this.stack = stack;
             this.name = name;
-            this.allowCreateRoom = allowCreateRoom;
             this.description = options?.description;
+            this.allowCreateRoom = options?.allowCreateRoom;
             this.postMessageScript = options?.postMessageScript;
             this.createRoomScript = options?.createRoomScript;
             this.deleteRoomScript = options?.deleteRoomScript;

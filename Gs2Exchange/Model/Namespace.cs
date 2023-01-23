@@ -27,18 +27,16 @@ namespace Gs2Cdk.Gs2Exchange.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private bool? enableAwaitExchange;
-        private bool? enableDirectExchange;
         private TransactionSetting transactionSetting;
         private string description;
+        private bool? enableAwaitExchange;
+        private bool? enableDirectExchange;
         private ScriptSetting exchangeScript;
         private LogSetting logSetting;
 
         public Namespace(
             Stack stack,
             string name,
-            bool? enableAwaitExchange,
-            bool? enableDirectExchange,
             TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
@@ -47,10 +45,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
 
             this.stack = stack;
             this.name = name;
-            this.enableAwaitExchange = enableAwaitExchange;
-            this.enableDirectExchange = enableDirectExchange;
             this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.enableAwaitExchange = options?.enableAwaitExchange;
+            this.enableDirectExchange = options?.enableDirectExchange;
             this.exchangeScript = options?.exchangeScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(

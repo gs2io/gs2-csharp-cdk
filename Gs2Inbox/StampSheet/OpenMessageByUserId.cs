@@ -26,7 +26,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
 
         public OpenMessageByUserId(
             string namespaceName,
-            string messageName,
+            string messageName = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Inbox:OpenMessageByUserId",

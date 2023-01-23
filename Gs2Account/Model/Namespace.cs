@@ -27,9 +27,9 @@ namespace Gs2Cdk.Gs2Account.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
+        private string description;
         private bool? changePasswordIfTakeOver;
         private bool? differentUserIdForLoginAndDataRetention;
-        private string description;
         private ScriptSetting createAccountScript;
         private ScriptSetting authenticationScript;
         private ScriptSetting createTakeOverScript;
@@ -39,8 +39,6 @@ namespace Gs2Cdk.Gs2Account.Model
         public Namespace(
             Stack stack,
             string name,
-            bool? changePasswordIfTakeOver,
-            bool? differentUserIdForLoginAndDataRetention,
             NamespaceOptions options = null
         ): base(
             "Account_Namespace_" + name
@@ -48,9 +46,9 @@ namespace Gs2Cdk.Gs2Account.Model
 
             this.stack = stack;
             this.name = name;
-            this.changePasswordIfTakeOver = changePasswordIfTakeOver;
-            this.differentUserIdForLoginAndDataRetention = differentUserIdForLoginAndDataRetention;
             this.description = options?.description;
+            this.changePasswordIfTakeOver = options?.changePasswordIfTakeOver;
+            this.differentUserIdForLoginAndDataRetention = options?.differentUserIdForLoginAndDataRetention;
             this.createAccountScript = options?.createAccountScript;
             this.authenticationScript = options?.authenticationScript;
             this.createTakeOverScript = options?.createTakeOverScript;

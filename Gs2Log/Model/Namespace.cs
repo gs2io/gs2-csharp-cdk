@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Log.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private NamespaceType? type;
         private string description;
+        private NamespaceType? type;
         private string gcpCredentialJson;
         private string bigQueryDatasetName;
         private int? logExpireDays;
@@ -41,7 +41,6 @@ namespace Gs2Cdk.Gs2Log.Model
         public Namespace(
             Stack stack,
             string name,
-            NamespaceType type,
             NamespaceOptions options = null
         ): base(
             "Log_Namespace_" + name
@@ -49,8 +48,8 @@ namespace Gs2Cdk.Gs2Log.Model
 
             this.stack = stack;
             this.name = name;
-            this.type = type;
             this.description = options?.description;
+            this.type = options?.type;
             this.gcpCredentialJson = options?.gcpCredentialJson;
             this.bigQueryDatasetName = options?.bigQueryDatasetName;
             this.logExpireDays = options?.logExpireDays;

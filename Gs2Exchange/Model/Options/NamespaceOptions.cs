@@ -24,6 +24,8 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public bool? enableAwaitExchange;
+        public bool? enableDirectExchange;
         public ScriptSetting exchangeScript;
         public LogSetting logSetting;
         public string queueNamespaceId;

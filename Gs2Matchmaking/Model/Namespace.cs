@@ -28,10 +28,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private bool? enableRating;
         private NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
         private NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         private string description;
+        private bool? enableRating;
         private string createGatheringTriggerRealtimeNamespaceId;
         private string createGatheringTriggerScriptId;
         private string completeMatchmakingTriggerRealtimeNamespaceId;
@@ -45,7 +45,6 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         public Namespace(
             Stack stack,
             string name,
-            bool? enableRating,
             NamespaceCreateGatheringTriggerType createGatheringTriggerType,
             NamespaceCompleteMatchmakingTriggerType completeMatchmakingTriggerType,
             NamespaceOptions options = null
@@ -55,10 +54,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 
             this.stack = stack;
             this.name = name;
-            this.enableRating = enableRating;
             this.createGatheringTriggerType = createGatheringTriggerType;
             this.completeMatchmakingTriggerType = completeMatchmakingTriggerType;
             this.description = options?.description;
+            this.enableRating = options?.enableRating;
             this.createGatheringTriggerRealtimeNamespaceId = options?.createGatheringTriggerRealtimeNamespaceId;
             this.createGatheringTriggerScriptId = options?.createGatheringTriggerScriptId;
             this.completeMatchmakingTriggerRealtimeNamespaceId = options?.completeMatchmakingTriggerRealtimeNamespaceId;

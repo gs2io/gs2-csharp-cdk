@@ -27,8 +27,8 @@ namespace Gs2Cdk.Gs2JobQueue.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private bool? enableAutoRun;
         private string description;
+        private bool? enableAutoRun;
         private NotificationSetting pushNotification;
         private NotificationSetting runNotification;
         private LogSetting logSetting;
@@ -36,7 +36,6 @@ namespace Gs2Cdk.Gs2JobQueue.Model
         public Namespace(
             Stack stack,
             string name,
-            bool? enableAutoRun,
             NamespaceOptions options = null
         ): base(
             "JobQueue_Namespace_" + name
@@ -44,8 +43,8 @@ namespace Gs2Cdk.Gs2JobQueue.Model
 
             this.stack = stack;
             this.name = name;
-            this.enableAutoRun = enableAutoRun;
             this.description = options?.description;
+            this.enableAutoRun = options?.enableAutoRun;
             this.pushNotification = options?.pushNotification;
             this.runNotification = options?.runNotification;
             this.logSetting = options?.logSetting;

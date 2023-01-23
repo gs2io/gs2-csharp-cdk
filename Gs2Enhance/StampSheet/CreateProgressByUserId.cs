@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             string namespaceName,
             string rateName,
             string targetItemSetId,
-            bool? force,
             Material[] materials = null,
+            bool? force = null,
             string userId = "#{userId}"
         ): base(
             "Gs2Enhance:CreateProgressByUserId",
@@ -37,8 +37,8 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 ["namespaceName"] = namespaceName,
                 ["rateName"] = rateName,
                 ["targetItemSetId"] = targetItemSetId,
-                ["force"] = force,
                 ["materials"] = materials,
+                ["force"] = force,
                 ["userId"] = userId,
             }
         ){

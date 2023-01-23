@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Money.Model.Options
         public string description;
         public string appleKey;
         public string googleKey;
+        public bool? enableFakeReceipt;
         public ScriptSetting createWalletScript;
         public ScriptSetting depositScript;
         public ScriptSetting withdrawScript;
