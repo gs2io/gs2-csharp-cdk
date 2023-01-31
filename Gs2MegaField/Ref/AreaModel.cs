@@ -34,6 +34,16 @@ namespace Gs2Cdk.Gs2MegaField.Ref
             this.areaModelName = areaModelName;
         }
 
+        public LayerModelRef LayerModel(
+            string layerModelName
+        ){
+            return (new LayerModelRef(
+                this.namespaceName,
+                this.areaModelName,
+                layerModelName
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(
