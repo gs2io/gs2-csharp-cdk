@@ -32,15 +32,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
             this.namespaceName = namespaceName;
         }
 
-        public FormModelRef FormModel(
-            string formModelName
-        ){
-            return (new FormModelRef(
-                this.namespaceName,
-                formModelName
-            ));
-        }
-
         public MoldModelRef MoldModel(
             string moldName
         ){

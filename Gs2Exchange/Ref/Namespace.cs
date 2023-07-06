@@ -70,13 +70,11 @@ namespace Gs2Cdk.Gs2Exchange.Ref
         }
 
         public DeleteAwaitByUserId DeleteAwait(
-            string rateName,
             string awaitName,
             string userId = "#{userId}"
         ){
             return (new DeleteAwaitByUserId(
                 this.namespaceName,
-                rateName,
                 awaitName,
                 userId
             ));
