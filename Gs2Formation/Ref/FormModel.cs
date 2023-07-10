@@ -25,20 +25,18 @@ namespace Gs2Cdk.Gs2Formation.Ref
 {
     public class FormModelRef {
         private string namespaceName;
-        private string moldName;
         private string formModelName;
 
         public FormModelRef(
             string namespaceName,
-            string moldName,
             string formModelName
         ){
             this.namespaceName = namespaceName;
-            this.moldName = moldName;
             this.formModelName = formModelName;
         }
 
         public AcquireActionsToFormProperties AcquireActionsToFormProperties(
+            string moldName,
             int? index,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
@@ -46,7 +44,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         ){
             return (new AcquireActionsToFormProperties(
                 this.namespaceName,
-                this.moldName,
+                moldName,
                 index,
                 acquireAction,
                 config,

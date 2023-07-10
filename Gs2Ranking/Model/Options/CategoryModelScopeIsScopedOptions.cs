@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
         public int? calculateFixedTimingMinute;
         public string entryPeriodEventId;
         public string accessPeriodEventId;
+        public string[] ignoreUserIds;
         public string generation;
     }
 }

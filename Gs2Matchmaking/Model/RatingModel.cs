@@ -24,15 +24,18 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class RatingModel {
         private string name;
+        private int? initialValue;
         private int? volatility;
         private string metadata;
 
         public RatingModel(
             string name,
+            int? initialValue,
             int? volatility,
             RatingModelOptions options = null
         ){
             this.name = name;
+            this.initialValue = initialValue;
             this.volatility = volatility;
             this.metadata = options?.metadata;
         }
@@ -46,6 +49,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
+            }
+            if (this.initialValue != null) {
+                properties["initialValue"] = this.initialValue;
             }
             if (this.volatility != null) {
                 properties["volatility"] = this.volatility;

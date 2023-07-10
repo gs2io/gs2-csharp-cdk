@@ -116,12 +116,14 @@ namespace Gs2Cdk.Gs2Exchange.Model
         }
 
         public Namespace MasterData(
-            RateModel[] rateModels
+            RateModel[] rateModels,
+            IncrementalRateModel[] incrementalRateModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                rateModels
+                rateModels,
+                incrementalRateModels
             )).AddDependsOn(
                 this
             );

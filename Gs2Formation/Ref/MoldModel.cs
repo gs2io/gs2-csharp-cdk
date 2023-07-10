@@ -35,16 +35,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
             this.moldName = moldName;
         }
 
-        public FormModelRef FormModel(
-            string formModelName
-        ){
-            return (new FormModelRef(
-                this.namespaceName,
-                this.moldName,
-                formModelName
-            ));
-        }
-
         public AddMoldCapacityByUserId AddMoldCapacity(
             int? capacity,
             string userId = "#{userId}"

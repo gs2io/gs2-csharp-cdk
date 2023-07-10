@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Inventory.Model
         private string? version= "2019-02-05";
         private string? namespaceName;
         private InventoryModel[] inventoryModels;
+        private SimpleInventoryModel[] simpleInventoryModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            InventoryModel[] inventoryModels
+            InventoryModel[] inventoryModels,
+            SimpleInventoryModel[] simpleInventoryModels
         ): base(
             "Inventory_CurrentItemModelMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.inventoryModels = inventoryModels;
+            this.simpleInventoryModels = simpleInventoryModels;
             stack.AddResource(
                 this
             );
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Inventory.Model
             settings["version"] = this.version;
             if (this.inventoryModels != null) {
                 settings["inventoryModels"] = this.inventoryModels.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.simpleInventoryModels != null) {
+                settings["simpleInventoryModels"] = this.simpleInventoryModels.Select(v => v.Properties(
                         )).ToList();
             }
 

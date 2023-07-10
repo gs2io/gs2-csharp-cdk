@@ -26,8 +26,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
     public class Event {
         private string name;
         private EventScheduleType? scheduleType;
-        private string metadata;
         private EventRepeatType? repeatType;
+        private string metadata;
         private long? absoluteBegin;
         private long? absoluteEnd;
         private int? repeatBeginDayOfMonth;
@@ -37,17 +37,17 @@ namespace Gs2Cdk.Gs2Schedule.Model
         private int? repeatBeginHour;
         private int? repeatEndHour;
         private string relativeTriggerName;
-        private int? relativeDuration;
 
         public Event(
             string name,
             EventScheduleType scheduleType,
+            EventRepeatType repeatType,
             EventOptions options = null
         ){
             this.name = name;
             this.scheduleType = scheduleType;
+            this.repeatType = repeatType;
             this.metadata = options?.metadata;
-            this.repeatType = options?.repeatType;
             this.absoluteBegin = options?.absoluteBegin;
             this.absoluteEnd = options?.absoluteEnd;
             this.repeatBeginDayOfMonth = options?.repeatBeginDayOfMonth;
@@ -57,7 +57,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
             this.repeatBeginHour = options?.repeatBeginHour;
             this.repeatEndHour = options?.repeatEndHour;
             this.relativeTriggerName = options?.relativeTriggerName;
-            this.relativeDuration = options?.relativeDuration;
         }
 
         public static Event ScheduleTypeIsAbsolute(
@@ -70,8 +69,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 EventScheduleType.Absolute,
+                repeatType,
                 new EventOptions {
-                    repeatType = repeatType,
                     absoluteBegin = absoluteBegin,
                     absoluteEnd = absoluteEnd,
                     metadata = options?.metadata,
@@ -81,16 +80,16 @@ namespace Gs2Cdk.Gs2Schedule.Model
 
         public static Event ScheduleTypeIsRelative(
             string name,
+            EventRepeatType repeatType,
             string relativeTriggerName,
-            int? relativeDuration,
             EventScheduleTypeIsRelativeOptions options = null
         ){
             return (new Event(
                 name,
                 EventScheduleType.Relative,
+                repeatType,
                 new EventOptions {
                     relativeTriggerName = relativeTriggerName,
-                    relativeDuration = relativeDuration,
                     metadata = options?.metadata,
                 }
             ));
@@ -104,6 +103,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                EventRepeatType.Always,
                 new EventOptions {
                     metadata = options?.metadata,
                 }
@@ -120,6 +120,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                EventRepeatType.Daily,
                 new EventOptions {
                     repeatBeginHour = repeatBeginHour,
                     repeatEndHour = repeatEndHour,
@@ -140,6 +141,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                EventRepeatType.Weekly,
                 new EventOptions {
                     repeatBeginDayOfWeek = repeatBeginDayOfWeek,
                     repeatEndDayOfWeek = repeatEndDayOfWeek,
@@ -162,6 +164,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                EventRepeatType.Monthly,
                 new EventOptions {
                     repeatBeginDayOfMonth = repeatBeginDayOfMonth,
                     repeatEndDayOfMonth = repeatEndDayOfMonth,
@@ -218,9 +221,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
             }
             if (this.relativeTriggerName != null) {
                 properties["relativeTriggerName"] = this.relativeTriggerName;
-            }
-            if (this.relativeDuration != null) {
-                properties["relativeDuration"] = this.relativeDuration;
             }
 
             return properties;

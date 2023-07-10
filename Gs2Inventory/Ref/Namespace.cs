@@ -41,6 +41,15 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public SimpleInventoryModelRef SimpleInventoryModel(
+            string inventoryName
+        ){
+            return (new SimpleInventoryModelRef(
+                this.namespaceName,
+                inventoryName
+            ));
+        }
+
         public AddCapacityByUserId AddCapacity(
             string inventoryName,
             int? addCapacityValue,
@@ -122,6 +131,19 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public AcquireSimpleItemsByUserId AcquireSimpleItems(
+            string inventoryName,
+            AcquireCount[] acquireCounts,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireSimpleItemsByUserId(
+                this.namespaceName,
+                inventoryName,
+                acquireCounts,
+                userId
+            ));
+        }
+
         public ConsumeItemSetByUserId ConsumeItemSet(
             string inventoryName,
             string itemName,
@@ -154,6 +176,19 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemSetName,
                 referenceOf,
                 verifyType,
+                userId
+            ));
+        }
+
+        public ConsumeSimpleItemsByUserId ConsumeSimpleItems(
+            string inventoryName,
+            ConsumeCount[] consumeCounts,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeSimpleItemsByUserId(
+                this.namespaceName,
+                inventoryName,
+                consumeCounts,
                 userId
             ));
         }

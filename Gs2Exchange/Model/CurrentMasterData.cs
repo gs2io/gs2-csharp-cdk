@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private string? version= "2019-08-19";
         private string? namespaceName;
         private RateModel[] rateModels;
+        private IncrementalRateModel[] incrementalRateModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            RateModel[] rateModels
+            RateModel[] rateModels,
+            IncrementalRateModel[] incrementalRateModels
         ): base(
             "Exchange_CurrentRateMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.rateModels = rateModels;
+            this.incrementalRateModels = incrementalRateModels;
             stack.AddResource(
                 this
             );
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
             settings["version"] = this.version;
             if (this.rateModels != null) {
                 settings["rateModels"] = this.rateModels.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.incrementalRateModels != null) {
+                settings["incrementalRateModels"] = this.incrementalRateModels.Select(v => v.Properties(
                         )).ToList();
             }
 

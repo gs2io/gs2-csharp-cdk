@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
         public NotificationSetting completeNotification;
+        public NotificationSetting changeRatingNotification;
         public LogSetting logSetting;
     }
 }

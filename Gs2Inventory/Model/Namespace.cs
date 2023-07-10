@@ -111,12 +111,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
         }
 
         public Namespace MasterData(
-            InventoryModel[] inventoryModels
+            InventoryModel[] inventoryModels,
+            SimpleInventoryModel[] simpleInventoryModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                inventoryModels
+                inventoryModels,
+                simpleInventoryModels
             )).AddDependsOn(
                 this
             );

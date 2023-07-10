@@ -24,7 +24,6 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
 {
     public class EventOptions {
         public string metadata;
-        public EventRepeatType repeatType;
         public long? absoluteBegin;
         public long? absoluteEnd;
         public int? repeatBeginDayOfMonth;
@@ -34,6 +33,5 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
         public int? repeatBeginHour;
         public int? repeatEndHour;
         public string relativeTriggerName;
-        public int? relativeDuration;
     }
 }

@@ -41,6 +41,15 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             ));
         }
 
+        public IncrementalRateModelRef IncrementalRateModel(
+            string rateName
+        ){
+            return (new IncrementalRateModelRef(
+                this.namespaceName,
+                rateName
+            ));
+        }
+
         public ExchangeByUserId Exchange(
             string rateName,
             int? count,
@@ -52,6 +61,34 @@ namespace Gs2Cdk.Gs2Exchange.Ref
                 rateName,
                 count,
                 config,
+                userId
+            ));
+        }
+
+        public IncrementalExchangeByUserId IncrementalExchange(
+            string rateName,
+            int? count,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+            return (new IncrementalExchangeByUserId(
+                this.namespaceName,
+                rateName,
+                count,
+                config,
+                userId
+            ));
+        }
+
+        public UnlockIncrementalExchangeByUserId UnlockIncrementalExchange(
+            string rateName,
+            string lockTransactionId,
+            string userId = "#{userId}"
+        ){
+            return (new UnlockIncrementalExchangeByUserId(
+                this.namespaceName,
+                rateName,
+                lockTransactionId,
                 userId
             ));
         }

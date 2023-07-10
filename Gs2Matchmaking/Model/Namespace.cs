@@ -40,6 +40,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         private NotificationSetting joinNotification;
         private NotificationSetting leaveNotification;
         private NotificationSetting completeNotification;
+        private NotificationSetting changeRatingNotification;
         private LogSetting logSetting;
 
         public Namespace(
@@ -66,6 +67,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.joinNotification = options?.joinNotification;
             this.leaveNotification = options?.leaveNotification;
             this.completeNotification = options?.completeNotification;
+            this.changeRatingNotification = options?.changeRatingNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -128,6 +130,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.completeNotification != null) {
                 properties["CompleteNotification"] = this.completeNotification?.Properties(
+                );
+            }
+            if (this.changeRatingNotification != null) {
+                properties["ChangeRatingNotification"] = this.changeRatingNotification?.Properties(
                 );
             }
             if (this.logSetting != null) {

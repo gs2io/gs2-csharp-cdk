@@ -31,15 +31,6 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             this.namespaceName = namespaceName;
         }
 
-        public DisplayItemRef DisplayItem(
-            string displayItemId
-        ){
-            return (new DisplayItemRef(
-                this.namespaceName,
-                displayItemId
-            ));
-        }
-
         public string Grn(
         ){
             return (new Join(

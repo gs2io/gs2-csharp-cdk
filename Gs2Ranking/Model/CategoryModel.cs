@@ -31,11 +31,13 @@ namespace Gs2Cdk.Gs2Ranking.Model
         private string metadata;
         private long? minimumValue;
         private long? maximumValue;
+        private bool? sum;
         private int? calculateFixedTimingHour;
         private int? calculateFixedTimingMinute;
         private int? calculateIntervalMinutes;
         private string entryPeriodEventId;
         private string accessPeriodEventId;
+        private string[] ignoreUserIds;
         private string generation;
 
         public CategoryModel(
@@ -52,11 +54,13 @@ namespace Gs2Cdk.Gs2Ranking.Model
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.maximumValue = options?.maximumValue;
+            this.sum = options?.sum;
             this.calculateFixedTimingHour = options?.calculateFixedTimingHour;
             this.calculateFixedTimingMinute = options?.calculateFixedTimingMinute;
             this.calculateIntervalMinutes = options?.calculateIntervalMinutes;
             this.entryPeriodEventId = options?.entryPeriodEventId;
             this.accessPeriodEventId = options?.accessPeriodEventId;
+            this.ignoreUserIds = options?.ignoreUserIds;
             this.generation = options?.generation;
         }
 
@@ -81,6 +85,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
                     entryPeriodEventId = options?.entryPeriodEventId,
                     accessPeriodEventId = options?.accessPeriodEventId,
+                    ignoreUserIds = options?.ignoreUserIds,
                     generation = options?.generation,
                 }
             ));
@@ -105,6 +110,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
                     entryPeriodEventId = options?.entryPeriodEventId,
                     accessPeriodEventId = options?.accessPeriodEventId,
+                    ignoreUserIds = options?.ignoreUserIds,
                     generation = options?.generation,
                 }
             ));
@@ -137,6 +143,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.uniqueByUserId != null) {
                 properties["uniqueByUserId"] = this.uniqueByUserId;
             }
+            if (this.sum != null) {
+                properties["sum"] = this.sum;
+            }
             if (this.calculateFixedTimingHour != null) {
                 properties["calculateFixedTimingHour"] = this.calculateFixedTimingHour;
             }
@@ -151,6 +160,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
             if (this.accessPeriodEventId != null) {
                 properties["accessPeriodEventId"] = this.accessPeriodEventId;
+            }
+            if (this.ignoreUserIds != null) {
+                properties["ignoreUserIds"] = this.ignoreUserIds;
             }
             if (this.generation != null) {
                 properties["generation"] = this.generation;
