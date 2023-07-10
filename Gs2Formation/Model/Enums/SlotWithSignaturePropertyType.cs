@@ -20,6 +20,7 @@ namespace Gs2Cdk.Gs2Formation.Model.Enums
     
     public enum SlotWithSignaturePropertyType {
         Gs2Inventory,
+        Gs2SimpleInventory,
         Gs2Dictionary
     }
 
@@ -29,6 +30,8 @@ namespace Gs2Cdk.Gs2Formation.Model.Enums
             switch (self) {
                 case SlotWithSignaturePropertyType.Gs2Inventory:
                     return "gs2_inventory";
+                case SlotWithSignaturePropertyType.Gs2SimpleInventory:
+                    return "gs2_simple_inventory";
                 case SlotWithSignaturePropertyType.Gs2Dictionary:
                     return "gs2_dictionary";
             }
