@@ -91,9 +91,9 @@ namespace Gs2Cdk.Gs2Gateway.Model
         public GetAttr GetAttrNamespaceId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.NamespaceId"
+                this,
+                "Item.NamespaceId",
+                null
             ));
         }
     }

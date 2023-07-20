@@ -126,9 +126,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public GetAttr GetAttrUserId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.UserId"
+                this,
+                "Item.UserId",
+                null
             ));
         }
     }

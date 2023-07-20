@@ -99,19 +99,21 @@ namespace Gs2Cdk.Gs2Showcase.Model
         public GetAttr GetAttrNamespaceId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.NamespaceId"
+                this,
+                "Item.NamespaceId",
+                null
             ));
         }
 
         public Namespace MasterData(
-            Showcase[] showcases
+            Showcase[] showcases,
+            RandomShowcase[] randomShowcases
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                showcases
+                showcases,
+                randomShowcases
             )).AddDependsOn(
                 this
             );

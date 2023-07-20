@@ -81,9 +81,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public GetAttr GetAttrPasswordId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.PasswordId"
+                this,
+                "Item.PasswordId",
+                null
             ));
         }
     }

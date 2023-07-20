@@ -93,9 +93,9 @@ namespace Gs2Cdk.Gs2Script.Model
         public GetAttr GetAttrScriptId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.ScriptId"
+                this,
+                "Item.ScriptId",
+                null
             ));
         }
     }

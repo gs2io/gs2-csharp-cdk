@@ -77,9 +77,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public GetAttr GetAttrClientId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.ClientId"
+                this,
+                "Item.ClientId",
+                null
             ));
         }
 
@@ -87,9 +87,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public GetAttr GetAttrClientSecret(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "ClientSecret"
+                this,
+                "ClientSecret",
+                null
             ));
         }
     }

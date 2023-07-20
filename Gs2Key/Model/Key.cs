@@ -87,9 +87,9 @@ namespace Gs2Cdk.Gs2Key.Model
         public GetAttr GetAttrKeyId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.KeyId"
+                this,
+                "Item.KeyId",
+                null
             ));
         }
     }

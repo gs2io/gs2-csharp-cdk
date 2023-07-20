@@ -19,6 +19,7 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Showcase.Model;
+using Gs2Cdk.Gs2Showcase.StampSheet;
 
 namespace Gs2Cdk.Gs2Showcase.Ref
 {
@@ -29,6 +30,32 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string namespaceName
         ){
             this.namespaceName = namespaceName;
+        }
+
+        public ForceReDrawByUserId ForceReDraw(
+            string showcaseName,
+            string userId = "#{userId}"
+        ){
+            return (new ForceReDrawByUserId(
+                this.namespaceName,
+                showcaseName,
+                userId
+            ));
+        }
+
+        public IncrementPurchaseCountByUserId IncrementPurchaseCount(
+            string showcaseName,
+            string displayItemName,
+            int? count,
+            string userId = "#{userId}"
+        ){
+            return (new IncrementPurchaseCountByUserId(
+                this.namespaceName,
+                showcaseName,
+                displayItemName,
+                count,
+                userId
+            ));
         }
 
         public string Grn(

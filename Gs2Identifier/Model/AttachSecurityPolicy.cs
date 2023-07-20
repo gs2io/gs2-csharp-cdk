@@ -41,6 +41,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
             this.stack = stack;
             this.userName = userName;
             this.securityPolicyId = securityPolicyId;
+            stack.AddResource(
+                this
+            );
         }
 
         public override string ResourceType()

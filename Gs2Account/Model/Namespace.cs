@@ -120,9 +120,9 @@ namespace Gs2Cdk.Gs2Account.Model
         public GetAttr GetAttrNamespaceId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.NamespaceId"
+                this,
+                "Item.NamespaceId",
+                null
             ));
         }
     }

@@ -103,9 +103,9 @@ namespace Gs2Cdk.Gs2Realtime.Model
         public GetAttr GetAttrRoomId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.RoomId"
+                this,
+                "Item.RoomId",
+                null
             ));
         }
     }

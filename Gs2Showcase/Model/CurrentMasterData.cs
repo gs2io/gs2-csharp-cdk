@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Showcase.Model
         private string? version= "2019-04-04";
         private string? namespaceName;
         private Showcase[] showcases;
+        private RandomShowcase[] randomShowcases;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            Showcase[] showcases
+            Showcase[] showcases,
+            RandomShowcase[] randomShowcases
         ): base(
             "Showcase_CurrentShowcaseMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.showcases = showcases;
+            this.randomShowcases = randomShowcases;
             stack.AddResource(
                 this
             );
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
             settings["version"] = this.version;
             if (this.showcases != null) {
                 settings["showcases"] = this.showcases.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.randomShowcases != null) {
+                settings["randomShowcases"] = this.randomShowcases.Select(v => v.Properties(
                         )).ToList();
             }
 

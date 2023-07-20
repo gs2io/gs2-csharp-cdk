@@ -86,9 +86,9 @@ namespace Gs2Cdk.Gs2Lock.Model
         public GetAttr GetAttrNamespaceId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.NamespaceId"
+                this,
+                "Item.NamespaceId",
+                null
             ));
         }
     }

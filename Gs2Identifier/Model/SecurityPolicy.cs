@@ -91,9 +91,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public GetAttr GetAttrSecurityPolicyId(
         ){
             return (new GetAttr(
-                null,
-                null,
-                "Item.SecurityPolicyId"
+                this,
+                "Item.SecurityPolicyId",
+                null
             ));
         }
     }
