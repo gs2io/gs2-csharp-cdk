@@ -20,16 +20,21 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Script.Ref;
-using Gs2Cdk.Gs2Script.Model;
-using Gs2Cdk.Gs2Script.Model.Options;
+using Gs2Cdk.Gs2StateMachine.Integration;
+using Gs2Cdk.Gs2StateMachine.Ref;
+using Gs2Cdk.Gs2StateMachine.Model;
+using Gs2Cdk.Gs2StateMachine.Model.Options;
 
-namespace Gs2Cdk.Gs2Script.Model
+namespace Gs2Cdk.Gs2StateMachine.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
         private string description;
+        private ScriptSetting startScript;
+        private ScriptSetting passScript;
+        private ScriptSetting errorScript;
+        private long? lowestStateMachineVersion;
         private LogSetting logSetting;
 
         public Namespace(
@@ -37,12 +42,16 @@ namespace Gs2Cdk.Gs2Script.Model
             string name,
             NamespaceOptions options = null
         ): base(
-            "Script_Namespace_" + name
+            "StateMachine_Namespace_" + name
         ){
 
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.startScript = options?.startScript;
+            this.passScript = options?.passScript;
+            this.errorScript = options?.errorScript;
+            this.lowestStateMachineVersion = options?.lowestStateMachineVersion;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -57,7 +66,7 @@ namespace Gs2Cdk.Gs2Script.Model
 
         public override string ResourceType(
         ){
-            return "GS2::Script::Namespace";
+            return "GS2::StateMachine::Namespace";
         }
 
         public override Dictionary<string, object> Properties(
@@ -69,6 +78,21 @@ namespace Gs2Cdk.Gs2Script.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.startScript != null) {
+                properties["StartScript"] = this.startScript?.Properties(
+                );
+            }
+            if (this.passScript != null) {
+                properties["PassScript"] = this.passScript?.Properties(
+                );
+            }
+            if (this.errorScript != null) {
+                properties["ErrorScript"] = this.errorScript?.Properties(
+                );
+            }
+            if (this.lowestStateMachineVersion != null) {
+                properties["LowestStateMachineVersion"] = this.lowestStateMachineVersion;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
@@ -93,9 +117,16 @@ namespace Gs2Cdk.Gs2Script.Model
                 null
             ));
         }
-
-        public string GetName() {
-            return this.name;
+        public void StateMachine(Gs2Cdk.Gs2Script.Model.Namespace scriptNamespace, StateMachineDefinition definition)
+        {
+            definition.AppendScripts(stack, scriptNamespace);
+            new StateMachineMaster(
+                    stack,
+                    name,
+                    definition.StateMachineName,
+                    definition.Gsl().Replace("{scriptNamespaceName}", scriptNamespace.GetName())
+                )
+                .AddDependsOn(this);
         }
     }
 }

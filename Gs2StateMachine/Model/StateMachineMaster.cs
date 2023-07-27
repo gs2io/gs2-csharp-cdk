@@ -20,30 +20,32 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Script.Ref;
-using Gs2Cdk.Gs2Script.Model;
-using Gs2Cdk.Gs2Script.Model.Options;
+using Gs2Cdk.Gs2StateMachine.Ref;
+using Gs2Cdk.Gs2StateMachine.Model;
+using Gs2Cdk.Gs2StateMachine.Model.Options;
 
-namespace Gs2Cdk.Gs2Script.Model
+namespace Gs2Cdk.Gs2StateMachine.Model
 {
-    public class Namespace : CdkResource {
+    public class StateMachineMaster : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private LogSetting logSetting;
+        private string namespaceName;
+        private string mainStateMachineName;
+        private string payload;
 
-        public Namespace(
+        public StateMachineMaster(
             Stack stack,
-            string name,
-            NamespaceOptions options = null
+            string namespaceName,
+            string mainStateMachineName,
+            string payload,
+            StateMachineMasterOptions options = null
         ): base(
-            "Script_Namespace_" + name
+            "StateMachine_StateMachineMaster_" + namespaceName
         ){
 
             this.stack = stack;
-            this.name = name;
-            this.description = options?.description;
-            this.logSetting = options?.logSetting;
+            this.namespaceName = namespaceName;
+            this.mainStateMachineName = mainStateMachineName;
+            this.payload = payload;
             stack.AddResource(
                 this
             );
@@ -52,50 +54,47 @@ namespace Gs2Cdk.Gs2Script.Model
 
         public string AlternateKeys(
         ){
-            return "name";
+            return "version";
         }
 
         public override string ResourceType(
         ){
-            return "GS2::Script::Namespace";
+            return "GS2::StateMachine::StateMachineMaster";
         }
 
         public override Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.name != null) {
-                properties["Name"] = this.name;
+            if (this.namespaceName != null) {
+                properties["NamespaceName"] = this.namespaceName;
             }
-            if (this.description != null) {
-                properties["Description"] = this.description;
+            if (this.mainStateMachineName != null) {
+                properties["MainStateMachineName"] = this.mainStateMachineName;
             }
-            if (this.logSetting != null) {
-                properties["LogSetting"] = this.logSetting?.Properties(
-                );
+            if (this.payload != null) {
+                properties["Payload"] = this.payload;
             }
 
             return properties;
         }
 
-        public NamespaceRef Ref(
+        public StateMachineMasterRef Ref(
+            long? version
         ){
-            return (new NamespaceRef(
-                this.name
+            return (new StateMachineMasterRef(
+                this.namespaceName,
+                version
             ));
         }
 
-        public GetAttr GetAttrNamespaceId(
+        public GetAttr GetAttrStateMachineId(
         ){
             return (new GetAttr(
                 this,
-                "Item.NamespaceId",
+                "Item.StateMachineId",
                 null
             ));
-        }
-
-        public string GetName() {
-            return this.name;
         }
     }
 }
