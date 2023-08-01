@@ -26,18 +26,15 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class ScopedValue {
         private ScopedValueResetType? resetType;
         private long? value;
-        private long? updatedAt;
         private long? nextResetAt;
 
         public ScopedValue(
             ScopedValueResetType resetType,
             long? value,
-            long? updatedAt,
             ScopedValueOptions options = null
         ){
             this.resetType = resetType;
             this.value = value;
-            this.updatedAt = updatedAt;
             this.nextResetAt = options?.nextResetAt;
         }
 
@@ -54,9 +51,6 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
             if (this.nextResetAt != null) {
                 properties["nextResetAt"] = this.nextResetAt;
-            }
-            if (this.updatedAt != null) {
-                properties["updatedAt"] = this.updatedAt;
             }
 
             return properties;
