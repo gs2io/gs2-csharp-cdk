@@ -24,21 +24,21 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class CurrentMasterData : CdkResource {
         private string? version= "2019-05-28";
         private string? namespaceName;
-        private MissionGroupModel[] missionGroupModels;
-        private CounterModel[] counterModels;
+        private MissionGroupModel[] groups;
+        private CounterModel[] counters;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            MissionGroupModel[] missionGroupModels,
-            CounterModel[] counterModels
+            MissionGroupModel[] groups,
+            CounterModel[] counters
         ): base(
             "Mission_CurrentMissionMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
-            this.missionGroupModels = missionGroupModels;
-            this.counterModels = counterModels;
+            this.groups = groups;
+            this.counters = counters;
             stack.AddResource(
                 this
             );
@@ -60,12 +60,12 @@ namespace Gs2Cdk.Gs2Mission.Model
             var settings = new Dictionary<string, object>();
 
             settings["version"] = this.version;
-            if (this.missionGroupModels != null) {
-                settings["missionGroupModels"] = this.missionGroupModels.Select(v => v.Properties(
+            if (this.groups != null) {
+                settings["groups"] = this.groups.Select(v => v.Properties(
                         )).ToList();
             }
-            if (this.counterModels != null) {
-                settings["counterModels"] = this.counterModels.Select(v => v.Properties(
+            if (this.counters != null) {
+                settings["counters"] = this.counters.Select(v => v.Properties(
                         )).ToList();
             }
 

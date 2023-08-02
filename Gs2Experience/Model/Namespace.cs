@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Experience.Model
         private Stack? stack;
         private string name;
         private string description;
+        private TransactionSetting transactionSetting;
         private string experienceCapScriptId;
         private ScriptSetting changeExperienceScript;
         private ScriptSetting changeRankScript;
@@ -46,6 +47,7 @@ namespace Gs2Cdk.Gs2Experience.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.experienceCapScriptId = options?.experienceCapScriptId;
             this.changeExperienceScript = options?.changeExperienceScript;
             this.changeRankScript = options?.changeRankScript;
@@ -77,6 +79,10 @@ namespace Gs2Cdk.Gs2Experience.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.experienceCapScriptId != null) {
                 properties["ExperienceCapScriptId"] = this.experienceCapScriptId;

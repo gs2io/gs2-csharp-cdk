@@ -86,6 +86,23 @@ namespace Gs2Cdk.Gs2Experience.Ref
             ));
         }
 
+        public MultiplyAcquireActionsByUserId MultiplyAcquireActions(
+            string experienceName,
+            string propertyId,
+            string rateName,
+            AcquireAction[] acquireActions = null,
+            string userId = "#{userId}"
+        ){
+            return (new MultiplyAcquireActionsByUserId(
+                this.namespaceName,
+                experienceName,
+                propertyId,
+                rateName,
+                acquireActions,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

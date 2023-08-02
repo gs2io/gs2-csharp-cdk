@@ -26,8 +26,6 @@ namespace Gs2Cdk.Gs2Distributor.Model
         private string userId;
         private string transactionId;
         private AcquireAction sheetRequest;
-        private long? createdAt;
-        private long? ttlAt;
         private ConsumeAction[] taskRequests;
         private string[] taskResults;
         private string sheetResult;
@@ -37,15 +35,11 @@ namespace Gs2Cdk.Gs2Distributor.Model
             string userId,
             string transactionId,
             AcquireAction sheetRequest,
-            long? createdAt,
-            long? ttlAt,
             StampSheetResultOptions options = null
         ){
             this.userId = userId;
             this.transactionId = transactionId;
             this.sheetRequest = sheetRequest;
-            this.createdAt = createdAt;
-            this.ttlAt = ttlAt;
             this.taskRequests = options?.taskRequests;
             this.taskResults = options?.taskResults;
             this.sheetResult = options?.sheetResult;
@@ -78,12 +72,6 @@ namespace Gs2Cdk.Gs2Distributor.Model
             }
             if (this.nextTransactionId != null) {
                 properties["nextTransactionId"] = this.nextTransactionId;
-            }
-            if (this.createdAt != null) {
-                properties["createdAt"] = this.createdAt;
-            }
-            if (this.ttlAt != null) {
-                properties["ttlAt"] = this.ttlAt;
             }
 
             return properties;

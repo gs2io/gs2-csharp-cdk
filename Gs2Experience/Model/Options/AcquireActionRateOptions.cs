@@ -21,8 +21,6 @@ using Gs2Cdk.Gs2Experience.Model;
 
 namespace Gs2Cdk.Gs2Experience.Model.Options
 {
-    public class ExperienceModelOptions {
-        public string metadata;
-        public AcquireActionRate[] acquireActionRates;
+    public class AcquireActionRateOptions {
     }
 }

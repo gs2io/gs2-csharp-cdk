@@ -26,23 +26,17 @@ namespace Gs2Cdk.Gs2Key.Model
         private string name;
         private string apiKey;
         private string encryptionKeyName;
-        private long? createdAt;
-        private long? updatedAt;
         private string description;
 
         public GitHubApiKey(
             string name,
             string apiKey,
             string encryptionKeyName,
-            long? createdAt,
-            long? updatedAt,
             GitHubApiKeyOptions options = null
         ){
             this.name = name;
             this.apiKey = apiKey;
             this.encryptionKeyName = encryptionKeyName;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
             this.description = options?.description;
         }
 
@@ -61,12 +55,6 @@ namespace Gs2Cdk.Gs2Key.Model
             }
             if (this.encryptionKeyName != null) {
                 properties["encryptionKeyName"] = this.encryptionKeyName;
-            }
-            if (this.createdAt != null) {
-                properties["createdAt"] = this.createdAt;
-            }
-            if (this.updatedAt != null) {
-                properties["updatedAt"] = this.updatedAt;
             }
 
             return properties;

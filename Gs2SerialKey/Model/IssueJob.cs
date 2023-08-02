@@ -28,7 +28,6 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         private int? issuedCount;
         private int? issueRequestCount;
         private IssueJobStatus? status;
-        private long? createdAt;
         private string metadata;
 
         public IssueJob(
@@ -36,14 +35,12 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             int? issuedCount,
             int? issueRequestCount,
             IssueJobStatus status,
-            long? createdAt,
             IssueJobOptions options = null
         ){
             this.name = name;
             this.issuedCount = issuedCount;
             this.issueRequestCount = issueRequestCount;
             this.status = status;
-            this.createdAt = createdAt;
             this.metadata = options?.metadata;
         }
 
@@ -66,9 +63,6 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             if (this.status != null) {
                 properties["status"] = this.status?.Str(
                 );
-            }
-            if (this.createdAt != null) {
-                properties["createdAt"] = this.createdAt;
             }
 
             return properties;

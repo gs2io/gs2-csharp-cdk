@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Experience.Model
         private long? maxRankCap;
         private Threshold rankThreshold;
         private string metadata;
+        private AcquireActionRate[] acquireActionRates;
 
         public ExperienceModel(
             string name,
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Experience.Model
             this.maxRankCap = maxRankCap;
             this.rankThreshold = rankThreshold;
             this.metadata = options?.metadata;
+            this.acquireActionRates = options?.acquireActionRates;
         }
 
         public Dictionary<string, object> Properties(
@@ -68,6 +70,10 @@ namespace Gs2Cdk.Gs2Experience.Model
             if (this.rankThreshold != null) {
                 properties["rankThreshold"] = this.rankThreshold?.Properties(
                 );
+            }
+            if (this.acquireActionRates != null) {
+                properties["acquireActionRates"] = this.acquireActionRates.Select(v => v.Properties(
+                        )).ToList();
             }
 
             return properties;

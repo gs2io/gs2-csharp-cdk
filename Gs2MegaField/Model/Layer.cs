@@ -28,7 +28,6 @@ namespace Gs2Cdk.Gs2MegaField.Model
         private int? numberOfMinEntries;
         private int? numberOfMaxEntries;
         private int? height;
-        private long? createdAt;
         private string root;
 
         public Layer(
@@ -37,7 +36,6 @@ namespace Gs2Cdk.Gs2MegaField.Model
             int? numberOfMinEntries,
             int? numberOfMaxEntries,
             int? height,
-            long? createdAt,
             LayerOptions options = null
         ){
             this.areaModelName = areaModelName;
@@ -45,7 +43,6 @@ namespace Gs2Cdk.Gs2MegaField.Model
             this.numberOfMinEntries = numberOfMinEntries;
             this.numberOfMaxEntries = numberOfMaxEntries;
             this.height = height;
-            this.createdAt = createdAt;
             this.root = options?.root;
         }
 
@@ -70,9 +67,6 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
             if (this.height != null) {
                 properties["height"] = this.height;
-            }
-            if (this.createdAt != null) {
-                properties["createdAt"] = this.createdAt;
             }
 
             return properties;

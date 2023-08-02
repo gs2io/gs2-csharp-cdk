@@ -124,14 +124,14 @@ namespace Gs2Cdk.Gs2Mission.Model
         }
 
         public Namespace MasterData(
-            MissionGroupModel[] missionGroupModels,
-            CounterModel[] counterModels
+            MissionGroupModel[] groups,
+            CounterModel[] counters
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                missionGroupModels,
-                counterModels
+                groups,
+                counters
             )).AddDependsOn(
                 this
             );

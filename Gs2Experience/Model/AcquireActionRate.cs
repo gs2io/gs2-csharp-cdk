@@ -17,39 +17,33 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2JobQueue.Model;
-using Gs2Cdk.Gs2JobQueue.Model.Options;
+using Gs2Cdk.Gs2Experience.Model;
+using Gs2Cdk.Gs2Experience.Model.Options;
 
-namespace Gs2Cdk.Gs2JobQueue.Model
+namespace Gs2Cdk.Gs2Experience.Model
 {
-    public class JobResultBody {
-        private int? tryNumber;
-        private int? statusCode;
-        private string result;
+    public class AcquireActionRate {
+        private string name;
+        private double[] rates;
 
-        public JobResultBody(
-            int? tryNumber,
-            int? statusCode,
-            string result,
-            JobResultBodyOptions options = null
+        public AcquireActionRate(
+            string name,
+            double[] rates,
+            AcquireActionRateOptions options = null
         ){
-            this.tryNumber = tryNumber;
-            this.statusCode = statusCode;
-            this.result = result;
+            this.name = name;
+            this.rates = rates;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.tryNumber != null) {
-                properties["tryNumber"] = this.tryNumber;
+            if (this.name != null) {
+                properties["name"] = this.name;
             }
-            if (this.statusCode != null) {
-                properties["statusCode"] = this.statusCode;
-            }
-            if (this.result != null) {
-                properties["result"] = this.result;
+            if (this.rates != null) {
+                properties["rates"] = this.rates;
             }
 
             return properties;
