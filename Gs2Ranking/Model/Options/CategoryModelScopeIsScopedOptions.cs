@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
         public long? maximumValue;
         public int? calculateFixedTimingHour;
         public int? calculateFixedTimingMinute;
+        public Scope[] additionalScopes;
         public string entryPeriodEventId;
         public string accessPeriodEventId;
         public string[] ignoreUserIds;

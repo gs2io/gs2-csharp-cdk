@@ -18,22 +18,9 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Ranking.Model;
-using Gs2Cdk.Gs2Ranking.Model.Enums;
 
 namespace Gs2Cdk.Gs2Ranking.Model.Options
 {
-    public class CategoryModelOptions {
-        public string metadata;
-        public long? minimumValue;
-        public long? maximumValue;
-        public bool? sum;
-        public int? calculateFixedTimingHour;
-        public int? calculateFixedTimingMinute;
-        public int? calculateIntervalMinutes;
-        public Scope[] additionalScopes;
-        public string entryPeriodEventId;
-        public string accessPeriodEventId;
-        public string[] ignoreUserIds;
-        public string generation;
+    public class ScopeOptions {
     }
 }

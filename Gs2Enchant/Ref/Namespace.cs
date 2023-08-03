@@ -65,6 +65,21 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             ));
         }
 
+        public SetBalanceParameterStatusByUserId SetBalanceParameterStatus(
+            string parameterName,
+            string propertyId,
+            BalanceParameterValue[] parameterValues,
+            string userId = "#{userId}"
+        ){
+            return (new SetBalanceParameterStatusByUserId(
+                this.namespaceName,
+                parameterName,
+                propertyId,
+                parameterValues,
+                userId
+            ));
+        }
+
         public ReDrawRarityParameterStatusByUserId ReDrawRarityParameterStatus(
             string parameterName,
             string propertyId,
@@ -91,6 +106,21 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 count,
+                userId
+            ));
+        }
+
+        public SetRarityParameterStatusByUserId SetRarityParameterStatus(
+            string parameterName,
+            string propertyId,
+            RarityParameterValue[] parameterValues = null,
+            string userId = "#{userId}"
+        ){
+            return (new SetRarityParameterStatusByUserId(
+                this.namespaceName,
+                parameterName,
+                propertyId,
+                parameterValues,
                 userId
             ));
         }

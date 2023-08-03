@@ -35,6 +35,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         private int? calculateFixedTimingHour;
         private int? calculateFixedTimingMinute;
         private int? calculateIntervalMinutes;
+        private Scope[] additionalScopes;
         private string entryPeriodEventId;
         private string accessPeriodEventId;
         private string[] ignoreUserIds;
@@ -58,6 +59,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
             this.calculateFixedTimingHour = options?.calculateFixedTimingHour;
             this.calculateFixedTimingMinute = options?.calculateFixedTimingMinute;
             this.calculateIntervalMinutes = options?.calculateIntervalMinutes;
+            this.additionalScopes = options?.additionalScopes;
             this.entryPeriodEventId = options?.entryPeriodEventId;
             this.accessPeriodEventId = options?.accessPeriodEventId;
             this.ignoreUserIds = options?.ignoreUserIds;
@@ -83,6 +85,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                     maximumValue = options?.maximumValue,
                     calculateFixedTimingHour = options?.calculateFixedTimingHour,
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
+                    additionalScopes = options?.additionalScopes,
                     entryPeriodEventId = options?.entryPeriodEventId,
                     accessPeriodEventId = options?.accessPeriodEventId,
                     ignoreUserIds = options?.ignoreUserIds,
@@ -108,6 +111,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                     maximumValue = options?.maximumValue,
                     calculateFixedTimingHour = options?.calculateFixedTimingHour,
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
+                    additionalScopes = options?.additionalScopes,
                     entryPeriodEventId = options?.entryPeriodEventId,
                     accessPeriodEventId = options?.accessPeriodEventId,
                     ignoreUserIds = options?.ignoreUserIds,
@@ -154,6 +158,10 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
             if (this.calculateIntervalMinutes != null) {
                 properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
+            }
+            if (this.additionalScopes != null) {
+                properties["additionalScopes"] = this.additionalScopes.Select(v => v.Properties(
+                        )).ToList();
             }
             if (this.entryPeriodEventId != null) {
                 properties["entryPeriodEventId"] = this.entryPeriodEventId;
