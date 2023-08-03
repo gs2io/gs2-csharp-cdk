@@ -18,6 +18,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
 using Gs2Cdk.Gs2Mission.Model.Options;
 
 namespace Gs2Cdk.Gs2Mission.Model
@@ -27,6 +28,7 @@ namespace Gs2Cdk.Gs2Mission.Model
         private string counterName;
         private long? targetValue;
         private string metadata;
+        private MissionTaskModelTargetResetType? targetResetType;
         private AcquireAction[] completeAcquireActions;
         private string challengePeriodEventId;
         private string premiseMissionTaskName;
@@ -41,6 +43,7 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.counterName = counterName;
             this.targetValue = targetValue;
             this.metadata = options?.metadata;
+            this.targetResetType = options?.targetResetType;
             this.completeAcquireActions = options?.completeAcquireActions;
             this.challengePeriodEventId = options?.challengePeriodEventId;
             this.premiseMissionTaskName = options?.premiseMissionTaskName;
@@ -58,6 +61,10 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
             if (this.counterName != null) {
                 properties["counterName"] = this.counterName;
+            }
+            if (this.targetResetType != null) {
+                properties["targetResetType"] = this.targetResetType?.Str(
+                );
             }
             if (this.targetValue != null) {
                 properties["targetValue"] = this.targetValue;

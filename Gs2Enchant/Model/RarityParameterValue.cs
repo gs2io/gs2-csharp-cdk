@@ -17,27 +17,39 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Enchant.Model;
+using Gs2Cdk.Gs2Enchant.Model.Options;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant.Model
 {
-    public class Output {
-        private string text;
+    public class RarityParameterValue {
+        private string name;
+        private string resourceName;
+        private long? resourceValue;
 
-        public Output(
-            string text,
-            OutputOptions options = null
+        public RarityParameterValue(
+            string name,
+            string resourceName,
+            long? resourceValue,
+            RarityParameterValueOptions options = null
         ){
-            this.text = text;
+            this.name = name;
+            this.resourceName = resourceName;
+            this.resourceValue = resourceValue;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.text != null) {
-                properties["text"] = this.text;
+            if (this.name != null) {
+                properties["name"] = this.name;
+            }
+            if (this.resourceName != null) {
+                properties["resourceName"] = this.resourceName;
+            }
+            if (this.resourceValue != null) {
+                properties["resourceValue"] = this.resourceValue;
             }
 
             return properties;

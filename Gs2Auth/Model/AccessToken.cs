@@ -24,21 +24,18 @@ namespace Gs2Cdk.Gs2Auth.Model
 {
     public class AccessToken {
         private string ownerId;
-        private string token;
         private string userId;
         private long? expire;
         private int? timeOffset;
 
         public AccessToken(
             string ownerId,
-            string token,
             string userId,
             long? expire,
             int? timeOffset,
             AccessTokenOptions options = null
         ){
             this.ownerId = ownerId;
-            this.token = token;
             this.userId = userId;
             this.expire = expire;
             this.timeOffset = timeOffset;
@@ -50,9 +47,6 @@ namespace Gs2Cdk.Gs2Auth.Model
 
             if (this.ownerId != null) {
                 properties["ownerId"] = this.ownerId;
-            }
-            if (this.token != null) {
-                properties["token"] = this.token;
             }
             if (this.userId != null) {
                 properties["userId"] = this.userId;

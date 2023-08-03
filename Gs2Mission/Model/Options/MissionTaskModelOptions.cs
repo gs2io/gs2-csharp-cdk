@@ -18,11 +18,13 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
 
 namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class MissionTaskModelOptions {
         public string metadata;
+        public MissionTaskModelTargetResetType targetResetType;
         public AcquireAction[] completeAcquireActions;
         public string challengePeriodEventId;
         public string premiseMissionTaskName;

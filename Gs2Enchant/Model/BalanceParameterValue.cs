@@ -17,27 +17,33 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Enchant.Model;
+using Gs2Cdk.Gs2Enchant.Model.Options;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant.Model
 {
-    public class Output {
-        private string text;
+    public class BalanceParameterValue {
+        private string name;
+        private long? value;
 
-        public Output(
-            string text,
-            OutputOptions options = null
+        public BalanceParameterValue(
+            string name,
+            long? value,
+            BalanceParameterValueOptions options = null
         ){
-            this.text = text;
+            this.name = name;
+            this.value = value;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.text != null) {
-                properties["text"] = this.text;
+            if (this.name != null) {
+                properties["name"] = this.name;
+            }
+            if (this.value != null) {
+                properties["value"] = this.value;
             }
 
             return properties;

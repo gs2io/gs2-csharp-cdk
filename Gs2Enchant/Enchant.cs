@@ -13,34 +13,18 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System.Collections.Generic;
-using System.Linq;
+using Gs2Cdk.Gs2Enchant.Ref;
 
-using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
-
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant
 {
-    public class Output {
-        private string text;
+    public class Enchant {
 
-        public Output(
-            string text,
-            OutputOptions options = null
+        public static NamespaceRef Namespace(
+            string namespaceName
         ){
-            this.text = text;
-        }
-
-        public Dictionary<string, object> Properties(
-        ){
-            var properties = new Dictionary<string, object>();
-
-            if (this.text != null) {
-                properties["text"] = this.text;
-            }
-
-            return properties;
+            return (new NamespaceRef(
+                namespaceName
+            ));
         }
     }
 }

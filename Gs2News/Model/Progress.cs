@@ -26,22 +26,16 @@ namespace Gs2Cdk.Gs2News.Model
         private string uploadToken;
         private int? generated;
         private int? patternCount;
-        private long? createdAt;
-        private long? updatedAt;
 
         public Progress(
             string uploadToken,
             int? generated,
             int? patternCount,
-            long? createdAt,
-            long? updatedAt,
             ProgressOptions options = null
         ){
             this.uploadToken = uploadToken;
             this.generated = generated;
             this.patternCount = patternCount;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
         }
 
         public Dictionary<string, object> Properties(
@@ -56,12 +50,6 @@ namespace Gs2Cdk.Gs2News.Model
             }
             if (this.patternCount != null) {
                 properties["patternCount"] = this.patternCount;
-            }
-            if (this.createdAt != null) {
-                properties["createdAt"] = this.createdAt;
-            }
-            if (this.updatedAt != null) {
-                properties["updatedAt"] = this.updatedAt;
             }
 
             return properties;

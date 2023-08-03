@@ -13,34 +13,26 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System.Collections.Generic;
-using System.Linq;
 
-using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant.Model.Enums
 {
-    public class Output {
-        private string text;
+    
+    public enum BalanceParameterModelInitialValueStrategy {
+        Average,
+        Lottery
+    }
 
-        public Output(
-            string text,
-            OutputOptions options = null
-        ){
-            this.text = text;
-        }
-
-        public Dictionary<string, object> Properties(
-        ){
-            var properties = new Dictionary<string, object>();
-
-            if (this.text != null) {
-                properties["text"] = this.text;
+    public static class BalanceParameterModelInitialValueStrategyExt
+    {
+        public static string Str(this BalanceParameterModelInitialValueStrategy self) {
+            switch (self) {
+                case BalanceParameterModelInitialValueStrategy.Average:
+                    return "average";
+                case BalanceParameterModelInitialValueStrategy.Lottery:
+                    return "lottery";
             }
-
-            return properties;
+            return "unknown";
         }
     }
 }

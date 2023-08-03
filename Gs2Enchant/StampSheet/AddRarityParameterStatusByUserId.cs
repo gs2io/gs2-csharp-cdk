@@ -17,30 +17,29 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Enchant.Model;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant.StampSheet
 {
-    public class Output {
-        private string text;
+    public class AddRarityParameterStatusByUserId : AcquireAction {
 
-        public Output(
-            string text,
-            OutputOptions options = null
-        ){
-            this.text = text;
-        }
 
-        public Dictionary<string, object> Properties(
-        ){
-            var properties = new Dictionary<string, object>();
-
-            if (this.text != null) {
-                properties["text"] = this.text;
+        public AddRarityParameterStatusByUserId(
+            string namespaceName,
+            string parameterName,
+            string propertyId,
+            int? count = null,
+            string userId = "#{userId}"
+        ): base(
+            "Gs2Enchant:AddRarityParameterStatusByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["parameterName"] = parameterName,
+                ["propertyId"] = propertyId,
+                ["count"] = count,
+                ["userId"] = userId,
             }
-
-            return properties;
+        ){
         }
     }
 }

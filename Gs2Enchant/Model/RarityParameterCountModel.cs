@@ -17,27 +17,33 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Enchant.Model;
+using Gs2Cdk.Gs2Enchant.Model.Options;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Enchant.Model
 {
-    public class Output {
-        private string text;
+    public class RarityParameterCountModel {
+        private int? count;
+        private int? weight;
 
-        public Output(
-            string text,
-            OutputOptions options = null
+        public RarityParameterCountModel(
+            int? count,
+            int? weight,
+            RarityParameterCountModelOptions options = null
         ){
-            this.text = text;
+            this.count = count;
+            this.weight = weight;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.text != null) {
-                properties["text"] = this.text;
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+            if (this.weight != null) {
+                properties["weight"] = this.weight;
             }
 
             return properties;
