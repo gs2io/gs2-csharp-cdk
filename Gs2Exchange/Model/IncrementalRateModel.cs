@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private ConsumeAction consumeAction;
         private IncrementalRateModelCalculateType? calculateType;
         private string exchangeCountId;
+        private int? maximumExchangeCount;
         private string metadata;
         private long? baseValue;
         private long? coefficientValue;
@@ -39,12 +40,14 @@ namespace Gs2Cdk.Gs2Exchange.Model
             ConsumeAction consumeAction,
             IncrementalRateModelCalculateType calculateType,
             string exchangeCountId,
+            int? maximumExchangeCount,
             IncrementalRateModelOptions options = null
         ){
             this.name = name;
             this.consumeAction = consumeAction;
             this.calculateType = calculateType;
             this.exchangeCountId = exchangeCountId;
+            this.maximumExchangeCount = maximumExchangeCount;
             this.metadata = options?.metadata;
             this.baseValue = options?.baseValue;
             this.coefficientValue = options?.coefficientValue;
@@ -56,6 +59,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             string name,
             ConsumeAction consumeAction,
             string exchangeCountId,
+            int? maximumExchangeCount,
             long? baseValue,
             long? coefficientValue,
             IncrementalRateModelCalculateTypeIsLinearOptions options = null
@@ -65,6 +69,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 consumeAction,
                 IncrementalRateModelCalculateType.Linear,
                 exchangeCountId,
+                maximumExchangeCount,
                 new IncrementalRateModelOptions {
                     baseValue = baseValue,
                     coefficientValue = coefficientValue,
@@ -78,6 +83,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             string name,
             ConsumeAction consumeAction,
             string exchangeCountId,
+            int? maximumExchangeCount,
             long? coefficientValue,
             IncrementalRateModelCalculateTypeIsPowerOptions options = null
         ){
@@ -86,6 +92,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 consumeAction,
                 IncrementalRateModelCalculateType.Power,
                 exchangeCountId,
+                maximumExchangeCount,
                 new IncrementalRateModelOptions {
                     coefficientValue = coefficientValue,
                     metadata = options?.metadata,
@@ -98,6 +105,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             string name,
             ConsumeAction consumeAction,
             string exchangeCountId,
+            int? maximumExchangeCount,
             string calculateScriptId,
             IncrementalRateModelCalculateTypeIsGs2ScriptOptions options = null
         ){
@@ -106,6 +114,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 consumeAction,
                 IncrementalRateModelCalculateType.Gs2Script,
                 exchangeCountId,
+                maximumExchangeCount,
                 new IncrementalRateModelOptions {
                     calculateScriptId = calculateScriptId,
                     metadata = options?.metadata,
@@ -143,6 +152,9 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.exchangeCountId != null) {
                 properties["exchangeCountId"] = this.exchangeCountId;
+            }
+            if (this.maximumExchangeCount != null) {
+                properties["maximumExchangeCount"] = this.maximumExchangeCount;
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
