@@ -24,38 +24,9 @@ using Gs2Cdk.Gs2Stamina.StampSheet;
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
     public class RecoverValueTableRef {
-        private string namespaceName;
-        private string recoverValueTableName;
 
         public RecoverValueTableRef(
-            string namespaceName,
-            string recoverValueTableName
         ){
-            this.namespaceName = namespaceName;
-            this.recoverValueTableName = recoverValueTableName;
-        }
-
-        public string Grn(
-        ){
-            return (new Join(
-                ":",
-                new []
-                {
-                    "grn",
-                    "gs2",
-                    GetAttr.Region(
-                    ).Str(
-                    ),
-                    GetAttr.OwnerId(
-                    ).Str(
-                    ),
-                    "stamina",
-                    this.namespaceName,
-                    "recoverValueTable",
-                    this.recoverValueTableName
-                }
-            )).Str(
-            );
         }
     }
 }

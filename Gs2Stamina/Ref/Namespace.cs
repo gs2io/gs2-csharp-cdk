@@ -32,33 +32,6 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             this.namespaceName = namespaceName;
         }
 
-        public MaxStaminaTableRef MaxStaminaTable(
-            string maxStaminaTableName
-        ){
-            return (new MaxStaminaTableRef(
-                this.namespaceName,
-                maxStaminaTableName
-            ));
-        }
-
-        public RecoverIntervalTableRef RecoverIntervalTable(
-            string recoverIntervalTableName
-        ){
-            return (new RecoverIntervalTableRef(
-                this.namespaceName,
-                recoverIntervalTableName
-            ));
-        }
-
-        public RecoverValueTableRef RecoverValueTable(
-            string recoverValueTableName
-        ){
-            return (new RecoverValueTableRef(
-                this.namespaceName,
-                recoverValueTableName
-            ));
-        }
-
         public StaminaModelRef StaminaModel(
             string staminaName
         ){

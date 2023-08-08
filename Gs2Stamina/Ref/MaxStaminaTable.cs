@@ -24,38 +24,9 @@ using Gs2Cdk.Gs2Stamina.StampSheet;
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
     public class MaxStaminaTableRef {
-        private string namespaceName;
-        private string maxStaminaTableName;
 
         public MaxStaminaTableRef(
-            string namespaceName,
-            string maxStaminaTableName
         ){
-            this.namespaceName = namespaceName;
-            this.maxStaminaTableName = maxStaminaTableName;
-        }
-
-        public string Grn(
-        ){
-            return (new Join(
-                ":",
-                new []
-                {
-                    "grn",
-                    "gs2",
-                    GetAttr.Region(
-                    ).Str(
-                    ),
-                    GetAttr.OwnerId(
-                    ).Str(
-                    ),
-                    "stamina",
-                    this.namespaceName,
-                    "maxStaminaTable",
-                    this.maxStaminaTableName
-                }
-            )).Str(
-            );
         }
     }
 }
