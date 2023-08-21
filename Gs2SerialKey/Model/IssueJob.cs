@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         private int? issueRequestCount;
         private IssueJobStatus? status;
         private string metadata;
+        private long? revision;
 
         public IssueJob(
             string name,
@@ -42,6 +43,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             this.issueRequestCount = issueRequestCount;
             this.status = status;
             this.metadata = options?.metadata;
+            this.revision = options?.revision;
         }
 
         public Dictionary<string, object> Properties(

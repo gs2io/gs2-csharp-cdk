@@ -17,29 +17,24 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Key.Model;
-using Gs2Cdk.Gs2Key.Model.Options;
+using Gs2Cdk.Gs2Inventory.Model;
+using Gs2Cdk.Gs2Inventory.Model.Options;
 
-namespace Gs2Cdk.Gs2Key.Model
+namespace Gs2Cdk.Gs2Inventory.Model
 {
-    public class GitHubApiKey {
+    public class BigInventoryModel {
         private string name;
-        private string apiKey;
-        private string encryptionKeyName;
-        private string description;
-        private long? revision;
+        private BigItemModel[] bigItemModels;
+        private string metadata;
 
-        public GitHubApiKey(
+        public BigInventoryModel(
             string name,
-            string apiKey,
-            string encryptionKeyName,
-            GitHubApiKeyOptions options = null
+            BigItemModel[] bigItemModels,
+            BigInventoryModelOptions options = null
         ){
             this.name = name;
-            this.apiKey = apiKey;
-            this.encryptionKeyName = encryptionKeyName;
-            this.description = options?.description;
-            this.revision = options?.revision;
+            this.bigItemModels = bigItemModels;
+            this.metadata = options?.metadata;
         }
 
         public Dictionary<string, object> Properties(
@@ -49,14 +44,12 @@ namespace Gs2Cdk.Gs2Key.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.description != null) {
-                properties["description"] = this.description;
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
-            if (this.apiKey != null) {
-                properties["apiKey"] = this.apiKey;
-            }
-            if (this.encryptionKeyName != null) {
-                properties["encryptionKeyName"] = this.encryptionKeyName;
+            if (this.bigItemModels != null) {
+                properties["bigItemModels"] = this.bigItemModels.Select(v => v.Properties(
+                        )).ToList();
             }
 
             return properties;

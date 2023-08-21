@@ -26,12 +26,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
         private string? namespaceName;
         private InventoryModel[] inventoryModels;
         private SimpleInventoryModel[] simpleInventoryModels;
+        private BigInventoryModel[] bigInventoryModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
             InventoryModel[] inventoryModels,
-            SimpleInventoryModel[] simpleInventoryModels
+            SimpleInventoryModel[] simpleInventoryModels,
+            BigInventoryModel[] bigInventoryModels
         ): base(
             "Inventory_CurrentItemModelMaster_" + namespaceName
         ){
@@ -39,6 +41,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.namespaceName = namespaceName;
             this.inventoryModels = inventoryModels;
             this.simpleInventoryModels = simpleInventoryModels;
+            this.bigInventoryModels = bigInventoryModels;
             stack.AddResource(
                 this
             );
@@ -66,6 +69,10 @@ namespace Gs2Cdk.Gs2Inventory.Model
             }
             if (this.simpleInventoryModels != null) {
                 settings["simpleInventoryModels"] = this.simpleInventoryModels.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.bigInventoryModels != null) {
+                settings["bigInventoryModels"] = this.bigInventoryModels.Select(v => v.Properties(
                         )).ToList();
             }
 

@@ -23,5 +23,6 @@ namespace Gs2Cdk.Gs2Key.Model.Options
 {
     public class GitHubApiKeyOptions {
         public string description;
+        public long? revision;
     }
 }

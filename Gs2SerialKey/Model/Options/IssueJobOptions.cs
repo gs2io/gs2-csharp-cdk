@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2SerialKey.Model.Options
 {
     public class IssueJobOptions {
         public string metadata;
+        public long? revision;
     }
 }

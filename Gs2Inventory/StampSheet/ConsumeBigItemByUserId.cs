@@ -17,32 +17,29 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Inventory.Model;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
-    public class Output {
-        private string text;
-        private long? revision;
+    public class ConsumeBigItemByUserId : ConsumeAction {
 
-        public Output(
-            string text,
-            OutputOptions options = null
-        ){
-            this.text = text;
-            this.revision = options?.revision;
-        }
 
-        public Dictionary<string, object> Properties(
-        ){
-            var properties = new Dictionary<string, object>();
-
-            if (this.text != null) {
-                properties["text"] = this.text;
+        public ConsumeBigItemByUserId(
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            string consumeCount,
+            string userId = "#{userId}"
+        ): base(
+            "Gs2Inventory:ConsumeBigItemByUserId",
+            new Dictionary<string, object>() {
+                ["namespaceName"] = namespaceName,
+                ["inventoryName"] = inventoryName,
+                ["itemName"] = itemName,
+                ["consumeCount"] = consumeCount,
+                ["userId"] = userId,
             }
-
-            return properties;
+        ){
         }
     }
 }

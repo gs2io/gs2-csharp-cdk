@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2News.Model
         private string uploadToken;
         private int? generated;
         private int? patternCount;
+        private long? revision;
 
         public Progress(
             string uploadToken,
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2News.Model
             this.uploadToken = uploadToken;
             this.generated = generated;
             this.patternCount = patternCount;
+            this.revision = options?.revision;
         }
 
         public Dictionary<string, object> Properties(

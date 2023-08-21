@@ -25,5 +25,6 @@ namespace Gs2Cdk.Gs2Log.Model.Options
     public class NamespaceTypeIsFirehoseOptions {
         public string description;
         public string status;
+        public long? revision;
     }
 }

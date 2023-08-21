@@ -17,29 +17,32 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2News.Model;
-using Gs2Cdk.Gs2News.Model.Options;
+using Gs2Cdk.Gs2Inventory.Model;
+using Gs2Cdk.Gs2Inventory.Model.Options;
 
-namespace Gs2Cdk.Gs2News.Model
+namespace Gs2Cdk.Gs2Inventory.Model
 {
-    public class Output {
-        private string text;
-        private long? revision;
+    public class BigItemModel {
+        private string name;
+        private string metadata;
 
-        public Output(
-            string text,
-            OutputOptions options = null
+        public BigItemModel(
+            string name,
+            BigItemModelOptions options = null
         ){
-            this.text = text;
-            this.revision = options?.revision;
+            this.name = name;
+            this.metadata = options?.metadata;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.text != null) {
-                properties["text"] = this.text;
+            if (this.name != null) {
+                properties["name"] = this.name;
+            }
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
 
             return properties;

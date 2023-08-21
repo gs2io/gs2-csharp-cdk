@@ -30,5 +30,6 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
         public NotificationSetting completeNotification;
         public NotificationSetting changeRatingNotification;
         public LogSetting logSetting;
+        public long? revision;
     }
 }

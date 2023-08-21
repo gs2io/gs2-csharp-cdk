@@ -50,6 +50,15 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public BigInventoryModelRef BigInventoryModel(
+            string inventoryName
+        ){
+            return (new BigInventoryModelRef(
+                this.namespaceName,
+                inventoryName
+            ));
+        }
+
         public AddCapacityByUserId AddCapacity(
             string inventoryName,
             int? addCapacityValue,
@@ -144,6 +153,21 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public AcquireBigItemByUserId AcquireBigItem(
+            string inventoryName,
+            string itemName,
+            string acquireCount,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireBigItemByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                acquireCount,
+                userId
+            ));
+        }
+
         public ConsumeItemSetByUserId ConsumeItemSet(
             string inventoryName,
             string itemName,
@@ -189,6 +213,21 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.namespaceName,
                 inventoryName,
                 consumeCounts,
+                userId
+            ));
+        }
+
+        public ConsumeBigItemByUserId ConsumeBigItem(
+            string inventoryName,
+            string itemName,
+            string consumeCount,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeBigItemByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                consumeCount,
                 userId
             ));
         }

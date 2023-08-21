@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
         private string[] taskResults;
         private string sheetResult;
         private string nextTransactionId;
+        private long? revision;
 
         public StampSheetResult(
             string userId,
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
             this.taskResults = options?.taskResults;
             this.sheetResult = options?.sheetResult;
             this.nextTransactionId = options?.nextTransactionId;
+            this.revision = options?.revision;
         }
 
         public Dictionary<string, object> Properties(

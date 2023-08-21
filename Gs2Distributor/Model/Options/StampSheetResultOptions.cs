@@ -26,5 +26,6 @@ namespace Gs2Cdk.Gs2Distributor.Model.Options
         public string[] taskResults;
         public string sheetResult;
         public string nextTransactionId;
+        public long? revision;
     }
 }
