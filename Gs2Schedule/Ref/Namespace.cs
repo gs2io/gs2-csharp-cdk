@@ -19,6 +19,7 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Schedule.Model;
+using Gs2Cdk.Gs2Schedule.StampSheet;
 
 namespace Gs2Cdk.Gs2Schedule.Ref
 {
@@ -29,6 +30,21 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             string namespaceName
         ){
             this.namespaceName = namespaceName;
+        }
+
+        public TriggerByUserId Trigger(
+            string triggerName,
+            string triggerStrategy,
+            int? ttl,
+            string userId = "#{userId}"
+        ){
+            return (new TriggerByUserId(
+                this.namespaceName,
+                triggerName,
+                triggerStrategy,
+                ttl,
+                userId
+            ));
         }
 
         public string Grn(
