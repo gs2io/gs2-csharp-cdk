@@ -50,6 +50,19 @@ namespace Gs2Cdk.Gs2Mission.Ref
             ));
         }
 
+        public RevertReceiveByUserId RevertReceive(
+            string missionGroupName,
+            string missionTaskName,
+            string userId = "#{userId}"
+        ){
+            return (new RevertReceiveByUserId(
+                this.namespaceName,
+                missionGroupName,
+                missionTaskName,
+                userId
+            ));
+        }
+
         public IncreaseCounterByUserId IncreaseCounter(
             string counterName,
             long? value,
@@ -72,6 +85,19 @@ namespace Gs2Cdk.Gs2Mission.Ref
                 this.namespaceName,
                 missionGroupName,
                 missionTaskName,
+                userId
+            ));
+        }
+
+        public DecreaseCounterByUserId DecreaseCounter(
+            string counterName,
+            long? value,
+            string userId = "#{userId}"
+        ){
+            return (new DecreaseCounterByUserId(
+                this.namespaceName,
+                counterName,
+                value,
                 userId
             ));
         }

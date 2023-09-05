@@ -41,6 +41,17 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
             ));
         }
 
+        public RevertUseByUserId RevertUse(
+            string code,
+            string userId = "#{userId}"
+        ){
+            return (new RevertUseByUserId(
+                this.namespaceName,
+                code,
+                userId
+            ));
+        }
+
         public UseByUserId Use(
             string code,
             string userId = "#{userId}"

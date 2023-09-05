@@ -46,6 +46,17 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
             ));
         }
 
+        public DeleteEntriesByUserId DeleteEntries(
+            string[] entryModelNames = null,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteEntriesByUserId(
+                this.namespaceName,
+                entryModelNames,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

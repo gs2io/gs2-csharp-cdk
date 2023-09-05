@@ -41,6 +41,21 @@ namespace Gs2Cdk.Gs2Limit.Ref
             ));
         }
 
+        public CountDownByUserId CountDown(
+            string limitName,
+            string counterName,
+            int? countDownValue,
+            string userId = "#{userId}"
+        ){
+            return (new CountDownByUserId(
+                this.namespaceName,
+                limitName,
+                counterName,
+                countDownValue,
+                userId
+            ));
+        }
+
         public DeleteCounterByUserId DeleteCounter(
             string limitName,
             string counterName,

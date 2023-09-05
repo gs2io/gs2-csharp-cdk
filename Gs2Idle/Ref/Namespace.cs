@@ -54,6 +54,19 @@ namespace Gs2Cdk.Gs2Idle.Ref
             ));
         }
 
+        public DecreaseMaximumIdleMinutesByUserId DecreaseMaximumIdleMinutes(
+            string categoryName,
+            int? decreaseMinutes = null,
+            string userId = "#{userId}"
+        ){
+            return (new DecreaseMaximumIdleMinutesByUserId(
+                this.namespaceName,
+                categoryName,
+                decreaseMinutes,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

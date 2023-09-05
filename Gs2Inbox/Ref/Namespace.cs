@@ -69,6 +69,17 @@ namespace Gs2Cdk.Gs2Inbox.Ref
             ));
         }
 
+        public DeleteMessageByUserId DeleteMessage(
+            string messageName,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteMessageByUserId(
+                this.namespaceName,
+                messageName,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

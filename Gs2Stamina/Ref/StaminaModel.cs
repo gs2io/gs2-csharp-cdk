@@ -95,6 +95,18 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             ));
         }
 
+        public DecreaseMaxValueByUserId DecreaseMaxValue(
+            int? decreaseValue,
+            string userId = "#{userId}"
+        ){
+            return (new DecreaseMaxValueByUserId(
+                this.namespaceName,
+                this.staminaName,
+                decreaseValue,
+                userId
+            ));
+        }
+
         public ConsumeStaminaByUserId ConsumeStamina(
             int? consumeValue,
             string userId = "#{userId}"

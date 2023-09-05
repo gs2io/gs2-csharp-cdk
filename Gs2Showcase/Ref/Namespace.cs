@@ -32,6 +32,21 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             this.namespaceName = namespaceName;
         }
 
+        public DecrementPurchaseCountByUserId DecrementPurchaseCount(
+            string showcaseName,
+            string displayItemName,
+            int? count,
+            string userId = "#{userId}"
+        ){
+            return (new DecrementPurchaseCountByUserId(
+                this.namespaceName,
+                showcaseName,
+                displayItemName,
+                count,
+                userId
+            ));
+        }
+
         public ForceReDrawByUserId ForceReDraw(
             string showcaseName,
             string userId = "#{userId}"

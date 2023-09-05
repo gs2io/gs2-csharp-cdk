@@ -110,6 +110,19 @@ namespace Gs2Cdk.Gs2Formation.Ref
             ));
         }
 
+        public SubMoldCapacityByUserId SubMoldCapacity(
+            string moldName,
+            int? capacity,
+            string userId = "#{userId}"
+        ){
+            return (new SubMoldCapacityByUserId(
+                this.namespaceName,
+                moldName,
+                capacity,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

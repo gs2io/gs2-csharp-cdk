@@ -52,6 +52,19 @@ namespace Gs2Cdk.Gs2LoginReward.Ref
             ));
         }
 
+        public UnmarkReceivedByUserId UnmarkReceived(
+            string bonusModelName,
+            int? stepNumber,
+            string userId = "#{userId}"
+        ){
+            return (new UnmarkReceivedByUserId(
+                this.namespaceName,
+                bonusModelName,
+                stepNumber,
+                userId
+            ));
+        }
+
         public MarkReceivedByUserId MarkReceived(
             string bonusModelName,
             int? stepNumber,

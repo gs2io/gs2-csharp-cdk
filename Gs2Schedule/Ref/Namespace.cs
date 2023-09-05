@@ -47,6 +47,17 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             ));
         }
 
+        public DeleteTriggerByUserId DeleteTrigger(
+            string triggerName,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteTriggerByUserId(
+                this.namespaceName,
+                triggerName,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

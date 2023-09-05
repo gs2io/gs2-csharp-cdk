@@ -103,6 +103,36 @@ namespace Gs2Cdk.Gs2Experience.Ref
             ));
         }
 
+        public SubExperienceByUserId SubExperience(
+            string experienceName,
+            string propertyId,
+            long? experienceValue,
+            string userId = "#{userId}"
+        ){
+            return (new SubExperienceByUserId(
+                this.namespaceName,
+                experienceName,
+                propertyId,
+                experienceValue,
+                userId
+            ));
+        }
+
+        public SubRankCapByUserId SubRankCap(
+            string experienceName,
+            string propertyId,
+            long? rankCapValue,
+            string userId = "#{userId}"
+        ){
+            return (new SubRankCapByUserId(
+                this.namespaceName,
+                experienceName,
+                propertyId,
+                rankCapValue,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

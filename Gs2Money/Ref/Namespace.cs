@@ -47,6 +47,17 @@ namespace Gs2Cdk.Gs2Money.Ref
             ));
         }
 
+        public RevertRecordReceipt RevertRecordReceipt(
+            string receipt,
+            string userId = "#{userId}"
+        ){
+            return (new RevertRecordReceipt(
+                this.namespaceName,
+                receipt,
+                userId
+            ));
+        }
+
         public WithdrawByUserId Withdraw(
             int? slot,
             int? count,

@@ -47,6 +47,18 @@ namespace Gs2Cdk.Gs2Mission.Ref
             ));
         }
 
+        public DecreaseCounterByUserId DecreaseCounter(
+            long? value,
+            string userId = "#{userId}"
+        ){
+            return (new DecreaseCounterByUserId(
+                this.namespaceName,
+                this.counterName,
+                value,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

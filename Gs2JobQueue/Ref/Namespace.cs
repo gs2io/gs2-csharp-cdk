@@ -43,6 +43,17 @@ namespace Gs2Cdk.Gs2JobQueue.Ref
             ));
         }
 
+        public DeleteJobByUserId DeleteJob(
+            string jobName,
+            string userId = "#{userId}"
+        ){
+            return (new DeleteJobByUserId(
+                this.namespaceName,
+                jobName,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(
