@@ -39,7 +39,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
         }
 
         public AcquireActionsToFormProperties AcquireActionsToFormProperties(
-            string moldName,
             int? index,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
@@ -47,7 +46,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         ){
             return (new AcquireActionsToFormProperties(
                 this.namespaceName,
-                moldName,
+                this.moldModelName,
                 index,
                 acquireAction,
                 config,

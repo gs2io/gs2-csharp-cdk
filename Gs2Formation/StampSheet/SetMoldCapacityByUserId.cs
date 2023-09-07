@@ -26,14 +26,14 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
 
         public SetMoldCapacityByUserId(
             string namespaceName,
-            string moldName,
+            string moldModelName,
             int? capacity,
             string userId = "#{userId}"
         ): base(
             "Gs2Formation:SetMoldCapacityByUserId",
             new Dictionary<string, object>() {
                 ["namespaceName"] = namespaceName,
-                ["moldName"] = moldName,
+                ["moldModelName"] = moldModelName,
                 ["capacity"] = capacity,
                 ["userId"] = userId,
             }
