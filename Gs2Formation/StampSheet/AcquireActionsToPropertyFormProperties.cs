@@ -26,7 +26,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
 
         public AcquireActionsToPropertyFormProperties(
             string namespaceName,
-            string formModelName,
+            string propertyFormModelName,
             string propertyId,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
@@ -35,7 +35,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             "Gs2Formation:AcquireActionsToPropertyFormProperties",
             new Dictionary<string, object>() {
                 ["namespaceName"] = namespaceName,
-                ["formModelName"] = formModelName,
+                ["propertyFormModelName"] = propertyFormModelName,
                 ["propertyId"] = propertyId,
                 ["acquireAction"] = acquireAction,
                 ["config"] = config,

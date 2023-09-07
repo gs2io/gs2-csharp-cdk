@@ -23,32 +23,28 @@ using Gs2Cdk.Gs2Formation.StampSheet;
 
 namespace Gs2Cdk.Gs2Formation.Ref
 {
-    public class FormModelRef {
+    public class PropertyFormModelRef {
         private string namespaceName;
-        private string moldModelName;
-        private string formModelName;
+        private string propertyFormModelName;
 
-        public FormModelRef(
+        public PropertyFormModelRef(
             string namespaceName,
-            string moldModelName,
-            string formModelName
+            string propertyFormModelName
         ){
             this.namespaceName = namespaceName;
-            this.moldModelName = moldModelName;
-            this.formModelName = formModelName;
+            this.propertyFormModelName = propertyFormModelName;
         }
 
-        public AcquireActionsToFormProperties AcquireActionsToFormProperties(
-            string moldName,
-            int? index,
+        public AcquireActionsToPropertyFormProperties AcquireActionsToPropertyFormProperties(
+            string propertyId,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
             string userId = "#{userId}"
         ){
-            return (new AcquireActionsToFormProperties(
+            return (new AcquireActionsToPropertyFormProperties(
                 this.namespaceName,
-                moldName,
-                index,
+                this.propertyFormModelName,
+                propertyId,
                 acquireAction,
                 config,
                 userId
@@ -72,11 +68,8 @@ namespace Gs2Cdk.Gs2Formation.Ref
                     "formation",
                     this.namespaceName,
                     "model",
-                    "mold",
-                    this.moldModelName,
-                    "model",
-                    "form",
-                    this.formModelName
+                    "propertyForm",
+                    this.propertyFormModelName
                 }
             )).Str(
             );

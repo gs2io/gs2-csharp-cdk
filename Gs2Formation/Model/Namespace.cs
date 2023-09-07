@@ -112,13 +112,13 @@ namespace Gs2Cdk.Gs2Formation.Model
 
         public Namespace MasterData(
             MoldModel[] moldModels,
-            FormModel[] formModels
+            PropertyFormModel[] propertyFormModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
                 moldModels,
-                formModels
+                propertyFormModels
             )).AddDependsOn(
                 this
             );

@@ -33,20 +33,20 @@ namespace Gs2Cdk.Gs2Formation.Ref
         }
 
         public MoldModelRef MoldModel(
-            string moldName
+            string moldModelName
         ){
             return (new MoldModelRef(
                 this.namespaceName,
-                moldName
+                moldModelName
             ));
         }
 
-        public FormModelRef FormModel(
-            string formModelName
+        public PropertyFormModelRef PropertyFormModel(
+            string propertyFormModelName
         ){
-            return (new FormModelRef(
+            return (new PropertyFormModelRef(
                 this.namespaceName,
-                formModelName
+                propertyFormModelName
             ));
         }
 
@@ -94,7 +94,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         }
 
         public AcquireActionsToPropertyFormProperties AcquireActionsToPropertyFormProperties(
-            string formModelName,
+            string propertyFormModelName,
             string propertyId,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
@@ -102,7 +102,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         ){
             return (new AcquireActionsToPropertyFormProperties(
                 this.namespaceName,
-                formModelName,
+                propertyFormModelName,
                 propertyId,
                 acquireAction,
                 config,

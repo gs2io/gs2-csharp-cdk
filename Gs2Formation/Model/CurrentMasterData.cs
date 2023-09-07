@@ -25,20 +25,20 @@ namespace Gs2Cdk.Gs2Formation.Model
         private string? version= "2019-09-09";
         private string? namespaceName;
         private MoldModel[] moldModels;
-        private FormModel[] formModels;
+        private PropertyFormModel[] propertyFormModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
             MoldModel[] moldModels,
-            FormModel[] formModels
+            PropertyFormModel[] propertyFormModels
         ): base(
             "Formation_CurrentFormMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.moldModels = moldModels;
-            this.formModels = formModels;
+            this.propertyFormModels = propertyFormModels;
             stack.AddResource(
                 this
             );
@@ -64,8 +64,8 @@ namespace Gs2Cdk.Gs2Formation.Model
                 settings["moldModels"] = this.moldModels.Select(v => v.Properties(
                         )).ToList();
             }
-            if (this.formModels != null) {
-                settings["formModels"] = this.formModels.Select(v => v.Properties(
+            if (this.propertyFormModels != null) {
+                settings["propertyFormModels"] = this.propertyFormModels.Select(v => v.Properties(
                         )).ToList();
             }
 
