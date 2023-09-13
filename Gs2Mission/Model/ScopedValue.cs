@@ -69,9 +69,23 @@ namespace Gs2Cdk.Gs2Mission.Model
                         _ => ScopedValueResetType.NotReset
                     };
                 })(),
-                (long?)properties["value"],
+                new Func<long?>(() =>
+                {
+                    return properties["value"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ScopedValueOptions {
-                    nextResetAt = properties.TryGetValue("nextResetAt", out var nextResetAt) ? (long?)nextResetAt : null
+                    nextResetAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("nextResetAt", out var nextResetAt) ? nextResetAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

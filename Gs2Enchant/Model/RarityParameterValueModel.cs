@@ -73,8 +73,22 @@ namespace Gs2Cdk.Gs2Enchant.Model
             var model = new RarityParameterValueModel(
                 (string)properties["name"],
                 (string)properties["resourceName"],
-                (long)properties["resourceValue"],
-                (int)properties["weight"],
+                new Func<long>(() =>
+                {
+                    return properties["resourceValue"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RarityParameterValueModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

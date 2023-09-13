@@ -52,7 +52,14 @@ namespace Gs2Cdk.Gs2News.Model
             var model = new Output(
                 (string)properties["text"],
                 new OutputOptions {
-                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                    revision = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("revision", out var revision) ? revision switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

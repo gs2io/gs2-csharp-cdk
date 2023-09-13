@@ -250,14 +250,56 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 })(),
                 new EventOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    absoluteBegin = properties.TryGetValue("absoluteBegin", out var absoluteBegin) ? (long?)absoluteBegin : null,
-                    absoluteEnd = properties.TryGetValue("absoluteEnd", out var absoluteEnd) ? (long?)absoluteEnd : null,
-                    repeatBeginDayOfMonth = properties.TryGetValue("repeatBeginDayOfMonth", out var repeatBeginDayOfMonth) ? (int?)repeatBeginDayOfMonth : null,
-                    repeatEndDayOfMonth = properties.TryGetValue("repeatEndDayOfMonth", out var repeatEndDayOfMonth) ? (int?)repeatEndDayOfMonth : null,
+                    absoluteBegin = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("absoluteBegin", out var absoluteBegin) ? absoluteBegin switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    absoluteEnd = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("absoluteEnd", out var absoluteEnd) ? absoluteEnd switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    repeatBeginDayOfMonth = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("repeatBeginDayOfMonth", out var repeatBeginDayOfMonth) ? repeatBeginDayOfMonth switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    repeatEndDayOfMonth = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("repeatEndDayOfMonth", out var repeatEndDayOfMonth) ? repeatEndDayOfMonth switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     repeatBeginDayOfWeek = properties.TryGetValue("repeatBeginDayOfWeek", out var repeatBeginDayOfWeek) ? EventRepeatBeginDayOfWeekExt.New(repeatBeginDayOfWeek as string) : EventRepeatBeginDayOfWeek.Sunday,
                     repeatEndDayOfWeek = properties.TryGetValue("repeatEndDayOfWeek", out var repeatEndDayOfWeek) ? EventRepeatEndDayOfWeekExt.New(repeatEndDayOfWeek as string) : EventRepeatEndDayOfWeek.Sunday,
-                    repeatBeginHour = properties.TryGetValue("repeatBeginHour", out var repeatBeginHour) ? (int?)repeatBeginHour : null,
-                    repeatEndHour = properties.TryGetValue("repeatEndHour", out var repeatEndHour) ? (int?)repeatEndHour : null,
+                    repeatBeginHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("repeatBeginHour", out var repeatBeginHour) ? repeatBeginHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    repeatEndHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("repeatEndHour", out var repeatEndHour) ? repeatEndHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     relativeTriggerName = properties.TryGetValue("relativeTriggerName", out var relativeTriggerName) ? (string)relativeTriggerName : null
                 }
             );

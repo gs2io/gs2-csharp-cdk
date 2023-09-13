@@ -54,8 +54,22 @@ namespace Gs2Cdk.Gs2Enhance.Model
             Dictionary<string, object> properties
         ){
             var model = new BonusRate(
-                (float?)properties["rate"],
-                (int?)properties["weight"],
+                new Func<float?>(() =>
+                {
+                    return properties["rate"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new BonusRateOptions {
                 }
             );

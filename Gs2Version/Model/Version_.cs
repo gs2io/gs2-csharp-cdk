@@ -60,9 +60,30 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new Version_(
-                (int)properties["major"],
-                (int)properties["minor"],
-                (int)properties["micro"],
+                new Func<int>(() =>
+                {
+                    return properties["major"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["minor"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["micro"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new VersionOptions {
                 }
             );

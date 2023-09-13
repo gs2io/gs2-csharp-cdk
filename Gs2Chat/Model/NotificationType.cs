@@ -54,8 +54,22 @@ namespace Gs2Cdk.Gs2Chat.Model
             Dictionary<string, object> properties
         ){
             var model = new NotificationType(
-                (int?)properties["category"],
-                (bool?)properties["enableTransferMobilePushNotification"],
+                new Func<int?>(() =>
+                {
+                    return properties["category"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<bool?>(() =>
+                {
+                    return properties["enableTransferMobilePushNotification"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
                 new NotificationTypeOptions {
                 }
             );

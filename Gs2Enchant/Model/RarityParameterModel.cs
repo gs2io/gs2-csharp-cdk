@@ -74,7 +74,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
         ){
             var model = new RarityParameterModel(
                 (string)properties["name"],
-                (int)properties["maximumParameterCount"],
+                new Func<int>(() =>
+                {
+                    return properties["maximumParameterCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<RarityParameterCountModel[]>(() =>
                 {
                     return properties["parameterCounts"] switch {

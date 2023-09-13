@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Ranking.Model
         ){
             var model = new Scope(
                 (string)properties["name"],
-                (long)properties["targetDays"],
+                new Func<long>(() =>
+                {
+                    return properties["targetDays"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ScopeOptions {
                 }
             );

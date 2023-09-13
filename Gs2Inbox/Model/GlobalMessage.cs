@@ -92,7 +92,14 @@ namespace Gs2Cdk.Gs2Inbox.Model
                             _ => null
                         };
                     })() : null,
-                    expiresAt = properties.TryGetValue("expiresAt", out var expiresAt) ? (long?)expiresAt : null
+                    expiresAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("expiresAt", out var expiresAt) ? expiresAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

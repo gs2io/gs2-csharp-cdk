@@ -65,7 +65,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 new Func<Position>(() =>
                 {
                     return properties["position"] switch {
-                        Position m => m,
+                        Position v => v,
                         Dictionary<string, object> v => Position.FromProperties(v),
                         _ => null
                     };
@@ -73,12 +73,19 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 new Func<Vector>(() =>
                 {
                     return properties["vector"] switch {
-                        Vector m => m,
+                        Vector v => v,
                         Dictionary<string, object> v => Vector.FromProperties(v),
                         _ => null
                     };
                 })(),
-                (float?)properties["r"],
+                new Func<float?>(() =>
+                {
+                    return properties["r"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new MyPositionOptions {
                 }
             );

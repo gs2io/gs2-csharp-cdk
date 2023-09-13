@@ -61,8 +61,22 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         ){
             var model = new AttributeRange(
                 (string)properties["name"],
-                (int?)properties["min"],
-                (int?)properties["max"],
+                new Func<int?>(() =>
+                {
+                    return properties["min"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["max"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new AttributeRangeOptions {
                 }
             );

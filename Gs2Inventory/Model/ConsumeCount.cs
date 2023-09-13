@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
         ){
             var model = new ConsumeCount(
                 (string)properties["itemName"],
-                (long)properties["count"],
+                new Func<long>(() =>
+                {
+                    return properties["count"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ConsumeCountOptions {
                 }
             );

@@ -82,7 +82,14 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                         _ => null
                     };
                 })(),
-                (float?)properties["restrainReturnRate"],
+                new Func<float?>(() =>
+                {
+                    return properties["restrainReturnRate"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new NodeModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     returnAcquireActions = properties.TryGetValue("returnAcquireActions", out var returnAcquireActions) ? new Func<AcquireAction[]>(() =>

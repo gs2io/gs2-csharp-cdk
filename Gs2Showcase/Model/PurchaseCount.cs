@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Showcase.Model
         ){
             var model = new PurchaseCount(
                 (string)properties["name"],
-                (int)properties["count"],
+                new Func<int>(() =>
+                {
+                    return properties["count"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new PurchaseCountOptions {
                 }
             );

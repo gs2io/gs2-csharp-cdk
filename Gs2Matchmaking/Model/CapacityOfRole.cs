@@ -66,7 +66,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         ){
             var model = new CapacityOfRole(
                 (string)properties["roleName"],
-                (int)properties["capacity"],
+                new Func<int>(() =>
+                {
+                    return properties["capacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new CapacityOfRoleOptions {
                     roleAliases = properties.TryGetValue("roleAliases", out var roleAliases) ? new Func<string[]>(() =>
                     {

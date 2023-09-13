@@ -59,7 +59,14 @@ namespace Gs2Cdk.Gs2Quest.Model
             Dictionary<string, object> properties
         ){
             var model = new Contents(
-                (int?)properties["weight"],
+                new Func<int?>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ContentsOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     completeAcquireActions = properties.TryGetValue("completeAcquireActions", out var completeAcquireActions) ? new Func<AcquireAction[]>(() =>

@@ -84,7 +84,14 @@ namespace Gs2Cdk.Gs2Showcase.Model
         ){
             var model = new RandomShowcase(
                 (string)properties["name"],
-                (int)properties["maximumNumberOfChoice"],
+                new Func<int>(() =>
+                {
+                    return properties["maximumNumberOfChoice"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<RandomDisplayItemModel[]>(() =>
                 {
                     return properties["displayItems"] switch {
@@ -93,8 +100,22 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         _ => null
                     };
                 })(),
-                (long)properties["baseTimestamp"],
-                (int)properties["resetIntervalHours"],
+                new Func<long>(() =>
+                {
+                    return properties["baseTimestamp"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["resetIntervalHours"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RandomShowcaseOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null

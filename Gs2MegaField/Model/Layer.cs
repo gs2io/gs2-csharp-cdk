@@ -79,9 +79,30 @@ namespace Gs2Cdk.Gs2MegaField.Model
             var model = new Layer(
                 (string)properties["areaModelName"],
                 (string)properties["layerModelName"],
-                (int?)properties["numberOfMinEntries"],
-                (int?)properties["numberOfMaxEntries"],
-                (int)properties["height"],
+                new Func<int?>(() =>
+                {
+                    return properties["numberOfMinEntries"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["numberOfMaxEntries"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["height"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new LayerOptions {
                     root = properties.TryGetValue("root", out var root) ? (string)root : null
                 }

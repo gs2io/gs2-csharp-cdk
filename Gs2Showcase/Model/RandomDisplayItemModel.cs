@@ -87,8 +87,22 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         _ => null
                     };
                 })(),
-                (int)properties["stock"],
-                (int)properties["weight"],
+                new Func<int>(() =>
+                {
+                    return properties["stock"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RandomDisplayItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>

@@ -60,7 +60,14 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         ){
             var model = new CampaignModel(
                 (string)properties["name"],
-                (bool?)properties["enableCampaignCode"],
+                new Func<bool?>(() =>
+                {
+                    return properties["enableCampaignCode"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
                 new CampaignModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

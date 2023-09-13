@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Enhance.Model
         ){
             var model = new Material(
                 (string)properties["materialItemSetId"],
-                (int?)properties["count"],
+                new Func<int?>(() =>
+                {
+                    return properties["count"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new MaterialOptions {
                 }
             );

@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         ){
             var model = new Attribute_(
                 (string)properties["name"],
-                (int?)properties["value"],
+                new Func<int?>(() =>
+                {
+                    return properties["value"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new AttributeOptions {
                 }
             );

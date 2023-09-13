@@ -201,15 +201,64 @@ namespace Gs2Cdk.Gs2Ranking.Model
                         _ => CategoryModelScope.Global
                     };
                 })(),
-                (bool)properties["uniqueByUserId"],
+                new Func<bool>(() =>
+                {
+                    return properties["uniqueByUserId"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
                 new CategoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    minimumValue = properties.TryGetValue("minimumValue", out var minimumValue) ? (long?)minimumValue : null,
-                    maximumValue = properties.TryGetValue("maximumValue", out var maximumValue) ? (long?)maximumValue : null,
-                    sum = properties.TryGetValue("sum", out var sum) ? (bool?)sum : null,
-                    calculateFixedTimingHour = properties.TryGetValue("calculateFixedTimingHour", out var calculateFixedTimingHour) ? (int?)calculateFixedTimingHour : null,
-                    calculateFixedTimingMinute = properties.TryGetValue("calculateFixedTimingMinute", out var calculateFixedTimingMinute) ? (int?)calculateFixedTimingMinute : null,
-                    calculateIntervalMinutes = properties.TryGetValue("calculateIntervalMinutes", out var calculateIntervalMinutes) ? (int?)calculateIntervalMinutes : null,
+                    minimumValue = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("minimumValue", out var minimumValue) ? minimumValue switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    maximumValue = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("maximumValue", out var maximumValue) ? maximumValue switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    sum = new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("sum", out var sum) ? sum switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    calculateFixedTimingHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("calculateFixedTimingHour", out var calculateFixedTimingHour) ? calculateFixedTimingHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    calculateFixedTimingMinute = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("calculateFixedTimingMinute", out var calculateFixedTimingMinute) ? calculateFixedTimingMinute switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    calculateIntervalMinutes = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("calculateIntervalMinutes", out var calculateIntervalMinutes) ? calculateIntervalMinutes switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     additionalScopes = properties.TryGetValue("additionalScopes", out var additionalScopes) ? new Func<Scope[]>(() =>
                     {
                         return additionalScopes switch {

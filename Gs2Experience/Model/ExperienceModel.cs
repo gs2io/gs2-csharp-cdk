@@ -85,13 +85,34 @@ namespace Gs2Cdk.Gs2Experience.Model
         ){
             var model = new ExperienceModel(
                 (string)properties["name"],
-                (long?)properties["defaultExperience"],
-                (long)properties["defaultRankCap"],
-                (long)properties["maxRankCap"],
+                new Func<long?>(() =>
+                {
+                    return properties["defaultExperience"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<long>(() =>
+                {
+                    return properties["defaultRankCap"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<long>(() =>
+                {
+                    return properties["maxRankCap"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<Threshold>(() =>
                 {
                     return properties["rankThreshold"] switch {
-                        Threshold m => m,
+                        Threshold v => v,
                         Dictionary<string, object> v => Threshold.FromProperties(v),
                         _ => null
                     };

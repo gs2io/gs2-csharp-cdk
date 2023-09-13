@@ -54,8 +54,22 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new RarityParameterCountModel(
-                (int)properties["count"],
-                (int)properties["weight"],
+                new Func<int>(() =>
+                {
+                    return properties["count"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RarityParameterCountModelOptions {
                 }
             );

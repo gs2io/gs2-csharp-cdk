@@ -60,8 +60,22 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new BoxItem(
-                (int)properties["remaining"],
-                (int)properties["initial"],
+                new Func<int>(() =>
+                {
+                    return properties["remaining"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["initial"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new BoxItemOptions {
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                     {

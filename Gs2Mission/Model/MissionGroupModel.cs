@@ -179,9 +179,23 @@ namespace Gs2Cdk.Gs2Mission.Model
                             _ => null
                         };
                     })() : null,
-                    resetDayOfMonth = properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? (int?)resetDayOfMonth : null,
+                    resetDayOfMonth = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? resetDayOfMonth switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? MissionGroupModelResetDayOfWeekExt.New(resetDayOfWeek as string) : MissionGroupModelResetDayOfWeek.Sunday,
-                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null,
+                    resetHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("resetHour", out var resetHour) ? resetHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     completeNotificationNamespaceId = properties.TryGetValue("completeNotificationNamespaceId", out var completeNotificationNamespaceId) ? (string)completeNotificationNamespaceId : null
                 }
             );

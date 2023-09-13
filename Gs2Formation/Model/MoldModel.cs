@@ -73,12 +73,26 @@ namespace Gs2Cdk.Gs2Formation.Model
         ){
             var model = new MoldModel(
                 (string)properties["name"],
-                (int)properties["initialMaxCapacity"],
-                (int)properties["maxCapacity"],
+                new Func<int>(() =>
+                {
+                    return properties["initialMaxCapacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["maxCapacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<FormModel>(() =>
                 {
                     return properties["formModel"] switch {
-                        FormModel m => m,
+                        FormModel v => v,
                         Dictionary<string, object> v => FormModel.FromProperties(v),
                         _ => null
                     };

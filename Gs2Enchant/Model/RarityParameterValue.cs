@@ -62,7 +62,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
             var model = new RarityParameterValue(
                 (string)properties["name"],
                 (string)properties["resourceName"],
-                (long)properties["resourceValue"],
+                new Func<long>(() =>
+                {
+                    return properties["resourceValue"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RarityParameterValueOptions {
                 }
             );

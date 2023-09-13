@@ -190,7 +190,14 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                 new BonusModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     periodEventId = properties.TryGetValue("periodEventId", out var periodEventId) ? (string)periodEventId : null,
-                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null,
+                    resetHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("resetHour", out var resetHour) ? resetHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     repeat = properties.TryGetValue("repeat", out var repeat) ? BonusModelRepeatExt.New(repeat as string) : BonusModelRepeat.Enabled,
                     rewards = properties.TryGetValue("rewards", out var rewards) ? new Func<Reward[]>(() =>
                     {

@@ -101,13 +101,48 @@ namespace Gs2Cdk.Gs2Stamina.Model
         ){
             var model = new StaminaModel(
                 (string)properties["name"],
-                (int)properties["recoverIntervalMinutes"],
-                (int?)properties["recoverValue"],
-                (int)properties["initialCapacity"],
-                (bool)properties["isOverflow"],
+                new Func<int>(() =>
+                {
+                    return properties["recoverIntervalMinutes"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["recoverValue"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["initialCapacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<bool>(() =>
+                {
+                    return properties["isOverflow"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
                 new StaminaModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    maxCapacity = properties.TryGetValue("maxCapacity", out var maxCapacity) ? (int?)maxCapacity : null,
+                    maxCapacity = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("maxCapacity", out var maxCapacity) ? maxCapacity switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     maxStaminaTable = properties.TryGetValue("maxStaminaTable", out var maxStaminaTable) ? new Func<MaxStaminaTable>(() =>
                     {
                         return maxStaminaTable switch {

@@ -146,8 +146,22 @@ namespace Gs2Cdk.Gs2Exchange.Model
                             _ => null
                         };
                     })() : null,
-                    lockTime = properties.TryGetValue("lockTime", out var lockTime) ? (int?)lockTime : null,
-                    enableSkip = properties.TryGetValue("enableSkip", out var enableSkip) ? (bool?)enableSkip : null,
+                    lockTime = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("lockTime", out var lockTime) ? lockTime switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    enableSkip = new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("enableSkip", out var enableSkip) ? enableSkip switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     skipConsumeActions = properties.TryGetValue("skipConsumeActions", out var skipConsumeActions) ? new Func<ConsumeAction[]>(() =>
                     {
                         return skipConsumeActions switch {

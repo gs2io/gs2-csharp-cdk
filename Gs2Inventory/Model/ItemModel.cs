@@ -72,9 +72,30 @@ namespace Gs2Cdk.Gs2Inventory.Model
         ){
             var model = new ItemModel(
                 (string)properties["name"],
-                (long)properties["stackingLimit"],
-                (bool)properties["allowMultipleStacks"],
-                (int)properties["sortValue"],
+                new Func<long>(() =>
+                {
+                    return properties["stackingLimit"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<bool>(() =>
+                {
+                    return properties["allowMultipleStacks"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["sortValue"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

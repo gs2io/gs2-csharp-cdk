@@ -126,7 +126,14 @@ namespace Gs2Cdk.Gs2Lottery.Model
                         _ => PrizeType.Action
                     };
                 })(),
-                (int)properties["weight"],
+                new Func<int>(() =>
+                {
+                    return properties["weight"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new PrizeOptions {
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                     {
@@ -138,7 +145,14 @@ namespace Gs2Cdk.Gs2Lottery.Model
                             _ => null
                         };
                     })() : null,
-                    drawnLimit = properties.TryGetValue("drawnLimit", out var drawnLimit) ? (int?)drawnLimit : null,
+                    drawnLimit = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("drawnLimit", out var drawnLimit) ? drawnLimit switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     limitFailOverPrizeId = properties.TryGetValue("limitFailOverPrizeId", out var limitFailOverPrizeId) ? (string)limitFailOverPrizeId : null,
                     prizeTableName = properties.TryGetValue("prizeTableName", out var prizeTableName) ? (string)prizeTableName : null
                 }

@@ -61,8 +61,22 @@ namespace Gs2Cdk.Gs2MegaField.Model
         ){
             var model = new Scope(
                 (string)properties["layerName"],
-                (float)properties["r"],
-                (int)properties["limit"],
+                new Func<float>(() =>
+                {
+                    return properties["r"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["limit"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ScopeOptions {
                 }
             );

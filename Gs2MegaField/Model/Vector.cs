@@ -60,9 +60,30 @@ namespace Gs2Cdk.Gs2MegaField.Model
             Dictionary<string, object> properties
         ){
             var model = new Vector(
-                (float)properties["x"],
-                (float)properties["y"],
-                (float)properties["z"],
+                new Func<float>(() =>
+                {
+                    return properties["x"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<float>(() =>
+                {
+                    return properties["y"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<float>(() =>
+                {
+                    return properties["z"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new VectorOptions {
                 }
             );

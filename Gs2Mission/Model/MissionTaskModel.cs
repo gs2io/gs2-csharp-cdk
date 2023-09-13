@@ -90,7 +90,14 @@ namespace Gs2Cdk.Gs2Mission.Model
             var model = new MissionTaskModel(
                 (string)properties["name"],
                 (string)properties["counterName"],
-                (long)properties["targetValue"],
+                new Func<long>(() =>
+                {
+                    return properties["targetValue"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new MissionTaskModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     targetResetType = properties.TryGetValue("targetResetType", out var targetResetType) ? MissionTaskModelTargetResetTypeExt.New(targetResetType as string) : MissionTaskModelTargetResetType.NotReset,

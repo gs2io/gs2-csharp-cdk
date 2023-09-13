@@ -89,7 +89,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
                 new Func<AcquireAction>(() =>
                 {
                     return properties["sheetRequest"] switch {
-                        AcquireAction m => m,
+                        AcquireAction v => v,
                         Dictionary<string, object> v => AcquireAction.FromProperties(v),
                         _ => null
                     };
@@ -115,7 +115,14 @@ namespace Gs2Cdk.Gs2Distributor.Model
                     })() : null,
                     sheetResult = properties.TryGetValue("sheetResult", out var sheetResult) ? (string)sheetResult : null,
                     nextTransactionId = properties.TryGetValue("nextTransactionId", out var nextTransactionId) ? (string)nextTransactionId : null,
-                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                    revision = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("revision", out var revision) ? revision switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

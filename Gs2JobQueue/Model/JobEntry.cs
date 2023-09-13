@@ -62,7 +62,14 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             var model = new JobEntry(
                 (string)properties["scriptId"],
                 (string)properties["args"],
-                (int?)properties["maxTryCount"],
+                new Func<int?>(() =>
+                {
+                    return properties["maxTryCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new JobEntryOptions {
                 }
             );

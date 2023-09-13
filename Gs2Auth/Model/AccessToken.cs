@@ -68,8 +68,22 @@ namespace Gs2Cdk.Gs2Auth.Model
             var model = new AccessToken(
                 (string)properties["ownerId"],
                 (string)properties["userId"],
-                (long?)properties["expire"],
-                (int?)properties["timeOffset"],
+                new Func<long?>(() =>
+                {
+                    return properties["expire"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["timeOffset"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new AccessTokenOptions {
                 }
             );

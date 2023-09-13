@@ -78,8 +78,22 @@ namespace Gs2Cdk.Gs2Inventory.Model
         ){
             var model = new InventoryModel(
                 (string)properties["name"],
-                (int)properties["initialCapacity"],
-                (int)properties["maxCapacity"],
+                new Func<int>(() =>
+                {
+                    return properties["initialCapacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["maxCapacity"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<ItemModel[]>(() =>
                 {
                     return properties["itemModels"] switch {
@@ -90,7 +104,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
                 })(),
                 new InventoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    protectReferencedItem = properties.TryGetValue("protectReferencedItem", out var protectReferencedItem) ? (bool?)protectReferencedItem : null
+                    protectReferencedItem = new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("protectReferencedItem", out var protectReferencedItem) ? protectReferencedItem switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

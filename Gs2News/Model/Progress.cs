@@ -63,10 +63,31 @@ namespace Gs2Cdk.Gs2News.Model
         ){
             var model = new Progress(
                 (string)properties["uploadToken"],
-                (int)properties["generated"],
-                (int)properties["patternCount"],
+                new Func<int>(() =>
+                {
+                    return properties["generated"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["patternCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new ProgressOptions {
-                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                    revision = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("revision", out var revision) ? revision switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

@@ -75,7 +75,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
         ){
             var model = new BalanceParameterModel(
                 (string)properties["name"],
-                (long)properties["totalValue"],
+                new Func<long>(() =>
+                {
+                    return properties["totalValue"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<BalanceParameterModelInitialValueStrategy>(() =>
                 {
                     return properties["initialValueStrategy"] switch {

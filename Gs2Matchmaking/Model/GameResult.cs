@@ -54,7 +54,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new GameResult(
-                (int)properties["rank"],
+                new Func<int>(() =>
+                {
+                    return properties["rank"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 (string)properties["userId"],
                 new GameResultOptions {
                 }

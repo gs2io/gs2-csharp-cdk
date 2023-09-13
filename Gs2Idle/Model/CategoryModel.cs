@@ -83,8 +83,22 @@ namespace Gs2Cdk.Gs2Idle.Model
         ){
             var model = new CategoryModel(
                 (string)properties["name"],
-                (int)properties["rewardIntervalMinutes"],
-                (int)properties["defaultMaximumIdleMinutes"],
+                new Func<int>(() =>
+                {
+                    return properties["rewardIntervalMinutes"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["defaultMaximumIdleMinutes"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<AcquireActionList[]>(() =>
                 {
                     return properties["acquireActions"] switch {

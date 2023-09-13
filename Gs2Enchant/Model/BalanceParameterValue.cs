@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
         ){
             var model = new BalanceParameterValue(
                 (string)properties["name"],
-                (long)properties["value"],
+                new Func<long>(() =>
+                {
+                    return properties["value"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new BalanceParameterValueOptions {
                 }
             );

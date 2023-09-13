@@ -133,7 +133,7 @@ namespace Gs2Cdk.Gs2Version.Model
                 new Func<Version_>(() =>
                 {
                     return properties["warningVersion"] switch {
-                        Version_ m => m,
+                        Version_ v => v,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         _ => null
                     };
@@ -141,7 +141,7 @@ namespace Gs2Cdk.Gs2Version.Model
                 new Func<Version_>(() =>
                 {
                     return properties["errorVersion"] switch {
-                        Version_ m => m,
+                        Version_ v => v,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         _ => null
                     };
@@ -164,7 +164,14 @@ namespace Gs2Cdk.Gs2Version.Model
                             _ => null
                         };
                     })() : null,
-                    needSignature = properties.TryGetValue("needSignature", out var needSignature) ? (bool?)needSignature : null,
+                    needSignature = new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("needSignature", out var needSignature) ? needSignature switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     signatureKeyId = properties.TryGetValue("signatureKeyId", out var signatureKeyId) ? (string)signatureKeyId : null
                 }
             );

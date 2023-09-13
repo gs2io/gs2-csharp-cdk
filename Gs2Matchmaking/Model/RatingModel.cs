@@ -66,8 +66,22 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         ){
             var model = new RatingModel(
                 (string)properties["name"],
-                (int?)properties["initialValue"],
-                (int?)properties["volatility"],
+                new Func<int?>(() =>
+                {
+                    return properties["initialValue"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["volatility"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RatingModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

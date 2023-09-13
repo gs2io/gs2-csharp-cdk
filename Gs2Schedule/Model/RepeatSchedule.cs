@@ -68,12 +68,47 @@ namespace Gs2Cdk.Gs2Schedule.Model
             Dictionary<string, object> properties
         ){
             var model = new RepeatSchedule(
-                (int)properties["repeatCount"],
+                new Func<int>(() =>
+                {
+                    return properties["repeatCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RepeatScheduleOptions {
-                    currentRepeatStartAt = properties.TryGetValue("currentRepeatStartAt", out var currentRepeatStartAt) ? (long?)currentRepeatStartAt : null,
-                    currentRepeatEndAt = properties.TryGetValue("currentRepeatEndAt", out var currentRepeatEndAt) ? (long?)currentRepeatEndAt : null,
-                    lastRepeatEndAt = properties.TryGetValue("lastRepeatEndAt", out var lastRepeatEndAt) ? (long?)lastRepeatEndAt : null,
-                    nextRepeatStartAt = properties.TryGetValue("nextRepeatStartAt", out var nextRepeatStartAt) ? (long?)nextRepeatStartAt : null
+                    currentRepeatStartAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("currentRepeatStartAt", out var currentRepeatStartAt) ? currentRepeatStartAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    currentRepeatEndAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("currentRepeatEndAt", out var currentRepeatEndAt) ? currentRepeatEndAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    lastRepeatEndAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("lastRepeatEndAt", out var lastRepeatEndAt) ? lastRepeatEndAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    nextRepeatStartAt = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("nextRepeatStartAt", out var nextRepeatStartAt) ? nextRepeatStartAt switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

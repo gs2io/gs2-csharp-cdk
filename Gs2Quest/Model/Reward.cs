@@ -69,7 +69,14 @@ namespace Gs2Cdk.Gs2Quest.Model
                 (string)properties["action"],
                 (string)properties["request"],
                 (string)properties["itemId"],
-                (int)properties["value"],
+                new Func<int>(() =>
+                {
+                    return properties["value"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new RewardOptions {
                 }
             );

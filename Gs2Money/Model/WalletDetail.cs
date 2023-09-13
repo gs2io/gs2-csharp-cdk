@@ -54,8 +54,22 @@ namespace Gs2Cdk.Gs2Money.Model
             Dictionary<string, object> properties
         ){
             var model = new WalletDetail(
-                (float)properties["price"],
-                (int)properties["count"],
+                new Func<float>(() =>
+                {
+                    return properties["price"] switch {
+                        float v => v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["count"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new WalletDetailOptions {
                 }
             );

@@ -76,8 +76,22 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         ){
             var model = new IssueJob(
                 (string)properties["name"],
-                (int?)properties["issuedCount"],
-                (int)properties["issueRequestCount"],
+                new Func<int?>(() =>
+                {
+                    return properties["issuedCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["issueRequestCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new Func<IssueJobStatus>(() =>
                 {
                     return properties["status"] switch {
@@ -88,7 +102,14 @@ namespace Gs2Cdk.Gs2SerialKey.Model
                 })(),
                 new IssueJobOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                    revision = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("revision", out var revision) ? revision switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

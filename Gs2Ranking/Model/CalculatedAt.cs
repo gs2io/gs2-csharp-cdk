@@ -55,7 +55,14 @@ namespace Gs2Cdk.Gs2Ranking.Model
         ){
             var model = new CalculatedAt(
                 (string)properties["categoryName"],
-                (long)properties["calculatedAt"],
+                new Func<long>(() =>
+                {
+                    return properties["calculatedAt"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new CalculatedAtOptions {
                 }
             );

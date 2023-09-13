@@ -60,9 +60,30 @@ namespace Gs2Cdk.Gs2Inbox.Model
             Dictionary<string, object> properties
         ){
             var model = new TimeSpan_(
-                (int?)properties["days"],
-                (int?)properties["hours"],
-                (int?)properties["minutes"],
+                new Func<int?>(() =>
+                {
+                    return properties["days"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["hours"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties["minutes"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new TimeSpanOptions {
                 }
             );

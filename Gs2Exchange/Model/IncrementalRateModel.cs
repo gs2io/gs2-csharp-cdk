@@ -173,7 +173,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 new Func<ConsumeAction>(() =>
                 {
                     return properties["consumeAction"] switch {
-                        ConsumeAction m => m,
+                        ConsumeAction v => v,
                         Dictionary<string, object> v => ConsumeAction.FromProperties(v),
                         _ => null
                     };
@@ -187,11 +187,32 @@ namespace Gs2Cdk.Gs2Exchange.Model
                     };
                 })(),
                 (string)properties["exchangeCountId"],
-                (int?)properties["maximumExchangeCount"],
+                new Func<int?>(() =>
+                {
+                    return properties["maximumExchangeCount"] switch {
+                        int v => v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
                 new IncrementalRateModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    baseValue = properties.TryGetValue("baseValue", out var baseValue) ? (long?)baseValue : null,
-                    coefficientValue = properties.TryGetValue("coefficientValue", out var coefficientValue) ? (long?)coefficientValue : null,
+                    baseValue = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("baseValue", out var baseValue) ? baseValue switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    coefficientValue = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("coefficientValue", out var coefficientValue) ? coefficientValue switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     calculateScriptId = properties.TryGetValue("calculateScriptId", out var calculateScriptId) ? (string)calculateScriptId : null,
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                     {
