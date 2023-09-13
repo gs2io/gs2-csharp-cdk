@@ -48,5 +48,18 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public ConsumeCount FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ConsumeCount(
+                properties["itemName"] as string,
+                properties["count"] as long?,
+                new ConsumeCountOptions {
+                }
+            );
+
+            return model;
+        }
     }
 }

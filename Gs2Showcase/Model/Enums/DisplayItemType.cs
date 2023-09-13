@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Showcase.Model.Enums
             }
             return "unknown";
         }
+
+        public static DisplayItemType New(string value) {
+            switch (value) {
+                case "salesItem":
+                    return DisplayItemType.SalesItem;
+                case "salesItemGroup":
+                    return DisplayItemType.SalesItemGroup;
+            }
+            return DisplayItemType.SalesItem;
+        }
     }
 }

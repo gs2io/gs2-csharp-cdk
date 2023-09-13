@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,13 +24,13 @@ using Gs2Cdk.Gs2JobQueue.Model.Options;
 namespace Gs2Cdk.Gs2JobQueue.Model
 {
     public class JobResultBody {
-        private int? tryNumber;
-        private int? statusCode;
+        private int tryNumber;
+        private int statusCode;
         private string result;
 
         public JobResultBody(
-            int? tryNumber,
-            int? statusCode,
+            int tryNumber,
+            int statusCode,
             string result,
             JobResultBodyOptions options = null
         ){
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             }
 
             return properties;
+        }
+
+        public static JobResultBody FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new JobResultBody(
+                (int)properties["tryNumber"],
+                (int)properties["statusCode"],
+                (string)properties["result"],
+                new JobResultBodyOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

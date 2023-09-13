@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,6 +48,28 @@ namespace Gs2Cdk.Gs2Lottery.Model
             }
 
             return properties;
+        }
+
+        public static DrawnPrize FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new DrawnPrize(
+                (string)properties["prizeId"],
+                new DrawnPrizeOptions {
+                    acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return acquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,6 +58,30 @@ namespace Gs2Cdk.Gs2Quest.Model
             }
 
             return properties;
+        }
+
+        public static QuestGroupModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new QuestGroupModel(
+                (string)properties["name"],
+                new QuestGroupModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    quests = properties.TryGetValue("quests", out var quests) ? new Func<QuestModel[]>(() =>
+                    {
+                        return quests switch {
+                            QuestModel[] v => v,
+                            List<QuestModel> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(QuestModel.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(QuestModel.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null
+                }
+            );
+
+            return model;
         }
     }
 }

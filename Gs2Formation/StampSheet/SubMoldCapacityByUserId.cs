@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         public SubMoldCapacityByUserId(
             string namespaceName,
             string moldModelName,
-            int? capacity,
+            int capacity,
             string userId = "#{userId}"
         ): base(
             "Gs2Formation:SubMoldCapacityByUserId",

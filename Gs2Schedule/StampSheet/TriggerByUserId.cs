@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             string namespaceName,
             string triggerName,
             string triggerStrategy,
-            int? ttl,
+            int ttl,
             string userId = "#{userId}"
         ): base(
             "Gs2Schedule:TriggerByUserId",

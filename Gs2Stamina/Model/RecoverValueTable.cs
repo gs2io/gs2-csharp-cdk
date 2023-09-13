@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,28 @@ namespace Gs2Cdk.Gs2Stamina.Model
             }
 
             return properties;
+        }
+
+        public static RecoverValueTable FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RecoverValueTable(
+                (string)properties["name"],
+                (string)properties["experienceModelId"],
+                new Func<int[]>(() =>
+                {
+                    return properties["values"] switch {
+                        int[] v => v.ToArray(),
+                        List<int> v => v.ToArray(),
+                        _ => null
+                    };
+                })(),
+                new RecoverValueTableOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

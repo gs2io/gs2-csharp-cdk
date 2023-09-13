@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,14 +25,14 @@ namespace Gs2Cdk.Gs2News.Model
 {
     public class Progress {
         private string uploadToken;
-        private int? generated;
-        private int? patternCount;
+        private int generated;
+        private int patternCount;
         private long? revision;
 
         public Progress(
             string uploadToken,
-            int? generated,
-            int? patternCount,
+            int generated,
+            int patternCount,
             ProgressOptions options = null
         ){
             this.uploadToken = uploadToken;
@@ -55,6 +56,21 @@ namespace Gs2Cdk.Gs2News.Model
             }
 
             return properties;
+        }
+
+        public static Progress FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Progress(
+                (string)properties["uploadToken"],
+                (int)properties["generated"],
+                (int)properties["patternCount"],
+                new ProgressOptions {
+                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                }
+            );
+
+            return model;
         }
     }
 }

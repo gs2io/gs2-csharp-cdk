@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Enums
             }
             return "unknown";
         }
+
+        public static BonusModelRepeat New(string value) {
+            switch (value) {
+                case "enabled":
+                    return BonusModelRepeat.Enabled;
+                case "disabled":
+                    return BonusModelRepeat.Disabled;
+            }
+            return BonusModelRepeat.Enabled;
+        }
     }
 }

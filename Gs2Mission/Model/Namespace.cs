@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -132,6 +133,38 @@ namespace Gs2Cdk.Gs2Mission.Model
                 this.name,
                 groups,
                 counters
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<MissionGroupModel[]>(() =>
+                {
+                    return properties["groups"] switch {
+                        MissionGroupModel[] v => v,
+                        List<MissionGroupModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(MissionGroupModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(MissionGroupModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<CounterModel[]>(() =>
+                {
+                    return properties["counters"] switch {
+                        CounterModel[] v => v,
+                        List<CounterModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(CounterModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(CounterModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

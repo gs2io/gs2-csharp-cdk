@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,6 +65,38 @@ namespace Gs2Cdk.Gs2Inbox.Model
             }
 
             return properties;
+        }
+
+        public static GlobalMessage FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new GlobalMessage(
+                (string)properties["name"],
+                (string)properties["metadata"],
+                new GlobalMessageOptions {
+                    readAcquireActions = properties.TryGetValue("readAcquireActions", out var readAcquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return readAcquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    expiresTimeSpan = properties.TryGetValue("expiresTimeSpan", out var expiresTimeSpan) ? new Func<TimeSpan_>(() =>
+                    {
+                        return expiresTimeSpan switch {
+                            TimeSpan_ v => v,
+                            Dictionary<string, object> v => TimeSpan_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    expiresAt = properties.TryGetValue("expiresAt", out var expiresAt) ? (long?)expiresAt : null
+                }
+            );
+
+            return model;
         }
     }
 }

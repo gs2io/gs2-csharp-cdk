@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +53,20 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             }
 
             return properties;
+        }
+
+        public static CampaignModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CampaignModel(
+                (string)properties["name"],
+                (bool?)properties["enableCampaignCode"],
+                new CampaignModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

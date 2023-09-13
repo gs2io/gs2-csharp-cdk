@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,11 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class CalculatedAt {
         private string categoryName;
-        private long? calculatedAt;
+        private long calculatedAt;
 
         public CalculatedAt(
             string categoryName,
-            long? calculatedAt,
+            long calculatedAt,
             CalculatedAtOptions options = null
         ){
             this.categoryName = categoryName;
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
 
             return properties;
+        }
+
+        public static CalculatedAt FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CalculatedAt(
+                (string)properties["categoryName"],
+                (long)properties["calculatedAt"],
+                new CalculatedAtOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

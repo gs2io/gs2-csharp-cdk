@@ -40,5 +40,19 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             }
             return "unknown";
         }
+
+        public static ScopedValueResetType New(string value) {
+            switch (value) {
+                case "notReset":
+                    return ScopedValueResetType.NotReset;
+                case "daily":
+                    return ScopedValueResetType.Daily;
+                case "weekly":
+                    return ScopedValueResetType.Weekly;
+                case "monthly":
+                    return ScopedValueResetType.Monthly;
+            }
+            return ScopedValueResetType.NotReset;
+        }
     }
 }

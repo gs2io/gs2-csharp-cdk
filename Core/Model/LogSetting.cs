@@ -13,9 +13,11 @@ namespace Gs2Cdk.Core.Model
         }
 
         public Dictionary<string, object> Properties() {
-            return new Dictionary<string, object>() {
-                {"LoggingNamespaceId", _loggingNamespaceId},
-            };
+            var properties = new Dictionary<string, object>();
+            if (this._loggingNamespaceId != null) {
+                properties["LoggingNamespaceId"] = this._loggingNamespaceId;
+            }
+            return properties;
         }
     }
 }

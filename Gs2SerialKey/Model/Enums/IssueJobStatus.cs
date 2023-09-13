@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2SerialKey.Model.Enums
             }
             return "unknown";
         }
+
+        public static IssueJobStatus New(string value) {
+            switch (value) {
+                case "PROCESSING":
+                    return IssueJobStatus.Processing;
+                case "COMPLETE":
+                    return IssueJobStatus.Complete;
+            }
+            return IssueJobStatus.Processing;
+        }
     }
 }

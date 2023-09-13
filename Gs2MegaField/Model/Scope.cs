@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,13 +25,13 @@ namespace Gs2Cdk.Gs2MegaField.Model
 {
     public class Scope {
         private string layerName;
-        private float? r;
-        private int? limit;
+        private float r;
+        private int limit;
 
         public Scope(
             string layerName,
-            float? r,
-            int? limit,
+            float r,
+            int limit,
             ScopeOptions options = null
         ){
             this.layerName = layerName;
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
 
             return properties;
+        }
+
+        public static Scope FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Scope(
+                (string)properties["layerName"],
+                (float)properties["r"],
+                (int)properties["limit"],
+                new ScopeOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

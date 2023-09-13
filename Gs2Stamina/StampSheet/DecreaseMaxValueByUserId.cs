@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         public DecreaseMaxValueByUserId(
             string namespaceName,
             string staminaName,
-            int? decreaseValue,
+            int decreaseValue,
             string userId = "#{userId}"
         ): base(
             "Gs2Stamina:DecreaseMaxValueByUserId",

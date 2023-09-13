@@ -36,13 +36,13 @@ namespace Gs2Cdk.Gs2Lottery.Ref
         }
 
         public DrawByUserId Draw(
-            int? count,
+            int count,
             Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new DrawByUserId(
-                this.namespaceName,
-                this.lotteryName,
+                namespaceName,
+                lotteryName,
                 count,
                 config,
                 userId

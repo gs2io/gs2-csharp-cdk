@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         public RecoverStaminaByUserId(
             string namespaceName,
             string staminaName,
-            int? recoverValue,
+            int recoverValue,
             string userId = "#{userId}"
         ): base(
             "Gs2Stamina:RecoverStaminaByUserId",

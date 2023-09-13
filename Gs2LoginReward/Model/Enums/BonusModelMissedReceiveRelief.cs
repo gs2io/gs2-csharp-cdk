@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Enums
             }
             return "unknown";
         }
+
+        public static BonusModelMissedReceiveRelief New(string value) {
+            switch (value) {
+                case "enabled":
+                    return BonusModelMissedReceiveRelief.Enabled;
+                case "disabled":
+                    return BonusModelMissedReceiveRelief.Disabled;
+            }
+            return BonusModelMissedReceiveRelief.Enabled;
+        }
     }
 }

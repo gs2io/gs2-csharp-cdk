@@ -71,5 +71,22 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public InventoryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new InventoryModel(
+                properties["name"] as string,
+                properties["initialCapacity"] as int?,
+                properties["maxCapacity"] as int?,
+                properties["itemModels"] as ItemModel[],
+                new InventoryModelOptions {
+                    metadata = properties["metadata"] as string,
+                    protectReferencedItem = properties["protectReferencedItem"] as bool?
+                }
+            );
+
+            return model;
+        }
     }
 }

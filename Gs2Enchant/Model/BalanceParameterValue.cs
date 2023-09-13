@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,11 @@ namespace Gs2Cdk.Gs2Enchant.Model
 {
     public class BalanceParameterValue {
         private string name;
-        private long? value;
+        private long value;
 
         public BalanceParameterValue(
             string name,
-            long? value,
+            long value,
             BalanceParameterValueOptions options = null
         ){
             this.name = name;
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Enchant.Model
             }
 
             return properties;
+        }
+
+        public static BalanceParameterValue FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BalanceParameterValue(
+                (string)properties["name"],
+                (long)properties["value"],
+                new BalanceParameterValueOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

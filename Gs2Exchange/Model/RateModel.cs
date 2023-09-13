@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -118,6 +119,59 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
 
             return properties;
+        }
+
+        public static RateModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RateModel(
+                (string)properties["name"],
+                new Func<RateModelTimingType>(() =>
+                {
+                    return properties["timingType"] switch {
+                        RateModelTimingType e => e,
+                        string s => RateModelTimingTypeExt.New(s),
+                        _ => RateModelTimingType.Immediate
+                    };
+                })(),
+                new RateModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return consumeActions switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    lockTime = properties.TryGetValue("lockTime", out var lockTime) ? (int?)lockTime : null,
+                    enableSkip = properties.TryGetValue("enableSkip", out var enableSkip) ? (bool?)enableSkip : null,
+                    skipConsumeActions = properties.TryGetValue("skipConsumeActions", out var skipConsumeActions) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return skipConsumeActions switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return acquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

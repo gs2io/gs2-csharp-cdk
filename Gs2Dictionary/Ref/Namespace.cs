@@ -46,7 +46,7 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
             string userId = "#{userId}"
         ){
             return (new AddEntriesByUserId(
-                this.namespaceName,
+                namespaceName,
                 entryModelNames,
                 userId
             ));
@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteEntriesByUserId(
-                this.namespaceName,
+                namespaceName,
                 entryModelNames,
                 userId
             ));

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,16 +26,16 @@ namespace Gs2Cdk.Gs2Showcase.Model
     public class RandomDisplayItemModel {
         private string name;
         private AcquireAction[] acquireActions;
-        private int? stock;
-        private int? weight;
+        private int stock;
+        private int weight;
         private string metadata;
         private ConsumeAction[] consumeActions;
 
         public RandomDisplayItemModel(
             string name,
             AcquireAction[] acquireActions,
-            int? stock,
-            int? weight,
+            int stock,
+            int weight,
             RandomDisplayItemModelOptions options = null
         ){
             this.name = name;
@@ -71,6 +72,39 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
 
             return properties;
+        }
+
+        public static RandomDisplayItemModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RandomDisplayItemModel(
+                (string)properties["name"],
+                new Func<AcquireAction[]>(() =>
+                {
+                    return properties["acquireActions"] switch {
+                        Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                (int)properties["stock"],
+                (int)properties["weight"],
+                new RandomDisplayItemModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return consumeActions switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

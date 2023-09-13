@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -96,6 +97,43 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
 
             return properties;
+        }
+
+        public static DisplayItem FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new DisplayItem(
+                (string)properties["displayItemId"],
+                new Func<DisplayItemType>(() =>
+                {
+                    return properties["type"] switch {
+                        DisplayItemType e => e,
+                        string s => DisplayItemTypeExt.New(s),
+                        _ => DisplayItemType.SalesItem
+                    };
+                })(),
+                new DisplayItemOptions {
+                    salesItem = properties.TryGetValue("salesItem", out var salesItem) ? new Func<SalesItem>(() =>
+                    {
+                        return salesItem switch {
+                            SalesItem v => v,
+                            Dictionary<string, object> v => SalesItem.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    salesItemGroup = properties.TryGetValue("salesItemGroup", out var salesItemGroup) ? new Func<SalesItemGroup>(() =>
+                    {
+                        return salesItemGroup switch {
+                            SalesItemGroup v => v,
+                            Dictionary<string, object> v => SalesItemGroup.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null
+                }
+            );
+
+            return model;
         }
     }
 }

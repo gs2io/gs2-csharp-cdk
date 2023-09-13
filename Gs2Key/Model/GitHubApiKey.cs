@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -60,6 +61,22 @@ namespace Gs2Cdk.Gs2Key.Model
             }
 
             return properties;
+        }
+
+        public static GitHubApiKey FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new GitHubApiKey(
+                (string)properties["name"],
+                (string)properties["apiKey"],
+                (string)properties["encryptionKeyName"],
+                new GitHubApiKeyOptions {
+                    description = properties.TryGetValue("description", out var description) ? (string)description : null,
+                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Enums
             }
             return "unknown";
         }
+
+        public static BonusModelMode New(string value) {
+            switch (value) {
+                case "schedule":
+                    return BonusModelMode.Schedule;
+                case "streaming":
+                    return BonusModelMode.Streaming;
+            }
+            return BonusModelMode.Schedule;
+        }
     }
 }

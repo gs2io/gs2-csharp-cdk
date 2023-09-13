@@ -48,5 +48,18 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public AcquireCount FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new AcquireCount(
+                properties["itemName"] as string,
+                properties["count"] as long?,
+                new AcquireCountOptions {
+                }
+            );
+
+            return model;
+        }
     }
 }

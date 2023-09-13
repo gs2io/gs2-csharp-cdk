@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,6 +47,19 @@ namespace Gs2Cdk.Gs2Enchant.Model
             }
 
             return properties;
+        }
+
+        public static BalanceParameterValueModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BalanceParameterValueModel(
+                (string)properties["name"],
+                new BalanceParameterValueModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

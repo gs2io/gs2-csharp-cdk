@@ -49,5 +49,25 @@ namespace Gs2Cdk.Gs2Limit.Model.Enums
             }
             return "unknown";
         }
+
+        public static LimitModelResetDayOfWeek New(string value) {
+            switch (value) {
+                case "sunday":
+                    return LimitModelResetDayOfWeek.Sunday;
+                case "monday":
+                    return LimitModelResetDayOfWeek.Monday;
+                case "tuesday":
+                    return LimitModelResetDayOfWeek.Tuesday;
+                case "wednesday":
+                    return LimitModelResetDayOfWeek.Wednesday;
+                case "thursday":
+                    return LimitModelResetDayOfWeek.Thursday;
+                case "friday":
+                    return LimitModelResetDayOfWeek.Friday;
+                case "saturday":
+                    return LimitModelResetDayOfWeek.Saturday;
+            }
+            return LimitModelResetDayOfWeek.Sunday;
+        }
     }
 }

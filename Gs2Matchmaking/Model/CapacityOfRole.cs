@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,13 +25,13 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class CapacityOfRole {
         private string roleName;
-        private int? capacity;
+        private int capacity;
         private string[] roleAliases;
         private Player[] participants;
 
         public CapacityOfRole(
             string roleName,
-            int? capacity,
+            int capacity,
             CapacityOfRoleOptions options = null
         ){
             this.roleName = roleName;
@@ -58,6 +59,37 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
 
             return properties;
+        }
+
+        public static CapacityOfRole FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CapacityOfRole(
+                (string)properties["roleName"],
+                (int)properties["capacity"],
+                new CapacityOfRoleOptions {
+                    roleAliases = properties.TryGetValue("roleAliases", out var roleAliases) ? new Func<string[]>(() =>
+                    {
+                        return roleAliases switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    participants = properties.TryGetValue("participants", out var participants) ? new Func<Player[]>(() =>
+                    {
+                        return participants switch {
+                            Player[] v => v,
+                            List<Player> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Player.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Player.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

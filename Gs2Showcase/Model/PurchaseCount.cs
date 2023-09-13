@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,11 @@ namespace Gs2Cdk.Gs2Showcase.Model
 {
     public class PurchaseCount {
         private string name;
-        private int? count;
+        private int count;
 
         public PurchaseCount(
             string name,
-            int? count,
+            int count,
             PurchaseCountOptions options = null
         ){
             this.name = name;
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
 
             return properties;
+        }
+
+        public static PurchaseCount FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new PurchaseCount(
+                (string)properties["name"],
+                (int)properties["count"],
+                new PurchaseCountOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

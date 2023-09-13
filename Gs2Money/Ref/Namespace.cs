@@ -33,13 +33,13 @@ namespace Gs2Cdk.Gs2Money.Ref
         }
 
         public DepositByUserId Deposit(
-            int? slot,
-            float? price,
-            int? count,
+            int slot,
+            float price,
+            int count,
             string userId = "#{userId}"
         ){
             return (new DepositByUserId(
-                this.namespaceName,
+                namespaceName,
                 slot,
                 price,
                 count,
@@ -52,20 +52,20 @@ namespace Gs2Cdk.Gs2Money.Ref
             string userId = "#{userId}"
         ){
             return (new RevertRecordReceipt(
-                this.namespaceName,
+                namespaceName,
                 receipt,
                 userId
             ));
         }
 
         public WithdrawByUserId Withdraw(
-            int? slot,
-            int? count,
+            int slot,
+            int count,
             bool? paidOnly,
             string userId = "#{userId}"
         ){
             return (new WithdrawByUserId(
-                this.namespaceName,
+                namespaceName,
                 slot,
                 count,
                 paidOnly,
@@ -79,7 +79,7 @@ namespace Gs2Cdk.Gs2Money.Ref
             string userId = "#{userId}"
         ){
             return (new RecordReceipt(
-                this.namespaceName,
+                namespaceName,
                 contentsId,
                 receipt,
                 userId

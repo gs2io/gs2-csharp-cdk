@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,13 +24,13 @@ using Gs2Cdk.Gs2Lottery.Model.Options;
 namespace Gs2Cdk.Gs2Lottery.Model
 {
     public class BoxItem {
-        private int? remaining;
-        private int? initial;
+        private int remaining;
+        private int initial;
         private AcquireAction[] acquireActions;
 
         public BoxItem(
-            int? remaining,
-            int? initial,
+            int remaining,
+            int initial,
             BoxItemOptions options = null
         ){
             this.remaining = remaining;
@@ -53,6 +54,29 @@ namespace Gs2Cdk.Gs2Lottery.Model
             }
 
             return properties;
+        }
+
+        public static BoxItem FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BoxItem(
+                (int)properties["remaining"],
+                (int)properties["initial"],
+                new BoxItemOptions {
+                    acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return acquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -114,6 +115,38 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 this.name,
                 showcases,
                 randomShowcases
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<Showcase[]>(() =>
+                {
+                    return properties["showcases"] switch {
+                        Showcase[] v => v,
+                        List<Showcase> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(Showcase.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(Showcase.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<RandomShowcase[]>(() =>
+                {
+                    return properties["randomShowcases"] switch {
+                        RandomShowcase[] v => v,
+                        List<RandomShowcase> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(RandomShowcase.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(RandomShowcase.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

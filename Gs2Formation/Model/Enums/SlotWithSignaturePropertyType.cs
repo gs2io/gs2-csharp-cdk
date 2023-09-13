@@ -37,5 +37,17 @@ namespace Gs2Cdk.Gs2Formation.Model.Enums
             }
             return "unknown";
         }
+
+        public static SlotWithSignaturePropertyType New(string value) {
+            switch (value) {
+                case "gs2_inventory":
+                    return SlotWithSignaturePropertyType.Gs2Inventory;
+                case "gs2_simple_inventory":
+                    return SlotWithSignaturePropertyType.Gs2SimpleInventory;
+                case "gs2_dictionary":
+                    return SlotWithSignaturePropertyType.Gs2Dictionary;
+            }
+            return SlotWithSignaturePropertyType.Gs2Inventory;
+        }
     }
 }

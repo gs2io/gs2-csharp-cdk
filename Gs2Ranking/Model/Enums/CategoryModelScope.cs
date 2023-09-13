@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Ranking.Model.Enums
             }
             return "unknown";
         }
+
+        public static CategoryModelScope New(string value) {
+            switch (value) {
+                case "global":
+                    return CategoryModelScope.Global;
+                case "scoped":
+                    return CategoryModelScope.Scoped;
+            }
+            return CategoryModelScope.Global;
+        }
     }
 }

@@ -31,5 +31,13 @@ namespace Gs2Cdk.Gs2Realtime.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespaceServerSpec New(string value) {
+            switch (value) {
+                case "realtime1.nano":
+                    return NamespaceServerSpec.Realtime1Nano;
+            }
+            return NamespaceServerSpec.Realtime1Nano;
+        }
     }
 }

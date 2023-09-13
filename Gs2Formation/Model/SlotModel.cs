@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +53,20 @@ namespace Gs2Cdk.Gs2Formation.Model
             }
 
             return properties;
+        }
+
+        public static SlotModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new SlotModel(
+                (string)properties["name"],
+                (string)properties["propertyRegex"],
+                new SlotModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

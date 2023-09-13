@@ -56,7 +56,7 @@ namespace Gs2Cdk.Gs2Mission.Ref
             string userId = "#{userId}"
         ){
             return (new RevertReceiveByUserId(
-                this.namespaceName,
+                namespaceName,
                 missionGroupName,
                 missionTaskName,
                 userId
@@ -65,11 +65,11 @@ namespace Gs2Cdk.Gs2Mission.Ref
 
         public IncreaseCounterByUserId IncreaseCounter(
             string counterName,
-            long? value,
+            long value,
             string userId = "#{userId}"
         ){
             return (new IncreaseCounterByUserId(
-                this.namespaceName,
+                namespaceName,
                 counterName,
                 value,
                 userId
@@ -82,7 +82,7 @@ namespace Gs2Cdk.Gs2Mission.Ref
             string userId = "#{userId}"
         ){
             return (new ReceiveByUserId(
-                this.namespaceName,
+                namespaceName,
                 missionGroupName,
                 missionTaskName,
                 userId
@@ -91,11 +91,11 @@ namespace Gs2Cdk.Gs2Mission.Ref
 
         public DecreaseCounterByUserId DecreaseCounter(
             string counterName,
-            long? value,
+            long value,
             string userId = "#{userId}"
         ){
             return (new DecreaseCounterByUserId(
-                this.namespaceName,
+                namespaceName,
                 counterName,
                 value,
                 userId

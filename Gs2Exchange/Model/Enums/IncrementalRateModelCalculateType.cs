@@ -37,5 +37,17 @@ namespace Gs2Cdk.Gs2Exchange.Model.Enums
             }
             return "unknown";
         }
+
+        public static IncrementalRateModelCalculateType New(string value) {
+            switch (value) {
+                case "linear":
+                    return IncrementalRateModelCalculateType.Linear;
+                case "power":
+                    return IncrementalRateModelCalculateType.Power;
+                case "gs2_script":
+                    return IncrementalRateModelCalculateType.Gs2Script;
+            }
+            return IncrementalRateModelCalculateType.Linear;
+        }
     }
 }

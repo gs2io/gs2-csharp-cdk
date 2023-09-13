@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,28 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
 
             return properties;
+        }
+
+        public static CounterModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CounterModel(
+                (string)properties["name"],
+                new Func<CounterScopeModel[]>(() =>
+                {
+                    return properties["scopes"] switch {
+                        Dictionary<string, object>[] v => v.Select(CounterScopeModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(CounterScopeModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new CounterModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null
+                }
+            );
+
+            return model;
         }
     }
 }

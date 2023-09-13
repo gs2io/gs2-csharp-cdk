@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -118,6 +119,38 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 this.name,
                 lotteryModels,
                 prizeTables
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<LotteryModel[]>(() =>
+                {
+                    return properties["lotteryModels"] switch {
+                        LotteryModel[] v => v,
+                        List<LotteryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(LotteryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(LotteryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<PrizeTable[]>(() =>
+                {
+                    return properties["prizeTables"] switch {
+                        PrizeTable[] v => v,
+                        List<PrizeTable> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(PrizeTable.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(PrizeTable.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

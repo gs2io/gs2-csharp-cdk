@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -162,6 +163,50 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
 
             return properties;
+        }
+
+        public static IncrementalRateModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new IncrementalRateModel(
+                (string)properties["name"],
+                new Func<ConsumeAction>(() =>
+                {
+                    return properties["consumeAction"] switch {
+                        ConsumeAction m => m,
+                        Dictionary<string, object> v => ConsumeAction.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new Func<IncrementalRateModelCalculateType>(() =>
+                {
+                    return properties["calculateType"] switch {
+                        IncrementalRateModelCalculateType e => e,
+                        string s => IncrementalRateModelCalculateTypeExt.New(s),
+                        _ => IncrementalRateModelCalculateType.Linear
+                    };
+                })(),
+                (string)properties["exchangeCountId"],
+                (int?)properties["maximumExchangeCount"],
+                new IncrementalRateModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    baseValue = properties.TryGetValue("baseValue", out var baseValue) ? (long?)baseValue : null,
+                    coefficientValue = properties.TryGetValue("coefficientValue", out var coefficientValue) ? (long?)coefficientValue : null,
+                    calculateScriptId = properties.TryGetValue("calculateScriptId", out var calculateScriptId) ? (string)calculateScriptId : null,
+                    acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return acquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

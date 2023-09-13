@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
 
             return properties;
+        }
+
+        public static TimeSpan_ FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new TimeSpan_(
+                (int?)properties["days"],
+                (int?)properties["hours"],
+                (int?)properties["minutes"],
+                new TimeSpanOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

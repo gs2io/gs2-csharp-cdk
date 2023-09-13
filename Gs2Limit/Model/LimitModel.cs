@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -132,6 +133,30 @@ namespace Gs2Cdk.Gs2Limit.Model
             }
 
             return properties;
+        }
+
+        public static LimitModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new LimitModel(
+                (string)properties["name"],
+                new Func<LimitModelResetType>(() =>
+                {
+                    return properties["resetType"] switch {
+                        LimitModelResetType e => e,
+                        string s => LimitModelResetTypeExt.New(s),
+                        _ => LimitModelResetType.NotReset
+                    };
+                })(),
+                new LimitModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    resetDayOfMonth = properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? (int?)resetDayOfMonth : null,
+                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? LimitModelResetDayOfWeekExt.New(resetDayOfWeek as string) : LimitModelResetDayOfWeek.Sunday,
+                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null
+                }
+            );
+
+            return model;
         }
     }
 }

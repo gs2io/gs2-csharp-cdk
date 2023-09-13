@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Version.Model.Enums
             }
             return "unknown";
         }
+
+        public static VersionModelScope New(string value) {
+            switch (value) {
+                case "passive":
+                    return VersionModelScope.Passive;
+                case "active":
+                    return VersionModelScope.Active;
+            }
+            return VersionModelScope.Passive;
+        }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +53,29 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
 
             return properties;
+        }
+
+        public static AreaModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new AreaModel(
+                (string)properties["name"],
+                new AreaModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    layerModels = properties.TryGetValue("layerModels", out var layerModels) ? new Func<LayerModel[]>(() =>
+                    {
+                        return layerModels switch {
+                            LayerModel[] v => v,
+                            List<LayerModel> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(LayerModel.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(LayerModel.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

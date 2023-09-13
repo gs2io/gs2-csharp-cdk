@@ -40,5 +40,19 @@ namespace Gs2Cdk.Gs2Limit.Model.Enums
             }
             return "unknown";
         }
+
+        public static LimitModelResetType New(string value) {
+            switch (value) {
+                case "notReset":
+                    return LimitModelResetType.NotReset;
+                case "daily":
+                    return LimitModelResetType.Daily;
+                case "weekly":
+                    return LimitModelResetType.Weekly;
+                case "monthly":
+                    return LimitModelResetType.Monthly;
+            }
+            return LimitModelResetType.NotReset;
+        }
     }
 }

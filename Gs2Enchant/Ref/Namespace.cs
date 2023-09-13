@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new ReDrawBalanceParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 fixedParameterNames,
@@ -72,7 +72,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new SetBalanceParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 parameterValues,
@@ -87,7 +87,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new ReDrawRarityParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 fixedParameterNames,
@@ -102,7 +102,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new AddRarityParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 count,
@@ -117,7 +117,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new SetRarityParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 parameterValues,
@@ -134,7 +134,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyRarityParameterStatusByUserId(
-                this.namespaceName,
+                namespaceName,
                 parameterName,
                 propertyId,
                 verifyType,

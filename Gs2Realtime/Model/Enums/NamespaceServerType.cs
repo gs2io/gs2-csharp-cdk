@@ -31,5 +31,13 @@ namespace Gs2Cdk.Gs2Realtime.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespaceServerType New(string value) {
+            switch (value) {
+                case "relay":
+                    return NamespaceServerType.Relay;
+            }
+            return NamespaceServerType.Relay;
+        }
     }
 }

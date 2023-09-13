@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         public ExchangeByUserId(
             string namespaceName,
             string rateName,
-            int? count,
+            int count,
             Config[] config = null,
             string userId = "#{userId}"
         ): base(

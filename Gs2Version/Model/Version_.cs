@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,14 +24,14 @@ using Gs2Cdk.Gs2Version.Model.Options;
 namespace Gs2Cdk.Gs2Version.Model
 {
     public class Version_ {
-        private int? major;
-        private int? minor;
-        private int? micro;
+        private int major;
+        private int minor;
+        private int micro;
 
         public Version_(
-            int? major,
-            int? minor,
-            int? micro,
+            int major,
+            int minor,
+            int micro,
             VersionOptions options = null
         ){
             this.major = major;
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2Version.Model
             }
 
             return properties;
+        }
+
+        public static Version_ FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Version_(
+                (int)properties["major"],
+                (int)properties["minor"],
+                (int)properties["micro"],
+                new VersionOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

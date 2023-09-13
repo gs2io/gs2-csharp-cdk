@@ -37,5 +37,17 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespaceCreateGatheringTriggerType New(string value) {
+            switch (value) {
+                case "none":
+                    return NamespaceCreateGatheringTriggerType.None;
+                case "gs2_realtime":
+                    return NamespaceCreateGatheringTriggerType.Gs2Realtime;
+                case "gs2_script":
+                    return NamespaceCreateGatheringTriggerType.Gs2Script;
+            }
+            return NamespaceCreateGatheringTriggerType.None;
+        }
     }
 }

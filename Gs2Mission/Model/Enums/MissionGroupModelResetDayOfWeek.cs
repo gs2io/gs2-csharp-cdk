@@ -49,5 +49,25 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             }
             return "unknown";
         }
+
+        public static MissionGroupModelResetDayOfWeek New(string value) {
+            switch (value) {
+                case "sunday":
+                    return MissionGroupModelResetDayOfWeek.Sunday;
+                case "monday":
+                    return MissionGroupModelResetDayOfWeek.Monday;
+                case "tuesday":
+                    return MissionGroupModelResetDayOfWeek.Tuesday;
+                case "wednesday":
+                    return MissionGroupModelResetDayOfWeek.Wednesday;
+                case "thursday":
+                    return MissionGroupModelResetDayOfWeek.Thursday;
+                case "friday":
+                    return MissionGroupModelResetDayOfWeek.Friday;
+                case "saturday":
+                    return MissionGroupModelResetDayOfWeek.Saturday;
+            }
+            return MissionGroupModelResetDayOfWeek.Sunday;
+        }
     }
 }

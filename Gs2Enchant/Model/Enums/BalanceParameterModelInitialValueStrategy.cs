@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Enchant.Model.Enums
             }
             return "unknown";
         }
+
+        public static BalanceParameterModelInitialValueStrategy New(string value) {
+            switch (value) {
+                case "average":
+                    return BalanceParameterModelInitialValueStrategy.Average;
+                case "lottery":
+                    return BalanceParameterModelInitialValueStrategy.Lottery;
+            }
+            return BalanceParameterModelInitialValueStrategy.Average;
+        }
     }
 }

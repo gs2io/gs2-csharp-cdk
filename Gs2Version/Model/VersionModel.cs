@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -122,6 +123,53 @@ namespace Gs2Cdk.Gs2Version.Model
             }
 
             return properties;
+        }
+
+        public static VersionModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new VersionModel(
+                (string)properties["name"],
+                new Func<Version_>(() =>
+                {
+                    return properties["warningVersion"] switch {
+                        Version_ m => m,
+                        Dictionary<string, object> v => Version_.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new Func<Version_>(() =>
+                {
+                    return properties["errorVersion"] switch {
+                        Version_ m => m,
+                        Dictionary<string, object> v => Version_.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new Func<VersionModelScope>(() =>
+                {
+                    return properties["scope"] switch {
+                        VersionModelScope e => e,
+                        string s => VersionModelScopeExt.New(s),
+                        _ => VersionModelScope.Passive
+                    };
+                })(),
+                new VersionModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    currentVersion = properties.TryGetValue("currentVersion", out var currentVersion) ? new Func<Version_>(() =>
+                    {
+                        return currentVersion switch {
+                            Version_ v => v,
+                            Dictionary<string, object> v => Version_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    needSignature = properties.TryGetValue("needSignature", out var needSignature) ? (bool?)needSignature : null,
+                    signatureKeyId = properties.TryGetValue("signatureKeyId", out var signatureKeyId) ? (string)signatureKeyId : null
+                }
+            );
+
+            return model;
         }
     }
 }

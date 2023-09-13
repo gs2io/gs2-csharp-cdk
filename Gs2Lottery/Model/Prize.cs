@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
     public class Prize {
         private string prizeId;
         private PrizeType? type;
-        private int? weight;
+        private int weight;
         private AcquireAction[] acquireActions;
         private int? drawnLimit;
         private string limitFailOverPrizeId;
@@ -35,7 +36,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
         public Prize(
             string prizeId,
             PrizeType type,
-            int? weight,
+            int weight,
             PrizeOptions options = null
         ){
             this.prizeId = prizeId;
@@ -49,7 +50,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
 
         public static Prize TypeIsAction(
             string prizeId,
-            int? weight,
+            int weight,
             AcquireAction[] acquireActions,
             PrizeTypeIsActionOptions options = null
         ){
@@ -66,7 +67,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
 
         public static Prize TypeIsPrizeTable(
             string prizeId,
-            int? weight,
+            int weight,
             string prizeTableName,
             PrizeTypeIsPrizeTableOptions options = null
         ){
@@ -110,6 +111,40 @@ namespace Gs2Cdk.Gs2Lottery.Model
             }
 
             return properties;
+        }
+
+        public static Prize FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Prize(
+                (string)properties["prizeId"],
+                new Func<PrizeType>(() =>
+                {
+                    return properties["type"] switch {
+                        PrizeType e => e,
+                        string s => PrizeTypeExt.New(s),
+                        _ => PrizeType.Action
+                    };
+                })(),
+                (int)properties["weight"],
+                new PrizeOptions {
+                    acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return acquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    drawnLimit = properties.TryGetValue("drawnLimit", out var drawnLimit) ? (int?)drawnLimit : null,
+                    limitFailOverPrizeId = properties.TryGetValue("limitFailOverPrizeId", out var limitFailOverPrizeId) ? (string)limitFailOverPrizeId : null,
+                    prizeTableName = properties.TryGetValue("prizeTableName", out var prizeTableName) ? (string)prizeTableName : null
+                }
+            );
+
+            return model;
         }
     }
 }

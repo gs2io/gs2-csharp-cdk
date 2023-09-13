@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             }
 
             return properties;
+        }
+
+        public static Variable FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Variable(
+                (string)properties["stateMachineName"],
+                (string)properties["value"],
+                new VariableOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

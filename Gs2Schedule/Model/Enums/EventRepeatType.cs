@@ -40,5 +40,19 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
             }
             return "unknown";
         }
+
+        public static EventRepeatType New(string value) {
+            switch (value) {
+                case "always":
+                    return EventRepeatType.Always;
+                case "daily":
+                    return EventRepeatType.Daily;
+                case "weekly":
+                    return EventRepeatType.Weekly;
+                case "monthly":
+                    return EventRepeatType.Monthly;
+            }
+            return EventRepeatType.Always;
+        }
     }
 }

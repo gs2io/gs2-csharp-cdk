@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         public AcquireActionsToFormProperties(
             string namespaceName,
             string moldModelName,
-            int? index,
+            int index,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
             string userId = "#{userId}"

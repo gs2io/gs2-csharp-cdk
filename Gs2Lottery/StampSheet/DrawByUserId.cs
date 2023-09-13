@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
         public DrawByUserId(
             string namespaceName,
             string lotteryName,
-            int? count,
+            int count,
             Config[] config = null,
             string userId = "#{userId}"
         ): base(

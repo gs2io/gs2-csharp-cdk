@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -124,6 +125,28 @@ namespace Gs2Cdk.Gs2Quest.Model
                 this.stack,
                 this.name,
                 questGroupModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<QuestGroupModel[]>(() =>
+                {
+                    return properties["questGroupModels"] switch {
+                        QuestGroupModel[] v => v,
+                        List<QuestGroupModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(QuestGroupModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(QuestGroupModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

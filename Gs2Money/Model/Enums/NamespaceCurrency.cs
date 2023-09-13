@@ -37,5 +37,17 @@ namespace Gs2Cdk.Gs2Money.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespaceCurrency New(string value) {
+            switch (value) {
+                case "JPY":
+                    return NamespaceCurrency.Jpy;
+                case "USD":
+                    return NamespaceCurrency.Usd;
+                case "TWD":
+                    return NamespaceCurrency.Twd;
+            }
+            return NamespaceCurrency.Jpy;
+        }
     }
 }

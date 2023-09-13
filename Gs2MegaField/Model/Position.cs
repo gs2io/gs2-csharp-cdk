@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,14 +24,14 @@ using Gs2Cdk.Gs2MegaField.Model.Options;
 namespace Gs2Cdk.Gs2MegaField.Model
 {
     public class Position {
-        private float? x;
-        private float? y;
-        private float? z;
+        private float x;
+        private float y;
+        private float z;
 
         public Position(
-            float? x,
-            float? y,
-            float? z,
+            float x,
+            float y,
+            float z,
             PositionOptions options = null
         ){
             this.x = x;
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
 
             return properties;
+        }
+
+        public static Position FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Position(
+                (float)properties["x"],
+                (float)properties["y"],
+                (float)properties["z"],
+                new PositionOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

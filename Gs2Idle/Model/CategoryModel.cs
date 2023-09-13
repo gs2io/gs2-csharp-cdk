@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,8 +25,8 @@ namespace Gs2Cdk.Gs2Idle.Model
 {
     public class CategoryModel {
         private string name;
-        private int? rewardIntervalMinutes;
-        private int? defaultMaximumIdleMinutes;
+        private int rewardIntervalMinutes;
+        private int defaultMaximumIdleMinutes;
         private AcquireActionList[] acquireActions;
         private string metadata;
         private string idlePeriodScheduleId;
@@ -33,8 +34,8 @@ namespace Gs2Cdk.Gs2Idle.Model
 
         public CategoryModel(
             string name,
-            int? rewardIntervalMinutes,
-            int? defaultMaximumIdleMinutes,
+            int rewardIntervalMinutes,
+            int defaultMaximumIdleMinutes,
             AcquireActionList[] acquireActions,
             CategoryModelOptions options = null
         ){
@@ -75,6 +76,31 @@ namespace Gs2Cdk.Gs2Idle.Model
             }
 
             return properties;
+        }
+
+        public static CategoryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CategoryModel(
+                (string)properties["name"],
+                (int)properties["rewardIntervalMinutes"],
+                (int)properties["defaultMaximumIdleMinutes"],
+                new Func<AcquireActionList[]>(() =>
+                {
+                    return properties["acquireActions"] switch {
+                        Dictionary<string, object>[] v => v.Select(AcquireActionList.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(AcquireActionList.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new CategoryModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    idlePeriodScheduleId = properties.TryGetValue("idlePeriodScheduleId", out var idlePeriodScheduleId) ? (string)idlePeriodScheduleId : null,
+                    receivePeriodScheduleId = properties.TryGetValue("receivePeriodScheduleId", out var receivePeriodScheduleId) ? (string)receivePeriodScheduleId : null
+                }
+            );
+
+            return model;
         }
     }
 }

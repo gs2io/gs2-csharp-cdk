@@ -49,5 +49,25 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             }
             return "unknown";
         }
+
+        public static CounterScopeModelResetDayOfWeek New(string value) {
+            switch (value) {
+                case "sunday":
+                    return CounterScopeModelResetDayOfWeek.Sunday;
+                case "monday":
+                    return CounterScopeModelResetDayOfWeek.Monday;
+                case "tuesday":
+                    return CounterScopeModelResetDayOfWeek.Tuesday;
+                case "wednesday":
+                    return CounterScopeModelResetDayOfWeek.Wednesday;
+                case "thursday":
+                    return CounterScopeModelResetDayOfWeek.Thursday;
+                case "friday":
+                    return CounterScopeModelResetDayOfWeek.Friday;
+                case "saturday":
+                    return CounterScopeModelResetDayOfWeek.Saturday;
+            }
+            return CounterScopeModelResetDayOfWeek.Sunday;
+        }
     }
 }

@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Lottery.Model.Enums
             }
             return "unknown";
         }
+
+        public static LotteryModelMode New(string value) {
+            switch (value) {
+                case "normal":
+                    return LotteryModelMode.Normal;
+                case "box":
+                    return LotteryModelMode.Box;
+            }
+            return LotteryModelMode.Normal;
+        }
     }
 }

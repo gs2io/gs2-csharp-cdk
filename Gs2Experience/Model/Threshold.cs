@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,6 +47,26 @@ namespace Gs2Cdk.Gs2Experience.Model
             }
 
             return properties;
+        }
+
+        public static Threshold FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Threshold(
+                new Func<long[]>(() =>
+                {
+                    return properties["values"] switch {
+                        long[] v => v.ToArray(),
+                        List<long> v => v.ToArray(),
+                        _ => null
+                    };
+                })(),
+                new ThresholdOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

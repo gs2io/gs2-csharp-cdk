@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         public DecreaseCounterByUserId(
             string namespaceName,
             string counterName,
-            long? value,
+            long value,
             string userId = "#{userId}"
         ): base(
             "Gs2Mission:DecreaseCounterByUserId",

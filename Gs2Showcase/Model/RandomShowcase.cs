@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,19 +25,19 @@ namespace Gs2Cdk.Gs2Showcase.Model
 {
     public class RandomShowcase {
         private string name;
-        private int? maximumNumberOfChoice;
+        private int maximumNumberOfChoice;
         private RandomDisplayItemModel[] displayItems;
-        private long? baseTimestamp;
-        private int? resetIntervalHours;
+        private long baseTimestamp;
+        private int resetIntervalHours;
         private string metadata;
         private string salesPeriodEventId;
 
         public RandomShowcase(
             string name,
-            int? maximumNumberOfChoice,
+            int maximumNumberOfChoice,
             RandomDisplayItemModel[] displayItems,
-            long? baseTimestamp,
-            int? resetIntervalHours,
+            long baseTimestamp,
+            int resetIntervalHours,
             RandomShowcaseOptions options = null
         ){
             this.name = name;
@@ -76,6 +77,31 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
 
             return properties;
+        }
+
+        public static RandomShowcase FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RandomShowcase(
+                (string)properties["name"],
+                (int)properties["maximumNumberOfChoice"],
+                new Func<RandomDisplayItemModel[]>(() =>
+                {
+                    return properties["displayItems"] switch {
+                        Dictionary<string, object>[] v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                (long)properties["baseTimestamp"],
+                (int)properties["resetIntervalHours"],
+                new RandomShowcaseOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null
+                }
+            );
+
+            return model;
         }
     }
 }

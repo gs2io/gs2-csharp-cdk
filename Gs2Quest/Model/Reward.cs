@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,13 +27,13 @@ namespace Gs2Cdk.Gs2Quest.Model
         private string action;
         private string request;
         private string itemId;
-        private int? value;
+        private int value;
 
         public Reward(
             string action,
             string request,
             string itemId,
-            int? value,
+            int value,
             RewardOptions options = null
         ){
             this.action = action;
@@ -59,6 +60,21 @@ namespace Gs2Cdk.Gs2Quest.Model
             }
 
             return properties;
+        }
+
+        public static Reward FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Reward(
+                (string)properties["action"],
+                (string)properties["request"],
+                (string)properties["itemId"],
+                (int)properties["value"],
+                new RewardOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

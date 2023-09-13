@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,7 @@ namespace Gs2Cdk.Gs2Money.Model
         private Stack? stack;
         private string name;
         private NamespacePriority? priority;
-        private bool? shareFree;
+        private bool shareFree;
         private NamespaceCurrency? currency;
         private string description;
         private string appleKey;
@@ -44,7 +45,7 @@ namespace Gs2Cdk.Gs2Money.Model
             Stack stack,
             string name,
             NamespacePriority priority,
-            bool? shareFree,
+            bool shareFree,
             NamespaceCurrency currency,
             NamespaceOptions options = null
         ): base(

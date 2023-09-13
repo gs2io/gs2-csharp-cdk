@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,14 +26,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
 {
     public class BalanceParameterModel {
         private string name;
-        private long? totalValue;
+        private long totalValue;
         private BalanceParameterModelInitialValueStrategy? initialValueStrategy;
         private BalanceParameterValueModel[] parameters;
         private string metadata;
 
         public BalanceParameterModel(
             string name,
-            long? totalValue,
+            long totalValue,
             BalanceParameterModelInitialValueStrategy initialValueStrategy,
             BalanceParameterValueModel[] parameters,
             BalanceParameterModelOptions options = null
@@ -67,6 +68,36 @@ namespace Gs2Cdk.Gs2Enchant.Model
             }
 
             return properties;
+        }
+
+        public static BalanceParameterModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BalanceParameterModel(
+                (string)properties["name"],
+                (long)properties["totalValue"],
+                new Func<BalanceParameterModelInitialValueStrategy>(() =>
+                {
+                    return properties["initialValueStrategy"] switch {
+                        BalanceParameterModelInitialValueStrategy e => e,
+                        string s => BalanceParameterModelInitialValueStrategyExt.New(s),
+                        _ => BalanceParameterModelInitialValueStrategy.Average
+                    };
+                })(),
+                new Func<BalanceParameterValueModel[]>(() =>
+                {
+                    return properties["parameters"] switch {
+                        Dictionary<string, object>[] v => v.Select(BalanceParameterValueModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(BalanceParameterValueModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new BalanceParameterModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

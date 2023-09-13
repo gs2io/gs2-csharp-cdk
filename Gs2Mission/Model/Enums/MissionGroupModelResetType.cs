@@ -40,5 +40,19 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             }
             return "unknown";
         }
+
+        public static MissionGroupModelResetType New(string value) {
+            switch (value) {
+                case "notReset":
+                    return MissionGroupModelResetType.NotReset;
+                case "daily":
+                    return MissionGroupModelResetType.Daily;
+                case "weekly":
+                    return MissionGroupModelResetType.Weekly;
+                case "monthly":
+                    return MissionGroupModelResetType.Monthly;
+            }
+            return MissionGroupModelResetType.NotReset;
+        }
     }
 }

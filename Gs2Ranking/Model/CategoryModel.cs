@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +28,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         private string name;
         private CategoryModelOrderDirection? orderDirection;
         private CategoryModelScope? scope;
-        private bool? uniqueByUserId;
+        private bool uniqueByUserId;
         private string metadata;
         private long? minimumValue;
         private long? maximumValue;
@@ -45,7 +46,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
             string name,
             CategoryModelOrderDirection orderDirection,
             CategoryModelScope scope,
-            bool? uniqueByUserId,
+            bool uniqueByUserId,
             CategoryModelOptions options = null
         ){
             this.name = name;
@@ -69,7 +70,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         public static CategoryModel ScopeIsGlobal(
             string name,
             CategoryModelOrderDirection orderDirection,
-            bool? uniqueByUserId,
+            bool uniqueByUserId,
             int? calculateIntervalMinutes,
             CategoryModelScopeIsGlobalOptions options = null
         ){
@@ -97,7 +98,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         public static CategoryModel ScopeIsScoped(
             string name,
             CategoryModelOrderDirection orderDirection,
-            bool? uniqueByUserId,
+            bool uniqueByUserId,
             CategoryModelScopeIsScopedOptions options = null
         ){
             return (new CategoryModel(
@@ -177,6 +178,63 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
 
             return properties;
+        }
+
+        public static CategoryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CategoryModel(
+                (string)properties["name"],
+                new Func<CategoryModelOrderDirection>(() =>
+                {
+                    return properties["orderDirection"] switch {
+                        CategoryModelOrderDirection e => e,
+                        string s => CategoryModelOrderDirectionExt.New(s),
+                        _ => CategoryModelOrderDirection.Asc
+                    };
+                })(),
+                new Func<CategoryModelScope>(() =>
+                {
+                    return properties["scope"] switch {
+                        CategoryModelScope e => e,
+                        string s => CategoryModelScopeExt.New(s),
+                        _ => CategoryModelScope.Global
+                    };
+                })(),
+                (bool)properties["uniqueByUserId"],
+                new CategoryModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    minimumValue = properties.TryGetValue("minimumValue", out var minimumValue) ? (long?)minimumValue : null,
+                    maximumValue = properties.TryGetValue("maximumValue", out var maximumValue) ? (long?)maximumValue : null,
+                    sum = properties.TryGetValue("sum", out var sum) ? (bool?)sum : null,
+                    calculateFixedTimingHour = properties.TryGetValue("calculateFixedTimingHour", out var calculateFixedTimingHour) ? (int?)calculateFixedTimingHour : null,
+                    calculateFixedTimingMinute = properties.TryGetValue("calculateFixedTimingMinute", out var calculateFixedTimingMinute) ? (int?)calculateFixedTimingMinute : null,
+                    calculateIntervalMinutes = properties.TryGetValue("calculateIntervalMinutes", out var calculateIntervalMinutes) ? (int?)calculateIntervalMinutes : null,
+                    additionalScopes = properties.TryGetValue("additionalScopes", out var additionalScopes) ? new Func<Scope[]>(() =>
+                    {
+                        return additionalScopes switch {
+                            Scope[] v => v,
+                            List<Scope> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Scope.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Scope.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    entryPeriodEventId = properties.TryGetValue("entryPeriodEventId", out var entryPeriodEventId) ? (string)entryPeriodEventId : null,
+                    accessPeriodEventId = properties.TryGetValue("accessPeriodEventId", out var accessPeriodEventId) ? (string)accessPeriodEventId : null,
+                    ignoreUserIds = properties.TryGetValue("ignoreUserIds", out var ignoreUserIds) ? new Func<string[]>(() =>
+                    {
+                        return ignoreUserIds switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    generation = properties.TryGetValue("generation", out var generation) ? (string)generation : null
+                }
+            );
+
+            return model;
         }
     }
 }

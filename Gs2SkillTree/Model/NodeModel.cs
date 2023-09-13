@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -66,6 +67,46 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             }
 
             return properties;
+        }
+
+        public static NodeModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new NodeModel(
+                (string)properties["name"],
+                new Func<ConsumeAction[]>(() =>
+                {
+                    return properties["releaseConsumeActions"] switch {
+                        Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                (float?)properties["restrainReturnRate"],
+                new NodeModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    returnAcquireActions = properties.TryGetValue("returnAcquireActions", out var returnAcquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return returnAcquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    premiseNodeNames = properties.TryGetValue("premiseNodeNames", out var premiseNodeNames) ? new Func<string[]>(() =>
+                    {
+                        return premiseNodeNames switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

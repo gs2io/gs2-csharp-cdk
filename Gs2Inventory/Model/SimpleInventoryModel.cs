@@ -54,5 +54,19 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public SimpleInventoryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new SimpleInventoryModel(
+                properties["name"] as string,
+                properties["simpleItemModels"] as SimpleItemModel[],
+                new SimpleInventoryModelOptions {
+                    metadata = properties["metadata"] as string
+                }
+            );
+
+            return model;
+        }
     }
 }

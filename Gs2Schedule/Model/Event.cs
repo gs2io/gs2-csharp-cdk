@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -224,6 +225,44 @@ namespace Gs2Cdk.Gs2Schedule.Model
             }
 
             return properties;
+        }
+
+        public static Event FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Event(
+                (string)properties["name"],
+                new Func<EventScheduleType>(() =>
+                {
+                    return properties["scheduleType"] switch {
+                        EventScheduleType e => e,
+                        string s => EventScheduleTypeExt.New(s),
+                        _ => EventScheduleType.Absolute
+                    };
+                })(),
+                new Func<EventRepeatType>(() =>
+                {
+                    return properties["repeatType"] switch {
+                        EventRepeatType e => e,
+                        string s => EventRepeatTypeExt.New(s),
+                        _ => EventRepeatType.Always
+                    };
+                })(),
+                new EventOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    absoluteBegin = properties.TryGetValue("absoluteBegin", out var absoluteBegin) ? (long?)absoluteBegin : null,
+                    absoluteEnd = properties.TryGetValue("absoluteEnd", out var absoluteEnd) ? (long?)absoluteEnd : null,
+                    repeatBeginDayOfMonth = properties.TryGetValue("repeatBeginDayOfMonth", out var repeatBeginDayOfMonth) ? (int?)repeatBeginDayOfMonth : null,
+                    repeatEndDayOfMonth = properties.TryGetValue("repeatEndDayOfMonth", out var repeatEndDayOfMonth) ? (int?)repeatEndDayOfMonth : null,
+                    repeatBeginDayOfWeek = properties.TryGetValue("repeatBeginDayOfWeek", out var repeatBeginDayOfWeek) ? EventRepeatBeginDayOfWeekExt.New(repeatBeginDayOfWeek as string) : EventRepeatBeginDayOfWeek.Sunday,
+                    repeatEndDayOfWeek = properties.TryGetValue("repeatEndDayOfWeek", out var repeatEndDayOfWeek) ? EventRepeatEndDayOfWeekExt.New(repeatEndDayOfWeek as string) : EventRepeatEndDayOfWeek.Sunday,
+                    repeatBeginHour = properties.TryGetValue("repeatBeginHour", out var repeatBeginHour) ? (int?)repeatBeginHour : null,
+                    repeatEndHour = properties.TryGetValue("repeatEndHour", out var repeatEndHour) ? (int?)repeatEndHour : null,
+                    relativeTriggerName = properties.TryGetValue("relativeTriggerName", out var relativeTriggerName) ? (string)relativeTriggerName : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
             }
             return "unknown";
         }
+
+        public static EventScheduleType New(string value) {
+            switch (value) {
+                case "absolute":
+                    return EventScheduleType.Absolute;
+                case "relative":
+                    return EventScheduleType.Relative;
+            }
+            return EventScheduleType.Absolute;
+        }
     }
 }

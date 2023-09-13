@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,37 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
 
             return properties;
+        }
+
+        public static Player FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Player(
+                (string)properties["userId"],
+                (string)properties["roleName"],
+                new PlayerOptions {
+                    attributes = properties.TryGetValue("attributes", out var attributes) ? new Func<Attribute_[]>(() =>
+                    {
+                        return attributes switch {
+                            Attribute_[] v => v,
+                            List<Attribute_> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Attribute_.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Attribute_.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    denyUserIds = properties.TryGetValue("denyUserIds", out var denyUserIds) ? new Func<string[]>(() =>
+                    {
+                        return denyUserIds switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

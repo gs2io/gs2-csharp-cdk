@@ -36,84 +36,84 @@ namespace Gs2Cdk.Gs2Stamina.Ref
         }
 
         public RecoverStaminaByUserId RecoverStamina(
-            int? recoverValue,
+            int recoverValue,
             string userId = "#{userId}"
         ){
             return (new RecoverStaminaByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 recoverValue,
                 userId
             ));
         }
 
         public RaiseMaxValueByUserId RaiseMaxValue(
-            int? raiseValue,
+            int raiseValue,
             string userId = "#{userId}"
         ){
             return (new RaiseMaxValueByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 raiseValue,
                 userId
             ));
         }
 
         public SetMaxValueByUserId SetMaxValue(
-            int? maxValue,
+            int maxValue,
             string userId = "#{userId}"
         ){
             return (new SetMaxValueByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 maxValue,
                 userId
             ));
         }
 
         public SetRecoverIntervalByUserId SetRecoverInterval(
-            int? recoverIntervalMinutes,
+            int recoverIntervalMinutes,
             string userId = "#{userId}"
         ){
             return (new SetRecoverIntervalByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 recoverIntervalMinutes,
                 userId
             ));
         }
 
         public SetRecoverValueByUserId SetRecoverValue(
-            int? recoverValue,
+            int recoverValue,
             string userId = "#{userId}"
         ){
             return (new SetRecoverValueByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 recoverValue,
                 userId
             ));
         }
 
         public DecreaseMaxValueByUserId DecreaseMaxValue(
-            int? decreaseValue,
+            int decreaseValue,
             string userId = "#{userId}"
         ){
             return (new DecreaseMaxValueByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 decreaseValue,
                 userId
             ));
         }
 
         public ConsumeStaminaByUserId ConsumeStamina(
-            int? consumeValue,
+            int consumeValue,
             string userId = "#{userId}"
         ){
             return (new ConsumeStaminaByUserId(
-                this.namespaceName,
-                this.staminaName,
+                namespaceName,
+                staminaName,
                 consumeValue,
                 userId
             ));

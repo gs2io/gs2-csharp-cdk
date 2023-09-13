@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,12 +24,12 @@ using Gs2Cdk.Gs2Money.Model.Options;
 namespace Gs2Cdk.Gs2Money.Model
 {
     public class WalletDetail {
-        private float? price;
-        private int? count;
+        private float price;
+        private int count;
 
         public WalletDetail(
-            float? price,
-            int? count,
+            float price,
+            int count,
             WalletDetailOptions options = null
         ){
             this.price = price;
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Money.Model
             }
 
             return properties;
+        }
+
+        public static WalletDetail FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new WalletDetail(
+                (float)properties["price"],
+                (int)properties["count"],
+                new WalletDetailOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

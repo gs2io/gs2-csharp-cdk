@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,28 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
 
             return properties;
+        }
+
+        public static Showcase FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Showcase(
+                (string)properties["name"],
+                new Func<DisplayItem[]>(() =>
+                {
+                    return properties["displayItems"] switch {
+                        Dictionary<string, object>[] v => v.Select(DisplayItem.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(DisplayItem.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new ShowcaseOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null
+                }
+            );
+
+            return model;
         }
     }
 }

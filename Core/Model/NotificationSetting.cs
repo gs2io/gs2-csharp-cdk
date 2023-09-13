@@ -19,11 +19,17 @@ namespace Gs2Cdk.Core.Model
         }
 
         public Dictionary<string, object> Properties() {
-            return new Dictionary<string, object>() {
-                {"GatewayNamespaceId", _gatewayNamespaceId},
-                {"EnableTransferMobileNotification", _enableTransferMobileNotification},
-                {"Sound", _sound},
-            };
+            var properties = new Dictionary<string, object>();
+            if (this._gatewayNamespaceId != null) {
+                properties["GatewayNamespaceId"] = this._gatewayNamespaceId;
+            }
+            if (this._enableTransferMobileNotification != null) {
+                properties["EnableTransferMobileNotification"] = this._enableTransferMobileNotification;
+            }
+            if (this._sound != null) {
+                properties["Sound"] = this._sound;
+            }
+            return properties;
         }
     }
 }

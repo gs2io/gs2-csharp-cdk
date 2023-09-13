@@ -40,5 +40,19 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             }
             return "unknown";
         }
+
+        public static CounterScopeModelResetType New(string value) {
+            switch (value) {
+                case "notReset":
+                    return CounterScopeModelResetType.NotReset;
+                case "daily":
+                    return CounterScopeModelResetType.Daily;
+                case "weekly":
+                    return CounterScopeModelResetType.Weekly;
+                case "monthly":
+                    return CounterScopeModelResetType.Monthly;
+            }
+            return CounterScopeModelResetType.NotReset;
+        }
     }
 }

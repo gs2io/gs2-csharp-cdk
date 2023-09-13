@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         public SetRecoverIntervalByUserId(
             string namespaceName,
             string staminaName,
-            int? recoverIntervalMinutes,
+            int recoverIntervalMinutes,
             string userId = "#{userId}"
         ): base(
             "Gs2Stamina:SetRecoverIntervalByUserId",

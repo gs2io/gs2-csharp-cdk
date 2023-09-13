@@ -52,11 +52,11 @@ namespace Gs2Cdk.Gs2Formation.Ref
 
         public AddMoldCapacityByUserId AddMoldCapacity(
             string moldModelName,
-            int? capacity,
+            int capacity,
             string userId = "#{userId}"
         ){
             return (new AddMoldCapacityByUserId(
-                this.namespaceName,
+                namespaceName,
                 moldModelName,
                 capacity,
                 userId
@@ -65,11 +65,11 @@ namespace Gs2Cdk.Gs2Formation.Ref
 
         public SetMoldCapacityByUserId SetMoldCapacity(
             string moldModelName,
-            int? capacity,
+            int capacity,
             string userId = "#{userId}"
         ){
             return (new SetMoldCapacityByUserId(
-                this.namespaceName,
+                namespaceName,
                 moldModelName,
                 capacity,
                 userId
@@ -78,13 +78,13 @@ namespace Gs2Cdk.Gs2Formation.Ref
 
         public AcquireActionsToFormProperties AcquireActionsToFormProperties(
             string moldModelName,
-            int? index,
+            int index,
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
-                this.namespaceName,
+                namespaceName,
                 moldModelName,
                 index,
                 acquireAction,
@@ -101,7 +101,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
-                this.namespaceName,
+                namespaceName,
                 propertyFormModelName,
                 propertyId,
                 acquireAction,
@@ -112,11 +112,11 @@ namespace Gs2Cdk.Gs2Formation.Ref
 
         public SubMoldCapacityByUserId SubMoldCapacity(
             string moldModelName,
-            int? capacity,
+            int capacity,
             string userId = "#{userId}"
         ){
             return (new SubMoldCapacityByUserId(
-                this.namespaceName,
+                namespaceName,
                 moldModelName,
                 capacity,
                 userId

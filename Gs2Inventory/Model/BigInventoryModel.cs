@@ -54,5 +54,19 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public BigInventoryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BigInventoryModel(
+                properties["name"] as string,
+                properties["bigItemModels"] as BigItemModel[],
+                new BigInventoryModelOptions {
+                    metadata = properties["metadata"] as string
+                }
+            );
+
+            return model;
+        }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -151,6 +152,41 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
 
             return properties;
+        }
+
+        public static MissionGroupModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new MissionGroupModel(
+                (string)properties["name"],
+                new Func<MissionGroupModelResetType>(() =>
+                {
+                    return properties["resetType"] switch {
+                        MissionGroupModelResetType e => e,
+                        string s => MissionGroupModelResetTypeExt.New(s),
+                        _ => MissionGroupModelResetType.NotReset
+                    };
+                })(),
+                new MissionGroupModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    tasks = properties.TryGetValue("tasks", out var tasks) ? new Func<MissionTaskModel[]>(() =>
+                    {
+                        return tasks switch {
+                            MissionTaskModel[] v => v,
+                            List<MissionTaskModel> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(MissionTaskModel.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(MissionTaskModel.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    resetDayOfMonth = properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? (int?)resetDayOfMonth : null,
+                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? MissionGroupModelResetDayOfWeekExt.New(resetDayOfWeek as string) : MissionGroupModelResetDayOfWeek.Sunday,
+                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null,
+                    completeNotificationNamespaceId = properties.TryGetValue("completeNotificationNamespaceId", out var completeNotificationNamespaceId) ? (string)completeNotificationNamespaceId : null
+                }
+            );
+
+            return model;
         }
     }
 }

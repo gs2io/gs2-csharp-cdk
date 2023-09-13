@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -81,6 +82,66 @@ namespace Gs2Cdk.Gs2Quest.Model
             }
 
             return properties;
+        }
+
+        public static QuestModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new QuestModel(
+                (string)properties["name"],
+                new Func<Contents[]>(() =>
+                {
+                    return properties["contents"] switch {
+                        Dictionary<string, object>[] v => v.Select(Contents.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(Contents.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new QuestModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null,
+                    firstCompleteAcquireActions = properties.TryGetValue("firstCompleteAcquireActions", out var firstCompleteAcquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return firstCompleteAcquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return consumeActions switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    failedAcquireActions = properties.TryGetValue("failedAcquireActions", out var failedAcquireActions) ? new Func<AcquireAction[]>(() =>
+                    {
+                        return failedAcquireActions switch {
+                            AcquireAction[] v => v,
+                            List<AcquireAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    premiseQuestNames = properties.TryGetValue("premiseQuestNames", out var premiseQuestNames) ? new Func<string[]>(() =>
+                    {
+                        return premiseQuestNames switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

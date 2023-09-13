@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
         public MarkReceivedByUserId(
             string namespaceName,
             string bonusModelName,
-            int? stepNumber,
+            int stepNumber,
             string userId = "#{userId}"
         ): base(
             "Gs2LoginReward:MarkReceivedByUserId",

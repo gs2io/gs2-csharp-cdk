@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +28,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
         private string layerModelName;
         private int? numberOfMinEntries;
         private int? numberOfMaxEntries;
-        private int? height;
+        private int height;
         private string root;
 
         public Layer(
@@ -35,7 +36,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
             string layerModelName,
             int? numberOfMinEntries,
             int? numberOfMaxEntries,
-            int? height,
+            int height,
             LayerOptions options = null
         ){
             this.areaModelName = areaModelName;
@@ -70,6 +71,23 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
 
             return properties;
+        }
+
+        public static Layer FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Layer(
+                (string)properties["areaModelName"],
+                (string)properties["layerModelName"],
+                (int?)properties["numberOfMinEntries"],
+                (int?)properties["numberOfMaxEntries"],
+                (int)properties["height"],
+                new LayerOptions {
+                    root = properties.TryGetValue("root", out var root) ? (string)root : null
+                }
+            );
+
+            return model;
         }
     }
 }

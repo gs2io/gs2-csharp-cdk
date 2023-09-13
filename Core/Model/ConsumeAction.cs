@@ -21,5 +21,16 @@ namespace Gs2Cdk.Core.Model
                 {"request", this._request},
             };
         }
+
+        public static ConsumeAction FromProperties(
+            Dictionary<string, object> properties
+        ) {
+            var model = new ConsumeAction(
+                properties["action"] as string,
+                properties["request"] as Dictionary<string, object>
+            );
+
+            return model;
+        }
     }
 }

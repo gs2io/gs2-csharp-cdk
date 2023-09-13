@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,6 +57,28 @@ namespace Gs2Cdk.Gs2Distributor.Model
             }
 
             return properties;
+        }
+
+        public static DistributorModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new DistributorModel(
+                (string)properties["name"],
+                new DistributorModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    inboxNamespaceId = properties.TryGetValue("inboxNamespaceId", out var inboxNamespaceId) ? (string)inboxNamespaceId : null,
+                    whiteListTargetIds = properties.TryGetValue("whiteListTargetIds", out var whiteListTargetIds) ? new Func<string[]>(() =>
+                    {
+                        return whiteListTargetIds switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

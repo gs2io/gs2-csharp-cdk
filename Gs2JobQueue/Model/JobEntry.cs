@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,6 +54,20 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             }
 
             return properties;
+        }
+
+        public static JobEntry FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new JobEntry(
+                (string)properties["scriptId"],
+                (string)properties["args"],
+                (int?)properties["maxTryCount"],
+                new JobEntryOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

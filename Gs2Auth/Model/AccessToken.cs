@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -59,6 +60,21 @@ namespace Gs2Cdk.Gs2Auth.Model
             }
 
             return properties;
+        }
+
+        public static AccessToken FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new AccessToken(
+                (string)properties["ownerId"],
+                (string)properties["userId"],
+                (long?)properties["expire"],
+                (int?)properties["timeOffset"],
+                new AccessTokenOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,6 +48,37 @@ namespace Gs2Cdk.Gs2News.Model
             }
 
             return properties;
+        }
+
+        public static View FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new View(
+                new ViewOptions {
+                    contents = properties.TryGetValue("contents", out var contents) ? new Func<Content[]>(() =>
+                    {
+                        return contents switch {
+                            Content[] v => v,
+                            List<Content> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Content.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Content.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    removeContents = properties.TryGetValue("removeContents", out var removeContents) ? new Func<Content[]>(() =>
+                    {
+                        return removeContents switch {
+                            Content[] v => v,
+                            List<Content> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Content.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Content.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -77,6 +78,48 @@ namespace Gs2Cdk.Gs2Distributor.Model
             }
 
             return properties;
+        }
+
+        public static StampSheetResult FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new StampSheetResult(
+                (string)properties["userId"],
+                (string)properties["transactionId"],
+                new Func<AcquireAction>(() =>
+                {
+                    return properties["sheetRequest"] switch {
+                        AcquireAction m => m,
+                        Dictionary<string, object> v => AcquireAction.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new StampSheetResultOptions {
+                    taskRequests = properties.TryGetValue("taskRequests", out var taskRequests) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return taskRequests switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    taskResults = properties.TryGetValue("taskResults", out var taskResults) ? new Func<string[]>(() =>
+                    {
+                        return taskResults switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    sheetResult = properties.TryGetValue("sheetResult", out var sheetResult) ? (string)sheetResult : null,
+                    nextTransactionId = properties.TryGetValue("nextTransactionId", out var nextTransactionId) ? (string)nextTransactionId : null,
+                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -43,11 +43,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public RecoverStaminaByUserId RecoverStamina(
             string staminaName,
-            int? recoverValue,
+            int recoverValue,
             string userId = "#{userId}"
         ){
             return (new RecoverStaminaByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 recoverValue,
                 userId
@@ -56,11 +56,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public RaiseMaxValueByUserId RaiseMaxValue(
             string staminaName,
-            int? raiseValue,
+            int raiseValue,
             string userId = "#{userId}"
         ){
             return (new RaiseMaxValueByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 raiseValue,
                 userId
@@ -69,11 +69,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public SetMaxValueByUserId SetMaxValue(
             string staminaName,
-            int? maxValue,
+            int maxValue,
             string userId = "#{userId}"
         ){
             return (new SetMaxValueByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 maxValue,
                 userId
@@ -82,11 +82,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public SetRecoverIntervalByUserId SetRecoverInterval(
             string staminaName,
-            int? recoverIntervalMinutes,
+            int recoverIntervalMinutes,
             string userId = "#{userId}"
         ){
             return (new SetRecoverIntervalByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 recoverIntervalMinutes,
                 userId
@@ -95,11 +95,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public SetRecoverValueByUserId SetRecoverValue(
             string staminaName,
-            int? recoverValue,
+            int recoverValue,
             string userId = "#{userId}"
         ){
             return (new SetRecoverValueByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 recoverValue,
                 userId
@@ -108,11 +108,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public DecreaseMaxValueByUserId DecreaseMaxValue(
             string staminaName,
-            int? decreaseValue,
+            int decreaseValue,
             string userId = "#{userId}"
         ){
             return (new DecreaseMaxValueByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 decreaseValue,
                 userId
@@ -121,11 +121,11 @@ namespace Gs2Cdk.Gs2Stamina.Ref
 
         public ConsumeStaminaByUserId ConsumeStamina(
             string staminaName,
-            int? consumeValue,
+            int consumeValue,
             string userId = "#{userId}"
         ){
             return (new ConsumeStaminaByUserId(
-                this.namespaceName,
+                namespaceName,
                 staminaName,
                 consumeValue,
                 userId

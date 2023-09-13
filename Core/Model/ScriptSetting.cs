@@ -23,12 +23,20 @@ namespace Gs2Cdk.Core.Model
         }
 
         public Dictionary<string, object> Properties() {
-            return new Dictionary<string, object>() {
-                {"TriggerScriptId", _triggerScriptId},
-                {"DoneTriggerTargetType", _doneTriggerTargetType},
-                {"DoneTriggerScriptId", _doneTriggerScriptId},
-                {"DoneTriggerQueueNamespaceId", _doneTriggerQueueNamespaceId},
-            };
+            var properties = new Dictionary<string, object>();
+            if (this._triggerScriptId != null) {
+                properties["TriggerScriptId"] = this._triggerScriptId;
+            }
+            if (this._doneTriggerTargetType != null) {
+                properties["DoneTriggerTargetType"] = this._doneTriggerTargetType;
+            }
+            if (this._doneTriggerScriptId != null) {
+                properties["DoneTriggerScriptId"] = this._doneTriggerScriptId;
+            }
+            if (this._doneTriggerQueueNamespaceId != null) {
+                properties["DoneTriggerQueueNamespaceId"] = this._doneTriggerQueueNamespaceId;
+            }
+            return properties;
         }
     }
 }

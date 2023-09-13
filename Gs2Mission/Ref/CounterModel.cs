@@ -36,24 +36,24 @@ namespace Gs2Cdk.Gs2Mission.Ref
         }
 
         public IncreaseCounterByUserId IncreaseCounter(
-            long? value,
+            long value,
             string userId = "#{userId}"
         ){
             return (new IncreaseCounterByUserId(
-                this.namespaceName,
-                this.counterName,
+                namespaceName,
+                counterName,
                 value,
                 userId
             ));
         }
 
         public DecreaseCounterByUserId DecreaseCounter(
-            long? value,
+            long value,
             string userId = "#{userId}"
         ){
             return (new DecreaseCounterByUserId(
-                this.namespaceName,
-                this.counterName,
+                namespaceName,
+                counterName,
                 value,
                 userId
             ));

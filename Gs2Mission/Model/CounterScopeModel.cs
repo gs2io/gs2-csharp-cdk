@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -109,6 +110,28 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
 
             return properties;
+        }
+
+        public static CounterScopeModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new CounterScopeModel(
+                new Func<CounterScopeModelResetType>(() =>
+                {
+                    return properties["resetType"] switch {
+                        CounterScopeModelResetType e => e,
+                        string s => CounterScopeModelResetTypeExt.New(s),
+                        _ => CounterScopeModelResetType.NotReset
+                    };
+                })(),
+                new CounterScopeModelOptions {
+                    resetDayOfMonth = properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? (int?)resetDayOfMonth : null,
+                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? CounterScopeModelResetDayOfWeekExt.New(resetDayOfWeek as string) : CounterScopeModelResetDayOfWeek.Sunday,
+                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null
+                }
+            );
+
+            return model;
         }
     }
 }

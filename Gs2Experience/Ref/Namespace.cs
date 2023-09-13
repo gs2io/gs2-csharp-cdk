@@ -48,7 +48,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new AddExperienceByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 experienceValue,
@@ -59,11 +59,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
         public AddRankCapByUserId AddRankCap(
             string experienceName,
             string propertyId,
-            long? rankCapValue,
+            long rankCapValue,
             string userId = "#{userId}"
         ){
             return (new AddRankCapByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,
@@ -74,11 +74,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
         public SetRankCapByUserId SetRankCap(
             string experienceName,
             string propertyId,
-            long? rankCapValue,
+            long rankCapValue,
             string userId = "#{userId}"
         ){
             return (new SetRankCapByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,
@@ -94,7 +94,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new MultiplyAcquireActionsByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 rateName,
@@ -110,7 +110,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new SubExperienceByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 experienceValue,
@@ -121,11 +121,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
         public SubRankCapByUserId SubRankCap(
             string experienceName,
             string propertyId,
-            long? rankCapValue,
+            long rankCapValue,
             string userId = "#{userId}"
         ){
             return (new SubRankCapByUserId(
-                this.namespaceName,
+                namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,

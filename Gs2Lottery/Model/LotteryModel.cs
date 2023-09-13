@@ -12,9 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
- *
- * deny overwrite
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,6 +49,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
         public static LotteryModel MethodIsPrizeTable(
             string name,
             LotteryModelMode mode,
+            string prizeTableName,
             LotteryModelMethodIsPrizeTableOptions options = null
         ){
             return (new LotteryModel(
@@ -57,8 +57,8 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 mode,
                 LotteryModelMethod.PrizeTable,
                 new LotteryModelOptions {
+                    prizeTableName = prizeTableName,
                     metadata = options?.metadata,
-                    prizeTableName = options?.prizeTableName,
                 }
             ));
         }
@@ -66,6 +66,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
         public static LotteryModel MethodIsScript(
             string name,
             LotteryModelMode mode,
+            string choicePrizeTableScriptId,
             LotteryModelMethodIsScriptOptions options = null
         ){
             return (new LotteryModel(
@@ -73,8 +74,8 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 mode,
                 LotteryModelMethod.Script,
                 new LotteryModelOptions {
+                    choicePrizeTableScriptId = choicePrizeTableScriptId,
                     metadata = options?.metadata,
-                    choicePrizeTableScriptId = options?.choicePrizeTableScriptId,
                 }
             ));
         }
@@ -105,6 +106,37 @@ namespace Gs2Cdk.Gs2Lottery.Model
             }
 
             return properties;
+        }
+
+        public static LotteryModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new LotteryModel(
+                (string)properties["name"],
+                new Func<LotteryModelMode>(() =>
+                {
+                    return properties["mode"] switch {
+                        LotteryModelMode e => e,
+                        string s => LotteryModelModeExt.New(s),
+                        _ => LotteryModelMode.Normal
+                    };
+                })(),
+                new Func<LotteryModelMethod>(() =>
+                {
+                    return properties["method"] switch {
+                        LotteryModelMethod e => e,
+                        string s => LotteryModelMethodExt.New(s),
+                        _ => LotteryModelMethod.PrizeTable
+                    };
+                })(),
+                new LotteryModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    prizeTableName = properties.TryGetValue("prizeTableName", out var prizeTableName) ? (string)prizeTableName : null,
+                    choicePrizeTableScriptId = properties.TryGetValue("choicePrizeTableScriptId", out var choicePrizeTableScriptId) ? (string)choicePrizeTableScriptId : null
+                }
+            );
+
+            return model;
         }
     }
 }

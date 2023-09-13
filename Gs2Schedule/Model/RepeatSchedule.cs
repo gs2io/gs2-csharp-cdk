@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,14 +24,14 @@ using Gs2Cdk.Gs2Schedule.Model.Options;
 namespace Gs2Cdk.Gs2Schedule.Model
 {
     public class RepeatSchedule {
-        private int? repeatCount;
+        private int repeatCount;
         private long? currentRepeatStartAt;
         private long? currentRepeatEndAt;
         private long? lastRepeatEndAt;
         private long? nextRepeatStartAt;
 
         public RepeatSchedule(
-            int? repeatCount,
+            int repeatCount,
             RepeatScheduleOptions options = null
         ){
             this.repeatCount = repeatCount;
@@ -61,6 +62,22 @@ namespace Gs2Cdk.Gs2Schedule.Model
             }
 
             return properties;
+        }
+
+        public static RepeatSchedule FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RepeatSchedule(
+                (int)properties["repeatCount"],
+                new RepeatScheduleOptions {
+                    currentRepeatStartAt = properties.TryGetValue("currentRepeatStartAt", out var currentRepeatStartAt) ? (long?)currentRepeatStartAt : null,
+                    currentRepeatEndAt = properties.TryGetValue("currentRepeatEndAt", out var currentRepeatEndAt) ? (long?)currentRepeatEndAt : null,
+                    lastRepeatEndAt = properties.TryGetValue("lastRepeatEndAt", out var lastRepeatEndAt) ? (long?)lastRepeatEndAt : null,
+                    nextRepeatStartAt = properties.TryGetValue("nextRepeatStartAt", out var nextRepeatStartAt) ? (long?)nextRepeatStartAt : null
+                }
+            );
+
+            return model;
         }
     }
 }

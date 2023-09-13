@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,8 +26,8 @@ namespace Gs2Cdk.Gs2Experience.Model
     public class ExperienceModel {
         private string name;
         private long? defaultExperience;
-        private long? defaultRankCap;
-        private long? maxRankCap;
+        private long defaultRankCap;
+        private long maxRankCap;
         private Threshold rankThreshold;
         private string metadata;
         private AcquireActionRate[] acquireActionRates;
@@ -34,8 +35,8 @@ namespace Gs2Cdk.Gs2Experience.Model
         public ExperienceModel(
             string name,
             long? defaultExperience,
-            long? defaultRankCap,
-            long? maxRankCap,
+            long defaultRankCap,
+            long maxRankCap,
             Threshold rankThreshold,
             ExperienceModelOptions options = null
         ){
@@ -77,6 +78,40 @@ namespace Gs2Cdk.Gs2Experience.Model
             }
 
             return properties;
+        }
+
+        public static ExperienceModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ExperienceModel(
+                (string)properties["name"],
+                (long?)properties["defaultExperience"],
+                (long)properties["defaultRankCap"],
+                (long)properties["maxRankCap"],
+                new Func<Threshold>(() =>
+                {
+                    return properties["rankThreshold"] switch {
+                        Threshold m => m,
+                        Dictionary<string, object> v => Threshold.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new ExperienceModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    acquireActionRates = properties.TryGetValue("acquireActionRates", out var acquireActionRates) ? new Func<AcquireActionRate[]>(() =>
+                    {
+                        return acquireActionRates switch {
+                            AcquireActionRate[] v => v,
+                            List<AcquireActionRate> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(AcquireActionRate.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(AcquireActionRate.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

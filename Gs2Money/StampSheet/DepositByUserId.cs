@@ -26,9 +26,9 @@ namespace Gs2Cdk.Gs2Money.StampSheet
 
         public DepositByUserId(
             string namespaceName,
-            int? slot,
-            float? price,
-            int? count,
+            int slot,
+            float price,
+            int count,
             string userId = "#{userId}"
         ): base(
             "Gs2Money:DepositByUserId",

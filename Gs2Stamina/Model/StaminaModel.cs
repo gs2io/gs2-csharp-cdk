@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,10 +25,10 @@ namespace Gs2Cdk.Gs2Stamina.Model
 {
     public class StaminaModel {
         private string name;
-        private int? recoverIntervalMinutes;
+        private int recoverIntervalMinutes;
         private int? recoverValue;
-        private int? initialCapacity;
-        private bool? isOverflow;
+        private int initialCapacity;
+        private bool isOverflow;
         private string metadata;
         private int? maxCapacity;
         private MaxStaminaTable maxStaminaTable;
@@ -36,10 +37,10 @@ namespace Gs2Cdk.Gs2Stamina.Model
 
         public StaminaModel(
             string name,
-            int? recoverIntervalMinutes,
+            int recoverIntervalMinutes,
             int? recoverValue,
-            int? initialCapacity,
-            bool? isOverflow,
+            int initialCapacity,
+            bool isOverflow,
             StaminaModelOptions options = null
         ){
             this.name = name;
@@ -93,6 +94,48 @@ namespace Gs2Cdk.Gs2Stamina.Model
             }
 
             return properties;
+        }
+
+        public static StaminaModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new StaminaModel(
+                (string)properties["name"],
+                (int)properties["recoverIntervalMinutes"],
+                (int?)properties["recoverValue"],
+                (int)properties["initialCapacity"],
+                (bool)properties["isOverflow"],
+                new StaminaModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    maxCapacity = properties.TryGetValue("maxCapacity", out var maxCapacity) ? (int?)maxCapacity : null,
+                    maxStaminaTable = properties.TryGetValue("maxStaminaTable", out var maxStaminaTable) ? new Func<MaxStaminaTable>(() =>
+                    {
+                        return maxStaminaTable switch {
+                            MaxStaminaTable v => v,
+                            Dictionary<string, object> v => MaxStaminaTable.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    recoverIntervalTable = properties.TryGetValue("recoverIntervalTable", out var recoverIntervalTable) ? new Func<RecoverIntervalTable>(() =>
+                    {
+                        return recoverIntervalTable switch {
+                            RecoverIntervalTable v => v,
+                            Dictionary<string, object> v => RecoverIntervalTable.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    recoverValueTable = properties.TryGetValue("recoverValueTable", out var recoverValueTable) ? new Func<RecoverValueTable>(() =>
+                    {
+                        return recoverValueTable switch {
+                            RecoverValueTable v => v,
+                            Dictionary<string, object> v => RecoverValueTable.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

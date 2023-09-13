@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,6 +56,34 @@ namespace Gs2Cdk.Gs2MegaField.Model
             }
 
             return properties;
+        }
+
+        public static MyPosition FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new MyPosition(
+                new Func<Position>(() =>
+                {
+                    return properties["position"] switch {
+                        Position m => m,
+                        Dictionary<string, object> v => Position.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new Func<Vector>(() =>
+                {
+                    return properties["vector"] switch {
+                        Vector m => m,
+                        Dictionary<string, object> v => Vector.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                (float?)properties["r"],
+                new MyPositionOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

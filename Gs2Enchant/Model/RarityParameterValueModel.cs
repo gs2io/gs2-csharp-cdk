@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,15 +26,15 @@ namespace Gs2Cdk.Gs2Enchant.Model
     public class RarityParameterValueModel {
         private string name;
         private string resourceName;
-        private long? resourceValue;
-        private int? weight;
+        private long resourceValue;
+        private int weight;
         private string metadata;
 
         public RarityParameterValueModel(
             string name,
             string resourceName,
-            long? resourceValue,
-            int? weight,
+            long resourceValue,
+            int weight,
             RarityParameterValueModelOptions options = null
         ){
             this.name = name;
@@ -64,6 +65,22 @@ namespace Gs2Cdk.Gs2Enchant.Model
             }
 
             return properties;
+        }
+
+        public static RarityParameterValueModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RarityParameterValueModel(
+                (string)properties["name"],
+                (string)properties["resourceName"],
+                (long)properties["resourceValue"],
+                (int)properties["weight"],
+                new RarityParameterValueModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

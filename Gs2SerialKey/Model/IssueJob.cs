@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
     public class IssueJob {
         private string name;
         private int? issuedCount;
-        private int? issueRequestCount;
+        private int issueRequestCount;
         private IssueJobStatus? status;
         private string metadata;
         private long? revision;
@@ -34,7 +35,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         public IssueJob(
             string name,
             int? issuedCount,
-            int? issueRequestCount,
+            int issueRequestCount,
             IssueJobStatus status,
             IssueJobOptions options = null
         ){
@@ -68,6 +69,30 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             }
 
             return properties;
+        }
+
+        public static IssueJob FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new IssueJob(
+                (string)properties["name"],
+                (int?)properties["issuedCount"],
+                (int)properties["issueRequestCount"],
+                new Func<IssueJobStatus>(() =>
+                {
+                    return properties["status"] switch {
+                        IssueJobStatus e => e,
+                        string s => IssueJobStatusExt.New(s),
+                        _ => IssueJobStatus.Processing
+                    };
+                })(),
+                new IssueJobOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    revision = properties.TryGetValue("revision", out var revision) ? (long?)revision : null
+                }
+            );
+
+            return model;
         }
     }
 }

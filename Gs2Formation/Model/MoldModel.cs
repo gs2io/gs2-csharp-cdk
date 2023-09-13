@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,15 +25,15 @@ namespace Gs2Cdk.Gs2Formation.Model
 {
     public class MoldModel {
         private string name;
-        private int? initialMaxCapacity;
-        private int? maxCapacity;
+        private int initialMaxCapacity;
+        private int maxCapacity;
         private FormModel formModel;
         private string metadata;
 
         public MoldModel(
             string name,
-            int? initialMaxCapacity,
-            int? maxCapacity,
+            int initialMaxCapacity,
+            int maxCapacity,
             FormModel formModel,
             MoldModelOptions options = null
         ){
@@ -65,6 +66,29 @@ namespace Gs2Cdk.Gs2Formation.Model
             }
 
             return properties;
+        }
+
+        public static MoldModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new MoldModel(
+                (string)properties["name"],
+                (int)properties["initialMaxCapacity"],
+                (int)properties["maxCapacity"],
+                new Func<FormModel>(() =>
+                {
+                    return properties["formModel"] switch {
+                        FormModel m => m,
+                        Dictionary<string, object> v => FormModel.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new MoldModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

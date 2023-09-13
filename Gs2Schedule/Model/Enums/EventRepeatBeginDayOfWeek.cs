@@ -49,5 +49,25 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
             }
             return "unknown";
         }
+
+        public static EventRepeatBeginDayOfWeek New(string value) {
+            switch (value) {
+                case "sunday":
+                    return EventRepeatBeginDayOfWeek.Sunday;
+                case "monday":
+                    return EventRepeatBeginDayOfWeek.Monday;
+                case "tuesday":
+                    return EventRepeatBeginDayOfWeek.Tuesday;
+                case "wednesday":
+                    return EventRepeatBeginDayOfWeek.Wednesday;
+                case "thursday":
+                    return EventRepeatBeginDayOfWeek.Thursday;
+                case "friday":
+                    return EventRepeatBeginDayOfWeek.Friday;
+                case "saturday":
+                    return EventRepeatBeginDayOfWeek.Saturday;
+            }
+            return EventRepeatBeginDayOfWeek.Sunday;
+        }
     }
 }

@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Exchange.Model.Enums
             }
             return "unknown";
         }
+
+        public static RateModelTimingType New(string value) {
+            switch (value) {
+                case "immediate":
+                    return RateModelTimingType.Immediate;
+                case "await":
+                    return RateModelTimingType.Await;
+            }
+            return RateModelTimingType.Immediate;
+        }
     }
 }

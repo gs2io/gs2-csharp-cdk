@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         public ConsumeStaminaByUserId(
             string namespaceName,
             string staminaName,
-            int? consumeValue,
+            int consumeValue,
             string userId = "#{userId}"
         ): base(
             "Gs2Stamina:ConsumeStaminaByUserId",

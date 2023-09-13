@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -163,6 +164,58 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             }
 
             return properties;
+        }
+
+        public static BonusModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new BonusModel(
+                (string)properties["name"],
+                new Func<BonusModelMode>(() =>
+                {
+                    return properties["mode"] switch {
+                        BonusModelMode e => e,
+                        string s => BonusModelModeExt.New(s),
+                        _ => BonusModelMode.Schedule
+                    };
+                })(),
+                new Func<BonusModelMissedReceiveRelief>(() =>
+                {
+                    return properties["missedReceiveRelief"] switch {
+                        BonusModelMissedReceiveRelief e => e,
+                        string s => BonusModelMissedReceiveReliefExt.New(s),
+                        _ => BonusModelMissedReceiveRelief.Enabled
+                    };
+                })(),
+                new BonusModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    periodEventId = properties.TryGetValue("periodEventId", out var periodEventId) ? (string)periodEventId : null,
+                    resetHour = properties.TryGetValue("resetHour", out var resetHour) ? (int?)resetHour : null,
+                    repeat = properties.TryGetValue("repeat", out var repeat) ? BonusModelRepeatExt.New(repeat as string) : BonusModelRepeat.Enabled,
+                    rewards = properties.TryGetValue("rewards", out var rewards) ? new Func<Reward[]>(() =>
+                    {
+                        return rewards switch {
+                            Reward[] v => v,
+                            List<Reward> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Reward.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Reward.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    missedReceiveReliefConsumeActions = properties.TryGetValue("missedReceiveReliefConsumeActions", out var missedReceiveReliefConsumeActions) ? new Func<ConsumeAction[]>(() =>
+                    {
+                        return missedReceiveReliefConsumeActions switch {
+                            ConsumeAction[] v => v,
+                            List<ConsumeAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

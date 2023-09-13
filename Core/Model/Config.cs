@@ -17,9 +17,20 @@ namespace Gs2Cdk.Core.Model
 
         public Dictionary<string, object> Properties() {
             return new Dictionary<string, object>() {
-                {"Key", key},
-                {"Value", value},
+                {"key", key},
+                {"value", value},
             };
+        }
+
+        public static Config FromProperties(
+            Dictionary<string, object> properties
+        ) {
+            var model = new Config(
+                properties["key"] as string,
+                properties["value"] as string
+            );
+
+            return model;
         }
     }
 }

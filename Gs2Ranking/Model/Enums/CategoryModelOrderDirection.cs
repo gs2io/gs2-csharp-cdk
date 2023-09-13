@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Ranking.Model.Enums
             }
             return "unknown";
         }
+
+        public static CategoryModelOrderDirection New(string value) {
+            switch (value) {
+                case "asc":
+                    return CategoryModelOrderDirection.Asc;
+                case "desc":
+                    return CategoryModelOrderDirection.Desc;
+            }
+            return CategoryModelOrderDirection.Asc;
+        }
     }
 }

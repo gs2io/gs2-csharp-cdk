@@ -47,7 +47,7 @@ namespace Gs2Cdk.Gs2Idle.Ref
             string userId = "#{userId}"
         ){
             return (new IncreaseMaximumIdleMinutesByUserId(
-                this.namespaceName,
+                namespaceName,
                 categoryName,
                 increaseMinutes,
                 userId
@@ -60,7 +60,7 @@ namespace Gs2Cdk.Gs2Idle.Ref
             string userId = "#{userId}"
         ){
             return (new DecreaseMaximumIdleMinutesByUserId(
-                this.namespaceName,
+                namespaceName,
                 categoryName,
                 decreaseMinutes,
                 userId

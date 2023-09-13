@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,6 +87,42 @@ namespace Gs2Cdk.Gs2Enhance.Model
             }
 
             return properties;
+        }
+
+        public static RateModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RateModel(
+                (string)properties["name"],
+                (string)properties["targetInventoryModelId"],
+                (string)properties["acquireExperienceSuffix"],
+                (string)properties["materialInventoryModelId"],
+                (string)properties["experienceModelId"],
+                new RateModelOptions {
+                    description = properties.TryGetValue("description", out var description) ? (string)description : null,
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    acquireExperienceHierarchy = properties.TryGetValue("acquireExperienceHierarchy", out var acquireExperienceHierarchy) ? new Func<string[]>(() =>
+                    {
+                        return acquireExperienceHierarchy switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    bonusRates = properties.TryGetValue("bonusRates", out var bonusRates) ? new Func<BonusRate[]>(() =>
+                    {
+                        return bonusRates switch {
+                            BonusRate[] v => v,
+                            List<BonusRate> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(BonusRate.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(BonusRate.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }

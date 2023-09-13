@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,11 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class Scope {
         private string name;
-        private long? targetDays;
+        private long targetDays;
 
         public Scope(
             string name,
-            long? targetDays,
+            long targetDays,
             ScopeOptions options = null
         ){
             this.name = name;
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Ranking.Model
             }
 
             return properties;
+        }
+
+        public static Scope FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new Scope(
+                (string)properties["name"],
+                (long)properties["targetDays"],
+                new ScopeOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

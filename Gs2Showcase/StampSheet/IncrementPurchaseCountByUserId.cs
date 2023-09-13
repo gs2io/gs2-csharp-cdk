@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             string namespaceName,
             string showcaseName,
             string displayItemName,
-            int? count,
+            int count,
             string userId = "#{userId}"
         ): base(
             "Gs2Showcase:IncrementPurchaseCountByUserId",

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,14 +25,14 @@ namespace Gs2Cdk.Gs2Enchant.Model
 {
     public class RarityParameterModel {
         private string name;
-        private int? maximumParameterCount;
+        private int maximumParameterCount;
         private RarityParameterCountModel[] parameterCounts;
         private RarityParameterValueModel[] parameters;
         private string metadata;
 
         public RarityParameterModel(
             string name,
-            int? maximumParameterCount,
+            int maximumParameterCount,
             RarityParameterCountModel[] parameterCounts,
             RarityParameterValueModel[] parameters,
             RarityParameterModelOptions options = null
@@ -66,6 +67,36 @@ namespace Gs2Cdk.Gs2Enchant.Model
             }
 
             return properties;
+        }
+
+        public static RarityParameterModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new RarityParameterModel(
+                (string)properties["name"],
+                (int)properties["maximumParameterCount"],
+                new Func<RarityParameterCountModel[]>(() =>
+                {
+                    return properties["parameterCounts"] switch {
+                        Dictionary<string, object>[] v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new Func<RarityParameterValueModel[]>(() =>
+                {
+                    return properties["parameters"] switch {
+                        Dictionary<string, object>[] v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
+                new RarityParameterModelOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                }
+            );
+
+            return model;
         }
     }
 }

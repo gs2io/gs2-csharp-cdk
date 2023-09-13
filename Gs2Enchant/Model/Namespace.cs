@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -108,6 +109,38 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 this.name,
                 balanceParameterModels,
                 rarityParameterModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<BalanceParameterModel[]>(() =>
+                {
+                    return properties["balanceParameterModels"] switch {
+                        BalanceParameterModel[] v => v,
+                        List<BalanceParameterModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(BalanceParameterModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(BalanceParameterModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<RarityParameterModel[]>(() =>
+                {
+                    return properties["rarityParameterModels"] switch {
+                        RarityParameterModel[] v => v,
+                        List<RarityParameterModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(RarityParameterModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(RarityParameterModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

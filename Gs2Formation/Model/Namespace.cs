@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -119,6 +120,38 @@ namespace Gs2Cdk.Gs2Formation.Model
                 this.name,
                 moldModels,
                 propertyFormModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<MoldModel[]>(() =>
+                {
+                    return properties["moldModels"] switch {
+                        MoldModel[] v => v,
+                        List<MoldModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(MoldModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(MoldModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<PropertyFormModel[]>(() =>
+                {
+                    return properties["propertyFormModels"] switch {
+                        PropertyFormModel[] v => v,
+                        List<PropertyFormModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(PropertyFormModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(PropertyFormModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

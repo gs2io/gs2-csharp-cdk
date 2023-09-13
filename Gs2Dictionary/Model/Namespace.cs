@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -111,6 +112,28 @@ namespace Gs2Cdk.Gs2Dictionary.Model
                 this.stack,
                 this.name,
                 entryModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<EntryModel[]>(() =>
+                {
+                    return properties["entryModels"] switch {
+                        EntryModel[] v => v,
+                        List<EntryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(EntryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(EntryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

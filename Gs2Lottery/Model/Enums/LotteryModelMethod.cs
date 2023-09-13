@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Lottery.Model.Enums
             }
             return "unknown";
         }
+
+        public static LotteryModelMethod New(string value) {
+            switch (value) {
+                case "prize_table":
+                    return LotteryModelMethod.PrizeTable;
+                case "script":
+                    return LotteryModelMethod.Script;
+            }
+            return LotteryModelMethod.PrizeTable;
+        }
     }
 }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +55,27 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
 
             return properties;
+        }
+
+        public static ScopedValue FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ScopedValue(
+                new Func<ScopedValueResetType>(() =>
+                {
+                    return properties["resetType"] switch {
+                        ScopedValueResetType e => e,
+                        string s => ScopedValueResetTypeExt.New(s),
+                        _ => ScopedValueResetType.NotReset
+                    };
+                })(),
+                (long?)properties["value"],
+                new ScopedValueOptions {
+                    nextResetAt = properties.TryGetValue("nextResetAt", out var nextResetAt) ? (long?)nextResetAt : null
+                }
+            );
+
+            return model;
         }
     }
 }

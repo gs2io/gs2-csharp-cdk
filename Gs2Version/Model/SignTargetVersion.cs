@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -66,6 +67,29 @@ namespace Gs2Cdk.Gs2Version.Model
             }
 
             return properties;
+        }
+
+        public static SignTargetVersion FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new SignTargetVersion(
+                (string)properties["region"],
+                (string)properties["ownerId"],
+                (string)properties["namespaceName"],
+                (string)properties["versionName"],
+                new Func<Version_>(() =>
+                {
+                    return properties["version"] switch {
+                        Version_ m => m,
+                        Dictionary<string, object> v => Version_.FromProperties(v),
+                        _ => null
+                    };
+                })(),
+                new SignTargetVersionOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

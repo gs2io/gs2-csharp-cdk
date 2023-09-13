@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -116,6 +117,28 @@ namespace Gs2Cdk.Gs2Version.Model
                 this.stack,
                 this.name,
                 versionModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<VersionModel[]>(() =>
+                {
+                    return properties["versionModels"] switch {
+                        VersionModel[] v => v,
+                        List<VersionModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(VersionModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(VersionModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );

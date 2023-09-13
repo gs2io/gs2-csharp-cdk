@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,11 +24,11 @@ using Gs2Cdk.Gs2Matchmaking.Model.Options;
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class GameResult {
-        private int? rank;
+        private int rank;
         private string userId;
 
         public GameResult(
-            int? rank,
+            int rank,
             string userId,
             GameResultOptions options = null
         ){
@@ -47,6 +48,19 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
 
             return properties;
+        }
+
+        public static GameResult FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new GameResult(
+                (int)properties["rank"],
+                (string)properties["userId"],
+                new GameResultOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

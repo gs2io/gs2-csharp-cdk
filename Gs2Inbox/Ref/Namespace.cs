@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Inbox.Ref
             string userId = "#{userId}"
         ){
             return (new SendMessageByUserId(
-                this.namespaceName,
+                namespaceName,
                 metadata,
                 readAcquireActions,
                 expiresAt,
@@ -63,7 +63,7 @@ namespace Gs2Cdk.Gs2Inbox.Ref
             string userId = "#{userId}"
         ){
             return (new OpenMessageByUserId(
-                this.namespaceName,
+                namespaceName,
                 messageName,
                 userId
             ));
@@ -74,7 +74,7 @@ namespace Gs2Cdk.Gs2Inbox.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteMessageByUserId(
-                this.namespaceName,
+                namespaceName,
                 messageName,
                 userId
             ));

@@ -65,5 +65,21 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             return properties;
         }
+
+        public ItemModel FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ItemModel(
+                properties["name"] as string,
+                properties["stackingLimit"] as long?,
+                properties["allowMultipleStacks"] as bool?,
+                properties["sortValue"] as int?,
+                new ItemModelOptions {
+                    metadata = properties["metadata"] as string
+                }
+            );
+
+            return model;
+        }
     }
 }

@@ -34,5 +34,15 @@ namespace Gs2Cdk.Gs2Money.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespacePriority New(string value) {
+            switch (value) {
+                case "free":
+                    return NamespacePriority.Free;
+                case "paid":
+                    return NamespacePriority.Paid;
+            }
+            return NamespacePriority.Free;
+        }
     }
 }
