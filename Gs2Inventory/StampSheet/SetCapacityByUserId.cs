@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         public SetCapacityByUserId(
             string namespaceName,
             string inventoryName,
-            int? newCapacityValue,
+            int newCapacityValue,
             string userId = "#{userId}"
         ): base(
             "Gs2Inventory:SetCapacityByUserId",

@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2StateMachine.Ref
 {
     public class StateMachineMasterRef {
         private string namespaceName;
-        private long? version;
+        private long version;
 
         public StateMachineMasterRef(
             string namespaceName,
-            long? version
+            long version
         ){
             this.namespaceName = namespaceName;
             this.version = version;

@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public AddCapacityByUserId AddCapacity(
             string inventoryName,
-            int? addCapacityValue,
+            int addCapacityValue,
             string userId = "#{userId}"
         ){
             return (new AddCapacityByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 addCapacityValue,
                 userId
@@ -74,11 +74,11 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public SetCapacityByUserId SetCapacity(
             string inventoryName,
-            int? newCapacityValue,
+            int newCapacityValue,
             string userId = "#{userId}"
         ){
             return (new SetCapacityByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 newCapacityValue,
                 userId
@@ -88,14 +88,14 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public AcquireItemSetByUserId AcquireItemSet(
             string inventoryName,
             string itemName,
-            long? acquireCount,
+            long acquireCount,
             long? expiresAt,
             bool? createNewItemSet,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new AcquireItemSetByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
                 acquireCount,
@@ -114,11 +114,11 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AddReferenceOfByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
+                itemSetName,
                 userId
             ));
         }
@@ -131,11 +131,11 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteReferenceOfByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
+                itemSetName,
                 userId
             ));
         }
@@ -146,7 +146,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireSimpleItemsByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 acquireCounts,
                 userId
@@ -160,7 +160,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireBigItemByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
                 acquireCount,
@@ -171,12 +171,12 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public ConsumeItemSetByUserId ConsumeItemSet(
             string inventoryName,
             string itemName,
-            long? consumeCount,
+            long consumeCount,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new ConsumeItemSetByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
                 consumeCount,
@@ -194,12 +194,12 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyReferenceOfByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
                 verifyType,
+                itemSetName,
                 userId
             ));
         }
@@ -210,7 +210,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeSimpleItemsByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 consumeCounts,
                 userId
@@ -224,7 +224,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeBigItemByUserId(
-                this.namespaceName,
+                namespaceName,
                 inventoryName,
                 itemName,
                 consumeCount,

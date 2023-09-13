@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,14 +56,21 @@ namespace Gs2Cdk.Gs2Inventory.Model
             return properties;
         }
 
-        public SimpleInventoryModel FromProperties(
+        public static SimpleInventoryModel FromProperties(
             Dictionary<string, object> properties
         ){
             var model = new SimpleInventoryModel(
-                properties["name"] as string,
-                properties["simpleItemModels"] as SimpleItemModel[],
+                (string)properties["name"],
+                new Func<SimpleItemModel[]>(() =>
+                {
+                    return properties["simpleItemModels"] switch {
+                        Dictionary<string, object>[] v => v.Select(SimpleItemModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(SimpleItemModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
                 new SimpleInventoryModelOptions {
-                    metadata = properties["metadata"] as string
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );
 

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,11 @@ namespace Gs2Cdk.Gs2Inventory.Model
 {
     public class AcquireCount {
         private string itemName;
-        private long? count;
+        private long count;
 
         public AcquireCount(
             string itemName,
-            long? count,
+            long count,
             AcquireCountOptions options = null
         ){
             this.itemName = itemName;
@@ -49,12 +50,12 @@ namespace Gs2Cdk.Gs2Inventory.Model
             return properties;
         }
 
-        public AcquireCount FromProperties(
+        public static AcquireCount FromProperties(
             Dictionary<string, object> properties
         ){
             var model = new AcquireCount(
-                properties["itemName"] as string,
-                properties["count"] as long?,
+                (string)properties["itemName"],
+                (long)properties["count"],
                 new AcquireCountOptions {
                 }
             );

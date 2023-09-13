@@ -51,8 +51,8 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireBigItemByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
                 acquireCount,
                 userId
@@ -65,8 +65,8 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeBigItemByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
                 consumeCount,
                 userId

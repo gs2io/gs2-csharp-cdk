@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,16 +25,16 @@ namespace Gs2Cdk.Gs2Inventory.Model
 {
     public class ItemModel {
         private string name;
-        private long? stackingLimit;
-        private bool? allowMultipleStacks;
-        private int? sortValue;
+        private long stackingLimit;
+        private bool allowMultipleStacks;
+        private int sortValue;
         private string metadata;
 
         public ItemModel(
             string name,
-            long? stackingLimit,
-            bool? allowMultipleStacks,
-            int? sortValue,
+            long stackingLimit,
+            bool allowMultipleStacks,
+            int sortValue,
             ItemModelOptions options = null
         ){
             this.name = name;
@@ -66,16 +67,16 @@ namespace Gs2Cdk.Gs2Inventory.Model
             return properties;
         }
 
-        public ItemModel FromProperties(
+        public static ItemModel FromProperties(
             Dictionary<string, object> properties
         ){
             var model = new ItemModel(
-                properties["name"] as string,
-                properties["stackingLimit"] as long?,
-                properties["allowMultipleStacks"] as bool?,
-                properties["sortValue"] as int?,
+                (string)properties["name"],
+                (long)properties["stackingLimit"],
+                (bool)properties["allowMultipleStacks"],
+                (int)properties["sortValue"],
                 new ItemModelOptions {
-                    metadata = properties["metadata"] as string
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );
 

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,16 +25,16 @@ namespace Gs2Cdk.Gs2Inventory.Model
 {
     public class InventoryModel {
         private string name;
-        private int? initialCapacity;
-        private int? maxCapacity;
+        private int initialCapacity;
+        private int maxCapacity;
         private ItemModel[] itemModels;
         private string metadata;
         private bool? protectReferencedItem;
 
         public InventoryModel(
             string name,
-            int? initialCapacity,
-            int? maxCapacity,
+            int initialCapacity,
+            int maxCapacity,
             ItemModel[] itemModels,
             InventoryModelOptions options = null
         ){
@@ -72,17 +73,24 @@ namespace Gs2Cdk.Gs2Inventory.Model
             return properties;
         }
 
-        public InventoryModel FromProperties(
+        public static InventoryModel FromProperties(
             Dictionary<string, object> properties
         ){
             var model = new InventoryModel(
-                properties["name"] as string,
-                properties["initialCapacity"] as int?,
-                properties["maxCapacity"] as int?,
-                properties["itemModels"] as ItemModel[],
+                (string)properties["name"],
+                (int)properties["initialCapacity"],
+                (int)properties["maxCapacity"],
+                new Func<ItemModel[]>(() =>
+                {
+                    return properties["itemModels"] switch {
+                        Dictionary<string, object>[] v => v.Select(ItemModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(ItemModel.FromProperties).ToArray(),
+                        _ => null
+                    };
+                })(),
                 new InventoryModelOptions {
-                    metadata = properties["metadata"] as string,
-                    protectReferencedItem = properties["protectReferencedItem"] as bool?
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    protectReferencedItem = properties.TryGetValue("protectReferencedItem", out var protectReferencedItem) ? (bool?)protectReferencedItem : null
                 }
             );
 

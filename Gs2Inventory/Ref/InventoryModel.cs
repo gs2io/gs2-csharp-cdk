@@ -46,24 +46,24 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public AddCapacityByUserId AddCapacity(
-            int? addCapacityValue,
+            int addCapacityValue,
             string userId = "#{userId}"
         ){
             return (new AddCapacityByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 addCapacityValue,
                 userId
             ));
         }
 
         public SetCapacityByUserId SetCapacity(
-            int? newCapacityValue,
+            int newCapacityValue,
             string userId = "#{userId}"
         ){
             return (new SetCapacityByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 newCapacityValue,
                 userId
             ));
@@ -71,15 +71,15 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public AcquireItemSetByUserId AcquireItemSet(
             string itemName,
-            long? acquireCount,
+            long acquireCount,
             long? expiresAt,
             bool? createNewItemSet,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new AcquireItemSetByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
                 acquireCount,
                 expiresAt,
@@ -96,11 +96,11 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AddReferenceOfByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
+                itemSetName,
                 userId
             ));
         }
@@ -112,24 +112,24 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteReferenceOfByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
+                itemSetName,
                 userId
             ));
         }
 
         public ConsumeItemSetByUserId ConsumeItemSet(
             string itemName,
-            long? consumeCount,
+            long consumeCount,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new ConsumeItemSetByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
                 consumeCount,
                 itemSetName,
@@ -145,12 +145,12 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyReferenceOfByUserId(
-                this.namespaceName,
-                this.inventoryName,
+                namespaceName,
+                inventoryName,
                 itemName,
-                itemSetName,
                 referenceOf,
                 verifyType,
+                itemSetName,
                 userId
             ));
         }

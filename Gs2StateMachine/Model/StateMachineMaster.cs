@@ -15,6 +15,7 @@
  *
  * deny overwrite
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -80,7 +81,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model
         }
 
         public StateMachineMasterRef Ref(
-            long? version
+            long version
         ){
             return (new StateMachineMasterRef(
                 this.namespaceName,

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -121,6 +122,48 @@ namespace Gs2Cdk.Gs2Inventory.Model
                 inventoryModels,
                 simpleInventoryModels,
                 bigInventoryModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<InventoryModel[]>(() =>
+                {
+                    return properties["inventoryModels"] switch {
+                        InventoryModel[] v => v,
+                        List<InventoryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(InventoryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(InventoryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<SimpleInventoryModel[]>(() =>
+                {
+                    return properties["simpleInventoryModels"] switch {
+                        SimpleInventoryModel[] v => v,
+                        List<SimpleInventoryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(SimpleInventoryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(SimpleInventoryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<BigInventoryModel[]>(() =>
+                {
+                    return properties["bigInventoryModels"] switch {
+                        BigInventoryModel[] v => v,
+                        List<BigInventoryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(BigInventoryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(BigInventoryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
             )).AddDependsOn(
                 this
             );
