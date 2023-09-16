@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ using Gs2Cdk.Gs2Log.Model.Options;
 namespace Gs2Cdk.Gs2Log.Model
 {
     public class AccessLog {
-        private long? timestamp;
+        private long timestamp;
         private string requestId;
         private string service;
         private string method;
@@ -32,7 +33,7 @@ namespace Gs2Cdk.Gs2Log.Model
         private string userId;
 
         public AccessLog(
-            long? timestamp,
+            long timestamp,
             string requestId,
             string service,
             string method,
@@ -76,6 +77,31 @@ namespace Gs2Cdk.Gs2Log.Model
             }
 
             return properties;
+        }
+
+        public static AccessLog FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new AccessLog(
+                new Func<long>(() =>
+                {
+                    return properties["timestamp"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                (string)properties["requestId"],
+                (string)properties["service"],
+                (string)properties["method"],
+                (string)properties["request"],
+                (string)properties["result"],
+                new AccessLogOptions {
+                    userId = properties.TryGetValue("userId", out var userId) ? (string)userId : null
+                }
+            );
+
+            return model;
         }
     }
 }

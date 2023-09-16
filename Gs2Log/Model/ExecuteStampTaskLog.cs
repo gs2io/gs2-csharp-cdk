@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ using Gs2Cdk.Gs2Log.Model.Options;
 namespace Gs2Cdk.Gs2Log.Model
 {
     public class ExecuteStampTaskLog {
-        private long? timestamp;
+        private long timestamp;
         private string taskId;
         private string service;
         private string method;
@@ -32,7 +33,7 @@ namespace Gs2Cdk.Gs2Log.Model
         private string args;
 
         public ExecuteStampTaskLog(
-            long? timestamp,
+            long timestamp,
             string taskId,
             string service,
             string method,
@@ -77,6 +78,31 @@ namespace Gs2Cdk.Gs2Log.Model
             }
 
             return properties;
+        }
+
+        public static ExecuteStampTaskLog FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ExecuteStampTaskLog(
+                new Func<long>(() =>
+                {
+                    return properties["timestamp"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                (string)properties["taskId"],
+                (string)properties["service"],
+                (string)properties["method"],
+                (string)properties["userId"],
+                (string)properties["action"],
+                (string)properties["args"],
+                new ExecuteStampTaskLogOptions {
+                }
+            );
+
+            return model;
         }
     }
 }

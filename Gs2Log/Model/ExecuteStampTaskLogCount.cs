@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,14 +24,14 @@ using Gs2Cdk.Gs2Log.Model.Options;
 namespace Gs2Cdk.Gs2Log.Model
 {
     public class ExecuteStampTaskLogCount {
-        private long? count;
+        private long count;
         private string service;
         private string method;
         private string userId;
         private string action;
 
         public ExecuteStampTaskLogCount(
-            long? count,
+            long count,
             ExecuteStampTaskLogCountOptions options = null
         ){
             this.count = count;
@@ -61,6 +62,29 @@ namespace Gs2Cdk.Gs2Log.Model
             }
 
             return properties;
+        }
+
+        public static ExecuteStampTaskLogCount FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new ExecuteStampTaskLogCount(
+                new Func<long>(() =>
+                {
+                    return properties["count"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new ExecuteStampTaskLogCountOptions {
+                    service = properties.TryGetValue("service", out var service) ? (string)service : null,
+                    method = properties.TryGetValue("method", out var method) ? (string)method : null,
+                    userId = properties.TryGetValue("userId", out var userId) ? (string)userId : null,
+                    action = properties.TryGetValue("action", out var action) ? (string)action : null
+                }
+            );
+
+            return model;
         }
     }
 }

@@ -37,5 +37,17 @@ namespace Gs2Cdk.Gs2Log.Model.Enums
             }
             return "unknown";
         }
+
+        public static NamespaceType New(string value) {
+            switch (value) {
+                case "gs2":
+                    return NamespaceType.Gs2;
+                case "bigquery":
+                    return NamespaceType.Bigquery;
+                case "firehose":
+                    return NamespaceType.Firehose;
+            }
+            return NamespaceType.Gs2;
+        }
     }
 }

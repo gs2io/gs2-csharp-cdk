@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ using Gs2Cdk.Gs2Log.Model.Options;
 namespace Gs2Cdk.Gs2Log.Model
 {
     public class IssueStampSheetLog {
-        private long? timestamp;
+        private long timestamp;
         private string transactionId;
         private string service;
         private string method;
@@ -33,7 +34,7 @@ namespace Gs2Cdk.Gs2Log.Model
         private string[] tasks;
 
         public IssueStampSheetLog(
-            long? timestamp,
+            long timestamp,
             string transactionId,
             string service,
             string method,
@@ -82,6 +83,39 @@ namespace Gs2Cdk.Gs2Log.Model
             }
 
             return properties;
+        }
+
+        public static IssueStampSheetLog FromProperties(
+            Dictionary<string, object> properties
+        ){
+            var model = new IssueStampSheetLog(
+                new Func<long>(() =>
+                {
+                    return properties["timestamp"] switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                (string)properties["transactionId"],
+                (string)properties["service"],
+                (string)properties["method"],
+                (string)properties["userId"],
+                (string)properties["action"],
+                (string)properties["args"],
+                new IssueStampSheetLogOptions {
+                    tasks = properties.TryGetValue("tasks", out var tasks) ? new Func<string[]>(() =>
+                    {
+                        return tasks switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
+                }
+            );
+
+            return model;
         }
     }
 }
