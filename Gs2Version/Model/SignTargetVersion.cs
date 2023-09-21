@@ -81,7 +81,9 @@ namespace Gs2Cdk.Gs2Version.Model
                 {
                     return properties["version"] switch {
                         Version_ v => v,
+                        Version_[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Version_.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? Version_.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),

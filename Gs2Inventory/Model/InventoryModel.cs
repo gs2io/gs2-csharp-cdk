@@ -98,7 +98,10 @@ namespace Gs2Cdk.Gs2Inventory.Model
                 {
                     return properties["itemModels"] switch {
                         Dictionary<string, object>[] v => v.Select(ItemModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ ItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(ItemModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as ItemModel).ToArray(),
+                        { } v => new []{ v as ItemModel },
                         _ => null
                     };
                 })(),

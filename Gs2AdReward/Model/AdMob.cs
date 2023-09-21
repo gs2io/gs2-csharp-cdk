@@ -53,6 +53,8 @@ namespace Gs2Cdk.Gs2AdReward.Model
                     return properties["allowAdUnitIds"] switch {
                         string[] v => v.ToArray(),
                         List<string> v => v.ToArray(),
+                        object[] v => v.Select(v2 => v2.ToString()).ToArray(),
+                        { } v => new []{ v.ToString() },
                         _ => null
                     };
                 })(),

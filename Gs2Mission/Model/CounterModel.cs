@@ -70,7 +70,10 @@ namespace Gs2Cdk.Gs2Mission.Model
                 {
                     return properties["scopes"] switch {
                         Dictionary<string, object>[] v => v.Select(CounterScopeModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ CounterScopeModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(CounterScopeModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as CounterScopeModel).ToArray(),
+                        { } v => new []{ v as CounterScopeModel },
                         _ => null
                     };
                 })(),

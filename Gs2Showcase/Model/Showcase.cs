@@ -70,7 +70,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 {
                     return properties["displayItems"] switch {
                         Dictionary<string, object>[] v => v.Select(DisplayItem.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ DisplayItem.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(DisplayItem.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as DisplayItem).ToArray(),
+                        { } v => new []{ v as DisplayItem },
                         _ => null
                     };
                 })(),

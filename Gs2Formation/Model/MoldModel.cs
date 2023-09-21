@@ -93,7 +93,9 @@ namespace Gs2Cdk.Gs2Formation.Model
                 {
                     return properties["formModel"] switch {
                         FormModel v => v,
+                        FormModel[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => FormModel.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? FormModel.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),

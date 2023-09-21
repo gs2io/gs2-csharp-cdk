@@ -65,7 +65,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 {
                     return properties["salesItems"] switch {
                         Dictionary<string, object>[] v => v.Select(SalesItem.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ SalesItem.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(SalesItem.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as SalesItem).ToArray(),
+                        { } v => new []{ v as SalesItem },
                         _ => null
                     };
                 })(),

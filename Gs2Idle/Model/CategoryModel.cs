@@ -103,7 +103,10 @@ namespace Gs2Cdk.Gs2Idle.Model
                 {
                     return properties["acquireActions"] switch {
                         Dictionary<string, object>[] v => v.Select(AcquireActionList.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ AcquireActionList.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(AcquireActionList.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as AcquireActionList).ToArray(),
+                        { } v => new []{ v as AcquireActionList },
                         _ => null
                     };
                 })(),

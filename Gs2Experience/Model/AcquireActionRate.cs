@@ -60,6 +60,8 @@ namespace Gs2Cdk.Gs2Experience.Model
                     return properties["rates"] switch {
                         double[] v => v.ToArray(),
                         List<double> v => v.ToArray(),
+                        object[] v => v.Select(v2 => double.Parse(v2.ToString())).ToArray(),
+                        { } v => new []{ double.Parse(v.ToString()) },
                         _ => null
                     };
                 })(),

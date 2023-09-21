@@ -65,7 +65,10 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 {
                     return properties["prizes"] switch {
                         Dictionary<string, object>[] v => v.Select(Prize.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Prize.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(Prize.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Prize).ToArray(),
+                        { } v => new []{ v as Prize },
                         _ => null
                     };
                 })(),

@@ -113,7 +113,9 @@ namespace Gs2Cdk.Gs2Experience.Model
                 {
                     return properties["rankThreshold"] switch {
                         Threshold v => v,
+                        Threshold[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Threshold.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? Threshold.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),

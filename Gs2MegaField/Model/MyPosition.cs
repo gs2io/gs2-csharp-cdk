@@ -66,7 +66,9 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 {
                     return properties["position"] switch {
                         Position v => v,
+                        Position[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Position.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? Position.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),
@@ -74,7 +76,9 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 {
                     return properties["vector"] switch {
                         Vector v => v,
+                        Vector[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Vector.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? Vector.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),

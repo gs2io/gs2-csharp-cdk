@@ -78,7 +78,10 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                 {
                     return properties["releaseConsumeActions"] switch {
                         Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ ConsumeAction.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as ConsumeAction).ToArray(),
+                        { } v => new []{ v as ConsumeAction },
                         _ => null
                     };
                 })(),

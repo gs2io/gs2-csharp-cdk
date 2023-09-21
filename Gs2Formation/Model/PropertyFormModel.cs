@@ -65,7 +65,10 @@ namespace Gs2Cdk.Gs2Formation.Model
                 {
                     return properties["slots"] switch {
                         Dictionary<string, object>[] v => v.Select(SlotModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ SlotModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(SlotModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as SlotModel).ToArray(),
+                        { } v => new []{ v as SlotModel },
                         _ => null
                     };
                 })(),

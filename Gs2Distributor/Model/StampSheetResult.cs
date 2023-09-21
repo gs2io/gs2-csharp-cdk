@@ -90,7 +90,9 @@ namespace Gs2Cdk.Gs2Distributor.Model
                 {
                     return properties["sheetRequest"] switch {
                         AcquireAction v => v,
+                        AcquireAction[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => AcquireAction.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? AcquireAction.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),

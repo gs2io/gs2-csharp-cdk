@@ -71,7 +71,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 {
                     return properties["acquireActions"] switch {
                         Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                        { } v => new []{ v as AcquireAction },
                         _ => null
                     };
                 })(),

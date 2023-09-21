@@ -96,7 +96,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 {
                     return properties["displayItems"] switch {
                         Dictionary<string, object>[] v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ RandomDisplayItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as RandomDisplayItemModel).ToArray(),
+                        { } v => new []{ v as RandomDisplayItemModel },
                         _ => null
                     };
                 })(),

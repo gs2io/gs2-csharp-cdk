@@ -86,7 +86,10 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 {
                     return properties["parameterCounts"] switch {
                         Dictionary<string, object>[] v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ RarityParameterCountModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as RarityParameterCountModel).ToArray(),
+                        { } v => new []{ v as RarityParameterCountModel },
                         _ => null
                     };
                 })(),
@@ -94,7 +97,10 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 {
                     return properties["parameters"] switch {
                         Dictionary<string, object>[] v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ RarityParameterValueModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as RarityParameterValueModel).ToArray(),
+                        { } v => new []{ v as RarityParameterValueModel },
                         _ => null
                     };
                 })(),

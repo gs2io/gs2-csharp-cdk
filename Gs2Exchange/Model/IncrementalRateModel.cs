@@ -174,7 +174,9 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 {
                     return properties["consumeAction"] switch {
                         ConsumeAction v => v,
+                        ConsumeAction[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => ConsumeAction.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? ConsumeAction.FromProperties(v.First()) : null,
                         _ => null
                     };
                 })(),
