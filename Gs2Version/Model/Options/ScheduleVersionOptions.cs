@@ -21,9 +21,7 @@ using Gs2Cdk.Gs2Version.Model;
 
 namespace Gs2Cdk.Gs2Version.Model.Options
 {
-    public class TargetVersionOptions {
-        public string body;
-        public string signature;
-        public Version_ version;
+    public class ScheduleVersionOptions {
+        public string scheduleEventId;
     }
 }

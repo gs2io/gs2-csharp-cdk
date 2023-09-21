@@ -25,6 +25,9 @@ namespace Gs2Cdk.Gs2Version.Model.Options
     public class VersionModelOptions {
         public string metadata;
         public Version_ currentVersion;
+        public Version_ warningVersion;
+        public Version_ errorVersion;
+        public ScheduleVersion[] scheduleVersions;
         public bool? needSignature;
         public string signatureKeyId;
     }

@@ -18,12 +18,12 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Version.Model;
+using Gs2Cdk.Gs2Version.Model.Enums;
 
 namespace Gs2Cdk.Gs2Version.Model.Options
 {
-    public class TargetVersionOptions {
-        public string body;
-        public string signature;
-        public Version_ version;
+    public class VersionModelTypeIsSimpleOptions {
+        public string metadata;
+        public ScheduleVersion[] scheduleVersions;
     }
 }

@@ -25,19 +25,18 @@ namespace Gs2Cdk.Gs2Version.Model
 {
     public class TargetVersion {
         private string versionName;
-        private Version_ version;
         private string body;
         private string signature;
+        private Version_ version;
 
         public TargetVersion(
             string versionName,
-            Version_ version,
             TargetVersionOptions options = null
         ){
             this.versionName = versionName;
-            this.version = version;
             this.body = options?.body;
             this.signature = options?.signature;
+            this.version = options?.version;
         }
 
         public Dictionary<string, object> Properties(
@@ -47,15 +46,15 @@ namespace Gs2Cdk.Gs2Version.Model
             if (this.versionName != null) {
                 properties["versionName"] = this.versionName;
             }
-            if (this.version != null) {
-                properties["version"] = this.version?.Properties(
-                );
-            }
             if (this.body != null) {
                 properties["body"] = this.body;
             }
             if (this.signature != null) {
                 properties["signature"] = this.signature;
+            }
+            if (this.version != null) {
+                properties["version"] = this.version?.Properties(
+                );
             }
 
             return properties;
@@ -66,17 +65,17 @@ namespace Gs2Cdk.Gs2Version.Model
         ){
             var model = new TargetVersion(
                 (string)properties["versionName"],
-                new Func<Version_>(() =>
-                {
-                    return properties["version"] switch {
-                        Version_ v => v,
-                        Dictionary<string, object> v => Version_.FromProperties(v),
-                        _ => null
-                    };
-                })(),
                 new TargetVersionOptions {
                     body = properties.TryGetValue("body", out var body) ? (string)body : null,
-                    signature = properties.TryGetValue("signature", out var signature) ? (string)signature : null
+                    signature = properties.TryGetValue("signature", out var signature) ? (string)signature : null,
+                    version = properties.TryGetValue("version", out var version) ? new Func<Version_>(() =>
+                    {
+                        return version switch {
+                            Version_ v => v,
+                            Dictionary<string, object> v => Version_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 

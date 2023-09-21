@@ -26,65 +26,100 @@ namespace Gs2Cdk.Gs2Version.Model
 {
     public class VersionModel {
         private string name;
-        private Version_ warningVersion;
-        private Version_ errorVersion;
         private VersionModelScope? scope;
+        private VersionModelType? type;
         private string metadata;
         private Version_ currentVersion;
+        private Version_ warningVersion;
+        private Version_ errorVersion;
+        private ScheduleVersion[] scheduleVersions;
         private bool? needSignature;
         private string signatureKeyId;
 
         public VersionModel(
             string name,
-            Version_ warningVersion,
-            Version_ errorVersion,
             VersionModelScope scope,
+            VersionModelType type,
             VersionModelOptions options = null
         ){
             this.name = name;
-            this.warningVersion = warningVersion;
-            this.errorVersion = errorVersion;
             this.scope = scope;
+            this.type = type;
             this.metadata = options?.metadata;
             this.currentVersion = options?.currentVersion;
+            this.warningVersion = options?.warningVersion;
+            this.errorVersion = options?.errorVersion;
+            this.scheduleVersions = options?.scheduleVersions;
             this.needSignature = options?.needSignature;
             this.signatureKeyId = options?.signatureKeyId;
         }
 
-        public static VersionModel ScopeIsPassive(
+        public static VersionModel TypeIsSimple(
             string name,
+            VersionModelScope scope,
             Version_ warningVersion,
             Version_ errorVersion,
+            VersionModelTypeIsSimpleOptions options = null
+        ){
+            return (new VersionModel(
+                name,
+                scope,
+                VersionModelType.Simple,
+                new VersionModelOptions {
+                    warningVersion = warningVersion,
+                    errorVersion = errorVersion,
+                    metadata = options?.metadata,
+                    scheduleVersions = options?.scheduleVersions,
+                }
+            ));
+        }
+
+        public static VersionModel TypeIsSchedule(
+            string name,
+            VersionModelScope scope,
+            VersionModelTypeIsScheduleOptions options = null
+        ){
+            return (new VersionModel(
+                name,
+                scope,
+                VersionModelType.Schedule,
+                new VersionModelOptions {
+                    metadata = options?.metadata,
+                    scheduleVersions = options?.scheduleVersions,
+                }
+            ));
+        }
+
+        public static VersionModel ScopeIsPassive(
+            string name,
+            VersionModelType type,
             bool? needSignature,
             VersionModelScopeIsPassiveOptions options = null
         ){
             return (new VersionModel(
                 name,
-                warningVersion,
-                errorVersion,
                 VersionModelScope.Passive,
+                type,
                 new VersionModelOptions {
                     needSignature = needSignature,
                     metadata = options?.metadata,
+                    scheduleVersions = options?.scheduleVersions,
                 }
             ));
         }
 
         public static VersionModel ScopeIsActive(
             string name,
-            Version_ warningVersion,
-            Version_ errorVersion,
-            Version_ currentVersion,
+            VersionModelType type,
             VersionModelScopeIsActiveOptions options = null
         ){
             return (new VersionModel(
                 name,
-                warningVersion,
-                errorVersion,
                 VersionModelScope.Active,
+                type,
                 new VersionModelOptions {
-                    currentVersion = currentVersion,
                     metadata = options?.metadata,
+                    scheduleVersions = options?.scheduleVersions,
                 }
             ));
         }
@@ -99,6 +134,18 @@ namespace Gs2Cdk.Gs2Version.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
+            if (this.scope != null) {
+                properties["scope"] = this.scope?.Str(
+                );
+            }
+            if (this.type != null) {
+                properties["type"] = this.type?.Str(
+                );
+            }
+            if (this.currentVersion != null) {
+                properties["currentVersion"] = this.currentVersion?.Properties(
+                );
+            }
             if (this.warningVersion != null) {
                 properties["warningVersion"] = this.warningVersion?.Properties(
                 );
@@ -107,13 +154,9 @@ namespace Gs2Cdk.Gs2Version.Model
                 properties["errorVersion"] = this.errorVersion?.Properties(
                 );
             }
-            if (this.scope != null) {
-                properties["scope"] = this.scope?.Str(
-                );
-            }
-            if (this.currentVersion != null) {
-                properties["currentVersion"] = this.currentVersion?.Properties(
-                );
+            if (this.scheduleVersions != null) {
+                properties["scheduleVersions"] = this.scheduleVersions.Select(v => v.Properties(
+                        )).ToList();
             }
             if (this.needSignature != null) {
                 properties["needSignature"] = this.needSignature;
@@ -130,28 +173,20 @@ namespace Gs2Cdk.Gs2Version.Model
         ){
             var model = new VersionModel(
                 (string)properties["name"],
-                new Func<Version_>(() =>
-                {
-                    return properties["warningVersion"] switch {
-                        Version_ v => v,
-                        Dictionary<string, object> v => Version_.FromProperties(v),
-                        _ => null
-                    };
-                })(),
-                new Func<Version_>(() =>
-                {
-                    return properties["errorVersion"] switch {
-                        Version_ v => v,
-                        Dictionary<string, object> v => Version_.FromProperties(v),
-                        _ => null
-                    };
-                })(),
                 new Func<VersionModelScope>(() =>
                 {
                     return properties["scope"] switch {
                         VersionModelScope e => e,
                         string s => VersionModelScopeExt.New(s),
                         _ => VersionModelScope.Passive
+                    };
+                })(),
+                new Func<VersionModelType>(() =>
+                {
+                    return properties["type"] switch {
+                        VersionModelType e => e,
+                        string s => VersionModelTypeExt.New(s),
+                        _ => VersionModelType.Simple
                     };
                 })(),
                 new VersionModelOptions {
@@ -161,6 +196,32 @@ namespace Gs2Cdk.Gs2Version.Model
                         return currentVersion switch {
                             Version_ v => v,
                             Dictionary<string, object> v => Version_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    warningVersion = properties.TryGetValue("warningVersion", out var warningVersion) ? new Func<Version_>(() =>
+                    {
+                        return warningVersion switch {
+                            Version_ v => v,
+                            Dictionary<string, object> v => Version_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    errorVersion = properties.TryGetValue("errorVersion", out var errorVersion) ? new Func<Version_>(() =>
+                    {
+                        return errorVersion switch {
+                            Version_ v => v,
+                            Dictionary<string, object> v => Version_.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    scheduleVersions = properties.TryGetValue("scheduleVersions", out var scheduleVersions) ? new Func<ScheduleVersion[]>(() =>
+                    {
+                        return scheduleVersions switch {
+                            ScheduleVersion[] v => v,
+                            List<ScheduleVersion> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ScheduleVersion.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ScheduleVersion.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null,

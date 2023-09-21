@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Version.Model.Options
 {
     public class VersionModelScopeIsActiveOptions {
         public string metadata;
+        public ScheduleVersion[] scheduleVersions;
     }
 }
