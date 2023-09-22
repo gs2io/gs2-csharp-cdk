@@ -42,6 +42,7 @@ namespace Gs2Cdk.Core.Model
 
         public string Yaml() {
             var serializer = new SerializerBuilder()
+                .DisableAliases()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
             return new Regex("['\"]!(.*) (.*)['\"]").Replace(serializer.Serialize(Template()), "!$1 $2");
