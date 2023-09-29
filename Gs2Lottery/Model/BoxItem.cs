@@ -24,15 +24,18 @@ using Gs2Cdk.Gs2Lottery.Model.Options;
 namespace Gs2Cdk.Gs2Lottery.Model
 {
     public class BoxItem {
+        private string prizeId;
         private int remaining;
         private int initial;
         private AcquireAction[] acquireActions;
 
         public BoxItem(
+            string prizeId,
             int remaining,
             int initial,
             BoxItemOptions options = null
         ){
+            this.prizeId = prizeId;
             this.remaining = remaining;
             this.initial = initial;
             this.acquireActions = options?.acquireActions;
@@ -42,6 +45,9 @@ namespace Gs2Cdk.Gs2Lottery.Model
         ){
             var properties = new Dictionary<string, object>();
 
+            if (this.prizeId != null) {
+                properties["prizeId"] = this.prizeId;
+            }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
                         )).ToList();
@@ -60,6 +66,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new BoxItem(
+                (string)properties["prizeId"],
                 new Func<int>(() =>
                 {
                     return properties["remaining"] switch {
