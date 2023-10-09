@@ -185,6 +185,25 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public VerifyItemSetByUserId VerifyItemSet(
+            string inventoryName,
+            string itemName,
+            string verifyType,
+            long count,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyItemSetByUserId(
+                namespaceName,
+                inventoryName,
+                itemName,
+                verifyType,
+                count,
+                itemSetName,
+                userId
+            ));
+        }
+
         public VerifyReferenceOfByUserId VerifyReferenceOf(
             string inventoryName,
             string itemName,
@@ -217,6 +236,23 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public VerifySimpleItemByUserId VerifySimpleItem(
+            string inventoryName,
+            string itemName,
+            string verifyType,
+            long count,
+            string userId = "#{userId}"
+        ){
+            return (new VerifySimpleItemByUserId(
+                namespaceName,
+                inventoryName,
+                itemName,
+                verifyType,
+                count,
+                userId
+            ));
+        }
+
         public ConsumeBigItemByUserId ConsumeBigItem(
             string inventoryName,
             string itemName,
@@ -228,6 +264,23 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 inventoryName,
                 itemName,
                 consumeCount,
+                userId
+            ));
+        }
+
+        public VerifyBigItemByUserId VerifyBigItem(
+            string inventoryName,
+            string itemName,
+            string verifyType,
+            string count,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyBigItemByUserId(
+                namespaceName,
+                inventoryName,
+                itemName,
+                verifyType,
+                count,
                 userId
             ));
         }

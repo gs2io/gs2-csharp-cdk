@@ -137,6 +137,24 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public VerifyItemSetByUserId VerifyItemSet(
+            string itemName,
+            string verifyType,
+            long count,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyItemSetByUserId(
+                namespaceName,
+                inventoryName,
+                itemName,
+                verifyType,
+                count,
+                itemSetName,
+                userId
+            ));
+        }
+
         public VerifyReferenceOfByUserId VerifyReferenceOf(
             string itemName,
             string itemSetName,

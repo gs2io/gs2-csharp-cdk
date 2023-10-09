@@ -73,6 +73,22 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public VerifyBigItemByUserId VerifyBigItem(
+            string itemName,
+            string verifyType,
+            string count,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyBigItemByUserId(
+                namespaceName,
+                inventoryName,
+                itemName,
+                verifyType,
+                count,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

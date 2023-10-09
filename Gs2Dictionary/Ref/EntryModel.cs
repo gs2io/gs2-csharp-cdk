@@ -57,6 +57,19 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
             ));
         }
 
+        public VerifyEntryByUserId VerifyEntry(
+            string entryModelName,
+            string verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyEntryByUserId(
+                namespaceName,
+                entryModelName,
+                verifyType,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

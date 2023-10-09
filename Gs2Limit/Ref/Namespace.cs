@@ -86,6 +86,23 @@ namespace Gs2Cdk.Gs2Limit.Ref
             ));
         }
 
+        public VerifyCounterByUserId VerifyCounter(
+            string limitName,
+            string counterName,
+            string verifyType,
+            int? count,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyCounterByUserId(
+                namespaceName,
+                limitName,
+                counterName,
+                verifyType,
+                count,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

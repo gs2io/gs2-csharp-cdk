@@ -133,6 +133,40 @@ namespace Gs2Cdk.Gs2Experience.Ref
             ));
         }
 
+        public VerifyRankByUserId VerifyRank(
+            string experienceName,
+            string verifyType,
+            string propertyId,
+            long? rankValue,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRankByUserId(
+                namespaceName,
+                experienceName,
+                verifyType,
+                propertyId,
+                rankValue,
+                userId
+            ));
+        }
+
+        public VerifyRankCapByUserId VerifyRankCap(
+            string experienceName,
+            string verifyType,
+            string propertyId,
+            long rankCapValue,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRankCapByUserId(
+                namespaceName,
+                experienceName,
+                verifyType,
+                propertyId,
+                rankCapValue,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(
