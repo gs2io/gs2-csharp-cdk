@@ -43,12 +43,12 @@ namespace Gs2Cdk.Gs2Quest.Ref
 
         public CreateProgressByUserId CreateProgress(
             string questModelId,
-            bool? force,
+            bool? force = null,
             Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new CreateProgressByUserId(
-                namespaceName,
+                this.namespaceName,
                 questModelId,
                 force,
                 config,
@@ -60,7 +60,7 @@ namespace Gs2Cdk.Gs2Quest.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteProgressByUserId(
-                namespaceName,
+                this.namespaceName,
                 userId
             ));
         }

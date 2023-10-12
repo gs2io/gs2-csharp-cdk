@@ -37,7 +37,7 @@ namespace Gs2Cdk.Gs2AdReward.Ref
             string userId = "#{userId}"
         ){
             return (new AcquirePointByUserId(
-                namespaceName,
+                this.namespaceName,
                 point,
                 userId
             ));
@@ -48,7 +48,7 @@ namespace Gs2Cdk.Gs2AdReward.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumePointByUserId(
-                namespaceName,
+                this.namespaceName,
                 point,
                 userId
             ));

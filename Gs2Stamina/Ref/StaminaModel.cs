@@ -40,8 +40,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new RecoverStaminaByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 recoverValue,
                 userId
             ));
@@ -52,8 +52,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new RaiseMaxValueByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 raiseValue,
                 userId
             ));
@@ -64,8 +64,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetMaxValueByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 maxValue,
                 userId
             ));
@@ -76,8 +76,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetRecoverIntervalByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 recoverIntervalMinutes,
                 userId
             ));
@@ -88,8 +88,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetRecoverValueByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 recoverValue,
                 userId
             ));
@@ -100,8 +100,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new DecreaseMaxValueByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 decreaseValue,
                 userId
             ));
@@ -112,8 +112,8 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeStaminaByUserId(
-                namespaceName,
-                staminaName,
+                this.namespaceName,
+                this.staminaName,
                 consumeValue,
                 userId
             ));

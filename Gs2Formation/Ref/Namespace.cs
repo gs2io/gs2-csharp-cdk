@@ -56,7 +56,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AddMoldCapacityByUserId(
-                namespaceName,
+                this.namespaceName,
                 moldModelName,
                 capacity,
                 userId
@@ -69,7 +69,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new SetMoldCapacityByUserId(
-                namespaceName,
+                this.namespaceName,
                 moldModelName,
                 capacity,
                 userId
@@ -84,7 +84,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
-                namespaceName,
+                this.namespaceName,
                 moldModelName,
                 index,
                 acquireAction,
@@ -101,7 +101,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
-                namespaceName,
+                this.namespaceName,
                 propertyFormModelName,
                 propertyId,
                 acquireAction,
@@ -116,7 +116,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new SubMoldCapacityByUserId(
-                namespaceName,
+                this.namespaceName,
                 moldModelName,
                 capacity,
                 userId

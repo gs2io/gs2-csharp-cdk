@@ -40,8 +40,8 @@ namespace Gs2Cdk.Gs2Mission.Ref
             string userId = "#{userId}"
         ){
             return (new IncreaseCounterByUserId(
-                namespaceName,
-                counterName,
+                this.namespaceName,
+                this.counterName,
                 value,
                 userId
             ));
@@ -52,8 +52,8 @@ namespace Gs2Cdk.Gs2Mission.Ref
             string userId = "#{userId}"
         ){
             return (new DecreaseCounterByUserId(
-                namespaceName,
-                counterName,
+                this.namespaceName,
+                this.counterName,
                 value,
                 userId
             ));

@@ -46,7 +46,7 @@ namespace Gs2Cdk.Gs2SkillTree.Ref
             string userId = "#{userId}"
         ){
             return (new MarkReleaseByUserId(
-                namespaceName,
+                this.namespaceName,
                 nodeModelNames,
                 userId
             ));
@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2SkillTree.Ref
             string userId = "#{userId}"
         ){
             return (new MarkRestrainByUserId(
-                namespaceName,
+                this.namespaceName,
                 nodeModelNames,
                 userId
             ));

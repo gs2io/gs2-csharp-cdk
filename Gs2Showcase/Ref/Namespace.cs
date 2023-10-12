@@ -39,7 +39,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string userId = "#{userId}"
         ){
             return (new DecrementPurchaseCountByUserId(
-                namespaceName,
+                this.namespaceName,
                 showcaseName,
                 displayItemName,
                 count,
@@ -52,7 +52,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string userId = "#{userId}"
         ){
             return (new ForceReDrawByUserId(
-                namespaceName,
+                this.namespaceName,
                 showcaseName,
                 userId
             ));
@@ -65,7 +65,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string userId = "#{userId}"
         ){
             return (new IncrementPurchaseCountByUserId(
-                namespaceName,
+                this.namespaceName,
                 showcaseName,
                 displayItemName,
                 count,

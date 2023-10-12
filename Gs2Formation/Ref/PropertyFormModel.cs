@@ -42,8 +42,8 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
-                namespaceName,
-                propertyFormModelName,
+                this.namespaceName,
+                this.propertyFormModelName,
                 propertyId,
                 acquireAction,
                 config,

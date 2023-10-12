@@ -33,12 +33,12 @@ namespace Gs2Cdk.Gs2StateMachine.Ref
         }
 
         public StartStateMachineByUserId StartStateMachine(
-            string args,
+            string args = null,
             int? ttl = null,
             string userId = "#{userId}"
         ){
             return (new StartStateMachineByUserId(
-                namespaceName,
+                this.namespaceName,
                 args,
                 ttl,
                 userId

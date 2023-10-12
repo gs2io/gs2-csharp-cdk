@@ -41,8 +41,8 @@ namespace Gs2Cdk.Gs2Lottery.Ref
             string userId = "#{userId}"
         ){
             return (new DrawByUserId(
-                namespaceName,
-                lotteryName,
+                this.namespaceName,
+                this.lotteryName,
                 count,
                 config,
                 userId

@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new ReDrawBalanceParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 fixedParameterNames,
@@ -72,7 +72,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new SetBalanceParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 parameterValues,
@@ -87,7 +87,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new ReDrawRarityParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 fixedParameterNames,
@@ -98,11 +98,11 @@ namespace Gs2Cdk.Gs2Enchant.Ref
         public AddRarityParameterStatusByUserId AddRarityParameterStatus(
             string parameterName,
             string propertyId,
-            int? count,
+            int? count = null,
             string userId = "#{userId}"
         ){
             return (new AddRarityParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 count,
@@ -117,7 +117,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string userId = "#{userId}"
         ){
             return (new SetRarityParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 parameterValues,
@@ -129,12 +129,12 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             string verifyType,
-            string parameterValueName,
-            int? parameterCount,
+            string parameterValueName = null,
+            int? parameterCount = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRarityParameterStatusByUserId(
-                namespaceName,
+                this.namespaceName,
                 parameterName,
                 propertyId,
                 verifyType,

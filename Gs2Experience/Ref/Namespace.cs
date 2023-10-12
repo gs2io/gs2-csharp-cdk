@@ -44,11 +44,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
         public AddExperienceByUserId AddExperience(
             string experienceName,
             string propertyId,
-            long? experienceValue,
+            long? experienceValue = null,
             string userId = "#{userId}"
         ){
             return (new AddExperienceByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 experienceValue,
@@ -63,7 +63,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new AddRankCapByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,
@@ -78,7 +78,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new SetRankCapByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,
@@ -94,7 +94,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new MultiplyAcquireActionsByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 rateName,
@@ -106,11 +106,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
         public SubExperienceByUserId SubExperience(
             string experienceName,
             string propertyId,
-            long? experienceValue,
+            long? experienceValue = null,
             string userId = "#{userId}"
         ){
             return (new SubExperienceByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 experienceValue,
@@ -125,7 +125,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new SubRankCapByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 propertyId,
                 rankCapValue,
@@ -137,11 +137,11 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string verifyType,
             string propertyId,
-            long? rankValue,
+            long? rankValue = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRankByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 verifyType,
                 propertyId,
@@ -158,7 +158,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyRankCapByUserId(
-                namespaceName,
+                this.namespaceName,
                 experienceName,
                 verifyType,
                 propertyId,

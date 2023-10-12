@@ -47,7 +47,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new RecoverStaminaByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 recoverValue,
                 userId
@@ -60,7 +60,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new RaiseMaxValueByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 raiseValue,
                 userId
@@ -73,7 +73,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetMaxValueByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 maxValue,
                 userId
@@ -86,7 +86,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetRecoverIntervalByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 recoverIntervalMinutes,
                 userId
@@ -99,7 +99,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new SetRecoverValueByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 recoverValue,
                 userId
@@ -112,7 +112,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new DecreaseMaxValueByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 decreaseValue,
                 userId
@@ -125,7 +125,7 @@ namespace Gs2Cdk.Gs2Stamina.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeStaminaByUserId(
-                namespaceName,
+                this.namespaceName,
                 staminaName,
                 consumeValue,
                 userId

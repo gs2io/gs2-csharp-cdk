@@ -43,9 +43,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireBigItemByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 acquireCount,
                 userId
             ));
@@ -56,9 +56,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeBigItemByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 consumeCount,
                 userId
             ));
@@ -70,9 +70,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyBigItemByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 verifyType,
                 count,
                 userId

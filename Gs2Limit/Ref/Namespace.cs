@@ -44,11 +44,11 @@ namespace Gs2Cdk.Gs2Limit.Ref
         public CountDownByUserId CountDown(
             string limitName,
             string counterName,
-            int? countDownValue,
+            int? countDownValue = null,
             string userId = "#{userId}"
         ){
             return (new CountDownByUserId(
-                namespaceName,
+                this.namespaceName,
                 limitName,
                 counterName,
                 countDownValue,
@@ -62,7 +62,7 @@ namespace Gs2Cdk.Gs2Limit.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteCounterByUserId(
-                namespaceName,
+                this.namespaceName,
                 limitName,
                 counterName,
                 userId
@@ -72,12 +72,12 @@ namespace Gs2Cdk.Gs2Limit.Ref
         public CountUpByUserId CountUp(
             string limitName,
             string counterName,
-            int? countUpValue,
+            int? countUpValue = null,
             int? maxValue = null,
             string userId = "#{userId}"
         ){
             return (new CountUpByUserId(
-                namespaceName,
+                this.namespaceName,
                 limitName,
                 counterName,
                 countUpValue,
@@ -90,11 +90,11 @@ namespace Gs2Cdk.Gs2Limit.Ref
             string limitName,
             string counterName,
             string verifyType,
-            int? count,
+            int? count = null,
             string userId = "#{userId}"
         ){
             return (new VerifyCounterByUserId(
-                namespaceName,
+                this.namespaceName,
                 limitName,
                 counterName,
                 verifyType,

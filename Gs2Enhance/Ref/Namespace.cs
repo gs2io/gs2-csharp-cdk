@@ -44,12 +44,12 @@ namespace Gs2Cdk.Gs2Enhance.Ref
         public CreateProgressByUserId CreateProgress(
             string rateName,
             string targetItemSetId,
-            bool? force,
             Material[] materials = null,
+            bool? force = null,
             string userId = "#{userId}"
         ){
             return (new CreateProgressByUserId(
-                namespaceName,
+                this.namespaceName,
                 rateName,
                 targetItemSetId,
                 materials,
@@ -62,7 +62,7 @@ namespace Gs2Cdk.Gs2Enhance.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteProgressByUserId(
-                namespaceName,
+                this.namespaceName,
                 userId
             ));
         }

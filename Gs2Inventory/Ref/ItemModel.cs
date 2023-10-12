@@ -40,15 +40,15 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public AcquireItemSetByUserId AcquireItemSet(
             long acquireCount,
-            long? expiresAt,
-            bool? createNewItemSet,
+            long? expiresAt = null,
+            bool? createNewItemSet = null,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new AcquireItemSetByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 acquireCount,
                 expiresAt,
                 createNewItemSet,
@@ -58,14 +58,14 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public AddReferenceOfByUserId AddReferenceOf(
-            string itemSetName,
             string referenceOf,
+            string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new AddReferenceOfByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 referenceOf,
                 itemSetName,
                 userId
@@ -73,14 +73,14 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public DeleteReferenceOfByUserId DeleteReferenceOf(
-            string itemSetName,
             string referenceOf,
+            string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new DeleteReferenceOfByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 referenceOf,
                 itemSetName,
                 userId
@@ -93,9 +93,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeItemSetByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 consumeCount,
                 itemSetName,
                 userId
@@ -109,9 +109,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new VerifyItemSetByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 verifyType,
                 count,
                 itemSetName,
@@ -120,15 +120,15 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public VerifyReferenceOfByUserId VerifyReferenceOf(
-            string itemSetName,
             string referenceOf,
             string verifyType,
+            string itemSetName = null,
             string userId = "#{userId}"
         ){
             return (new VerifyReferenceOfByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 referenceOf,
                 verifyType,
                 itemSetName,

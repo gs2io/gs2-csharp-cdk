@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string userId = "#{userId}"
         ){
             return (new ExchangeByUserId(
-                namespaceName,
+                this.namespaceName,
                 rateName,
                 count,
                 config,
@@ -72,7 +72,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string userId = "#{userId}"
         ){
             return (new IncrementalExchangeByUserId(
-                namespaceName,
+                this.namespaceName,
                 rateName,
                 count,
                 config,
@@ -86,7 +86,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string userId = "#{userId}"
         ){
             return (new UnlockIncrementalExchangeByUserId(
-                namespaceName,
+                this.namespaceName,
                 rateName,
                 lockTransactionId,
                 userId
@@ -95,11 +95,11 @@ namespace Gs2Cdk.Gs2Exchange.Ref
 
         public CreateAwaitByUserId CreateAwait(
             string rateName,
-            int? count,
+            int? count = null,
             string userId = "#{userId}"
         ){
             return (new CreateAwaitByUserId(
-                namespaceName,
+                this.namespaceName,
                 rateName,
                 count,
                 userId
@@ -107,11 +107,11 @@ namespace Gs2Cdk.Gs2Exchange.Ref
         }
 
         public DeleteAwaitByUserId DeleteAwait(
-            string awaitName,
+            string awaitName = null,
             string userId = "#{userId}"
         ){
             return (new DeleteAwaitByUserId(
-                namespaceName,
+                this.namespaceName,
                 awaitName,
                 userId
             ));

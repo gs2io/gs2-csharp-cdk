@@ -42,8 +42,8 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
-                namespaceName,
-                moldModelName,
+                this.namespaceName,
+                this.moldModelName,
                 index,
                 acquireAction,
                 config,

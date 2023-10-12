@@ -43,8 +43,8 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new AcquireSimpleItemsByUserId(
-                namespaceName,
-                inventoryName,
+                this.namespaceName,
+                this.inventoryName,
                 acquireCounts,
                 userId
             ));
@@ -55,8 +55,8 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new ConsumeSimpleItemsByUserId(
-                namespaceName,
-                inventoryName,
+                this.namespaceName,
+                this.inventoryName,
                 consumeCounts,
                 userId
             ));
@@ -68,9 +68,9 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string userId = "#{userId}"
         ){
             return (new VerifySimpleItemByUserId(
-                namespaceName,
-                inventoryName,
-                itemName,
+                this.namespaceName,
+                this.inventoryName,
+                this.itemName,
                 verifyType,
                 count,
                 userId

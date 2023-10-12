@@ -39,7 +39,7 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             string userId = "#{userId}"
         ){
             return (new TriggerByUserId(
-                namespaceName,
+                this.namespaceName,
                 triggerName,
                 triggerStrategy,
                 ttl,
@@ -52,7 +52,7 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             string userId = "#{userId}"
         ){
             return (new DeleteTriggerByUserId(
-                namespaceName,
+                this.namespaceName,
                 triggerName,
                 userId
             ));
