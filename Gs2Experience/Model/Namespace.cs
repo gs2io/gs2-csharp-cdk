@@ -30,7 +30,7 @@ namespace Gs2Cdk.Gs2Experience.Model
         private string name;
         private string description;
         private TransactionSetting transactionSetting;
-        private string experienceCapScriptId;
+        private string rankCapScriptId;
         private ScriptSetting changeExperienceScript;
         private ScriptSetting changeRankScript;
         private ScriptSetting changeRankCapScript;
@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Experience.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
-            this.experienceCapScriptId = options?.experienceCapScriptId;
+            this.rankCapScriptId = options?.rankCapScriptId;
             this.changeExperienceScript = options?.changeExperienceScript;
             this.changeRankScript = options?.changeRankScript;
             this.changeRankCapScript = options?.changeRankCapScript;
@@ -85,8 +85,8 @@ namespace Gs2Cdk.Gs2Experience.Model
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
                 );
             }
-            if (this.experienceCapScriptId != null) {
-                properties["ExperienceCapScriptId"] = this.experienceCapScriptId;
+            if (this.rankCapScriptId != null) {
+                properties["RankCapScriptId"] = this.rankCapScriptId;
             }
             if (this.changeExperienceScript != null) {
                 properties["ChangeExperienceScript"] = this.changeExperienceScript?.Properties(

@@ -25,7 +25,7 @@ namespace Gs2Cdk.Gs2Experience.Model.Options
     public class NamespaceOptions {
         public string description;
         public TransactionSetting transactionSetting;
-        public string experienceCapScriptId;
+        public string rankCapScriptId;
         public ScriptSetting changeExperienceScript;
         public ScriptSetting changeRankScript;
         public ScriptSetting changeRankCapScript;
