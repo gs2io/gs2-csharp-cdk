@@ -34,7 +34,7 @@ namespace Gs2Cdk.Gs2Experience.Model
         private ScriptSetting changeExperienceScript;
         private ScriptSetting changeRankScript;
         private ScriptSetting changeRankCapScript;
-        private ScriptSetting overflowExperienceScript;
+        private string overflowExperienceScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -101,8 +101,7 @@ namespace Gs2Cdk.Gs2Experience.Model
                 );
             }
             if (this.overflowExperienceScript != null) {
-                properties["OverflowExperienceScript"] = this.overflowExperienceScript?.Properties(
-                );
+                properties["OverflowExperienceScript"] = this.overflowExperienceScript;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(

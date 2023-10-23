@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Experience.Model.Options
         public ScriptSetting changeExperienceScript;
         public ScriptSetting changeRankScript;
         public ScriptSetting changeRankCapScript;
-        public ScriptSetting overflowExperienceScript;
+        public string overflowExperienceScript;
         public LogSetting logSetting;
     }
 }
