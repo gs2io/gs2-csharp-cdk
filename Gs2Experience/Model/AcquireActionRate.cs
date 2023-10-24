@@ -19,21 +19,54 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
+using Gs2Cdk.Gs2Experience.Model.Enums;
 using Gs2Cdk.Gs2Experience.Model.Options;
 
 namespace Gs2Cdk.Gs2Experience.Model
 {
     public class AcquireActionRate {
         private string name;
+        private AcquireActionRateMode? mode;
         private double[] rates;
+        private string[] bigRates;
 
         public AcquireActionRate(
             string name,
-            double[] rates,
+            AcquireActionRateMode mode,
             AcquireActionRateOptions options = null
         ){
             this.name = name;
-            this.rates = rates;
+            this.mode = mode;
+            this.rates = options?.rates;
+            this.bigRates = options?.bigRates;
+        }
+
+        public static AcquireActionRate ModeIsDouble(
+            string name,
+            double[] rates,
+            AcquireActionRateModeIsDoubleOptions options = null
+        ){
+            return (new AcquireActionRate(
+                name,
+                AcquireActionRateMode.Double,
+                new AcquireActionRateOptions {
+                    rates = rates,
+                }
+            ));
+        }
+
+        public static AcquireActionRate ModeIsBig(
+            string name,
+            string[] bigRates,
+            AcquireActionRateModeIsBigOptions options = null
+        ){
+            return (new AcquireActionRate(
+                name,
+                AcquireActionRateMode.Big,
+                new AcquireActionRateOptions {
+                    bigRates = bigRates,
+                }
+            ));
         }
 
         public Dictionary<string, object> Properties(
@@ -43,8 +76,15 @@ namespace Gs2Cdk.Gs2Experience.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
+            if (this.mode != null) {
+                properties["mode"] = this.mode?.Str(
+                );
+            }
             if (this.rates != null) {
                 properties["rates"] = this.rates;
+            }
+            if (this.bigRates != null) {
+                properties["bigRates"] = this.bigRates;
             }
 
             return properties;
@@ -55,17 +95,31 @@ namespace Gs2Cdk.Gs2Experience.Model
         ){
             var model = new AcquireActionRate(
                 (string)properties["name"],
-                new Func<double[]>(() =>
+                new Func<AcquireActionRateMode>(() =>
                 {
-                    return properties["rates"] switch {
-                        double[] v => v.ToArray(),
-                        List<double> v => v.ToArray(),
-                        object[] v => v.Select(v2 => double.Parse(v2.ToString())).ToArray(),
-                        { } v => new []{ double.Parse(v.ToString()) },
-                        _ => null
+                    return properties["mode"] switch {
+                        AcquireActionRateMode e => e,
+                        string s => AcquireActionRateModeExt.New(s),
+                        _ => AcquireActionRateMode.Double
                     };
                 })(),
                 new AcquireActionRateOptions {
+                    rates = properties.TryGetValue("rates", out var rates) ? new Func<double[]>(() =>
+                    {
+                        return rates switch {
+                            double[] v => v.ToArray(),
+                            List<double> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    bigRates = properties.TryGetValue("bigRates", out var bigRates) ? new Func<string[]>(() =>
+                    {
+                        return bigRates switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 

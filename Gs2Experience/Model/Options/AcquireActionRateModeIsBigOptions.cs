@@ -22,8 +22,6 @@ using Gs2Cdk.Gs2Experience.Model.Enums;
 
 namespace Gs2Cdk.Gs2Experience.Model.Options
 {
-    public class AcquireActionRateOptions {
-        public double[] rates;
-        public string[] bigRates;
+    public class AcquireActionRateModeIsBigOptions {
     }
 }
