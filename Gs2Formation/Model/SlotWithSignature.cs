@@ -34,14 +34,12 @@ namespace Gs2Cdk.Gs2Formation.Model
         public SlotWithSignature(
             string name,
             SlotWithSignaturePropertyType propertyType,
-            string body,
-            string signature,
             SlotWithSignatureOptions options = null
         ){
             this.name = name;
             this.propertyType = propertyType;
-            this.body = body;
-            this.signature = signature;
+            this.body = options?.body;
+            this.signature = options?.signature;
             this.metadata = options?.metadata;
         }
 
@@ -82,9 +80,9 @@ namespace Gs2Cdk.Gs2Formation.Model
                         _ => SlotWithSignaturePropertyType.Gs2Inventory
                     };
                 })(),
-                (string)properties["body"],
-                (string)properties["signature"],
                 new SlotWithSignatureOptions {
+                    body = properties.TryGetValue("body", out var body) ? (string)body : null,
+                    signature = properties.TryGetValue("signature", out var signature) ? (string)signature : null,
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );

@@ -23,6 +23,8 @@ using Gs2Cdk.Gs2Formation.Model.Enums;
 namespace Gs2Cdk.Gs2Formation.Model.Options
 {
     public class SlotWithSignatureOptions {
+        public string body;
+        public string signature;
         public string metadata;
     }
 }
