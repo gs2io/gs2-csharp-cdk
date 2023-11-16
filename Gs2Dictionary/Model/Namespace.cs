@@ -30,7 +30,7 @@ namespace Gs2Cdk.Gs2Dictionary.Model
         private string name;
         private string description;
         private ScriptSetting entryScript;
-        private ScriptSetting duplicateEntryScript;
+        private string duplicateEntryScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -78,8 +78,7 @@ namespace Gs2Cdk.Gs2Dictionary.Model
                 );
             }
             if (this.duplicateEntryScript != null) {
-                properties["DuplicateEntryScript"] = this.duplicateEntryScript?.Properties(
-                );
+                properties["DuplicateEntryScript"] = this.duplicateEntryScript;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(

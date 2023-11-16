@@ -25,7 +25,7 @@ namespace Gs2Cdk.Gs2Dictionary.Model.Options
     public class NamespaceOptions {
         public string description;
         public ScriptSetting entryScript;
-        public ScriptSetting duplicateEntryScript;
+        public string duplicateEntryScript;
         public LogSetting logSetting;
     }
 }

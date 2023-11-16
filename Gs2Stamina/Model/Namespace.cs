@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
         private Stack? stack;
         private string name;
         private string description;
-        private ScriptSetting overflowTriggerScript;
+        private string overflowTriggerScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -72,8 +72,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
                 properties["Description"] = this.description;
             }
             if (this.overflowTriggerScript != null) {
-                properties["OverflowTriggerScript"] = this.overflowTriggerScript?.Properties(
-                );
+                properties["OverflowTriggerScript"] = this.overflowTriggerScript;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
