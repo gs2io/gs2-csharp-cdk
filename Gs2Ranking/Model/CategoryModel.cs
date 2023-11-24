@@ -28,10 +28,10 @@ namespace Gs2Cdk.Gs2Ranking.Model
         private string name;
         private CategoryModelOrderDirection? orderDirection;
         private CategoryModelScope? scope;
-        private bool uniqueByUserId;
         private string metadata;
         private long? minimumValue;
         private long? maximumValue;
+        private bool? uniqueByUserId;
         private bool? sum;
         private int? calculateFixedTimingHour;
         private int? calculateFixedTimingMinute;
@@ -46,16 +46,15 @@ namespace Gs2Cdk.Gs2Ranking.Model
             string name,
             CategoryModelOrderDirection orderDirection,
             CategoryModelScope scope,
-            bool uniqueByUserId,
             CategoryModelOptions options = null
         ){
             this.name = name;
             this.orderDirection = orderDirection;
             this.scope = scope;
-            this.uniqueByUserId = uniqueByUserId;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.maximumValue = options?.maximumValue;
+            this.uniqueByUserId = options?.uniqueByUserId;
             this.sum = options?.sum;
             this.calculateFixedTimingHour = options?.calculateFixedTimingHour;
             this.calculateFixedTimingMinute = options?.calculateFixedTimingMinute;
@@ -70,7 +69,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
         public static CategoryModel ScopeIsGlobal(
             string name,
             CategoryModelOrderDirection orderDirection,
-            bool uniqueByUserId,
+            bool? uniqueByUserId,
             int? calculateIntervalMinutes,
             CategoryModelScopeIsGlobalOptions options = null
         ){
@@ -78,8 +77,8 @@ namespace Gs2Cdk.Gs2Ranking.Model
                 name,
                 orderDirection,
                 CategoryModelScope.Global,
-                uniqueByUserId,
                 new CategoryModelOptions {
+                    uniqueByUserId = uniqueByUserId,
                     calculateIntervalMinutes = calculateIntervalMinutes,
                     metadata = options?.metadata,
                     minimumValue = options?.minimumValue,
@@ -98,14 +97,12 @@ namespace Gs2Cdk.Gs2Ranking.Model
         public static CategoryModel ScopeIsScoped(
             string name,
             CategoryModelOrderDirection orderDirection,
-            bool uniqueByUserId,
             CategoryModelScopeIsScopedOptions options = null
         ){
             return (new CategoryModel(
                 name,
                 orderDirection,
                 CategoryModelScope.Scoped,
-                uniqueByUserId,
                 new CategoryModelOptions {
                     metadata = options?.metadata,
                     minimumValue = options?.minimumValue,
@@ -201,14 +198,6 @@ namespace Gs2Cdk.Gs2Ranking.Model
                         _ => CategoryModelScope.Global
                     };
                 })(),
-                new Func<bool>(() =>
-                {
-                    return properties["uniqueByUserId"] switch {
-                        bool v => v,
-                        string v => bool.Parse(v),
-                        _ => false
-                    };
-                })(),
                 new CategoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     minimumValue = new Func<long?>(() =>
@@ -224,6 +213,14 @@ namespace Gs2Cdk.Gs2Ranking.Model
                         return properties.TryGetValue("maximumValue", out var maximumValue) ? maximumValue switch {
                             long v => v,
                             string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    uniqueByUserId = new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("uniqueByUserId", out var uniqueByUserId) ? uniqueByUserId switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
                             _ => null
                         } : null;
                     })(),

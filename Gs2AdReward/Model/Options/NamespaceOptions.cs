@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2AdReward.Model.Options
         public AdMob admob;
         public UnityAd unityAd;
         public string description;
+        public NotificationSetting changePointNotification;
         public LogSetting logSetting;
     }
 }

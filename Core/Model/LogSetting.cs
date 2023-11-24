@@ -19,5 +19,14 @@ namespace Gs2Cdk.Core.Model
             }
             return properties;
         }
+        
+        public static LogSetting FromProperties(
+            Dictionary<string, object> properties
+        ) {
+            var model = new LogSetting(
+                properties.TryGetValue("loggingNamespaceId", out var loggingNamespaceId) ? (string)loggingNamespaceId : null
+            );
+            return model;
+        }
     }
 }

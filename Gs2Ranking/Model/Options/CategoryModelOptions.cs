@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
         public string metadata;
         public long? minimumValue;
         public long? maximumValue;
+        public bool? uniqueByUserId;
         public bool? sum;
         public int? calculateFixedTimingHour;
         public int? calculateFixedTimingMinute;

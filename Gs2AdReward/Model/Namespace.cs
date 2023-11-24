@@ -28,16 +28,15 @@ namespace Gs2Cdk.Gs2AdReward.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private NotificationSetting changePointNotification;
         private AdMob admob;
         private UnityAd unityAd;
         private string description;
+        private NotificationSetting changePointNotification;
         private LogSetting logSetting;
 
         public Namespace(
             Stack stack,
             string name,
-            NotificationSetting changePointNotification,
             NamespaceOptions options = null
         ): base(
             "AdReward_Namespace_" + name
@@ -45,10 +44,10 @@ namespace Gs2Cdk.Gs2AdReward.Model
 
             this.stack = stack;
             this.name = name;
-            this.changePointNotification = changePointNotification;
             this.admob = options?.admob;
             this.unityAd = options?.unityAd;
             this.description = options?.description;
+            this.changePointNotification = options?.changePointNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
