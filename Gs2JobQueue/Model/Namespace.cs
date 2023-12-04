@@ -18,121 +18,92 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
+using Gs2Cdk.Core.Func;
+using Gs2Cdk.Gs2JobQueue.Ref;
 using Gs2Cdk.Gs2JobQueue.Model;
 using Gs2Cdk.Gs2JobQueue.Model.Options;
 
 namespace Gs2Cdk.Gs2JobQueue.Model
 {
-    public class Namespace {
-        private string ownerId;
+    public class Namespace : CdkResource {
+        private Stack? stack;
         private string name;
-        private bool? enableAutoRun;
         private string description;
-        private NotificationSetting runNotification;
         private NotificationSetting pushNotification;
+        private NotificationSetting runNotification;
         private LogSetting logSetting;
-        private long? revision;
 
         public Namespace(
-            string ownerId,
+            Stack stack,
             string name,
-            bool? enableAutoRun,
             NamespaceOptions options = null
+        ): base(
+            "JobQueue_Namespace_" + name
         ){
-            this.ownerId = ownerId;
+
+            this.stack = stack;
             this.name = name;
-            this.enableAutoRun = enableAutoRun;
             this.description = options?.description;
-            this.runNotification = options?.runNotification;
             this.pushNotification = options?.pushNotification;
+            this.runNotification = options?.runNotification;
             this.logSetting = options?.logSetting;
-            this.revision = options?.revision;
+            stack.AddResource(
+                this
+            );
         }
 
-        public Dictionary<string, object> Properties(
+
+        public string AlternateKeys(
+        ){
+            return "name";
+        }
+
+        public override string ResourceType(
+        ){
+            return "GS2::JobQueue::Namespace";
+        }
+
+        public override Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.ownerId != null) {
-                properties["ownerId"] = this.ownerId;
-            }
             if (this.name != null) {
-                properties["name"] = this.name;
+                properties["Name"] = this.name;
             }
             if (this.description != null) {
-                properties["description"] = this.description;
+                properties["Description"] = this.description;
             }
-            if (this.enableAutoRun != null) {
-                properties["enableAutoRun"] = this.enableAutoRun;
-            }
-            if (this.runNotification != null) {
-                properties["runNotification"] = this.runNotification?.Properties(
+            properties["EnableAutoRun"] = true;
+            if (this.pushNotification != null) {
+                properties["PushNotification"] = this.pushNotification?.Properties(
                 );
             }
-            if (this.pushNotification != null) {
-                properties["pushNotification"] = this.pushNotification?.Properties(
+            if (this.runNotification != null) {
+                properties["RunNotification"] = this.runNotification?.Properties(
                 );
             }
             if (this.logSetting != null) {
-                properties["logSetting"] = this.logSetting?.Properties(
+                properties["LogSetting"] = this.logSetting?.Properties(
                 );
             }
 
             return properties;
         }
 
-        public static Namespace FromProperties(
-            Dictionary<string, object> properties
+        public NamespaceRef Ref(
         ){
-            var model = new Namespace(
-                (string)properties["ownerId"],
-                (string)properties["name"],
-                new Func<bool?>(() =>
-                {
-                    return properties["enableAutoRun"] switch {
-                        bool v => v,
-                        string v => bool.Parse(v),
-                        _ => false
-                    };
-                })(),
-                new NamespaceOptions {
-                    description = properties.TryGetValue("description", out var description) ? (string)description : null,
-                    runNotification = properties.TryGetValue("runNotification", out var runNotification) ? new Func<NotificationSetting>(() =>
-                    {
-                        return runNotification switch {
-                            NotificationSetting v => v,
-                            Dictionary<string, object> v => NotificationSetting.FromProperties(v),
-                            _ => null
-                        };
-                    })() : null,
-                    pushNotification = properties.TryGetValue("pushNotification", out var pushNotification) ? new Func<NotificationSetting>(() =>
-                    {
-                        return pushNotification switch {
-                            NotificationSetting v => v,
-                            Dictionary<string, object> v => NotificationSetting.FromProperties(v),
-                            _ => null
-                        };
-                    })() : null,
-                    logSetting = properties.TryGetValue("logSetting", out var logSetting) ? new Func<LogSetting>(() =>
-                    {
-                        return logSetting switch {
-                            LogSetting v => v,
-                            Dictionary<string, object> v => LogSetting.FromProperties(v),
-                            _ => null
-                        };
-                    })() : null,
-                    revision = new Func<long?>(() =>
-                    {
-                        return properties.TryGetValue("revision", out var revision) ? revision switch {
-                            long v => v,
-                            string v => long.Parse(v),
-                            _ => null
-                        } : null;
-                    })()
-                }
-            );
+            return (new NamespaceRef(
+                this.name
+            ));
+        }
 
-            return model;
+        public GetAttr GetAttrNamespaceId(
+        ){
+            return (new GetAttr(
+                this,
+                "Item.NamespaceId",
+                null
+            ));
         }
     }
 }

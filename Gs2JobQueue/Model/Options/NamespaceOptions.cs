@@ -17,15 +17,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
+using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2JobQueue.Model;
 
 namespace Gs2Cdk.Gs2JobQueue.Model.Options
 {
     public class NamespaceOptions {
         public string description;
-        public NotificationSetting runNotification;
+        public bool? enableAutoRun;
         public NotificationSetting pushNotification;
+        public NotificationSetting runNotification;
         public LogSetting logSetting;
-        public long? revision;
     }
 }
+
