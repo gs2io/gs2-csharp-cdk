@@ -153,6 +153,19 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public SetSimpleItemsByUserId SetSimpleItems(
+            string inventoryName,
+            HeldCount[] counts,
+            string userId = "#{userId}"
+        ){
+            return (new SetSimpleItemsByUserId(
+                this.namespaceName,
+                inventoryName,
+                counts,
+                userId
+            ));
+        }
+
         public AcquireBigItemByUserId AcquireBigItem(
             string inventoryName,
             string itemName,
@@ -164,6 +177,21 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 inventoryName,
                 itemName,
                 acquireCount,
+                userId
+            ));
+        }
+
+        public SetBigItemByUserId SetBigItem(
+            string inventoryName,
+            string itemName,
+            string count,
+            string userId = "#{userId}"
+        ){
+            return (new SetBigItemByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                count,
                 userId
             ));
         }

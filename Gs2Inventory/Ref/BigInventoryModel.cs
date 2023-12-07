@@ -59,6 +59,20 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public SetBigItemByUserId SetBigItem(
+            string itemName,
+            string count,
+            string userId = "#{userId}"
+        ){
+            return (new SetBigItemByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                itemName,
+                count,
+                userId
+            ));
+        }
+
         public ConsumeBigItemByUserId ConsumeBigItem(
             string itemName,
             string consumeCount,

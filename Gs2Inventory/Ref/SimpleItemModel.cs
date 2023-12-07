@@ -50,6 +50,18 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public SetSimpleItemsByUserId SetSimpleItems(
+            HeldCount[] counts,
+            string userId = "#{userId}"
+        ){
+            return (new SetSimpleItemsByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                counts,
+                userId
+            ));
+        }
+
         public ConsumeSimpleItemsByUserId ConsumeSimpleItems(
             ConsumeCount[] consumeCounts,
             string userId = "#{userId}"
