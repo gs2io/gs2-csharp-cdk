@@ -25,13 +25,16 @@ namespace Gs2Cdk.Gs2Limit.Ref
 {
     public class CounterRef {
         private string namespaceName;
+        private string limitName;
         private string counterName;
 
         public CounterRef(
             string namespaceName,
+            string limitName,
             string counterName
         ){
             this.namespaceName = namespaceName;
+            this.limitName = limitName;
             this.counterName = counterName;
         }
 
@@ -53,6 +56,8 @@ namespace Gs2Cdk.Gs2Limit.Ref
                     this.namespaceName,
                     "user",
                     "{userId}",
+                    "limit",
+                    this.limitName,
                     "counter",
                     this.counterName
                 }
