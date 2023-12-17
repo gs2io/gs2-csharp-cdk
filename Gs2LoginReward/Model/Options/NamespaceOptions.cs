@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting receiveScript;
         public LogSetting logSetting;
     }

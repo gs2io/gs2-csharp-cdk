@@ -100,7 +100,8 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["EnableRating"] = this.enableRating;
             }
             if (this.createGatheringTriggerType != null) {
-                properties["CreateGatheringTriggerType"] = this.createGatheringTriggerType;
+                properties["CreateGatheringTriggerType"] = this.createGatheringTriggerType?.Str(
+                );
             }
             if (this.createGatheringTriggerRealtimeNamespaceId != null) {
                 properties["CreateGatheringTriggerRealtimeNamespaceId"] = this.createGatheringTriggerRealtimeNamespaceId;
@@ -109,7 +110,8 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["CreateGatheringTriggerScriptId"] = this.createGatheringTriggerScriptId;
             }
             if (this.completeMatchmakingTriggerType != null) {
-                properties["CompleteMatchmakingTriggerType"] = this.completeMatchmakingTriggerType;
+                properties["CompleteMatchmakingTriggerType"] = this.completeMatchmakingTriggerType?.Str(
+                );
             }
             if (this.completeMatchmakingTriggerRealtimeNamespaceId != null) {
                 properties["CompleteMatchmakingTriggerRealtimeNamespaceId"] = this.completeMatchmakingTriggerRealtimeNamespaceId;

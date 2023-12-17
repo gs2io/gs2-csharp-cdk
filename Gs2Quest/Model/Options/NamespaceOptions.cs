@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Quest.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting startQuestScript;
         public ScriptSetting completeQuestScript;
         public ScriptSetting failedQuestScript;

@@ -79,10 +79,12 @@ namespace Gs2Cdk.Gs2Realtime.Model
                 properties["Description"] = this.description;
             }
             if (this.serverType != null) {
-                properties["ServerType"] = this.serverType;
+                properties["ServerType"] = this.serverType?.Str(
+                );
             }
             if (this.serverSpec != null) {
-                properties["ServerSpec"] = this.serverSpec;
+                properties["ServerSpec"] = this.serverSpec?.Str(
+                );
             }
             if (this.createNotification != null) {
                 properties["CreateNotification"] = this.createNotification?.Properties(

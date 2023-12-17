@@ -92,13 +92,15 @@ namespace Gs2Cdk.Gs2Money.Model
                 properties["Description"] = this.description;
             }
             if (this.priority != null) {
-                properties["Priority"] = this.priority;
+                properties["Priority"] = this.priority?.Str(
+                );
             }
             if (this.shareFree != null) {
                 properties["ShareFree"] = this.shareFree;
             }
             if (this.currency != null) {
-                properties["Currency"] = this.currency;
+                properties["Currency"] = this.currency?.Str(
+                );
             }
             if (this.appleKey != null) {
                 properties["AppleKey"] = this.appleKey;

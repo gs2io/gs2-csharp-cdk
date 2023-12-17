@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private TransactionSetting transactionSetting;
         private string description;
+        private TransactionSetting transactionSetting;
         private ScriptSetting missionCompleteScript;
         private ScriptSetting counterIncrementScript;
         private ScriptSetting receiveRewardsScript;
@@ -39,7 +39,6 @@ namespace Gs2Cdk.Gs2Mission.Model
         public Namespace(
             Stack stack,
             string name,
-            TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
             "Mission_Namespace_" + name
@@ -47,8 +46,8 @@ namespace Gs2Cdk.Gs2Mission.Model
 
             this.stack = stack;
             this.name = name;
-            this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.missionCompleteScript = options?.missionCompleteScript;
             this.counterIncrementScript = options?.counterIncrementScript;
             this.receiveRewardsScript = options?.receiveRewardsScript;

@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting missionCompleteScript;
         public ScriptSetting counterIncrementScript;
         public ScriptSetting receiveRewardsScript;

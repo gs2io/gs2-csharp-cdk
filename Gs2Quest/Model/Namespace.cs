@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Quest.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private TransactionSetting transactionSetting;
         private string description;
+        private TransactionSetting transactionSetting;
         private ScriptSetting startQuestScript;
         private ScriptSetting completeQuestScript;
         private ScriptSetting failedQuestScript;
@@ -38,7 +38,6 @@ namespace Gs2Cdk.Gs2Quest.Model
         public Namespace(
             Stack stack,
             string name,
-            TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
             "Quest_Namespace_" + name
@@ -46,8 +45,8 @@ namespace Gs2Cdk.Gs2Quest.Model
 
             this.stack = stack;
             this.name = name;
-            this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.startQuestScript = options?.startQuestScript;
             this.completeQuestScript = options?.completeQuestScript;
             this.failedQuestScript = options?.failedQuestScript;

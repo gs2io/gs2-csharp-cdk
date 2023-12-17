@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Lottery.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public string lotteryTriggerScriptId;
         public string choicePrizeTableScriptId;
         public LogSetting logSetting;

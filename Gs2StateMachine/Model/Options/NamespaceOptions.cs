@@ -19,11 +19,14 @@ using System.Linq;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2StateMachine.Model;
+using Gs2Cdk.Gs2StateMachine.Model.Enums;
 
 namespace Gs2Cdk.Gs2StateMachine.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public NamespaceSupportSpeculativeExecution supportSpeculativeExecution;
+        public TransactionSetting transactionSetting;
         public ScriptSetting startScript;
         public ScriptSetting passScript;
         public ScriptSetting errorScript;

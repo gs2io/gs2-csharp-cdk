@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2SkillTree.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private TransactionSetting transactionSetting;
         private string description;
+        private TransactionSetting transactionSetting;
         private ScriptSetting releaseScript;
         private ScriptSetting restrainScript;
         private LogSetting logSetting;
@@ -37,7 +37,6 @@ namespace Gs2Cdk.Gs2SkillTree.Model
         public Namespace(
             Stack stack,
             string name,
-            TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
             "SkillTree_Namespace_" + name
@@ -45,8 +44,8 @@ namespace Gs2Cdk.Gs2SkillTree.Model
 
             this.stack = stack;
             this.name = name;
-            this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.releaseScript = options?.releaseScript;
             this.restrainScript = options?.restrainScript;
             this.logSetting = options?.logSetting;

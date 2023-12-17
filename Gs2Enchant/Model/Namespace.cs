@@ -28,14 +28,13 @@ namespace Gs2Cdk.Gs2Enchant.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private TransactionSetting transactionSetting;
         private string description;
+        private TransactionSetting transactionSetting;
         private LogSetting logSetting;
 
         public Namespace(
             Stack stack,
             string name,
-            TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
             "Enchant_Namespace_" + name
@@ -43,8 +42,8 @@ namespace Gs2Cdk.Gs2Enchant.Model
 
             this.stack = stack;
             this.name = name;
-            this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this

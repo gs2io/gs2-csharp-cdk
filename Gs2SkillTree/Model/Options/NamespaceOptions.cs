@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting releaseScript;
         public ScriptSetting restrainScript;
         public LogSetting logSetting;

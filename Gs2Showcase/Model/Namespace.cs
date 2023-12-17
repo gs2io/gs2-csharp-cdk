@@ -28,15 +28,14 @@ namespace Gs2Cdk.Gs2Showcase.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         private string name;
-        private TransactionSetting transactionSetting;
         private string description;
+        private TransactionSetting transactionSetting;
         private ScriptSetting buyScript;
         private LogSetting logSetting;
 
         public Namespace(
             Stack stack,
             string name,
-            TransactionSetting transactionSetting,
             NamespaceOptions options = null
         ): base(
             "Showcase_Namespace_" + name
@@ -44,8 +43,8 @@ namespace Gs2Cdk.Gs2Showcase.Model
 
             this.stack = stack;
             this.name = name;
-            this.transactionSetting = transactionSetting;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.buyScript = options?.buyScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
