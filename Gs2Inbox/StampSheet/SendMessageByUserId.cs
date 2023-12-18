@@ -22,6 +22,12 @@ using Gs2Cdk.Gs2Inbox.Model;
 namespace Gs2Cdk.Gs2Inbox.StampSheet
 {
     public class SendMessageByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string metadata;
+        private AcquireAction[] readAcquireActions;
+        private long? expiresAt;
+        private TimeSpan_ expiresTimeSpan;
 
 
         public SendMessageByUserId(
@@ -42,6 +48,38 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
+            }
+            if (this.readAcquireActions != null) {
+                properties["readAcquireActions"] = this.readAcquireActions.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.expiresAt != null) {
+                properties["expiresAt"] = this.expiresAt;
+            }
+            if (this.expiresTimeSpan != null) {
+                properties["expiresTimeSpan"] = this.expiresTimeSpan?.Properties(
+                );
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Inbox:SendMessageByUserId";
         }
     }
 }

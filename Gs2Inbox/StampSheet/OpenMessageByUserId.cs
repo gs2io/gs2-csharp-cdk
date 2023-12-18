@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2Inbox.Model;
 namespace Gs2Cdk.Gs2Inbox.StampSheet
 {
     public class OpenMessageByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string messageName;
 
 
         public OpenMessageByUserId(
@@ -36,6 +39,24 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Inbox:OpenMessageByUserId";
         }
     }
 }

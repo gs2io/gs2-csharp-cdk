@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2SkillTree.Model;
 namespace Gs2Cdk.Gs2SkillTree.StampSheet
 {
     public class MarkReleaseByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string[] nodeModelNames;
 
 
         public MarkReleaseByUserId(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.nodeModelNames != null) {
+                properties["nodeModelNames"] = this.nodeModelNames;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2SkillTree:MarkReleaseByUserId";
         }
     }
 }

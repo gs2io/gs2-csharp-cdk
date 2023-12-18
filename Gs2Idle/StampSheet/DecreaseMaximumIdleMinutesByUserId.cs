@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Idle.Model;
 namespace Gs2Cdk.Gs2Idle.StampSheet
 {
     public class DecreaseMaximumIdleMinutesByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string categoryName;
+        private int? decreaseMinutes;
 
 
         public DecreaseMaximumIdleMinutesByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.categoryName != null) {
+                properties["categoryName"] = this.categoryName;
+            }
+            if (this.decreaseMinutes != null) {
+                properties["decreaseMinutes"] = this.decreaseMinutes;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Idle:DecreaseMaximumIdleMinutesByUserId";
         }
     }
 }

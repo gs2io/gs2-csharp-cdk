@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Money.Model;
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
     public class WithdrawByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private int slot;
+        private int count;
+        private bool? paidOnly;
 
 
         public WithdrawByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.slot != null) {
+                properties["slot"] = this.slot;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+            if (this.paidOnly != null) {
+                properties["paidOnly"] = this.paidOnly;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Money:WithdrawByUserId";
         }
     }
 }

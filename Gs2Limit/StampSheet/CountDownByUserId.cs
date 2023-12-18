@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Limit.Model;
 namespace Gs2Cdk.Gs2Limit.StampSheet
 {
     public class CountDownByUserId : AcquireAction {
+        private string namespaceName;
+        private string limitName;
+        private string counterName;
+        private string userId;
+        private int? countDownValue;
 
 
         public CountDownByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.limitName != null) {
+                properties["limitName"] = this.limitName;
+            }
+            if (this.counterName != null) {
+                properties["counterName"] = this.counterName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.countDownValue != null) {
+                properties["countDownValue"] = this.countDownValue;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Limit:CountDownByUserId";
         }
     }
 }

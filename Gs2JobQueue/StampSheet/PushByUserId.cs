@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2JobQueue.Model;
 namespace Gs2Cdk.Gs2JobQueue.StampSheet
 {
     public class PushByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private JobEntry[] jobs;
 
 
         public PushByUserId(
@@ -36,6 +39,28 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.jobs != null) {
+                properties["jobs"] = this.jobs.Select(v => v.Properties(
+                        )).ToList();
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2JobQueue:PushByUserId";
         }
     }
 }

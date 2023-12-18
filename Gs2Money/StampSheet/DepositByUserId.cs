@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Money.Model;
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
     public class DepositByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private int slot;
+        private float price;
+        private int count;
 
 
         public DepositByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.slot != null) {
+                properties["slot"] = this.slot;
+            }
+            if (this.price != null) {
+                properties["price"] = this.price;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Money:DepositByUserId";
         }
     }
 }

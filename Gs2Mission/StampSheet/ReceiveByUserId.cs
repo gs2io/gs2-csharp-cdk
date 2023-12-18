@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Mission.Model;
 namespace Gs2Cdk.Gs2Mission.StampSheet
 {
     public class ReceiveByUserId : ConsumeAction {
+        private string namespaceName;
+        private string missionGroupName;
+        private string missionTaskName;
+        private string userId;
 
 
         public ReceiveByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.missionGroupName != null) {
+                properties["missionGroupName"] = this.missionGroupName;
+            }
+            if (this.missionTaskName != null) {
+                properties["missionTaskName"] = this.missionTaskName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Mission:ReceiveByUserId";
         }
     }
 }

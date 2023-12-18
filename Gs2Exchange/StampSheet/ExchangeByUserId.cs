@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Exchange.Model;
 namespace Gs2Cdk.Gs2Exchange.StampSheet
 {
     public class ExchangeByUserId : AcquireAction {
+        private string namespaceName;
+        private string rateName;
+        private string userId;
+        private int count;
+        private Config[] config;
 
 
         public ExchangeByUserId(
@@ -40,6 +45,34 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.rateName != null) {
+                properties["rateName"] = this.rateName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v.Properties(
+                        )).ToList();
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Exchange:ExchangeByUserId";
         }
     }
 }

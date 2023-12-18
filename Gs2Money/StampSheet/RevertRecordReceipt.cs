@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2Money.Model;
 namespace Gs2Cdk.Gs2Money.StampSheet
 {
     public class RevertRecordReceipt : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string receipt;
 
 
         public RevertRecordReceipt(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.receipt != null) {
+                properties["receipt"] = this.receipt;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Money:RevertRecordReceipt";
         }
     }
 }

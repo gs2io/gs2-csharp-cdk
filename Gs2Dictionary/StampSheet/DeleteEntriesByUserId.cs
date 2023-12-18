@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2Dictionary.Model;
 namespace Gs2Cdk.Gs2Dictionary.StampSheet
 {
     public class DeleteEntriesByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string[] entryModelNames;
 
 
         public DeleteEntriesByUserId(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.entryModelNames != null) {
+                properties["entryModelNames"] = this.entryModelNames;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Dictionary:DeleteEntriesByUserId";
         }
     }
 }

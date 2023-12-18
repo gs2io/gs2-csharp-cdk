@@ -22,6 +22,8 @@ using Gs2Cdk.Gs2Quest.Model;
 namespace Gs2Cdk.Gs2Quest.StampSheet
 {
     public class DeleteProgressByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
 
 
         public DeleteProgressByUserId(
@@ -34,6 +36,24 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Quest:DeleteProgressByUserId";
         }
     }
 }

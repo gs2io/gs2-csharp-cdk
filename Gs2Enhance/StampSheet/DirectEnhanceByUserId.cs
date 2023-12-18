@@ -22,6 +22,12 @@ using Gs2Cdk.Gs2Enhance.Model;
 namespace Gs2Cdk.Gs2Enhance.StampSheet
 {
     public class DirectEnhanceByUserId : AcquireAction {
+        private string namespaceName;
+        private string rateName;
+        private string userId;
+        private string targetItemSetId;
+        private Material[] materials;
+        private Config[] config;
 
 
         public DirectEnhanceByUserId(
@@ -42,6 +48,38 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.rateName != null) {
+                properties["rateName"] = this.rateName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.targetItemSetId != null) {
+                properties["targetItemSetId"] = this.targetItemSetId;
+            }
+            if (this.materials != null) {
+                properties["materials"] = this.materials.Select(v => v.Properties(
+                        )).ToList();
+            }
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v.Properties(
+                        )).ToList();
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Enhance:DirectEnhanceByUserId";
         }
     }
 }

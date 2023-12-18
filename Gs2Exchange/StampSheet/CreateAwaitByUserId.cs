@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Exchange.Model;
 namespace Gs2Cdk.Gs2Exchange.StampSheet
 {
     public class CreateAwaitByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string rateName;
+        private int? count;
 
 
         public CreateAwaitByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.rateName != null) {
+                properties["rateName"] = this.rateName;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Exchange:CreateAwaitByUserId";
         }
     }
 }

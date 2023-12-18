@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2StateMachine.Model;
 namespace Gs2Cdk.Gs2StateMachine.StampSheet
 {
     public class StartStateMachineByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string args;
+        private int? ttl;
 
 
         public StartStateMachineByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.args != null) {
+                properties["args"] = this.args;
+            }
+            if (this.ttl != null) {
+                properties["ttl"] = this.ttl;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2StateMachine:StartStateMachineByUserId";
         }
     }
 }

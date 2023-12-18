@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2SerialKey.Model;
 namespace Gs2Cdk.Gs2SerialKey.StampSheet
 {
     public class UseByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string code;
 
 
         public UseByUserId(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.code != null) {
+                properties["code"] = this.code;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2SerialKey:UseByUserId";
         }
     }
 }

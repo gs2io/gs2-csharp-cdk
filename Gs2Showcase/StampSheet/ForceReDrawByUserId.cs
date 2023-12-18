@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2Showcase.Model;
 namespace Gs2Cdk.Gs2Showcase.StampSheet
 {
     public class ForceReDrawByUserId : AcquireAction {
+        private string namespaceName;
+        private string showcaseName;
+        private string userId;
 
 
         public ForceReDrawByUserId(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.showcaseName != null) {
+                properties["showcaseName"] = this.showcaseName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Showcase:ForceReDrawByUserId";
         }
     }
 }

@@ -22,6 +22,12 @@ using Gs2Cdk.Gs2Limit.Model;
 namespace Gs2Cdk.Gs2Limit.StampSheet
 {
     public class CountUpByUserId : ConsumeAction {
+        private string namespaceName;
+        private string limitName;
+        private string counterName;
+        private string userId;
+        private int? countUpValue;
+        private int? maxValue;
 
 
         public CountUpByUserId(
@@ -42,6 +48,36 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.limitName != null) {
+                properties["limitName"] = this.limitName;
+            }
+            if (this.counterName != null) {
+                properties["counterName"] = this.counterName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.countUpValue != null) {
+                properties["countUpValue"] = this.countUpValue;
+            }
+            if (this.maxValue != null) {
+                properties["maxValue"] = this.maxValue;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Limit:CountUpByUserId";
         }
     }
 }

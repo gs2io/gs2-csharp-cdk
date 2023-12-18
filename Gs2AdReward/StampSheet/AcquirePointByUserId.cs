@@ -22,6 +22,9 @@ using Gs2Cdk.Gs2AdReward.Model;
 namespace Gs2Cdk.Gs2AdReward.StampSheet
 {
     public class AcquirePointByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private long point;
 
 
         public AcquirePointByUserId(
@@ -36,6 +39,27 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.point != null) {
+                properties["point"] = this.point;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2AdReward:AcquirePointByUserId";
         }
     }
 }

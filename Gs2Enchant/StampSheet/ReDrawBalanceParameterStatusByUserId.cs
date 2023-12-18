@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Enchant.Model;
 namespace Gs2Cdk.Gs2Enchant.StampSheet
 {
     public class ReDrawBalanceParameterStatusByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string parameterName;
+        private string propertyId;
+        private string[] fixedParameterNames;
 
 
         public ReDrawBalanceParameterStatusByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.parameterName != null) {
+                properties["parameterName"] = this.parameterName;
+            }
+            if (this.propertyId != null) {
+                properties["propertyId"] = this.propertyId;
+            }
+            if (this.fixedParameterNames != null) {
+                properties["fixedParameterNames"] = this.fixedParameterNames;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Enchant:ReDrawBalanceParameterStatusByUserId";
         }
     }
 }

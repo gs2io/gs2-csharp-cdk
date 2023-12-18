@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Inventory.Model;
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
     public class SetCapacityByUserId : AcquireAction {
+        private string namespaceName;
+        private string inventoryName;
+        private string userId;
+        private int newCapacityValue;
 
 
         public SetCapacityByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.inventoryName != null) {
+                properties["inventoryName"] = this.inventoryName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.newCapacityValue != null) {
+                properties["newCapacityValue"] = this.newCapacityValue;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Inventory:SetCapacityByUserId";
         }
     }
 }

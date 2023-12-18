@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Stamina.Model;
 namespace Gs2Cdk.Gs2Stamina.StampSheet
 {
     public class RecoverStaminaByUserId : AcquireAction {
+        private string namespaceName;
+        private string staminaName;
+        private string userId;
+        private int recoverValue;
 
 
         public RecoverStaminaByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.staminaName != null) {
+                properties["staminaName"] = this.staminaName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.recoverValue != null) {
+                properties["recoverValue"] = this.recoverValue;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Stamina:RecoverStaminaByUserId";
         }
     }
 }

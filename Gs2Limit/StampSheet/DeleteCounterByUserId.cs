@@ -22,6 +22,10 @@ using Gs2Cdk.Gs2Limit.Model;
 namespace Gs2Cdk.Gs2Limit.StampSheet
 {
     public class DeleteCounterByUserId : AcquireAction {
+        private string namespaceName;
+        private string limitName;
+        private string userId;
+        private string counterName;
 
 
         public DeleteCounterByUserId(
@@ -38,6 +42,30 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.limitName != null) {
+                properties["limitName"] = this.limitName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.counterName != null) {
+                properties["counterName"] = this.counterName;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Limit:DeleteCounterByUserId";
         }
     }
 }

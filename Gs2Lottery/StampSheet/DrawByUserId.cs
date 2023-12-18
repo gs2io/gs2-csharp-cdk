@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Lottery.Model;
 namespace Gs2Cdk.Gs2Lottery.StampSheet
 {
     public class DrawByUserId : AcquireAction {
+        private string namespaceName;
+        private string lotteryName;
+        private string userId;
+        private int count;
+        private Config[] config;
 
 
         public DrawByUserId(
@@ -40,6 +45,34 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.lotteryName != null) {
+                properties["lotteryName"] = this.lotteryName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v.Properties(
+                        )).ToList();
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Lottery:DrawByUserId";
         }
     }
 }

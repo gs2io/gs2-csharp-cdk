@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Showcase.Model;
 namespace Gs2Cdk.Gs2Showcase.StampSheet
 {
     public class IncrementPurchaseCountByUserId : ConsumeAction {
+        private string namespaceName;
+        private string showcaseName;
+        private string displayItemName;
+        private string userId;
+        private int count;
 
 
         public IncrementPurchaseCountByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.showcaseName != null) {
+                properties["showcaseName"] = this.showcaseName;
+            }
+            if (this.displayItemName != null) {
+                properties["displayItemName"] = this.displayItemName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Showcase:IncrementPurchaseCountByUserId";
         }
     }
 }

@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Quest.Model;
 namespace Gs2Cdk.Gs2Quest.StampSheet
 {
     public class CreateProgressByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string questModelId;
+        private bool? force;
+        private Config[] config;
 
 
         public CreateProgressByUserId(
@@ -40,6 +45,34 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.questModelId != null) {
+                properties["questModelId"] = this.questModelId;
+            }
+            if (this.force != null) {
+                properties["force"] = this.force;
+            }
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v.Properties(
+                        )).ToList();
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Quest:CreateProgressByUserId";
         }
     }
 }

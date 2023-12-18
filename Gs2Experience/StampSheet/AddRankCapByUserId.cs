@@ -22,6 +22,11 @@ using Gs2Cdk.Gs2Experience.Model;
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
     public class AddRankCapByUserId : AcquireAction {
+        private string namespaceName;
+        private string userId;
+        private string experienceName;
+        private string propertyId;
+        private long rankCapValue;
 
 
         public AddRankCapByUserId(
@@ -40,6 +45,33 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                 ["userId"] = userId,
             }
         ){
+        }
+
+        public Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.experienceName != null) {
+                properties["experienceName"] = this.experienceName;
+            }
+            if (this.propertyId != null) {
+                properties["propertyId"] = this.propertyId;
+            }
+            if (this.rankCapValue != null) {
+                properties["rankCapValue"] = this.rankCapValue;
+            }
+
+            return properties;
+        }
+
+        public string Action() {
+            return "Gs2Experience:AddRankCapByUserId";
         }
     }
 }
