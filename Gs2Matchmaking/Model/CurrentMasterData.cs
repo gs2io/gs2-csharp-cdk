@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 
             settings["version"] = this.version;
             if (this.ratingModels != null) {
-                settings["ratingModels"] = this.ratingModels.Select(v => v.Properties(
+                settings["ratingModels"] = this.ratingModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

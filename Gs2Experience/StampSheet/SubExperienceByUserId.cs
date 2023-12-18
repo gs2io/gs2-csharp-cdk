@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,19 +36,16 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string propertyId,
             long? experienceValue = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Experience:SubExperienceByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["experienceName"] = experienceName,
-                ["propertyId"] = propertyId,
-                ["experienceValue"] = experienceValue,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.propertyId = propertyId;
+            this.experienceValue = experienceValue;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -70,7 +68,34 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static SubExperienceByUserId FromProperties(Dictionary<string, object> properties) {
+            return new SubExperienceByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["experienceName"],
+                (string)properties["propertyId"],
+                new Func<long?>(() =>
+                {
+                    return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue switch {
+                        long v => (long)v,
+                        int v => (long)v,
+                        float v => (long)v,
+                        double v => (long)v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Experience:SubExperienceByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Experience:SubExperienceByUserId";
         }
     }

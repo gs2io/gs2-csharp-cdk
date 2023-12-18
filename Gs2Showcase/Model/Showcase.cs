@@ -54,7 +54,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["salesPeriodEventId"] = this.salesPeriodEventId;
             }
             if (this.displayItems != null) {
-                properties["displayItems"] = this.displayItems.Select(v => v.Properties(
+                properties["displayItems"] = this.displayItems.Select(v => v?.Properties(
                         )).ToList();
             }
 

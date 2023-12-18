@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Formation.Model
 
             settings["version"] = this.version;
             if (this.moldModels != null) {
-                settings["moldModels"] = this.moldModels.Select(v => v.Properties(
+                settings["moldModels"] = this.moldModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.propertyFormModels != null) {
-                settings["propertyFormModels"] = this.propertyFormModels.Select(v => v.Properties(
+                settings["propertyFormModels"] = this.propertyFormModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
 
             settings["version"] = this.version;
             if (this.distributorModels != null) {
-                settings["distributorModels"] = this.distributorModels.Select(v => v.Properties(
+                settings["distributorModels"] = this.distributorModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

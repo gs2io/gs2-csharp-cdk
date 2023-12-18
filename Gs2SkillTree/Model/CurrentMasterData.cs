@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
 
             settings["version"] = this.version;
             if (this.nodeModels != null) {
-                settings["nodeModels"] = this.nodeModels.Select(v => v.Properties(
+                settings["nodeModels"] = this.nodeModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

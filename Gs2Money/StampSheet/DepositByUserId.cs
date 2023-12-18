@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,19 +36,16 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             float price,
             int count,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Money:DepositByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["slot"] = slot,
-                ["price"] = price,
-                ["count"] = count,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.slot = slot;
+            this.price = price;
+            this.count = count;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -70,7 +68,54 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static DepositByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DepositByUserId(
+                (string)properties["namespaceName"],
+                new Func<int>(() =>
+                {
+                    return properties["slot"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<float>(() =>
+                {
+                    return properties["price"] switch {
+                        long v => (float)v,
+                        int v => (float)v,
+                        float v => (float)v,
+                        double v => (float)v,
+                        string v => float.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["count"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Money:DepositByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Money:DepositByUserId";
         }
     }

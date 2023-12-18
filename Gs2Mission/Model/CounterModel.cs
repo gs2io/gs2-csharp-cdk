@@ -51,7 +51,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.scopes != null) {
-                properties["scopes"] = this.scopes.Select(v => v.Properties(
+                properties["scopes"] = this.scopes.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.challengePeriodEventId != null) {

@@ -37,7 +37,7 @@ namespace Gs2Cdk.Gs2Idle.Model
             var properties = new Dictionary<string, object>();
 
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
 

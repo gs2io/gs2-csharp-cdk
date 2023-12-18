@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             string moldModelName,
             int capacity,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Formation:AddMoldCapacityByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["moldModelName"] = moldModelName,
-                ["capacity"] = capacity,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.moldModelName = moldModelName;
+            this.capacity = capacity;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,33 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static AddMoldCapacityByUserId FromProperties(Dictionary<string, object> properties) {
+            return new AddMoldCapacityByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["moldModelName"],
+                new Func<int>(() =>
+                {
+                    return properties["capacity"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Formation:AddMoldCapacityByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Formation:AddMoldCapacityByUserId";
         }
     }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,19 +36,16 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string propertyId,
             int? count = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Enchant:AddRarityParameterStatusByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["parameterName"] = parameterName,
-                ["propertyId"] = propertyId,
-                ["count"] = count,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.parameterName = parameterName;
+            this.propertyId = propertyId;
+            this.count = count;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -70,7 +68,34 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static AddRarityParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
+            return new AddRarityParameterStatusByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["parameterName"],
+                (string)properties["propertyId"],
+                new Func<int?>(() =>
+                {
+                    return properties.TryGetValue("count", out var count) ? count switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Enchant:AddRarityParameterStatusByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Enchant:AddRarityParameterStatusByUserId";
         }
     }

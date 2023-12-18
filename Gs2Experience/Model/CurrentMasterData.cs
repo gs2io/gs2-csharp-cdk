@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Experience.Model
 
             settings["version"] = this.version;
             if (this.experienceModels != null) {
-                settings["experienceModels"] = this.experienceModels.Select(v => v.Properties(
+                settings["experienceModels"] = this.experienceModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

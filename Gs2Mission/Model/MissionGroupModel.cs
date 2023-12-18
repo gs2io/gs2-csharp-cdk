@@ -130,7 +130,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.tasks != null) {
-                properties["tasks"] = this.tasks.Select(v => v.Properties(
+                properties["tasks"] = this.tasks.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.resetType != null) {

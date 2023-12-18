@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Limit.Model;
 using Gs2Cdk.Gs2Limit.StampSheet;
+using Gs2Cdk.Gs2Limit.Model.Enums;
 
 namespace Gs2Cdk.Gs2Limit.Ref
 {
@@ -89,7 +90,7 @@ namespace Gs2Cdk.Gs2Limit.Ref
         public VerifyCounterByUserId VerifyCounter(
             string limitName,
             string counterName,
-            string verifyType,
+            CounterVerifyType verifyType,
             int? count = null,
             string userId = "#{userId}"
         ){

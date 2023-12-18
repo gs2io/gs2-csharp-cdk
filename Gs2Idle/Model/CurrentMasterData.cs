@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Idle.Model
 
             settings["version"] = this.version;
             if (this.categoryModels != null) {
-                settings["categoryModels"] = this.categoryModels.Select(v => v.Properties(
+                settings["categoryModels"] = this.categoryModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

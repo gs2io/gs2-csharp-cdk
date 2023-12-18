@@ -45,7 +45,7 @@ namespace Gs2Cdk.Gs2Quest.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.completeAcquireActions != null) {
-                properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v.Properties(
+                properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.weight != null) {

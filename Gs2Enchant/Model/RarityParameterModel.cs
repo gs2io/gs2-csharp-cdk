@@ -58,11 +58,11 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 properties["maximumParameterCount"] = this.maximumParameterCount;
             }
             if (this.parameterCounts != null) {
-                properties["parameterCounts"] = this.parameterCounts.Select(v => v.Properties(
+                properties["parameterCounts"] = this.parameterCounts.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.parameters != null) {
-                properties["parameters"] = this.parameters.Select(v => v.Properties(
+                properties["parameters"] = this.parameters.Select(v => v?.Properties(
                         )).ToList();
             }
 

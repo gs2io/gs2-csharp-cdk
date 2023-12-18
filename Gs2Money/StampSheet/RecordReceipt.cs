@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             string contentsId,
             string receipt,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Money:RecordReceipt",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["contentsId"] = contentsId,
-                ["receipt"] = receipt,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.contentsId = contentsId;
+            this.receipt = receipt;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,23 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static RecordReceipt FromProperties(Dictionary<string, object> properties) {
+            return new RecordReceipt(
+                (string)properties["namespaceName"],
+                (string)properties["contentsId"],
+                (string)properties["receipt"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Money:RecordReceipt";
+        }
+
+        public static string StaticAction() {
             return "Gs2Money:RecordReceipt";
         }
     }

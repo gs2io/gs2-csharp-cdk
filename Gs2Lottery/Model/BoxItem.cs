@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 properties["prizeId"] = this.prizeId;
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.remaining != null) {

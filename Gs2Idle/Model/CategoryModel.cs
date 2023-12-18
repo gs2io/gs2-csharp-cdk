@@ -65,7 +65,7 @@ namespace Gs2Cdk.Gs2Idle.Model
                 properties["defaultMaximumIdleMinutes"] = this.defaultMaximumIdleMinutes;
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.idlePeriodScheduleId != null) {

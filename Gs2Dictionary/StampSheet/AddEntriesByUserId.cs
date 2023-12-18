@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
             string namespaceName,
             string[] entryModelNames = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Dictionary:AddEntriesByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["entryModelNames"] = entryModelNames,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.entryModelNames = entryModelNames;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -58,7 +56,31 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static AddEntriesByUserId FromProperties(Dictionary<string, object> properties) {
+            return new AddEntriesByUserId(
+                (string)properties["namespaceName"],
+                new Func<string[]>(() =>
+                {
+                    return properties.TryGetValue("entryModelNames", out var entryModelNames) ? entryModelNames switch {
+                        string[] v => v.ToArray(),
+                        List<string> v => v.ToArray(),
+                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                        { } v => new []{ v.ToString() },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Dictionary:AddEntriesByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Dictionary:AddEntriesByUserId";
         }
     }

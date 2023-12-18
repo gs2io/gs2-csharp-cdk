@@ -54,7 +54,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["capacity"] = this.capacity;
             }
             if (this.participants != null) {
-                properties["participants"] = this.participants.Select(v => v.Properties(
+                properties["participants"] = this.participants.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,20 +38,17 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             Material[] materials = null,
             bool? force = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Enhance:CreateProgressByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["rateName"] = rateName,
-                ["targetItemSetId"] = targetItemSetId,
-                ["materials"] = materials,
-                ["force"] = force,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.targetItemSetId = targetItemSetId;
+            this.materials = materials;
+            this.force = force;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -67,7 +65,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 properties["targetItemSetId"] = this.targetItemSetId;
             }
             if (this.materials != null) {
-                properties["materials"] = this.materials.Select(v => v.Properties(
+                properties["materials"] = this.materials.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.force != null) {
@@ -77,7 +75,42 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static CreateProgressByUserId FromProperties(Dictionary<string, object> properties) {
+            return new CreateProgressByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["rateName"],
+                (string)properties["targetItemSetId"],
+                new Func<Material[]>(() =>
+                {
+                    return properties.TryGetValue("materials", out var materials) ? materials switch {
+                        Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                        { } v => new []{ v as Material },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<bool?>(() =>
+                {
+                    return properties.TryGetValue("force", out var force) ? force switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Enhance:CreateProgressByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Enhance:CreateProgressByUserId";
         }
     }

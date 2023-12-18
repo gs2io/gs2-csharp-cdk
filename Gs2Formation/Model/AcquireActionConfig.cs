@@ -43,7 +43,7 @@ namespace Gs2Cdk.Gs2Formation.Model
                 properties["name"] = this.name;
             }
             if (this.config != null) {
-                properties["config"] = this.config.Select(v => v.Properties(
+                properties["config"] = this.config.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -60,7 +60,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
                 properties["transactionId"] = this.transactionId;
             }
             if (this.taskRequests != null) {
-                properties["taskRequests"] = this.taskRequests.Select(v => v.Properties(
+                properties["taskRequests"] = this.taskRequests.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.sheetRequest != null) {

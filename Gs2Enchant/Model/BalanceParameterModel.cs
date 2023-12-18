@@ -63,7 +63,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 );
             }
             if (this.parameters != null) {
-                properties["parameters"] = this.parameters.Select(v => v.Properties(
+                properties["parameters"] = this.parameters.Select(v => v?.Properties(
                         )).ToList();
             }
 

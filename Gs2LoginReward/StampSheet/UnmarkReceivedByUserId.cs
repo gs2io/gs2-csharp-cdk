@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
             string bonusModelName,
             int stepNumber,
             string userId = "#{userId}"
-        ): base(
-            "Gs2LoginReward:UnmarkReceivedByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["bonusModelName"] = bonusModelName,
-                ["stepNumber"] = stepNumber,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.bonusModelName = bonusModelName;
+            this.stepNumber = stepNumber;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,33 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static UnmarkReceivedByUserId FromProperties(Dictionary<string, object> properties) {
+            return new UnmarkReceivedByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["bonusModelName"],
+                new Func<int>(() =>
+                {
+                    return properties["stepNumber"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2LoginReward:UnmarkReceivedByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2LoginReward:UnmarkReceivedByUserId";
         }
     }

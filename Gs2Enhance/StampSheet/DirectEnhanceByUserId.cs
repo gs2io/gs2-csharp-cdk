@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,20 +38,17 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             Material[] materials,
             Config[] config = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Enhance:DirectEnhanceByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["rateName"] = rateName,
-                ["targetItemSetId"] = targetItemSetId,
-                ["materials"] = materials,
-                ["config"] = config,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.targetItemSetId = targetItemSetId;
+            this.materials = materials;
+            this.config = config;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -67,18 +65,56 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 properties["targetItemSetId"] = this.targetItemSetId;
             }
             if (this.materials != null) {
-                properties["materials"] = this.materials.Select(v => v.Properties(
+                properties["materials"] = this.materials.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.config != null) {
-                properties["config"] = this.config.Select(v => v.Properties(
+                properties["config"] = this.config.Select(v => v?.Properties(
                         )).ToList();
             }
 
             return properties;
         }
 
-        public string Action() {
+        public static DirectEnhanceByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DirectEnhanceByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["rateName"],
+                (string)properties["targetItemSetId"],
+                new Func<Material[]>(() =>
+                {
+                    return properties["materials"] switch {
+                        Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                        { } v => new []{ v as Material },
+                        _ => null
+                    };
+                })(),
+                new Func<Config[]>(() =>
+                {
+                    return properties.TryGetValue("config", out var config) ? config switch {
+                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                        { } v => new []{ v as Config },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Enhance:DirectEnhanceByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Enhance:DirectEnhanceByUserId";
         }
     }

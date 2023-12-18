@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Exchange.Model
 
             settings["version"] = this.version;
             if (this.rateModels != null) {
-                settings["rateModels"] = this.rateModels.Select(v => v.Properties(
+                settings["rateModels"] = this.rateModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.incrementalRateModels != null) {
-                settings["incrementalRateModels"] = this.incrementalRateModels.Select(v => v.Properties(
+                settings["incrementalRateModels"] = this.incrementalRateModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

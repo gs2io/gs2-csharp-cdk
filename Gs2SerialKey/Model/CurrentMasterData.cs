@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
 
             settings["version"] = this.version;
             if (this.campaignModels != null) {
-                settings["campaignModels"] = this.campaignModels.Select(v => v.Properties(
+                settings["campaignModels"] = this.campaignModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

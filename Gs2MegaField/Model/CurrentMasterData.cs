@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
 
             settings["version"] = this.version;
             if (this.areaModels != null) {
-                settings["areaModels"] = this.areaModels.Select(v => v.Properties(
+                settings["areaModels"] = this.areaModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -151,7 +151,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                 );
             }
             if (this.rewards != null) {
-                properties["rewards"] = this.rewards.Select(v => v.Properties(
+                properties["rewards"] = this.rewards.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.missedReceiveRelief != null) {
@@ -159,7 +159,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                 );
             }
             if (this.missedReceiveReliefConsumeActions != null) {
-                properties["missedReceiveReliefConsumeActions"] = this.missedReceiveReliefConsumeActions.Select(v => v.Properties(
+                properties["missedReceiveReliefConsumeActions"] = this.missedReceiveReliefConsumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
 

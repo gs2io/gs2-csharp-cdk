@@ -13,31 +13,81 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Dictionary.Model;
+using Gs2Cdk.Gs2Dictionary.Model.Enums;
 
 namespace Gs2Cdk.Gs2Dictionary.StampSheet
 {
     public class VerifyEntryByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string entryModelName;
+        private EntryVerifyType? verifyType;
 
 
         public VerifyEntryByUserId(
             string namespaceName,
             string entryModelName,
-            string verifyType,
+            EntryVerifyType verifyType,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Dictionary:VerifyEntryByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["entryModelName"] = entryModelName,
-                ["verifyType"] = verifyType,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.entryModelName = entryModelName;
+            this.verifyType = verifyType;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.entryModelName != null) {
+                properties["entryModelName"] = this.entryModelName;
+            }
+            if (this.verifyType != null) {
+                properties["verifyType"] = this.verifyType;
+            }
+
+            return properties;
+        }
+
+        public static VerifyEntryByUserId FromProperties(Dictionary<string, object> properties) {
+            return new VerifyEntryByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["entryModelName"],
+                new Func<EntryVerifyType>(() =>
+                {
+                    return properties["verifyType"] switch {
+                        EntryVerifyType e => e,
+                        string s => EntryVerifyTypeExt.New(s),
+                        _ => EntryVerifyType.Havent
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Dictionary:VerifyEntryByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Dictionary:VerifyEntryByUserId";
         }
     }
 }

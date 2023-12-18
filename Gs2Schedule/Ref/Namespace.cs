@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Schedule.Model;
 using Gs2Cdk.Gs2Schedule.StampSheet;
+using Gs2Cdk.Gs2Schedule.Model.Enums;
 
 namespace Gs2Cdk.Gs2Schedule.Ref
 {
@@ -34,7 +35,7 @@ namespace Gs2Cdk.Gs2Schedule.Ref
 
         public TriggerByUserId Trigger(
             string triggerName,
-            string triggerStrategy,
+            TriggerTriggerStrategy triggerStrategy,
             int ttl,
             string userId = "#{userId}"
         ){

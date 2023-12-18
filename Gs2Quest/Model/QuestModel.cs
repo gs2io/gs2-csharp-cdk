@@ -59,22 +59,22 @@ namespace Gs2Cdk.Gs2Quest.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.contents != null) {
-                properties["contents"] = this.contents.Select(v => v.Properties(
+                properties["contents"] = this.contents.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.challengePeriodEventId != null) {
                 properties["challengePeriodEventId"] = this.challengePeriodEventId;
             }
             if (this.firstCompleteAcquireActions != null) {
-                properties["firstCompleteAcquireActions"] = this.firstCompleteAcquireActions.Select(v => v.Properties(
+                properties["firstCompleteAcquireActions"] = this.firstCompleteAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.consumeActions != null) {
-                properties["consumeActions"] = this.consumeActions.Select(v => v.Properties(
+                properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.failedAcquireActions != null) {
-                properties["failedAcquireActions"] = this.failedAcquireActions.Select(v => v.Properties(
+                properties["failedAcquireActions"] = this.failedAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.premiseQuestNames != null) {

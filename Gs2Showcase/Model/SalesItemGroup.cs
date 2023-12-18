@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.salesItems != null) {
-                properties["salesItems"] = this.salesItems.Select(v => v.Properties(
+                properties["salesItems"] = this.salesItems.Select(v => v?.Properties(
                         )).ToList();
             }
 

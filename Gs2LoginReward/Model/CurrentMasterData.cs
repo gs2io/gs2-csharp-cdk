@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
 
             settings["version"] = this.version;
             if (this.bonusModels != null) {
-                settings["bonusModels"] = this.bonusModels.Select(v => v.Properties(
+                settings["bonusModels"] = this.bonusModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

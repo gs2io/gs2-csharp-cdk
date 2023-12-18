@@ -53,7 +53,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.readAcquireActions != null) {
-                properties["readAcquireActions"] = this.readAcquireActions.Select(v => v.Properties(
+                properties["readAcquireActions"] = this.readAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.expiresTimeSpan != null) {

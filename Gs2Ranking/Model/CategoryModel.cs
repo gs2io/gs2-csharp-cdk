@@ -158,7 +158,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                 properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
             }
             if (this.additionalScopes != null) {
-                properties["additionalScopes"] = this.additionalScopes.Select(v => v.Properties(
+                properties["additionalScopes"] = this.additionalScopes.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.entryPeriodEventId != null) {

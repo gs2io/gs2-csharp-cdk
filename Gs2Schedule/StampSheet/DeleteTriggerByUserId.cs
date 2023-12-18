@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,20 +23,56 @@ using Gs2Cdk.Gs2Schedule.Model;
 namespace Gs2Cdk.Gs2Schedule.StampSheet
 {
     public class DeleteTriggerByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string triggerName;
 
 
         public DeleteTriggerByUserId(
             string namespaceName,
             string triggerName,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Schedule:DeleteTriggerByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["triggerName"] = triggerName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.triggerName = triggerName;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.triggerName != null) {
+                properties["triggerName"] = this.triggerName;
+            }
+
+            return properties;
+        }
+
+        public static DeleteTriggerByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DeleteTriggerByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["triggerName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Schedule:DeleteTriggerByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Schedule:DeleteTriggerByUserId";
         }
     }
 }

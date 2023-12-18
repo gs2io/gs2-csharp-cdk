@@ -63,7 +63,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["maximumNumberOfChoice"] = this.maximumNumberOfChoice;
             }
             if (this.displayItems != null) {
-                properties["displayItems"] = this.displayItems.Select(v => v.Properties(
+                properties["displayItems"] = this.displayItems.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.baseTimestamp != null) {

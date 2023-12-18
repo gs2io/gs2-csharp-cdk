@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string inventoryName,
             int newCapacityValue,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Inventory:SetCapacityByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["inventoryName"] = inventoryName,
-                ["newCapacityValue"] = newCapacityValue,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.newCapacityValue = newCapacityValue;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,33 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static SetCapacityByUserId FromProperties(Dictionary<string, object> properties) {
+            return new SetCapacityByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["inventoryName"],
+                new Func<int>(() =>
+                {
+                    return properties["newCapacityValue"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Inventory:SetCapacityByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Inventory:SetCapacityByUserId";
         }
     }

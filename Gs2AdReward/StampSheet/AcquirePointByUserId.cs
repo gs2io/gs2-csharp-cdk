@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
             string namespaceName,
             long point,
             string userId = "#{userId}"
-        ): base(
-            "Gs2AdReward:AcquirePointByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["point"] = point,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.point = point;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -58,7 +56,32 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static AcquirePointByUserId FromProperties(Dictionary<string, object> properties) {
+            return new AcquirePointByUserId(
+                (string)properties["namespaceName"],
+                new Func<long>(() =>
+                {
+                    return properties["point"] switch {
+                        long v => (long)v,
+                        int v => (long)v,
+                        float v => (long)v,
+                        double v => (long)v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2AdReward:AcquirePointByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2AdReward:AcquirePointByUserId";
         }
     }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
             string namespaceName,
             string[] nodeModelNames,
             string userId = "#{userId}"
-        ): base(
-            "Gs2SkillTree:MarkReleaseByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["nodeModelNames"] = nodeModelNames,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.nodeModelNames = nodeModelNames;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -58,7 +56,31 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static MarkReleaseByUserId FromProperties(Dictionary<string, object> properties) {
+            return new MarkReleaseByUserId(
+                (string)properties["namespaceName"],
+                new Func<string[]>(() =>
+                {
+                    return properties["nodeModelNames"] switch {
+                        string[] v => v.ToArray(),
+                        List<string> v => v.ToArray(),
+                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                        { } v => new []{ v.ToString() },
+                        _ => null
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2SkillTree:MarkReleaseByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2SkillTree:MarkReleaseByUserId";
         }
     }

@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
+using Gs2Cdk.Gs2Inventory.Model.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
@@ -198,7 +199,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
             string inventoryName,
-            string verifyType,
+            InventoryVerifyType verifyType,
             int currentInventoryMaxCapacity,
             string userId = "#{userId}"
         ){
@@ -231,7 +232,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyItemSetByUserId VerifyItemSet(
             string inventoryName,
             string itemName,
-            string verifyType,
+            ItemSetVerifyType verifyType,
             long count,
             string itemSetName = null,
             string userId = "#{userId}"
@@ -251,7 +252,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string inventoryName,
             string itemName,
             string referenceOf,
-            string verifyType,
+            ReferenceOfVerifyType verifyType,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
@@ -282,7 +283,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifySimpleItemByUserId VerifySimpleItem(
             string inventoryName,
             string itemName,
-            string verifyType,
+            SimpleItemVerifyType verifyType,
             long count,
             string userId = "#{userId}"
         ){
@@ -314,7 +315,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyBigItemByUserId VerifyBigItem(
             string inventoryName,
             string itemName,
-            string verifyType,
+            BigItemVerifyType verifyType,
             string count,
             string userId = "#{userId}"
         ){

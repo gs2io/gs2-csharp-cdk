@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             string namespaceName,
             string messageName = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Inbox:DeleteMessageByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["messageName"] = messageName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.messageName = messageName;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -55,7 +53,25 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static DeleteMessageByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DeleteMessageByUserId(
+                (string)properties["namespaceName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("messageName", out var messageName) ? messageName as string : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Inbox:DeleteMessageByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Inbox:DeleteMessageByUserId";
         }
     }

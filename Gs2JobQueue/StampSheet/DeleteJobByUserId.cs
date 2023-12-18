@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
             string namespaceName,
             string jobName = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2JobQueue:DeleteJobByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["jobName"] = jobName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.jobName = jobName;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -55,7 +53,25 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static DeleteJobByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DeleteJobByUserId(
+                (string)properties["namespaceName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("jobName", out var jobName) ? jobName as string : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2JobQueue:DeleteJobByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2JobQueue:DeleteJobByUserId";
         }
     }

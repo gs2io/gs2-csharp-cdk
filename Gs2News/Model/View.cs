@@ -39,11 +39,11 @@ namespace Gs2Cdk.Gs2News.Model
             var properties = new Dictionary<string, object>();
 
             if (this.contents != null) {
-                properties["contents"] = this.contents.Select(v => v.Properties(
+                properties["contents"] = this.contents.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.removeContents != null) {
-                properties["removeContents"] = this.removeContents.Select(v => v.Properties(
+                properties["removeContents"] = this.removeContents.Select(v => v?.Properties(
                         )).ToList();
             }
 

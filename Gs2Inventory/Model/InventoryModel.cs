@@ -66,7 +66,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
                 properties["protectReferencedItem"] = this.protectReferencedItem;
             }
             if (this.itemModels != null) {
-                properties["itemModels"] = this.itemModels.Select(v => v.Properties(
+                properties["itemModels"] = this.itemModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

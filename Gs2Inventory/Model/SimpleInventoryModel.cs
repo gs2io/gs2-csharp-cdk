@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.simpleItemModels != null) {
-                properties["simpleItemModels"] = this.simpleItemModels.Select(v => v.Properties(
+                properties["simpleItemModels"] = this.simpleItemModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

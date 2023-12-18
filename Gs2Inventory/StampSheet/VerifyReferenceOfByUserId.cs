@@ -13,15 +13,24 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
+using Gs2Cdk.Gs2Inventory.Model.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
     public class VerifyReferenceOfByUserId : ConsumeAction {
+        private string namespaceName;
+        private string inventoryName;
+        private string userId;
+        private string itemName;
+        private string referenceOf;
+        private ReferenceOfVerifyType? verifyType;
+        private string itemSetName;
 
 
         public VerifyReferenceOfByUserId(
@@ -29,21 +38,77 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string inventoryName,
             string itemName,
             string referenceOf,
-            string verifyType,
+            ReferenceOfVerifyType verifyType,
             string itemSetName = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Inventory:VerifyReferenceOfByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["inventoryName"] = inventoryName,
-                ["itemName"] = itemName,
-                ["referenceOf"] = referenceOf,
-                ["verifyType"] = verifyType,
-                ["itemSetName"] = itemSetName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
+            this.referenceOf = referenceOf;
+            this.verifyType = verifyType;
+            this.itemSetName = itemSetName;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.inventoryName != null) {
+                properties["inventoryName"] = this.inventoryName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.itemName != null) {
+                properties["itemName"] = this.itemName;
+            }
+            if (this.referenceOf != null) {
+                properties["referenceOf"] = this.referenceOf;
+            }
+            if (this.verifyType != null) {
+                properties["verifyType"] = this.verifyType;
+            }
+
+            return properties;
+        }
+
+        public static VerifyReferenceOfByUserId FromProperties(Dictionary<string, object> properties) {
+            return new VerifyReferenceOfByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["inventoryName"],
+                (string)properties["itemName"],
+                (string)properties["referenceOf"],
+                new Func<ReferenceOfVerifyType>(() =>
+                {
+                    return properties["verifyType"] switch {
+                        ReferenceOfVerifyType e => e,
+                        string s => ReferenceOfVerifyTypeExt.New(s),
+                        _ => ReferenceOfVerifyType.NotEntry
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Inventory:VerifyReferenceOfByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Inventory:VerifyReferenceOfByUserId";
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Gs2Cdk.Gs2Formation.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.slots != null) {
-                properties["slots"] = this.slots.Select(v => v.Properties(
+                properties["slots"] = this.slots.Select(v => v?.Properties(
                         )).ToList();
             }
 

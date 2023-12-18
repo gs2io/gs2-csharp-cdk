@@ -64,15 +64,15 @@ namespace Gs2Cdk.Gs2Inventory.Model
 
             settings["version"] = this.version;
             if (this.inventoryModels != null) {
-                settings["inventoryModels"] = this.inventoryModels.Select(v => v.Properties(
+                settings["inventoryModels"] = this.inventoryModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.simpleInventoryModels != null) {
-                settings["simpleInventoryModels"] = this.simpleInventoryModels.Select(v => v.Properties(
+                settings["simpleInventoryModels"] = this.simpleInventoryModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.bigInventoryModels != null) {
-                settings["bigInventoryModels"] = this.bigInventoryModels.Select(v => v.Properties(
+                settings["bigInventoryModels"] = this.bigInventoryModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

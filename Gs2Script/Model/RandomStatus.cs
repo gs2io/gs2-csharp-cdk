@@ -43,7 +43,7 @@ namespace Gs2Cdk.Gs2Script.Model
                 properties["seed"] = this.seed;
             }
             if (this.used != null) {
-                properties["used"] = this.used.Select(v => v.Properties(
+                properties["used"] = this.used.Select(v => v?.Properties(
                         )).ToList();
             }
 

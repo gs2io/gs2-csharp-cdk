@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Showcase.Model
 
             settings["version"] = this.version;
             if (this.showcases != null) {
-                settings["showcases"] = this.showcases.Select(v => v.Properties(
+                settings["showcases"] = this.showcases.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.randomShowcases != null) {
-                settings["randomShowcases"] = this.randomShowcases.Select(v => v.Properties(
+                settings["randomShowcases"] = this.randomShowcases.Select(v => v?.Properties(
                         )).ToList();
             }
 

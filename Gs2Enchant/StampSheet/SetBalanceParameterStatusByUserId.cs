@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,19 +36,16 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string propertyId,
             BalanceParameterValue[] parameterValues,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Enchant:SetBalanceParameterStatusByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["parameterName"] = parameterName,
-                ["propertyId"] = propertyId,
-                ["parameterValues"] = parameterValues,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.parameterName = parameterName;
+            this.propertyId = propertyId;
+            this.parameterValues = parameterValues;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,14 +62,41 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 properties["propertyId"] = this.propertyId;
             }
             if (this.parameterValues != null) {
-                properties["parameterValues"] = this.parameterValues.Select(v => v.Properties(
+                properties["parameterValues"] = this.parameterValues.Select(v => v?.Properties(
                         )).ToList();
             }
 
             return properties;
         }
 
-        public string Action() {
+        public static SetBalanceParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
+            return new SetBalanceParameterStatusByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["parameterName"],
+                (string)properties["propertyId"],
+                new Func<BalanceParameterValue[]>(() =>
+                {
+                    return properties["parameterValues"] switch {
+                        Dictionary<string, object>[] v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ BalanceParameterValue.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as BalanceParameterValue).ToArray(),
+                        { } v => new []{ v as BalanceParameterValue },
+                        _ => null
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Enchant:SetBalanceParameterStatusByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Enchant:SetBalanceParameterStatusByUserId";
         }
     }

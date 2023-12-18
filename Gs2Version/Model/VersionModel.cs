@@ -155,7 +155,7 @@ namespace Gs2Cdk.Gs2Version.Model
                 );
             }
             if (this.scheduleVersions != null) {
-                properties["scheduleVersions"] = this.scheduleVersions.Select(v => v.Properties(
+                properties["scheduleVersions"] = this.scheduleVersions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.needSignature != null) {

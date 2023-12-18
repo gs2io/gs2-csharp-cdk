@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
             string args = null,
             int? ttl = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2StateMachine:StartStateMachineByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["args"] = args,
-                ["ttl"] = ttl,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.args = args;
+            this.ttl = ttl;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,36 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static StartStateMachineByUserId FromProperties(Dictionary<string, object> properties) {
+            return new StartStateMachineByUserId(
+                (string)properties["namespaceName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("args", out var args) ? args as string : null;
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties.TryGetValue("ttl", out var ttl) ? ttl switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2StateMachine:StartStateMachineByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2StateMachine:StartStateMachineByUserId";
         }
     }

@@ -56,7 +56,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.releaseConsumeActions != null) {
-                properties["releaseConsumeActions"] = this.releaseConsumeActions.Select(v => v.Properties(
+                properties["releaseConsumeActions"] = this.releaseConsumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.restrainReturnRate != null) {

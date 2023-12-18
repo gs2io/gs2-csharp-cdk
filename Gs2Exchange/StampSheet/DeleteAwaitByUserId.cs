@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             string namespaceName,
             string awaitName = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Exchange:DeleteAwaitByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["awaitName"] = awaitName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.awaitName = awaitName;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -55,7 +53,25 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static DeleteAwaitByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DeleteAwaitByUserId(
+                (string)properties["namespaceName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("awaitName", out var awaitName) ? awaitName as string : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Exchange:DeleteAwaitByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Exchange:DeleteAwaitByUserId";
         }
     }

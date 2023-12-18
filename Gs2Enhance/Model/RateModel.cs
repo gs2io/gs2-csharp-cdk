@@ -82,7 +82,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
                 properties["experienceModelId"] = this.experienceModelId;
             }
             if (this.bonusRates != null) {
-                properties["bonusRates"] = this.bonusRates.Select(v => v.Properties(
+                properties["bonusRates"] = this.bonusRates.Select(v => v?.Properties(
                         )).ToList();
             }
 

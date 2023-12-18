@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Dictionary.Model;
 using Gs2Cdk.Gs2Dictionary.StampSheet;
+using Gs2Cdk.Gs2Dictionary.Model.Enums;
 
 namespace Gs2Cdk.Gs2Dictionary.Ref
 {
@@ -59,7 +60,7 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
 
         public VerifyEntryByUserId VerifyEntry(
             string entryModelName,
-            string verifyType,
+            EntryVerifyType verifyType,
             string userId = "#{userId}"
         ){
             return (new VerifyEntryByUserId(

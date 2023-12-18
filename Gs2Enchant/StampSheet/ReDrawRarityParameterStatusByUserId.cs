@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,19 +36,16 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string propertyId,
             string[] fixedParameterNames = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Enchant:ReDrawRarityParameterStatusByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["parameterName"] = parameterName,
-                ["propertyId"] = propertyId,
-                ["fixedParameterNames"] = fixedParameterNames,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.parameterName = parameterName;
+            this.propertyId = propertyId;
+            this.fixedParameterNames = fixedParameterNames;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -70,7 +68,33 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static ReDrawRarityParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
+            return new ReDrawRarityParameterStatusByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["parameterName"],
+                (string)properties["propertyId"],
+                new Func<string[]>(() =>
+                {
+                    return properties.TryGetValue("fixedParameterNames", out var fixedParameterNames) ? fixedParameterNames switch {
+                        string[] v => v.ToArray(),
+                        List<string> v => v.ToArray(),
+                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                        { } v => new []{ v.ToString() },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Enchant:ReDrawRarityParameterStatusByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Enchant:ReDrawRarityParameterStatusByUserId";
         }
     }

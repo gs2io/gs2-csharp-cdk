@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
 
             settings["version"] = this.version;
             if (this.staminaModels != null) {
-                settings["staminaModels"] = this.staminaModels.Select(v => v.Properties(
+                settings["staminaModels"] = this.staminaModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Dictionary.Model
 
             settings["version"] = this.version;
             if (this.entryModels != null) {
-                settings["entryModels"] = this.entryModels.Select(v => v.Properties(
+                settings["entryModels"] = this.entryModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

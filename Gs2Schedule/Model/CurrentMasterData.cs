@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
 
             settings["version"] = this.version;
             if (this.events != null) {
-                settings["events"] = this.events.Select(v => v.Properties(
+                settings["events"] = this.events.Select(v => v?.Properties(
                         )).ToList();
             }
 

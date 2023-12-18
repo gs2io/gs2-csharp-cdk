@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,20 +38,17 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             int? countUpValue = null,
             int? maxValue = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Limit:CountUpByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["limitName"] = limitName,
-                ["counterName"] = counterName,
-                ["countUpValue"] = countUpValue,
-                ["maxValue"] = maxValue,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.limitName = limitName;
+            this.counterName = counterName;
+            this.countUpValue = countUpValue;
+            this.maxValue = maxValue;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -76,7 +74,45 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static CountUpByUserId FromProperties(Dictionary<string, object> properties) {
+            return new CountUpByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["limitName"],
+                (string)properties["counterName"],
+                new Func<int?>(() =>
+                {
+                    return properties.TryGetValue("countUpValue", out var countUpValue) ? countUpValue switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<int?>(() =>
+                {
+                    return properties.TryGetValue("maxValue", out var maxValue) ? maxValue switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Limit:CountUpByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Limit:CountUpByUserId";
         }
     }

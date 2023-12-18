@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Mission.Model
 
             settings["version"] = this.version;
             if (this.groups != null) {
-                settings["groups"] = this.groups.Select(v => v.Properties(
+                settings["groups"] = this.groups.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.counters != null) {
-                settings["counters"] = this.counters.Select(v => v.Properties(
+                settings["counters"] = this.counters.Select(v => v?.Properties(
                         )).ToList();
             }
 

@@ -57,11 +57,11 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.consumeActions != null) {
-                properties["consumeActions"] = this.consumeActions.Select(v => v.Properties(
+                properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.stock != null) {

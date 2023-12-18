@@ -48,7 +48,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.layerModels != null) {
-                properties["layerModels"] = this.layerModels.Select(v => v.Properties(
+                properties["layerModels"] = this.layerModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

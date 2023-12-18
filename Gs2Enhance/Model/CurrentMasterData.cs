@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
 
             settings["version"] = this.version;
             if (this.rateModels != null) {
-                settings["rateModels"] = this.rateModels.Select(v => v.Properties(
+                settings["rateModels"] = this.rateModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

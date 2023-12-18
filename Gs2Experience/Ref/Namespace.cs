@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
 using Gs2Cdk.Gs2Experience.StampSheet;
+using Gs2Cdk.Gs2Experience.Model.Enums;
 
 namespace Gs2Cdk.Gs2Experience.Ref
 {
@@ -135,7 +136,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
 
         public VerifyRankByUserId VerifyRank(
             string experienceName,
-            string verifyType,
+            StatusVerifyType verifyType,
             string propertyId,
             long? rankValue = null,
             string userId = "#{userId}"
@@ -152,7 +153,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
 
         public VerifyRankCapByUserId VerifyRankCap(
             string experienceName,
-            string verifyType,
+            StatusVerifyType verifyType,
             string propertyId,
             long rankCapValue,
             string userId = "#{userId}"

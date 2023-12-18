@@ -50,7 +50,7 @@ namespace Gs2Cdk.Gs2Quest.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.quests != null) {
-                properties["quests"] = this.quests.Select(v => v.Properties(
+                properties["quests"] = this.quests.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.challengePeriodEventId != null) {

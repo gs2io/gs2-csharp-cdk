@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             string missionGroupName,
             string missionTaskName,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Mission:RevertReceiveByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["missionGroupName"] = missionGroupName,
-                ["missionTaskName"] = missionTaskName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.missionGroupName = missionGroupName;
+            this.missionTaskName = missionTaskName;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,23 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static RevertReceiveByUserId FromProperties(Dictionary<string, object> properties) {
+            return new RevertReceiveByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["missionGroupName"],
+                (string)properties["missionTaskName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Mission:RevertReceiveByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Mission:RevertReceiveByUserId";
         }
     }

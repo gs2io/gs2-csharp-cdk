@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
             string namespaceName,
             JobEntry[] jobs = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2JobQueue:PushByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["jobs"] = jobs,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.jobs = jobs;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -52,14 +50,39 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
                 properties["userId"] = this.userId;
             }
             if (this.jobs != null) {
-                properties["jobs"] = this.jobs.Select(v => v.Properties(
+                properties["jobs"] = this.jobs.Select(v => v?.Properties(
                         )).ToList();
             }
 
             return properties;
         }
 
-        public string Action() {
+        public static PushByUserId FromProperties(Dictionary<string, object> properties) {
+            return new PushByUserId(
+                (string)properties["namespaceName"],
+                new Func<JobEntry[]>(() =>
+                {
+                    return properties.TryGetValue("jobs", out var jobs) ? jobs switch {
+                        Dictionary<string, object>[] v => v.Select(JobEntry.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ JobEntry.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(JobEntry.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as JobEntry).ToArray(),
+                        { } v => new []{ v as JobEntry },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2JobQueue:PushByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2JobQueue:PushByUserId";
         }
     }

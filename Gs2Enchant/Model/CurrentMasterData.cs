@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Enchant.Model
 
             settings["version"] = this.version;
             if (this.balanceParameterModels != null) {
-                settings["balanceParameterModels"] = this.balanceParameterModels.Select(v => v.Properties(
+                settings["balanceParameterModels"] = this.balanceParameterModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.rarityParameterModels != null) {
-                settings["rarityParameterModels"] = this.rarityParameterModels.Select(v => v.Properties(
+                settings["rarityParameterModels"] = this.rarityParameterModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

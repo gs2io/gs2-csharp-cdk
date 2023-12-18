@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Quest.Model
 
             settings["version"] = this.version;
             if (this.questGroupModels != null) {
-                settings["questGroupModels"] = this.questGroupModels.Select(v => v.Properties(
+                settings["questGroupModels"] = this.questGroupModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

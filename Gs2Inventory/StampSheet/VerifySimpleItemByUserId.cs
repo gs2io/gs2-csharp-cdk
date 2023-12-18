@@ -13,35 +13,105 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
+using Gs2Cdk.Gs2Inventory.Model.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
     public class VerifySimpleItemByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string inventoryName;
+        private string itemName;
+        private SimpleItemVerifyType? verifyType;
+        private long count;
 
 
         public VerifySimpleItemByUserId(
             string namespaceName,
             string inventoryName,
             string itemName,
-            string verifyType,
+            SimpleItemVerifyType verifyType,
             long count,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Inventory:VerifySimpleItemByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["inventoryName"] = inventoryName,
-                ["itemName"] = itemName,
-                ["verifyType"] = verifyType,
-                ["count"] = count,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
+            this.verifyType = verifyType;
+            this.count = count;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.inventoryName != null) {
+                properties["inventoryName"] = this.inventoryName;
+            }
+            if (this.itemName != null) {
+                properties["itemName"] = this.itemName;
+            }
+            if (this.verifyType != null) {
+                properties["verifyType"] = this.verifyType;
+            }
+            if (this.count != null) {
+                properties["count"] = this.count;
+            }
+
+            return properties;
+        }
+
+        public static VerifySimpleItemByUserId FromProperties(Dictionary<string, object> properties) {
+            return new VerifySimpleItemByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["inventoryName"],
+                (string)properties["itemName"],
+                new Func<SimpleItemVerifyType>(() =>
+                {
+                    return properties["verifyType"] switch {
+                        SimpleItemVerifyType e => e,
+                        string s => SimpleItemVerifyTypeExt.New(s),
+                        _ => SimpleItemVerifyType.Less
+                    };
+                })(),
+                new Func<long>(() =>
+                {
+                    return properties["count"] switch {
+                        long v => (long)v,
+                        int v => (long)v,
+                        float v => (long)v,
+                        double v => (long)v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Inventory:VerifySimpleItemByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Inventory:VerifySimpleItemByUserId";
         }
     }
 }

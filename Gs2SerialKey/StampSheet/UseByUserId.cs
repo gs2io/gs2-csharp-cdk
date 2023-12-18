@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,17 +32,14 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             string namespaceName,
             string code,
             string userId = "#{userId}"
-        ): base(
-            "Gs2SerialKey:UseByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["code"] = code,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.code = code;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -58,7 +56,22 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static UseByUserId FromProperties(Dictionary<string, object> properties) {
+            return new UseByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["code"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2SerialKey:UseByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2SerialKey:UseByUserId";
         }
     }

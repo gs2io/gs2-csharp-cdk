@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,20 +38,17 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             AcquireAction acquireAction,
             AcquireActionConfig[] config = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Formation:AcquireActionsToPropertyFormProperties",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["propertyFormModelName"] = propertyFormModelName,
-                ["propertyId"] = propertyId,
-                ["acquireAction"] = acquireAction,
-                ["config"] = config,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.propertyFormModelName = propertyFormModelName;
+            this.propertyId = propertyId;
+            this.acquireAction = acquireAction;
+            this.config = config;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -71,14 +69,51 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                 );
             }
             if (this.config != null) {
-                properties["config"] = this.config.Select(v => v.Properties(
+                properties["config"] = this.config.Select(v => v?.Properties(
                         )).ToList();
             }
 
             return properties;
         }
 
-        public string Action() {
+        public static AcquireActionsToPropertyFormProperties FromProperties(Dictionary<string, object> properties) {
+            return new AcquireActionsToPropertyFormProperties(
+                (string)properties["namespaceName"],
+                (string)properties["propertyFormModelName"],
+                (string)properties["propertyId"],
+                new Func<AcquireAction>(() =>
+                {
+                    return properties["acquireAction"] switch {
+                        AcquireAction v => v,
+                        AcquireAction[] v => v.Length > 0 ? v.First() : null,
+                        Dictionary<string, object> v => AcquireAction.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? AcquireAction.FromProperties(v.First()) : null,
+                        _ => null
+                    };
+                })(),
+                new Func<AcquireActionConfig[]>(() =>
+                {
+                    return properties.TryGetValue("config", out var config) ? config switch {
+                        Dictionary<string, object>[] v => v.Select(AcquireActionConfig.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ AcquireActionConfig.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(AcquireActionConfig.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as AcquireActionConfig).ToArray(),
+                        { } v => new []{ v as AcquireActionConfig },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Formation:AcquireActionsToPropertyFormProperties";
+        }
+
+        public static string StaticAction() {
             return "Gs2Formation:AcquireActionsToPropertyFormProperties";
         }
     }

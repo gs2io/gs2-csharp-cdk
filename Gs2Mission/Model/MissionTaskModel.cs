@@ -71,7 +71,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["targetValue"] = this.targetValue;
             }
             if (this.completeAcquireActions != null) {
-                properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v.Properties(
+                properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.challengePeriodEventId != null) {

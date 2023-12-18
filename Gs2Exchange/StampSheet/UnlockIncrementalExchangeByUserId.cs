@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             string rateName,
             string lockTransactionId,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Exchange:UnlockIncrementalExchangeByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["rateName"] = rateName,
-                ["lockTransactionId"] = lockTransactionId,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.lockTransactionId = lockTransactionId;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,23 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static UnlockIncrementalExchangeByUserId FromProperties(Dictionary<string, object> properties) {
+            return new UnlockIncrementalExchangeByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["rateName"],
+                (string)properties["lockTransactionId"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Exchange:UnlockIncrementalExchangeByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Exchange:UnlockIncrementalExchangeByUserId";
         }
     }

@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             string limitName,
             string counterName,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Limit:DeleteCounterByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["limitName"] = limitName,
-                ["counterName"] = counterName,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.limitName = limitName;
+            this.counterName = counterName;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,23 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static DeleteCounterByUserId FromProperties(Dictionary<string, object> properties) {
+            return new DeleteCounterByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["limitName"],
+                (string)properties["counterName"],
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Limit:DeleteCounterByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Limit:DeleteCounterByUserId";
         }
     }

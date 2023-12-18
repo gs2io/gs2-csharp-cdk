@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,15 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             string staminaName,
             int recoverIntervalMinutes,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Stamina:SetRecoverIntervalByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["staminaName"] = staminaName,
-                ["recoverIntervalMinutes"] = recoverIntervalMinutes,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.staminaName = staminaName;
+            this.recoverIntervalMinutes = recoverIntervalMinutes;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -64,7 +62,33 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             return properties;
         }
 
-        public string Action() {
+        public static SetRecoverIntervalByUserId FromProperties(Dictionary<string, object> properties) {
+            return new SetRecoverIntervalByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["staminaName"],
+                new Func<int>(() =>
+                {
+                    return properties["recoverIntervalMinutes"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Stamina:SetRecoverIntervalByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Stamina:SetRecoverIntervalByUserId";
         }
     }

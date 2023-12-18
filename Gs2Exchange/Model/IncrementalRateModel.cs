@@ -158,7 +158,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 properties["maximumExchangeCount"] = this.maximumExchangeCount;
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
 

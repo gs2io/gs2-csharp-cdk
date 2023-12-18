@@ -13,33 +13,98 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Schedule.Model;
+using Gs2Cdk.Gs2Schedule.Model.Enums;
 
 namespace Gs2Cdk.Gs2Schedule.StampSheet
 {
     public class TriggerByUserId : AcquireAction {
+        private string namespaceName;
+        private string triggerName;
+        private string userId;
+        private TriggerTriggerStrategy? triggerStrategy;
+        private int ttl;
 
 
         public TriggerByUserId(
             string namespaceName,
             string triggerName,
-            string triggerStrategy,
+            TriggerTriggerStrategy triggerStrategy,
             int ttl,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Schedule:TriggerByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["triggerName"] = triggerName,
-                ["triggerStrategy"] = triggerStrategy,
-                ["ttl"] = ttl,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.triggerName = triggerName;
+            this.triggerStrategy = triggerStrategy;
+            this.ttl = ttl;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.triggerName != null) {
+                properties["triggerName"] = this.triggerName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.triggerStrategy != null) {
+                properties["triggerStrategy"] = this.triggerStrategy;
+            }
+            if (this.ttl != null) {
+                properties["ttl"] = this.ttl;
+            }
+
+            return properties;
+        }
+
+        public static TriggerByUserId FromProperties(Dictionary<string, object> properties) {
+            return new TriggerByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["triggerName"],
+                new Func<TriggerTriggerStrategy>(() =>
+                {
+                    return properties["triggerStrategy"] switch {
+                        TriggerTriggerStrategy e => e,
+                        string s => TriggerTriggerStrategyExt.New(s),
+                        _ => TriggerTriggerStrategy.Renew
+                    };
+                })(),
+                new Func<int>(() =>
+                {
+                    return properties["ttl"] switch {
+                        long v => (int)v,
+                        int v => (int)v,
+                        float v => (int)v,
+                        double v => (int)v,
+                        string v => int.Parse(v),
+                        _ => 0
+                    };
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Schedule:TriggerByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Schedule:TriggerByUserId";
         }
     }
 }

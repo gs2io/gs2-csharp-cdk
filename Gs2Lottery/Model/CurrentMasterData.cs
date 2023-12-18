@@ -61,11 +61,11 @@ namespace Gs2Cdk.Gs2Lottery.Model
 
             settings["version"] = this.version;
             if (this.lotteryModels != null) {
-                settings["lotteryModels"] = this.lotteryModels.Select(v => v.Properties(
+                settings["lotteryModels"] = this.lotteryModels.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.prizeTables != null) {
-                settings["prizeTables"] = this.prizeTables.Select(v => v.Properties(
+                settings["prizeTables"] = this.prizeTables.Select(v => v?.Properties(
                         )).ToList();
             }
 

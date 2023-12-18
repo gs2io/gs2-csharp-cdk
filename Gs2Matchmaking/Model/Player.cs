@@ -48,7 +48,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["userId"] = this.userId;
             }
             if (this.attributes != null) {
-                properties["attributes"] = this.attributes.Select(v => v.Properties(
+                properties["attributes"] = this.attributes.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.roleName != null) {

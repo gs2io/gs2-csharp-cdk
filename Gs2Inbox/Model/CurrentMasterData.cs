@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
 
             settings["version"] = this.version;
             if (this.globalMessages != null) {
-                settings["globalMessages"] = this.globalMessages.Select(v => v.Properties(
+                settings["globalMessages"] = this.globalMessages.Select(v => v?.Properties(
                         )).ToList();
             }
 

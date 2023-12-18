@@ -73,7 +73,7 @@ namespace Gs2Cdk.Gs2Experience.Model
                 );
             }
             if (this.acquireActionRates != null) {
-                properties["acquireActionRates"] = this.acquireActionRates.Select(v => v.Properties(
+                properties["acquireActionRates"] = this.acquireActionRates.Select(v => v?.Properties(
                         )).ToList();
             }
 

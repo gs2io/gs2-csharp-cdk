@@ -39,11 +39,11 @@ namespace Gs2Cdk.Gs2Script.Model
             var properties = new Dictionary<string, object>();
 
             if (this.consumeActions != null) {
-                properties["consumeActions"] = this.consumeActions.Select(v => v.Properties(
+                properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
 

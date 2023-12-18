@@ -13,35 +13,105 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
+using Gs2Cdk.Gs2Experience.Model.Enums;
 
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
     public class VerifyRankByUserId : ConsumeAction {
+        private string namespaceName;
+        private string userId;
+        private string experienceName;
+        private StatusVerifyType? verifyType;
+        private string propertyId;
+        private long? rankValue;
 
 
         public VerifyRankByUserId(
             string namespaceName,
             string experienceName,
-            string verifyType,
+            StatusVerifyType verifyType,
             string propertyId,
             long? rankValue = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Experience:VerifyRankByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["experienceName"] = experienceName,
-                ["verifyType"] = verifyType,
-                ["propertyId"] = propertyId,
-                ["rankValue"] = rankValue,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.verifyType = verifyType;
+            this.propertyId = propertyId;
+            this.rankValue = rankValue;
+            this.userId = userId;
+        }
+
+        public override Dictionary<string, object> Request(
+        ){
+            var properties = new Dictionary<string, object>();
+
+            if (this.namespaceName != null) {
+                properties["namespaceName"] = this.namespaceName;
+            }
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
+            }
+            if (this.experienceName != null) {
+                properties["experienceName"] = this.experienceName;
+            }
+            if (this.verifyType != null) {
+                properties["verifyType"] = this.verifyType;
+            }
+            if (this.propertyId != null) {
+                properties["propertyId"] = this.propertyId;
+            }
+            if (this.rankValue != null) {
+                properties["rankValue"] = this.rankValue;
+            }
+
+            return properties;
+        }
+
+        public static VerifyRankByUserId FromProperties(Dictionary<string, object> properties) {
+            return new VerifyRankByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["experienceName"],
+                new Func<StatusVerifyType>(() =>
+                {
+                    return properties["verifyType"] switch {
+                        StatusVerifyType e => e,
+                        string s => StatusVerifyTypeExt.New(s),
+                        _ => StatusVerifyType.Less
+                    };
+                })(),
+                (string)properties["propertyId"],
+                new Func<long?>(() =>
+                {
+                    return properties.TryGetValue("rankValue", out var rankValue) ? rankValue switch {
+                        long v => (long)v,
+                        int v => (long)v,
+                        float v => (long)v,
+                        double v => (long)v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Experience:VerifyRankByUserId";
+        }
+
+        public static string StaticAction() {
+            return "Gs2Experience:VerifyRankByUserId";
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.consumeActions != null) {
-                properties["consumeActions"] = this.consumeActions.Select(v => v.Properties(
+                properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.timingType != null) {
@@ -110,11 +110,11 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 properties["enableSkip"] = this.enableSkip;
             }
             if (this.skipConsumeActions != null) {
-                properties["skipConsumeActions"] = this.skipConsumeActions.Select(v => v.Properties(
+                properties["skipConsumeActions"] = this.skipConsumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
 

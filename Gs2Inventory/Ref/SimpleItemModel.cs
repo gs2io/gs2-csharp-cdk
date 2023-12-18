@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
+using Gs2Cdk.Gs2Inventory.Model.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
@@ -75,7 +76,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public VerifySimpleItemByUserId VerifySimpleItem(
-            string verifyType,
+            SimpleItemVerifyType verifyType,
             long count,
             string userId = "#{userId}"
         ){

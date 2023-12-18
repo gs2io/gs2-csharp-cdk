@@ -72,7 +72,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
                     return properties["values"] switch {
                         int[] v => v.ToArray(),
                         List<int> v => v.ToArray(),
-                        object[] v => v.Select(v2 => int.Parse(v2.ToString())).ToArray(),
+                        object[] v => v.Select(v2 => int.Parse(v2?.ToString())).ToArray(),
                         { } v => new []{ int.Parse(v.ToString()) },
                         _ => null
                     };

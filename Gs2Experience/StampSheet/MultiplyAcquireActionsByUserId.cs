@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,20 +38,17 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string rateName,
             AcquireAction[] acquireActions = null,
             string userId = "#{userId}"
-        ): base(
-            "Gs2Experience:MultiplyAcquireActionsByUserId",
-            new Dictionary<string, object>() {
-                ["namespaceName"] = namespaceName,
-                ["experienceName"] = experienceName,
-                ["propertyId"] = propertyId,
-                ["rateName"] = rateName,
-                ["acquireActions"] = acquireActions,
-                ["userId"] = userId,
-            }
         ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.propertyId = propertyId;
+            this.rateName = rateName;
+            this.acquireActions = acquireActions;
+            this.userId = userId;
         }
 
-        public Dictionary<string, object> Request(
+        public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
 
@@ -70,14 +68,42 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                 properties["rateName"] = this.rateName;
             }
             if (this.acquireActions != null) {
-                properties["acquireActions"] = this.acquireActions.Select(v => v.Properties(
+                properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
 
             return properties;
         }
 
-        public string Action() {
+        public static MultiplyAcquireActionsByUserId FromProperties(Dictionary<string, object> properties) {
+            return new MultiplyAcquireActionsByUserId(
+                (string)properties["namespaceName"],
+                (string)properties["experienceName"],
+                (string)properties["propertyId"],
+                (string)properties["rateName"],
+                new Func<AcquireAction[]>(() =>
+                {
+                    return properties.TryGetValue("acquireActions", out var acquireActions) ? acquireActions switch {
+                        Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                        { } v => new []{ v as AcquireAction },
+                        _ => null
+                    } : null;
+                })(),
+                new Func<string>(() =>
+                {
+                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                })()
+            );
+        }
+
+        public override string Action() {
+            return "Gs2Experience:MultiplyAcquireActionsByUserId";
+        }
+
+        public static string StaticAction() {
             return "Gs2Experience:MultiplyAcquireActionsByUserId";
         }
     }

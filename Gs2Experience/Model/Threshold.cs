@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Experience.Model
                     return properties["values"] switch {
                         long[] v => v.ToArray(),
                         List<long> v => v.ToArray(),
-                        object[] v => v.Select(v2 => long.Parse(v2.ToString())).ToArray(),
+                        object[] v => v.Select(v2 => long.Parse(v2?.ToString())).ToArray(),
                         { } v => new []{ long.Parse(v.ToString()) },
                         _ => null
                     };

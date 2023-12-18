@@ -58,7 +58,7 @@ namespace Gs2Cdk.Gs2Limit.Model
 
             settings["version"] = this.version;
             if (this.limitModels != null) {
-                settings["limitModels"] = this.limitModels.Select(v => v.Properties(
+                settings["limitModels"] = this.limitModels.Select(v => v?.Properties(
                         )).ToList();
             }
 
