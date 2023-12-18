@@ -55,7 +55,7 @@ namespace Gs2Cdk.Gs2Limit.Ref
                     "limit",
                     this.namespaceName,
                     "user",
-                    "{userId}",
+                    "'{userId}'",
                     "limit",
                     this.limitName,
                     "counter",
