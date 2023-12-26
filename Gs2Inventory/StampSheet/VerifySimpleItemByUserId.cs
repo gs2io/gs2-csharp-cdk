@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string inventoryName;
         private string itemName;
-        private SimpleItemVerifyType? verifyType;
+        private VerifySimpleItemByUserIdVerifyType? verifyType;
         private long count;
 
 
@@ -36,7 +36,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string namespaceName,
             string inventoryName,
             string itemName,
-            SimpleItemVerifyType verifyType,
+            VerifySimpleItemByUserIdVerifyType verifyType,
             long count,
             string userId = "#{userId}"
         ){
@@ -80,12 +80,12 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 (string)properties["namespaceName"],
                 (string)properties["inventoryName"],
                 (string)properties["itemName"],
-                new Func<SimpleItemVerifyType>(() =>
+                new Func<VerifySimpleItemByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        SimpleItemVerifyType e => e,
-                        string s => SimpleItemVerifyTypeExt.New(s),
-                        _ => SimpleItemVerifyType.Less
+                        VerifySimpleItemByUserIdVerifyType e => e,
+                        string s => VerifySimpleItemByUserIdVerifyTypeExt.New(s),
+                        _ => VerifySimpleItemByUserIdVerifyType.Less
                     };
                 })(),
                 new Func<long>(() =>

@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string itemName;
         private string referenceOf;
-        private ReferenceOfVerifyType? verifyType;
+        private VerifyReferenceOfByUserIdVerifyType? verifyType;
         private string itemSetName;
 
 
@@ -38,7 +38,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string inventoryName,
             string itemName,
             string referenceOf,
-            ReferenceOfVerifyType verifyType,
+            VerifyReferenceOfByUserIdVerifyType verifyType,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
@@ -84,12 +84,12 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 (string)properties["inventoryName"],
                 (string)properties["itemName"],
                 (string)properties["referenceOf"],
-                new Func<ReferenceOfVerifyType>(() =>
+                new Func<VerifyReferenceOfByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        ReferenceOfVerifyType e => e,
-                        string s => ReferenceOfVerifyTypeExt.New(s),
-                        _ => ReferenceOfVerifyType.NotEntry
+                        VerifyReferenceOfByUserIdVerifyType e => e,
+                        string s => VerifyReferenceOfByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyReferenceOfByUserIdVerifyType.NotEntry
                     };
                 })(),
                 new Func<string>(() =>

@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
-using Gs2Cdk.Gs2Experience.Model.Enums;
+using Gs2Cdk.Gs2Experience.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string namespaceName;
         private string userId;
         private string experienceName;
-        private StatusVerifyType? verifyType;
+        private VerifyRankCapByUserIdVerifyType? verifyType;
         private string propertyId;
         private long rankCapValue;
 
@@ -35,7 +35,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         public VerifyRankCapByUserId(
             string namespaceName,
             string experienceName,
-            StatusVerifyType verifyType,
+            VerifyRankCapByUserIdVerifyType verifyType,
             string propertyId,
             long rankCapValue,
             string userId = "#{userId}"
@@ -79,12 +79,12 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             return new VerifyRankCapByUserId(
                 (string)properties["namespaceName"],
                 (string)properties["experienceName"],
-                new Func<StatusVerifyType>(() =>
+                new Func<VerifyRankCapByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        StatusVerifyType e => e,
-                        string s => StatusVerifyTypeExt.New(s),
-                        _ => StatusVerifyType.Less
+                        VerifyRankCapByUserIdVerifyType e => e,
+                        string s => VerifyRankCapByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyRankCapByUserIdVerifyType.Less
                     };
                 })(),
                 (string)properties["propertyId"],

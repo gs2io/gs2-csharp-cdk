@@ -20,7 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Limit.Model;
 using Gs2Cdk.Gs2Limit.StampSheet;
-using Gs2Cdk.Gs2Limit.Model.Enums;
+using Gs2Cdk.Gs2Limit.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Limit.Ref
 {

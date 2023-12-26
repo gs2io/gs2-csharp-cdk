@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Dictionary.Model;
-using Gs2Cdk.Gs2Dictionary.Model.Enums;
+using Gs2Cdk.Gs2Dictionary.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Dictionary.StampSheet
 {
@@ -27,13 +27,13 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
         private string namespaceName;
         private string userId;
         private string entryModelName;
-        private EntryVerifyType? verifyType;
+        private VerifyEntryByUserIdVerifyType? verifyType;
 
 
         public VerifyEntryByUserId(
             string namespaceName,
             string entryModelName,
-            EntryVerifyType verifyType,
+            VerifyEntryByUserIdVerifyType verifyType,
             string userId = "#{userId}"
         ){
 
@@ -67,12 +67,12 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
             return new VerifyEntryByUserId(
                 (string)properties["namespaceName"],
                 (string)properties["entryModelName"],
-                new Func<EntryVerifyType>(() =>
+                new Func<VerifyEntryByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        EntryVerifyType e => e,
-                        string s => EntryVerifyTypeExt.New(s),
-                        _ => EntryVerifyType.Havent
+                        VerifyEntryByUserIdVerifyType e => e,
+                        string s => VerifyEntryByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyEntryByUserIdVerifyType.Havent
                     };
                 })(),
                 new Func<string>(() =>

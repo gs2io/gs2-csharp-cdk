@@ -20,7 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
@@ -199,7 +199,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
             string inventoryName,
-            InventoryVerifyType verifyType,
+            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
             string userId = "#{userId}"
         ){
@@ -232,7 +232,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyItemSetByUserId VerifyItemSet(
             string inventoryName,
             string itemName,
-            ItemSetVerifyType verifyType,
+            VerifyItemSetByUserIdVerifyType verifyType,
             long count,
             string itemSetName = null,
             string userId = "#{userId}"
@@ -252,7 +252,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string inventoryName,
             string itemName,
             string referenceOf,
-            ReferenceOfVerifyType verifyType,
+            VerifyReferenceOfByUserIdVerifyType verifyType,
             string itemSetName = null,
             string userId = "#{userId}"
         ){
@@ -283,7 +283,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifySimpleItemByUserId VerifySimpleItem(
             string inventoryName,
             string itemName,
-            SimpleItemVerifyType verifyType,
+            VerifySimpleItemByUserIdVerifyType verifyType,
             long count,
             string userId = "#{userId}"
         ){
@@ -315,7 +315,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyBigItemByUserId VerifyBigItem(
             string inventoryName,
             string itemName,
-            BigItemVerifyType verifyType,
+            VerifyBigItemByUserIdVerifyType verifyType,
             string count,
             string userId = "#{userId}"
         ){

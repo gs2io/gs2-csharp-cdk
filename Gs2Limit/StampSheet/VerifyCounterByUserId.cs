@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Limit.Model;
-using Gs2Cdk.Gs2Limit.Model.Enums;
+using Gs2Cdk.Gs2Limit.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Limit.StampSheet
 {
@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string userId;
         private string limitName;
         private string counterName;
-        private CounterVerifyType? verifyType;
+        private VerifyCounterByUserIdVerifyType? verifyType;
         private int? count;
 
 
@@ -36,7 +36,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             string namespaceName,
             string limitName,
             string counterName,
-            CounterVerifyType verifyType,
+            VerifyCounterByUserIdVerifyType verifyType,
             int? count = null,
             string userId = "#{userId}"
         ){
@@ -80,12 +80,12 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                 (string)properties["namespaceName"],
                 (string)properties["limitName"],
                 (string)properties["counterName"],
-                new Func<CounterVerifyType>(() =>
+                new Func<VerifyCounterByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        CounterVerifyType e => e,
-                        string s => CounterVerifyTypeExt.New(s),
-                        _ => CounterVerifyType.Less
+                        VerifyCounterByUserIdVerifyType e => e,
+                        string s => VerifyCounterByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyCounterByUserIdVerifyType.Less
                     };
                 })(),
                 new Func<int?>(() =>

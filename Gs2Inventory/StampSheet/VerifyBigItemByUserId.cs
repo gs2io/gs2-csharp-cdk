@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string inventoryName;
         private string itemName;
-        private BigItemVerifyType? verifyType;
+        private VerifyBigItemByUserIdVerifyType? verifyType;
         private string count;
 
 
@@ -36,7 +36,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string namespaceName,
             string inventoryName,
             string itemName,
-            BigItemVerifyType verifyType,
+            VerifyBigItemByUserIdVerifyType verifyType,
             string count,
             string userId = "#{userId}"
         ){
@@ -80,12 +80,12 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 (string)properties["namespaceName"],
                 (string)properties["inventoryName"],
                 (string)properties["itemName"],
-                new Func<BigItemVerifyType>(() =>
+                new Func<VerifyBigItemByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        BigItemVerifyType e => e,
-                        string s => BigItemVerifyTypeExt.New(s),
-                        _ => BigItemVerifyType.Less
+                        VerifyBigItemByUserIdVerifyType e => e,
+                        string s => VerifyBigItemByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyBigItemByUserIdVerifyType.Less
                     };
                 })(),
                 (string)properties["count"],

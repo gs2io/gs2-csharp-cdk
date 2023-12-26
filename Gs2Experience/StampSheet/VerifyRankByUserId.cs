@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
-using Gs2Cdk.Gs2Experience.Model.Enums;
+using Gs2Cdk.Gs2Experience.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string namespaceName;
         private string userId;
         private string experienceName;
-        private StatusVerifyType? verifyType;
+        private VerifyRankByUserIdVerifyType? verifyType;
         private string propertyId;
         private long? rankValue;
 
@@ -35,7 +35,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         public VerifyRankByUserId(
             string namespaceName,
             string experienceName,
-            StatusVerifyType verifyType,
+            VerifyRankByUserIdVerifyType verifyType,
             string propertyId,
             long? rankValue = null,
             string userId = "#{userId}"
@@ -79,12 +79,12 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             return new VerifyRankByUserId(
                 (string)properties["namespaceName"],
                 (string)properties["experienceName"],
-                new Func<StatusVerifyType>(() =>
+                new Func<VerifyRankByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        StatusVerifyType e => e,
-                        string s => StatusVerifyTypeExt.New(s),
-                        _ => StatusVerifyType.Less
+                        VerifyRankByUserIdVerifyType e => e,
+                        string s => VerifyRankByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyRankByUserIdVerifyType.Less
                     };
                 })(),
                 (string)properties["propertyId"],

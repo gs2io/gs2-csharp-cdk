@@ -20,7 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
 using Gs2Cdk.Gs2Inventory.StampSheet;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.Ref
 {
@@ -79,7 +79,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         }
 
         public VerifyBigItemByUserId VerifyBigItem(
-            BigItemVerifyType verifyType,
+            VerifyBigItemByUserIdVerifyType verifyType,
             string count,
             string userId = "#{userId}"
         ){

@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Inventory.Model;
-using Gs2Cdk.Gs2Inventory.Model.Enums;
+using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
@@ -27,14 +27,14 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string namespaceName;
         private string userId;
         private string inventoryName;
-        private InventoryVerifyType? verifyType;
+        private VerifyInventoryCurrentMaxCapacityByUserIdVerifyType? verifyType;
         private int currentInventoryMaxCapacity;
 
 
         public VerifyInventoryCurrentMaxCapacityByUserId(
             string namespaceName,
             string inventoryName,
-            InventoryVerifyType verifyType,
+            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
             string userId = "#{userId}"
         ){
@@ -73,12 +73,12 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             return new VerifyInventoryCurrentMaxCapacityByUserId(
                 (string)properties["namespaceName"],
                 (string)properties["inventoryName"],
-                new Func<InventoryVerifyType>(() =>
+                new Func<VerifyInventoryCurrentMaxCapacityByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        InventoryVerifyType e => e,
-                        string s => InventoryVerifyTypeExt.New(s),
-                        _ => InventoryVerifyType.Less
+                        VerifyInventoryCurrentMaxCapacityByUserIdVerifyType e => e,
+                        string s => VerifyInventoryCurrentMaxCapacityByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyInventoryCurrentMaxCapacityByUserIdVerifyType.Less
                     };
                 })(),
                 new Func<int>(() =>

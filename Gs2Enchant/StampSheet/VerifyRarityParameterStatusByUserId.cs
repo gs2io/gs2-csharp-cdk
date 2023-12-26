@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enchant.Model;
-using Gs2Cdk.Gs2Enchant.Model.Enums;
+using Gs2Cdk.Gs2Enchant.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Enchant.StampSheet
 {
@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string parameterName;
         private string userId;
         private string propertyId;
-        private RarityParameterStatusVerifyType? verifyType;
+        private VerifyRarityParameterStatusByUserIdVerifyType? verifyType;
         private string parameterValueName;
         private int? parameterCount;
 
@@ -37,7 +37,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string namespaceName,
             string parameterName,
             string propertyId,
-            RarityParameterStatusVerifyType verifyType,
+            VerifyRarityParameterStatusByUserIdVerifyType verifyType,
             string parameterValueName = null,
             int? parameterCount = null,
             string userId = "#{userId}"
@@ -86,12 +86,12 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 (string)properties["namespaceName"],
                 (string)properties["parameterName"],
                 (string)properties["propertyId"],
-                new Func<RarityParameterStatusVerifyType>(() =>
+                new Func<VerifyRarityParameterStatusByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        RarityParameterStatusVerifyType e => e,
-                        string s => RarityParameterStatusVerifyTypeExt.New(s),
-                        _ => RarityParameterStatusVerifyType.Havent
+                        VerifyRarityParameterStatusByUserIdVerifyType e => e,
+                        string s => VerifyRarityParameterStatusByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyRarityParameterStatusByUserIdVerifyType.Havent
                     };
                 })(),
                 new Func<string>(() =>

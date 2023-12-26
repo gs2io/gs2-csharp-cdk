@@ -19,7 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Schedule.Model;
-using Gs2Cdk.Gs2Schedule.Model.Enums;
+using Gs2Cdk.Gs2Schedule.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Schedule.StampSheet
 {
@@ -27,14 +27,14 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         private string namespaceName;
         private string triggerName;
         private string userId;
-        private TriggerTriggerStrategy? triggerStrategy;
+        private TriggerByUserIdTriggerStrategy? triggerStrategy;
         private int ttl;
 
 
         public TriggerByUserId(
             string namespaceName,
             string triggerName,
-            TriggerTriggerStrategy triggerStrategy,
+            TriggerByUserIdTriggerStrategy triggerStrategy,
             int ttl,
             string userId = "#{userId}"
         ){
@@ -73,12 +73,12 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             return new TriggerByUserId(
                 (string)properties["namespaceName"],
                 (string)properties["triggerName"],
-                new Func<TriggerTriggerStrategy>(() =>
+                new Func<TriggerByUserIdTriggerStrategy>(() =>
                 {
                     return properties["triggerStrategy"] switch {
-                        TriggerTriggerStrategy e => e,
-                        string s => TriggerTriggerStrategyExt.New(s),
-                        _ => TriggerTriggerStrategy.Renew
+                        TriggerByUserIdTriggerStrategy e => e,
+                        string s => TriggerByUserIdTriggerStrategyExt.New(s),
+                        _ => TriggerByUserIdTriggerStrategy.Renew
                     };
                 })(),
                 new Func<int>(() =>

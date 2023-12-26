@@ -20,7 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enchant.Model;
 using Gs2Cdk.Gs2Enchant.StampSheet;
-using Gs2Cdk.Gs2Enchant.Model.Enums;
+using Gs2Cdk.Gs2Enchant.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Enchant.Ref
 {
@@ -129,7 +129,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
         public VerifyRarityParameterStatusByUserId VerifyRarityParameterStatus(
             string parameterName,
             string propertyId,
-            RarityParameterStatusVerifyType verifyType,
+            VerifyRarityParameterStatusByUserIdVerifyType verifyType,
             string parameterValueName = null,
             int? parameterCount = null,
             string userId = "#{userId}"
