@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Enhance.Model
         private string? version= "2020-08-22";
         private string? namespaceName;
         private RateModel[] rateModels;
+        private UnleashRateModel[] unleashRateModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            RateModel[] rateModels
+            RateModel[] rateModels,
+            UnleashRateModel[] unleashRateModels
         ): base(
             "Enhance_CurrentRateMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.rateModels = rateModels;
+            this.unleashRateModels = unleashRateModels;
             stack.AddResource(
                 this
             );
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Enhance.Model
             settings["version"] = this.version;
             if (this.rateModels != null) {
                 settings["rateModels"] = this.rateModels.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.unleashRateModels != null) {
+                settings["unleashRateModels"] = this.unleashRateModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

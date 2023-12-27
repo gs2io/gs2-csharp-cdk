@@ -25,19 +25,20 @@ namespace Gs2Cdk.Gs2Grade.Model
 {
     public class GradeEntryModel {
         private long rankCapValue;
+        private string propertyIdRegex;
         private string gradeUpPropertyIdRegex;
         private string metadata;
-        private string propertyIdRegex;
 
         public GradeEntryModel(
             long rankCapValue,
+            string propertyIdRegex,
             string gradeUpPropertyIdRegex,
             GradeEntryModelOptions options = null
         ){
             this.rankCapValue = rankCapValue;
+            this.propertyIdRegex = propertyIdRegex;
             this.gradeUpPropertyIdRegex = gradeUpPropertyIdRegex;
             this.metadata = options?.metadata;
-            this.propertyIdRegex = options?.propertyIdRegex;
         }
 
         public Dictionary<string, object> Properties(
@@ -72,10 +73,10 @@ namespace Gs2Cdk.Gs2Grade.Model
                         _ => 0
                     };
                 })(),
+                (string)properties["propertyIdRegex"],
                 (string)properties["gradeUpPropertyIdRegex"],
                 new GradeEntryModelOptions {
-                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    propertyIdRegex = properties.TryGetValue("propertyIdRegex", out var propertyIdRegex) ? (string)propertyIdRegex : null
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );
 

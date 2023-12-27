@@ -17,11 +17,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Grade.Model;
+using Gs2Cdk.Gs2Enhance.Model;
 
-namespace Gs2Cdk.Gs2Grade.Model.Options
+namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
-    public class GradeEntryModelOptions {
-        public string metadata;
+    public class UnleashRateEntryModelOptions {
     }
 }

@@ -23,57 +23,16 @@ using Gs2Cdk.Gs2Enhance.StampSheet;
 
 namespace Gs2Cdk.Gs2Enhance.Ref
 {
-    public class NamespaceRef {
+    public class UnleashRateModelRef {
         private string namespaceName;
+        private string rateName;
 
-        public NamespaceRef(
-            string namespaceName
+        public UnleashRateModelRef(
+            string namespaceName,
+            string rateName
         ){
             this.namespaceName = namespaceName;
-        }
-
-        public UnleashRateModelRef UnleashRateModel(
-            string rateName
-        ){
-            return (new UnleashRateModelRef(
-                this.namespaceName,
-                rateName
-            ));
-        }
-
-        public RateModelRef RateModel(
-            string rateName
-        ){
-            return (new RateModelRef(
-                this.namespaceName,
-                rateName
-            ));
-        }
-
-        public CreateProgressByUserId CreateProgress(
-            string rateName,
-            string targetItemSetId,
-            Material[] materials = null,
-            bool? force = null,
-            string userId = "#{userId}"
-        ){
-            return (new CreateProgressByUserId(
-                this.namespaceName,
-                rateName,
-                targetItemSetId,
-                materials,
-                force,
-                userId
-            ));
-        }
-
-        public DeleteProgressByUserId DeleteProgress(
-            string userId = "#{userId}"
-        ){
-            return (new DeleteProgressByUserId(
-                this.namespaceName,
-                userId
-            ));
+            this.rateName = rateName;
         }
 
         public string Grn(
@@ -91,7 +50,9 @@ namespace Gs2Cdk.Gs2Enhance.Ref
                     ).Str(
                     ),
                     "enhance",
-                    this.namespaceName
+                    this.namespaceName,
+                    "unleashRateModel",
+                    this.rateName
                 }
             )).Str(
             );

@@ -111,12 +111,14 @@ namespace Gs2Cdk.Gs2Enhance.Model
         }
 
         public Namespace MasterData(
-            RateModel[] rateModels
+            RateModel[] rateModels,
+            UnleashRateModel[] unleashRateModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                rateModels
+                rateModels,
+                unleashRateModels
             )).AddDependsOn(
                 this
             );
@@ -136,6 +138,16 @@ namespace Gs2Cdk.Gs2Enhance.Model
                         List<RateModel> v => v.ToArray(),
                         Dictionary<string, object>[] v => v.Select(RateModel.FromProperties).ToArray(),
                         List<Dictionary<string, object>> v => v.Select(RateModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<UnleashRateModel[]>(() =>
+                {
+                    return properties["unleashRateModels"] switch {
+                        UnleashRateModel[] v => v,
+                        List<UnleashRateModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(UnleashRateModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(UnleashRateModel.FromProperties).ToArray(),
                         _ => null,
                     };
                 })()
