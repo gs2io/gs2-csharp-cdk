@@ -50,6 +50,17 @@ namespace Gs2Cdk.Gs2Lottery.Ref
             ));
         }
 
+        public ResetBoxByUserId ResetBox(
+            string prizeTableName,
+            string userId = "#{userId}"
+        ){
+            return (new ResetBoxByUserId(
+                this.namespaceName,
+                prizeTableName,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

@@ -19,8 +19,6 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
-using Gs2Cdk.Gs2Experience.StampSheet;
-using Gs2Cdk.Gs2Experience.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Experience.Ref
 {

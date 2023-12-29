@@ -19,7 +19,6 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Idle.Model;
-using Gs2Cdk.Gs2Idle.StampSheet;
 
 namespace Gs2Cdk.Gs2Idle.Ref
 {

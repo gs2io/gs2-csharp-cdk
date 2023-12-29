@@ -19,8 +19,6 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Grade.Model;
-using Gs2Cdk.Gs2Grade.StampSheet;
-using Gs2Cdk.Gs2Grade.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Grade.Ref
 {

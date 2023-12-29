@@ -90,6 +90,22 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
+        public AcquireItemSetWithGradeByUserId AcquireItemSetWithGrade(
+            string itemName,
+            string gradeModelId,
+            long gradeValue,
+            string userId = "#{userId}"
+        ){
+            return (new AcquireItemSetWithGradeByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                itemName,
+                gradeModelId,
+                gradeValue,
+                userId
+            ));
+        }
+
         public AddReferenceOfByUserId AddReferenceOf(
             string itemName,
             string referenceOf,

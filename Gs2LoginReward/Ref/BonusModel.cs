@@ -19,7 +19,6 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2LoginReward.Model;
-using Gs2Cdk.Gs2LoginReward.StampSheet;
 
 namespace Gs2Cdk.Gs2LoginReward.Ref
 {
