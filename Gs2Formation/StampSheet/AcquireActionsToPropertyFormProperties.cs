@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         private string propertyFormModelName;
         private string propertyId;
         private AcquireAction acquireAction;
-        private AcquireActionConfig[] config;
+        private Config[] config;
 
 
         public AcquireActionsToPropertyFormProperties(
@@ -36,7 +36,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             string propertyFormModelName,
             string propertyId,
             AcquireAction acquireAction,
-            AcquireActionConfig[] config = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
 
@@ -91,14 +91,14 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                         _ => null
                     };
                 })(),
-                new Func<AcquireActionConfig[]>(() =>
+                new Func<Config[]>(() =>
                 {
                     return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(AcquireActionConfig.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ AcquireActionConfig.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(AcquireActionConfig.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as AcquireActionConfig).ToArray(),
-                        { } v => new []{ v as AcquireActionConfig },
+                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                        { } v => new []{ v as Config },
                         _ => null
                     } : null;
                 })(),

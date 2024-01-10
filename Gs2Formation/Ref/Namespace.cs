@@ -80,7 +80,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string moldModelName,
             int index,
             AcquireAction acquireAction,
-            AcquireActionConfig[] config = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
@@ -97,7 +97,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string propertyFormModelName,
             string propertyId,
             AcquireAction acquireAction,
-            AcquireActionConfig[] config = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(

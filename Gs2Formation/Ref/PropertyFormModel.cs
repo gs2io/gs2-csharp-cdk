@@ -38,7 +38,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public AcquireActionsToPropertyFormProperties AcquireActionsToPropertyFormProperties(
             string propertyId,
             AcquireAction acquireAction,
-            AcquireActionConfig[] config = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
