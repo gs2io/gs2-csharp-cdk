@@ -24,12 +24,14 @@ using Gs2Cdk.Gs2Script.Model.Options;
 namespace Gs2Cdk.Gs2Script.Model
 {
     public class Transaction {
+        private string transactionId;
         private ConsumeAction[] consumeActions;
         private AcquireAction[] acquireActions;
 
         public Transaction(
             TransactionOptions options = null
         ){
+            this.transactionId = options?.transactionId;
             this.consumeActions = options?.consumeActions;
             this.acquireActions = options?.acquireActions;
         }
@@ -38,6 +40,9 @@ namespace Gs2Cdk.Gs2Script.Model
         ){
             var properties = new Dictionary<string, object>();
 
+            if (this.transactionId != null) {
+                properties["transactionId"] = this.transactionId;
+            }
             if (this.consumeActions != null) {
                 properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
                         )).ToList();
@@ -55,6 +60,7 @@ namespace Gs2Cdk.Gs2Script.Model
         ){
             var model = new Transaction(
                 new TransactionOptions {
+                    transactionId = properties.TryGetValue("transactionId", out var transactionId) ? (string)transactionId : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
                     {
                         return consumeActions switch {

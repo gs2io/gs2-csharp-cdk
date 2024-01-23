@@ -22,6 +22,7 @@ using Gs2Cdk.Gs2Script.Model;
 namespace Gs2Cdk.Gs2Script.Model.Options
 {
     public class TransactionOptions {
+        public string transactionId;
         public ConsumeAction[] consumeActions;
         public AcquireAction[] acquireActions;
     }

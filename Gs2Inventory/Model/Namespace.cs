@@ -32,6 +32,8 @@ namespace Gs2Cdk.Gs2Inventory.Model
         private ScriptSetting acquireScript;
         private ScriptSetting overflowScript;
         private ScriptSetting consumeScript;
+        private ScriptSetting simpleItemAcquireScript;
+        private ScriptSetting simpleItemConsumeScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -48,6 +50,8 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.acquireScript = options?.acquireScript;
             this.overflowScript = options?.overflowScript;
             this.consumeScript = options?.consumeScript;
+            this.simpleItemAcquireScript = options?.simpleItemAcquireScript;
+            this.simpleItemConsumeScript = options?.simpleItemConsumeScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -85,6 +89,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
             }
             if (this.consumeScript != null) {
                 properties["ConsumeScript"] = this.consumeScript?.Properties(
+                );
+            }
+            if (this.simpleItemAcquireScript != null) {
+                properties["SimpleItemAcquireScript"] = this.simpleItemAcquireScript?.Properties(
+                );
+            }
+            if (this.simpleItemConsumeScript != null) {
+                properties["SimpleItemConsumeScript"] = this.simpleItemConsumeScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

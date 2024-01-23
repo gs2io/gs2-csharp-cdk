@@ -27,6 +27,8 @@ namespace Gs2Cdk.Gs2Inventory.Model.Options
         public ScriptSetting acquireScript;
         public ScriptSetting overflowScript;
         public ScriptSetting consumeScript;
+        public ScriptSetting simpleItemAcquireScript;
+        public ScriptSetting simpleItemConsumeScript;
         public LogSetting logSetting;
     }
 }
