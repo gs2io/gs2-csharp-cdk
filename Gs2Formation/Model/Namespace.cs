@@ -32,6 +32,7 @@ namespace Gs2Cdk.Gs2Formation.Model
         private TransactionSetting transactionSetting;
         private ScriptSetting updateMoldScript;
         private ScriptSetting updateFormScript;
+        private ScriptSetting updatePropertyFormScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -48,6 +49,7 @@ namespace Gs2Cdk.Gs2Formation.Model
             this.transactionSetting = options?.transactionSetting;
             this.updateMoldScript = options?.updateMoldScript;
             this.updateFormScript = options?.updateFormScript;
+            this.updatePropertyFormScript = options?.updatePropertyFormScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -85,6 +87,10 @@ namespace Gs2Cdk.Gs2Formation.Model
             }
             if (this.updateFormScript != null) {
                 properties["UpdateFormScript"] = this.updateFormScript?.Properties(
+                );
+            }
+            if (this.updatePropertyFormScript != null) {
+                properties["UpdatePropertyFormScript"] = this.updatePropertyFormScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

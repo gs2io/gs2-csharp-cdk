@@ -60,7 +60,8 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 properties["inventoryName"] = this.inventoryName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType;
+                properties["verifyType"] = this.verifyType?.Str(
+                );
             }
             if (this.currentInventoryMaxCapacity != null) {
                 properties["currentInventoryMaxCapacity"] = this.currentInventoryMaxCapacity;

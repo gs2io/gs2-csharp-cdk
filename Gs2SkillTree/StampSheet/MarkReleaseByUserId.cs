@@ -25,16 +25,19 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
     public class MarkReleaseByUserId : AcquireAction {
         private string namespaceName;
         private string userId;
+        private string propertyId;
         private string[] nodeModelNames;
 
 
         public MarkReleaseByUserId(
             string namespaceName,
+            string propertyId,
             string[] nodeModelNames,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
+            this.propertyId = propertyId;
             this.nodeModelNames = nodeModelNames;
             this.userId = userId;
         }
@@ -49,6 +52,9 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.propertyId != null) {
+                properties["propertyId"] = this.propertyId;
+            }
             if (this.nodeModelNames != null) {
                 properties["nodeModelNames"] = this.nodeModelNames;
             }
@@ -59,6 +65,7 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
         public static MarkReleaseByUserId FromProperties(Dictionary<string, object> properties) {
             return new MarkReleaseByUserId(
                 (string)properties["namespaceName"],
+                (string)properties["propertyId"],
                 new Func<string[]>(() =>
                 {
                     return properties["nodeModelNames"] switch {

@@ -60,7 +60,8 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                 properties["userId"] = this.userId;
             }
             if (this.triggerStrategy != null) {
-                properties["triggerStrategy"] = this.triggerStrategy;
+                properties["triggerStrategy"] = this.triggerStrategy?.Str(
+                );
             }
             if (this.ttl != null) {
                 properties["ttl"] = this.ttl;

@@ -27,18 +27,21 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         private string userId;
         private string rateName;
         private int? count;
+        private Config[] config;
 
 
         public CreateAwaitByUserId(
             string namespaceName,
             string rateName,
             int? count = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.rateName = rateName;
             this.count = count;
+            this.config = config;
             this.userId = userId;
         }
 
@@ -58,6 +61,10 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             if (this.count != null) {
                 properties["count"] = this.count;
             }
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v?.Properties(
+                        )).ToList();
+            }
 
             return properties;
         }
@@ -75,6 +82,17 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
                         double v => (int)v,
                         string v => int.Parse(v),
                         _ => 0
+                    } : null;
+                })(),
+                new Func<Config[]>(() =>
+                {
+                    return properties.TryGetValue("config", out var config) ? config switch {
+                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                        { } v => new []{ v as Config },
+                        _ => null
                     } : null;
                 })(),
                 new Func<string>(() =>

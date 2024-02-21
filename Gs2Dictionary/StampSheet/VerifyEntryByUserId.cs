@@ -57,7 +57,8 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                 properties["entryModelName"] = this.entryModelName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType;
+                properties["verifyType"] = this.verifyType?.Str(
+                );
             }
 
             return properties;

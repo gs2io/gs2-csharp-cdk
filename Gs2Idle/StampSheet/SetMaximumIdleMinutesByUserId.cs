@@ -18,34 +18,27 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Limit.Model;
-using Gs2Cdk.Gs2Limit.StampSheet.Enums;
+using Gs2Cdk.Gs2Idle.Model;
 
-namespace Gs2Cdk.Gs2Limit.StampSheet
+namespace Gs2Cdk.Gs2Idle.StampSheet
 {
-    public class VerifyCounterByUserId : ConsumeAction {
+    public class SetMaximumIdleMinutesByUserId : AcquireAction {
         private string namespaceName;
         private string userId;
-        private string limitName;
-        private string counterName;
-        private VerifyCounterByUserIdVerifyType? verifyType;
-        private int? count;
+        private string categoryName;
+        private int? maximumIdleMinutes;
 
 
-        public VerifyCounterByUserId(
+        public SetMaximumIdleMinutesByUserId(
             string namespaceName,
-            string limitName,
-            string counterName,
-            VerifyCounterByUserIdVerifyType verifyType,
-            int? count = null,
+            string categoryName,
+            int? maximumIdleMinutes = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
-            this.limitName = limitName;
-            this.counterName = counterName;
-            this.verifyType = verifyType;
-            this.count = count;
+            this.categoryName = categoryName;
+            this.maximumIdleMinutes = maximumIdleMinutes;
             this.userId = userId;
         }
 
@@ -59,39 +52,23 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.limitName != null) {
-                properties["limitName"] = this.limitName;
+            if (this.categoryName != null) {
+                properties["categoryName"] = this.categoryName;
             }
-            if (this.counterName != null) {
-                properties["counterName"] = this.counterName;
-            }
-            if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
-                );
-            }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.maximumIdleMinutes != null) {
+                properties["maximumIdleMinutes"] = this.maximumIdleMinutes;
             }
 
             return properties;
         }
 
-        public static VerifyCounterByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyCounterByUserId(
+        public static SetMaximumIdleMinutesByUserId FromProperties(Dictionary<string, object> properties) {
+            return new SetMaximumIdleMinutesByUserId(
                 (string)properties["namespaceName"],
-                (string)properties["limitName"],
-                (string)properties["counterName"],
-                new Func<VerifyCounterByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyCounterByUserIdVerifyType e => e,
-                        string s => VerifyCounterByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyCounterByUserIdVerifyType.Less
-                    };
-                })(),
+                (string)properties["categoryName"],
                 new Func<int?>(() =>
                 {
-                    return properties.TryGetValue("count", out var count) ? count switch {
+                    return properties.TryGetValue("maximumIdleMinutes", out var maximumIdleMinutes) ? maximumIdleMinutes switch {
                         long v => (int)v,
                         int v => (int)v,
                         float v => (int)v,
@@ -108,11 +85,11 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         }
 
         public override string Action() {
-            return "Gs2Limit:VerifyCounterByUserId";
+            return "Gs2Idle:SetMaximumIdleMinutesByUserId";
         }
 
         public static string StaticAction() {
-            return "Gs2Limit:VerifyCounterByUserId";
+            return "Gs2Idle:SetMaximumIdleMinutesByUserId";
         }
     }
 }

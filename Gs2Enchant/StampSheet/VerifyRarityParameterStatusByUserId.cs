@@ -69,7 +69,8 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 properties["propertyId"] = this.propertyId;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType;
+                properties["verifyType"] = this.verifyType?.Str(
+                );
             }
             if (this.parameterValueName != null) {
                 properties["parameterValueName"] = this.parameterValueName;

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Formation.Model.Options
         public TransactionSetting transactionSetting;
         public ScriptSetting updateMoldScript;
         public ScriptSetting updateFormScript;
+        public ScriptSetting updatePropertyFormScript;
         public LogSetting logSetting;
     }
 }

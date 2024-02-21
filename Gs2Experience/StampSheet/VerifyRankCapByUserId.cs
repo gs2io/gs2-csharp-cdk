@@ -63,7 +63,8 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                 properties["experienceName"] = this.experienceName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType;
+                properties["verifyType"] = this.verifyType?.Str(
+                );
             }
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;

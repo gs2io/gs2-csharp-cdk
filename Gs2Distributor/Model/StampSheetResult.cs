@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,9 @@ namespace Gs2Cdk.Gs2Distributor.Model
         private string transactionId;
         private AcquireAction sheetRequest;
         private ConsumeAction[] taskRequests;
+        private int[] taskResultCodes;
         private string[] taskResults;
+        private int? sheetResultCode;
         private string sheetResult;
         private string nextTransactionId;
         private long? revision;
@@ -43,7 +47,9 @@ namespace Gs2Cdk.Gs2Distributor.Model
             this.transactionId = transactionId;
             this.sheetRequest = sheetRequest;
             this.taskRequests = options?.taskRequests;
+            this.taskResultCodes = options?.taskResultCodes;
             this.taskResults = options?.taskResults;
+            this.sheetResultCode = options?.sheetResultCode;
             this.sheetResult = options?.sheetResult;
             this.nextTransactionId = options?.nextTransactionId;
             this.revision = options?.revision;
@@ -67,8 +73,14 @@ namespace Gs2Cdk.Gs2Distributor.Model
                 properties["sheetRequest"] = this.sheetRequest?.Properties(
                 );
             }
+            if (this.taskResultCodes != null) {
+                properties["taskResultCodes"] = this.taskResultCodes;
+            }
             if (this.taskResults != null) {
                 properties["taskResults"] = this.taskResults;
+            }
+            if (this.sheetResultCode != null) {
+                properties["sheetResultCode"] = this.sheetResultCode;
             }
             if (this.sheetResult != null) {
                 properties["sheetResult"] = this.sheetResult;
@@ -107,6 +119,14 @@ namespace Gs2Cdk.Gs2Distributor.Model
                             _ => null
                         };
                     })() : null,
+                    taskResultCodes = properties.TryGetValue("taskResultCodes", out var taskResultCodes) ? new Func<int[]>(() =>
+                    {
+                        return taskResultCodes switch {
+                            int[] v => v.ToArray(),
+                            List<int> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
                     taskResults = properties.TryGetValue("taskResults", out var taskResults) ? new Func<string[]>(() =>
                     {
                         return taskResults switch {
@@ -115,6 +135,14 @@ namespace Gs2Cdk.Gs2Distributor.Model
                             _ => null
                         };
                     })() : null,
+                    sheetResultCode = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("sheetResultCode", out var sheetResultCode) ? sheetResultCode switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     sheetResult = properties.TryGetValue("sheetResult", out var sheetResult) ? (string)sheetResult : null,
                     nextTransactionId = properties.TryGetValue("nextTransactionId", out var nextTransactionId) ? (string)nextTransactionId : null,
                     revision = new Func<long?>(() =>

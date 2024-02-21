@@ -17,17 +17,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Distributor.Model;
+using Gs2Cdk.Gs2Log.Model;
+using Gs2Cdk.Gs2Log.Model.Enums;
 
-namespace Gs2Cdk.Gs2Distributor.Model.Options
+namespace Gs2Cdk.Gs2Log.Model.Options
 {
-    public class StampSheetResultOptions {
-        public ConsumeAction[] taskRequests;
-        public int[] taskResultCodes;
-        public string[] taskResults;
-        public int? sheetResultCode;
-        public string sheetResult;
-        public string nextTransactionId;
-        public long? revision;
+    public class AccessLogWithTelemetryOptions {
+        public string userId;
     }
 }

@@ -96,12 +96,14 @@ namespace Gs2Cdk.Gs2Exchange.Ref
         public CreateAwaitByUserId CreateAwait(
             string rateName,
             int? count = null,
+            Config[] config = null,
             string userId = "#{userId}"
         ){
             return (new CreateAwaitByUserId(
                 this.namespaceName,
                 rateName,
                 count,
+                config,
                 userId
             ));
         }

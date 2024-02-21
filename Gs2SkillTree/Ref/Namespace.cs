@@ -42,22 +42,26 @@ namespace Gs2Cdk.Gs2SkillTree.Ref
         }
 
         public MarkReleaseByUserId MarkRelease(
+            string propertyId,
             string[] nodeModelNames,
             string userId = "#{userId}"
         ){
             return (new MarkReleaseByUserId(
                 this.namespaceName,
+                propertyId,
                 nodeModelNames,
                 userId
             ));
         }
 
         public MarkRestrainByUserId MarkRestrain(
+            string propertyId,
             string[] nodeModelNames,
             string userId = "#{userId}"
         ){
             return (new MarkRestrainByUserId(
                 this.namespaceName,
+                propertyId,
                 nodeModelNames,
                 userId
             ));

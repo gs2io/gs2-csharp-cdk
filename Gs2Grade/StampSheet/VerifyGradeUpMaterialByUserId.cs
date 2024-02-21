@@ -63,7 +63,8 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                 properties["gradeName"] = this.gradeName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType;
+                properties["verifyType"] = this.verifyType?.Str(
+                );
             }
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;

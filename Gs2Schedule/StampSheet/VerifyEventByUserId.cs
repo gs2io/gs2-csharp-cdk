@@ -18,37 +18,28 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Inventory.Model;
-using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
+using Gs2Cdk.Gs2Schedule.Model;
+using Gs2Cdk.Gs2Schedule.StampSheet.Enums;
 
-namespace Gs2Cdk.Gs2Inventory.StampSheet
+namespace Gs2Cdk.Gs2Schedule.StampSheet
 {
-    public class VerifyReferenceOfByUserId : ConsumeAction {
+    public class VerifyEventByUserId : ConsumeAction {
         private string namespaceName;
-        private string inventoryName;
         private string userId;
-        private string itemName;
-        private string referenceOf;
-        private VerifyReferenceOfByUserIdVerifyType? verifyType;
-        private string itemSetName;
+        private string eventName;
+        private VerifyEventByUserIdVerifyType? verifyType;
 
 
-        public VerifyReferenceOfByUserId(
+        public VerifyEventByUserId(
             string namespaceName,
-            string inventoryName,
-            string itemName,
-            string referenceOf,
-            VerifyReferenceOfByUserIdVerifyType verifyType,
-            string itemSetName = null,
+            string eventName,
+            VerifyEventByUserIdVerifyType verifyType,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
-            this.inventoryName = inventoryName;
-            this.itemName = itemName;
-            this.referenceOf = referenceOf;
+            this.eventName = eventName;
             this.verifyType = verifyType;
-            this.itemSetName = itemSetName;
             this.userId = userId;
         }
 
@@ -59,17 +50,11 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.namespaceName != null) {
                 properties["namespaceName"] = this.namespaceName;
             }
-            if (this.inventoryName != null) {
-                properties["inventoryName"] = this.inventoryName;
-            }
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.itemName != null) {
-                properties["itemName"] = this.itemName;
-            }
-            if (this.referenceOf != null) {
-                properties["referenceOf"] = this.referenceOf;
+            if (this.eventName != null) {
+                properties["eventName"] = this.eventName;
             }
             if (this.verifyType != null) {
                 properties["verifyType"] = this.verifyType?.Str(
@@ -79,23 +64,17 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             return properties;
         }
 
-        public static VerifyReferenceOfByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyReferenceOfByUserId(
+        public static VerifyEventByUserId FromProperties(Dictionary<string, object> properties) {
+            return new VerifyEventByUserId(
                 (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                (string)properties["referenceOf"],
-                new Func<VerifyReferenceOfByUserIdVerifyType>(() =>
+                (string)properties["eventName"],
+                new Func<VerifyEventByUserIdVerifyType>(() =>
                 {
                     return properties["verifyType"] switch {
-                        VerifyReferenceOfByUserIdVerifyType e => e,
-                        string s => VerifyReferenceOfByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyReferenceOfByUserIdVerifyType.NotEntry
+                        VerifyEventByUserIdVerifyType e => e,
+                        string s => VerifyEventByUserIdVerifyTypeExt.New(s),
+                        _ => VerifyEventByUserIdVerifyType.InSchedule
                     };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
                 })(),
                 new Func<string>(() =>
                 {
@@ -105,11 +84,11 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public override string Action() {
-            return "Gs2Inventory:VerifyReferenceOfByUserId";
+            return "Gs2Schedule:VerifyEventByUserId";
         }
 
         public static string StaticAction() {
-            return "Gs2Inventory:VerifyReferenceOfByUserId";
+            return "Gs2Schedule:VerifyEventByUserId";
         }
     }
 }

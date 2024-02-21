@@ -59,6 +59,19 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             ));
         }
 
+        public VerifyEventByUserId VerifyEvent(
+            string eventName,
+            VerifyEventByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyEventByUserId(
+                this.namespaceName,
+                eventName,
+                verifyType,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(
