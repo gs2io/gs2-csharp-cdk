@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
         private string metadata;
         private AcquireAction[] readAcquireActions;
         private long? expiresAt;
+        private string? expiresAtString;
         private TimeSpan_ expiresTimeSpan;
 
 
@@ -44,6 +45,24 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             this.metadata = metadata;
             this.readAcquireActions = readAcquireActions;
             this.expiresAt = expiresAt;
+            this.expiresTimeSpan = expiresTimeSpan;
+            this.userId = userId;
+        }
+
+
+        public SendMessageByUserId(
+            string namespaceName,
+            string metadata,
+            AcquireAction[] readAcquireActions = null,
+            string expiresAt = null,
+            TimeSpan_ expiresTimeSpan = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.metadata = metadata;
+            this.readAcquireActions = readAcquireActions;
+            this.expiresAtString = expiresAt;
             this.expiresTimeSpan = expiresTimeSpan;
             this.userId = userId;
         }
@@ -65,8 +84,12 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
                 properties["readAcquireActions"] = this.readAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.expiresAt != null) {
-                properties["expiresAt"] = this.expiresAt;
+            if (this.expiresAtString != null) {
+                properties["expiresAt"] = this.expiresAtString;
+            } else {
+                if (this.expiresAt != null) {
+                    properties["expiresAt"] = this.expiresAt;
+                }
             }
             if (this.expiresTimeSpan != null) {
                 properties["expiresTimeSpan"] = this.expiresTimeSpan?.Properties(
@@ -77,46 +100,82 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
         }
 
         public static SendMessageByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SendMessageByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["metadata"],
-                new Func<AcquireAction[]>(() =>
-                {
-                    return properties.TryGetValue("readAcquireActions", out var readAcquireActions) ? readAcquireActions switch {
-                        Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
-                        { } v => new []{ v as AcquireAction },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<long?>(() =>
-                {
-                    return properties.TryGetValue("expiresAt", out var expiresAt) ? expiresAt switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<TimeSpan_>(() =>
-                {
-                    return properties.TryGetValue("expiresTimeSpan", out var expiresTimeSpan) ? expiresTimeSpan switch {
-                        TimeSpan_ v => v,
-                        TimeSpan_[] v => v.Length > 0 ? v.First() : null,
-                        Dictionary<string, object> v => TimeSpan_.FromProperties(v),
-                        Dictionary<string, object>[] v => v.Length > 0 ? TimeSpan_.FromProperties(v.First()) : null,
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SendMessageByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["metadata"],
+                    new Func<AcquireAction[]>(() =>
+                    {
+                        return properties.TryGetValue("readAcquireActions", out var readAcquireActions) ? readAcquireActions switch {
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                            { } v => new []{ v as AcquireAction },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("expiresAt", out var expiresAt) ? expiresAt switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<TimeSpan_>(() =>
+                    {
+                        return properties.TryGetValue("expiresTimeSpan", out var expiresTimeSpan) ? expiresTimeSpan switch {
+                            TimeSpan_ v => v,
+                            TimeSpan_[] v => v.Length > 0 ? v.First() : null,
+                            Dictionary<string, object> v => TimeSpan_.FromProperties(v),
+                            Dictionary<string, object>[] v => v.Length > 0 ? TimeSpan_.FromProperties(v.First()) : null,
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SendMessageByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["metadata"].ToString(),
+                    new Func<AcquireAction[]>(() =>
+                    {
+                        return properties.TryGetValue("readAcquireActions", out var readAcquireActions) ? readAcquireActions switch {
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                            { } v => new []{ v as AcquireAction },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("expiresAt", out var expiresAt) ? expiresAt.ToString() : null;
+                    })(),
+                    new Func<TimeSpan_>(() =>
+                    {
+                        return properties.TryGetValue("expiresTimeSpan", out var expiresTimeSpan) ? expiresTimeSpan switch {
+                            TimeSpan_ v => v,
+                            TimeSpan_[] v => v.Length > 0 ? v.First() : null,
+                            Dictionary<string, object> v => TimeSpan_.FromProperties(v),
+                            Dictionary<string, object>[] v => v.Length > 0 ? TimeSpan_.FromProperties(v.First()) : null,
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

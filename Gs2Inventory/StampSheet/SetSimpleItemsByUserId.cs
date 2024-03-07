@@ -64,25 +64,47 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static SetSimpleItemsByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetSimpleItemsByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                new Func<HeldCount[]>(() =>
-                {
-                    return properties["counts"] switch {
-                        Dictionary<string, object>[] v => v.Select(HeldCount.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ HeldCount.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(HeldCount.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as HeldCount).ToArray(),
-                        { } v => new []{ v as HeldCount },
-                        _ => null
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetSimpleItemsByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    new Func<HeldCount[]>(() =>
+                    {
+                        return properties["counts"] switch {
+                            Dictionary<string, object>[] v => v.Select(HeldCount.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ HeldCount.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(HeldCount.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as HeldCount).ToArray(),
+                            { } v => new []{ v as HeldCount },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetSimpleItemsByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    new Func<HeldCount[]>(() =>
+                    {
+                        return properties["counts"] switch {
+                            Dictionary<string, object>[] v => v.Select(HeldCount.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ HeldCount.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(HeldCount.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as HeldCount).ToArray(),
+                            { } v => new []{ v as HeldCount },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

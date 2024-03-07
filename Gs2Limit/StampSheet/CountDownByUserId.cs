@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string counterName;
         private string userId;
         private int? countDownValue;
+        private string? countDownValueString;
 
 
         public CountDownByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             this.limitName = limitName;
             this.counterName = counterName;
             this.countDownValue = countDownValue;
+            this.userId = userId;
+        }
+
+
+        public CountDownByUserId(
+            string namespaceName,
+            string limitName,
+            string counterName,
+            string countDownValue = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.limitName = limitName;
+            this.counterName = counterName;
+            this.countDownValueString = countDownValue;
             this.userId = userId;
         }
 
@@ -61,34 +78,54 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.countDownValue != null) {
-                properties["countDownValue"] = this.countDownValue;
+            if (this.countDownValueString != null) {
+                properties["countDownValue"] = this.countDownValueString;
+            } else {
+                if (this.countDownValue != null) {
+                    properties["countDownValue"] = this.countDownValue;
+                }
             }
 
             return properties;
         }
 
         public static CountDownByUserId FromProperties(Dictionary<string, object> properties) {
-            return new CountDownByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["limitName"],
-                (string)properties["counterName"],
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("countDownValue", out var countDownValue) ? countDownValue switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new CountDownByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["limitName"],
+                    (string)properties["counterName"],
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("countDownValue", out var countDownValue) ? countDownValue switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new CountDownByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["limitName"].ToString(),
+                    properties["counterName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("countDownValue", out var countDownValue) ? countDownValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

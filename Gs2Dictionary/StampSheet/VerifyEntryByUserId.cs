@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                 properties["entryModelName"] = this.entryModelName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
 
@@ -65,22 +65,41 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
         }
 
         public static VerifyEntryByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyEntryByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["entryModelName"],
-                new Func<VerifyEntryByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyEntryByUserIdVerifyType e => e,
-                        string s => VerifyEntryByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyEntryByUserIdVerifyType.Havent
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyEntryByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["entryModelName"],
+                    new Func<VerifyEntryByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyEntryByUserIdVerifyType e => e,
+                            string s => VerifyEntryByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyEntryByUserIdVerifyType.Havent
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyEntryByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["entryModelName"].ToString(),
+                    new Func<VerifyEntryByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyEntryByUserIdVerifyType e => e,
+                            string s => VerifyEntryByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyEntryByUserIdVerifyType.Havent
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

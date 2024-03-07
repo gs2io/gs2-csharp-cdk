@@ -67,7 +67,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             var properties = new Dictionary<string, object>();
 
             if (this.eventType != null) {
-                properties["eventType"] = this.eventType?.Str(
+                properties["eventType"] = this.eventType.Value.Str(
                 );
             }
             if (this.changeStateEvent != null) {

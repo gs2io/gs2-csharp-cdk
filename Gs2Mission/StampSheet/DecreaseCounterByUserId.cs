@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         private string counterName;
         private string userId;
         private long value;
+        private string? valueString;
 
 
         public DecreaseCounterByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             this.namespaceName = namespaceName;
             this.counterName = counterName;
             this.value = value;
+            this.userId = userId;
+        }
+
+
+        public DecreaseCounterByUserId(
+            string namespaceName,
+            string counterName,
+            string value,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.counterName = counterName;
+            this.valueString = value;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.value != null) {
-                properties["value"] = this.value;
+            if (this.valueString != null) {
+                properties["value"] = this.valueString;
+            } else {
+                if (this.value != null) {
+                    properties["value"] = this.value;
+                }
             }
 
             return properties;
         }
 
         public static DecreaseCounterByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DecreaseCounterByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["counterName"],
-                new Func<long>(() =>
-                {
-                    return properties["value"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DecreaseCounterByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["counterName"],
+                    new Func<long>(() =>
+                    {
+                        return properties["value"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DecreaseCounterByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["counterName"].ToString(),
+                    properties["value"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         private string userId;
         private string moldModelName;
         private int capacity;
+        private string? capacityString;
 
 
         public SubMoldCapacityByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             this.namespaceName = namespaceName;
             this.moldModelName = moldModelName;
             this.capacity = capacity;
+            this.userId = userId;
+        }
+
+
+        public SubMoldCapacityByUserId(
+            string namespaceName,
+            string moldModelName,
+            string capacity,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.moldModelName = moldModelName;
+            this.capacityString = capacity;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             if (this.moldModelName != null) {
                 properties["moldModelName"] = this.moldModelName;
             }
-            if (this.capacity != null) {
-                properties["capacity"] = this.capacity;
+            if (this.capacityString != null) {
+                properties["capacity"] = this.capacityString;
+            } else {
+                if (this.capacity != null) {
+                    properties["capacity"] = this.capacity;
+                }
             }
 
             return properties;
         }
 
         public static SubMoldCapacityByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SubMoldCapacityByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["moldModelName"],
-                new Func<int>(() =>
-                {
-                    return properties["capacity"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SubMoldCapacityByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["moldModelName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["capacity"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SubMoldCapacityByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["moldModelName"].ToString(),
+                    properties["capacity"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

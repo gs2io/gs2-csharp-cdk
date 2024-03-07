@@ -54,17 +54,31 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
         }
 
         public static DeleteMessageByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteMessageByUserId(
-                (string)properties["namespaceName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("messageName", out var messageName) ? messageName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteMessageByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("messageName", out var messageName) ? messageName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteMessageByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("messageName", out var messageName) ? messageName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

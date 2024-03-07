@@ -137,7 +137,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.mode != null) {
-                properties["mode"] = this.mode?.Str(
+                properties["mode"] = this.mode.Value.Str(
                 );
             }
             if (this.periodEventId != null) {
@@ -147,7 +147,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                 properties["resetHour"] = this.resetHour;
             }
             if (this.repeat != null) {
-                properties["repeat"] = this.repeat?.Str(
+                properties["repeat"] = this.repeat.Value.Str(
                 );
             }
             if (this.rewards != null) {
@@ -155,7 +155,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                         )).ToList();
             }
             if (this.missedReceiveRelief != null) {
-                properties["missedReceiveRelief"] = this.missedReceiveRelief?.Str(
+                properties["missedReceiveRelief"] = this.missedReceiveRelief.Value.Str(
                 );
             }
             if (this.missedReceiveReliefConsumeActions != null) {

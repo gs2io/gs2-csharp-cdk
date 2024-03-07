@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private string userId;
         private int newCapacityValue;
+        private string? newCapacityValueString;
 
 
         public SetCapacityByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.namespaceName = namespaceName;
             this.inventoryName = inventoryName;
             this.newCapacityValue = newCapacityValue;
+            this.userId = userId;
+        }
+
+
+        public SetCapacityByUserId(
+            string namespaceName,
+            string inventoryName,
+            string newCapacityValue,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.newCapacityValueString = newCapacityValue;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.newCapacityValue != null) {
-                properties["newCapacityValue"] = this.newCapacityValue;
+            if (this.newCapacityValueString != null) {
+                properties["newCapacityValue"] = this.newCapacityValueString;
+            } else {
+                if (this.newCapacityValue != null) {
+                    properties["newCapacityValue"] = this.newCapacityValue;
+                }
             }
 
             return properties;
         }
 
         public static SetCapacityByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetCapacityByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                new Func<int>(() =>
-                {
-                    return properties["newCapacityValue"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetCapacityByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["newCapacityValue"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetCapacityByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["newCapacityValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

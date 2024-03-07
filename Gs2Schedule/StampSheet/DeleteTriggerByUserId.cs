@@ -57,14 +57,25 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         }
 
         public static DeleteTriggerByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteTriggerByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["triggerName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteTriggerByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["triggerName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteTriggerByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["triggerName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

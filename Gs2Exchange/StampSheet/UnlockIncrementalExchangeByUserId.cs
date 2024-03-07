@@ -63,15 +63,27 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         }
 
         public static UnlockIncrementalExchangeByUserId FromProperties(Dictionary<string, object> properties) {
-            return new UnlockIncrementalExchangeByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                (string)properties["lockTransactionId"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new UnlockIncrementalExchangeByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    (string)properties["lockTransactionId"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new UnlockIncrementalExchangeByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    properties["lockTransactionId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

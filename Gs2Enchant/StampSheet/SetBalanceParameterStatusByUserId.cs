@@ -70,26 +70,49 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         }
 
         public static SetBalanceParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetBalanceParameterStatusByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["parameterName"],
-                (string)properties["propertyId"],
-                new Func<BalanceParameterValue[]>(() =>
-                {
-                    return properties["parameterValues"] switch {
-                        Dictionary<string, object>[] v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ BalanceParameterValue.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as BalanceParameterValue).ToArray(),
-                        { } v => new []{ v as BalanceParameterValue },
-                        _ => null
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetBalanceParameterStatusByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["parameterName"],
+                    (string)properties["propertyId"],
+                    new Func<BalanceParameterValue[]>(() =>
+                    {
+                        return properties["parameterValues"] switch {
+                            Dictionary<string, object>[] v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ BalanceParameterValue.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as BalanceParameterValue).ToArray(),
+                            { } v => new []{ v as BalanceParameterValue },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetBalanceParameterStatusByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["parameterName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<BalanceParameterValue[]>(() =>
+                    {
+                        return properties["parameterValues"] switch {
+                            Dictionary<string, object>[] v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ BalanceParameterValue.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(BalanceParameterValue.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as BalanceParameterValue).ToArray(),
+                            { } v => new []{ v as BalanceParameterValue },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -30,11 +30,10 @@ namespace Gs2Cdk.Gs2Formation.Model
 
         public Slot(
             string name,
-            string propertyId,
             SlotOptions options = null
         ){
             this.name = name;
-            this.propertyId = propertyId;
+            this.propertyId = options?.propertyId;
             this.metadata = options?.metadata;
         }
 
@@ -60,8 +59,8 @@ namespace Gs2Cdk.Gs2Formation.Model
         ){
             var model = new Slot(
                 (string)properties["name"],
-                (string)properties["propertyId"],
                 new SlotOptions {
+                    propertyId = properties.TryGetValue("propertyId", out var propertyId) ? (string)propertyId : null,
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );

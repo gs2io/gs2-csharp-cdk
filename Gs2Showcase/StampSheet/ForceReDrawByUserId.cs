@@ -57,14 +57,25 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
         }
 
         public static ForceReDrawByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ForceReDrawByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["showcaseName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ForceReDrawByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["showcaseName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ForceReDrawByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["showcaseName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

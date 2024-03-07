@@ -132,6 +132,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             VerifyRarityParameterStatusByUserIdVerifyType verifyType,
             string parameterValueName = null,
             int? parameterCount = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRarityParameterStatusByUserId(
@@ -141,6 +142,7 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 verifyType,
                 parameterValueName,
                 parameterCount,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

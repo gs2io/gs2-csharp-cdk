@@ -92,7 +92,7 @@ namespace Gs2Cdk.Gs2Log.Model
                 properties["result"] = this.result;
             }
             if (this.status != null) {
-                properties["status"] = this.status?.Str(
+                properties["status"] = this.status.Value.Str(
                 );
             }
 

@@ -91,11 +91,11 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.mode != null) {
-                properties["mode"] = this.mode?.Str(
+                properties["mode"] = this.mode.Value.Str(
                 );
             }
             if (this.method != null) {
-                properties["method"] = this.method?.Str(
+                properties["method"] = this.method.Value.Str(
                 );
             }
             if (this.prizeTableName != null) {

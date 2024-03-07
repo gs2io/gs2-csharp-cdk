@@ -51,7 +51,7 @@ namespace Gs2Cdk.Gs2Formation.Model
                 properties["name"] = this.name;
             }
             if (this.propertyType != null) {
-                properties["propertyType"] = this.propertyType?.Str(
+                properties["propertyType"] = this.propertyType.Value.Str(
                 );
             }
             if (this.body != null) {

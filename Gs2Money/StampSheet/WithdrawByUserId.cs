@@ -26,8 +26,11 @@ namespace Gs2Cdk.Gs2Money.StampSheet
         private string namespaceName;
         private string userId;
         private int slot;
+        private string? slotString;
         private int count;
+        private string? countString;
         private bool? paidOnly;
+        private string? paidOnlyString;
 
 
         public WithdrawByUserId(
@@ -45,6 +48,22 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             this.userId = userId;
         }
 
+
+        public WithdrawByUserId(
+            string namespaceName,
+            string slot,
+            string count,
+            string paidOnly = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.slotString = slot;
+            this.countString = count;
+            this.paidOnlyString = paidOnly;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -55,57 +74,85 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.slot != null) {
-                properties["slot"] = this.slot;
+            if (this.slotString != null) {
+                properties["slot"] = this.slotString;
+            } else {
+                if (this.slot != null) {
+                    properties["slot"] = this.slot;
+                }
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
-            if (this.paidOnly != null) {
-                properties["paidOnly"] = this.paidOnly;
+            if (this.paidOnlyString != null) {
+                properties["paidOnly"] = this.paidOnlyString;
+            } else {
+                if (this.paidOnly != null) {
+                    properties["paidOnly"] = this.paidOnly;
+                }
             }
 
             return properties;
         }
 
         public static WithdrawByUserId FromProperties(Dictionary<string, object> properties) {
-            return new WithdrawByUserId(
-                (string)properties["namespaceName"],
-                new Func<int>(() =>
-                {
-                    return properties["slot"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<int>(() =>
-                {
-                    return properties["count"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<bool?>(() =>
-                {
-                    return properties.TryGetValue("paidOnly", out var paidOnly) ? paidOnly switch {
-                        bool v => v,
-                        string v => bool.Parse(v),
-                        _ => false
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new WithdrawByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["slot"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<int>(() =>
+                    {
+                        return properties["count"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("paidOnly", out var paidOnly) ? paidOnly switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new WithdrawByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["slot"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("paidOnly", out var paidOnly) ? paidOnly.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -77,7 +77,7 @@ namespace Gs2Cdk.Gs2Grade.Model
                 properties["name"] = this.name;
             }
             if (this.mode != null) {
-                properties["mode"] = this.mode?.Str(
+                properties["mode"] = this.mode.Value.Str(
                 );
             }
             if (this.rates != null) {

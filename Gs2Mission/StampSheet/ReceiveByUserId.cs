@@ -63,15 +63,27 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         }
 
         public static ReceiveByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ReceiveByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["missionGroupName"],
-                (string)properties["missionTaskName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ReceiveByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["missionGroupName"],
+                    (string)properties["missionTaskName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ReceiveByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["missionGroupName"].ToString(),
+                    properties["missionTaskName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

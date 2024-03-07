@@ -28,6 +28,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string experienceName;
         private string propertyId;
         private long? experienceValue;
+        private string? experienceValueString;
+        private bool? truncateExperienceWhenRankUp;
+        private string? truncateExperienceWhenRankUpString;
 
 
         public AddExperienceByUserId(
@@ -35,6 +38,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string experienceName,
             string propertyId,
             long? experienceValue = null,
+            bool? truncateExperienceWhenRankUp = null,
             string userId = "#{userId}"
         ){
 
@@ -42,6 +46,25 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.experienceName = experienceName;
             this.propertyId = propertyId;
             this.experienceValue = experienceValue;
+            this.truncateExperienceWhenRankUp = truncateExperienceWhenRankUp;
+            this.userId = userId;
+        }
+
+
+        public AddExperienceByUserId(
+            string namespaceName,
+            string experienceName,
+            string propertyId,
+            string experienceValue = null,
+            string truncateExperienceWhenRankUp = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.propertyId = propertyId;
+            this.experienceValueString = experienceValue;
+            this.truncateExperienceWhenRankUpString = truncateExperienceWhenRankUp;
             this.userId = userId;
         }
 
@@ -61,34 +84,73 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.experienceValue != null) {
-                properties["experienceValue"] = this.experienceValue;
+            if (this.experienceValueString != null) {
+                properties["experienceValue"] = this.experienceValueString;
+            } else {
+                if (this.experienceValue != null) {
+                    properties["experienceValue"] = this.experienceValue;
+                }
+            }
+            if (this.truncateExperienceWhenRankUpString != null) {
+                properties["truncateExperienceWhenRankUp"] = this.truncateExperienceWhenRankUpString;
+            } else {
+                if (this.truncateExperienceWhenRankUp != null) {
+                    properties["truncateExperienceWhenRankUp"] = this.truncateExperienceWhenRankUp;
+                }
             }
 
             return properties;
         }
 
         public static AddExperienceByUserId FromProperties(Dictionary<string, object> properties) {
-            return new AddExperienceByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["experienceName"],
-                (string)properties["propertyId"],
-                new Func<long?>(() =>
-                {
-                    return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new AddExperienceByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["experienceName"],
+                    (string)properties["propertyId"],
+                    new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("truncateExperienceWhenRankUp", out var truncateExperienceWhenRankUp) ? truncateExperienceWhenRankUp switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new AddExperienceByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["experienceName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("truncateExperienceWhenRankUp", out var truncateExperienceWhenRankUp) ? truncateExperienceWhenRankUp.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

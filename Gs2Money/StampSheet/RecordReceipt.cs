@@ -63,15 +63,27 @@ namespace Gs2Cdk.Gs2Money.StampSheet
         }
 
         public static RecordReceipt FromProperties(Dictionary<string, object> properties) {
-            return new RecordReceipt(
-                (string)properties["namespaceName"],
-                (string)properties["contentsId"],
-                (string)properties["receipt"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new RecordReceipt(
+                    (string)properties["namespaceName"],
+                    (string)properties["contentsId"],
+                    (string)properties["receipt"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new RecordReceipt(
+                    properties["namespaceName"].ToString(),
+                    properties["contentsId"].ToString(),
+                    properties["receipt"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

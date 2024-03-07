@@ -77,37 +77,71 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         }
 
         public static DirectEnhanceByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DirectEnhanceByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                (string)properties["targetItemSetId"],
-                new Func<Material[]>(() =>
-                {
-                    return properties["materials"] switch {
-                        Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Material.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Material).ToArray(),
-                        { } v => new []{ v as Material },
-                        _ => null
-                    };
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DirectEnhanceByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    (string)properties["targetItemSetId"],
+                    new Func<Material[]>(() =>
+                    {
+                        return properties["materials"] switch {
+                            Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                            { } v => new []{ v as Material },
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DirectEnhanceByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    properties["targetItemSetId"].ToString(),
+                    new Func<Material[]>(() =>
+                    {
+                        return properties["materials"] switch {
+                            Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                            { } v => new []{ v as Material },
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

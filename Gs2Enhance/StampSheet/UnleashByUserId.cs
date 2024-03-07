@@ -76,36 +76,69 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         }
 
         public static UnleashByUserId FromProperties(Dictionary<string, object> properties) {
-            return new UnleashByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                (string)properties["targetItemSetId"],
-                new Func<string[]>(() =>
-                {
-                    return properties["materials"] switch {
-                        string[] v => v.ToArray(),
-                        List<string> v => v.ToArray(),
-                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
-                        { } v => new []{ v.ToString() },
-                        _ => null
-                    };
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new UnleashByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    (string)properties["targetItemSetId"],
+                    new Func<string[]>(() =>
+                    {
+                        return properties["materials"] switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new UnleashByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    properties["targetItemSetId"].ToString(),
+                    new Func<string[]>(() =>
+                    {
+                        return properties["materials"] switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

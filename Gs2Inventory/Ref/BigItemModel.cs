@@ -81,6 +81,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyBigItemByUserId VerifyBigItem(
             VerifyBigItemByUserIdVerifyType verifyType,
             string count,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyBigItemByUserId(
@@ -89,6 +90,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.itemName,
                 verifyType,
                 count,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

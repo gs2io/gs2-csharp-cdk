@@ -63,15 +63,27 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         }
 
         public static DeleteCounterByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteCounterByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["limitName"],
-                (string)properties["counterName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteCounterByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["limitName"],
+                    (string)properties["counterName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteCounterByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["limitName"].ToString(),
+                    properties["counterName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

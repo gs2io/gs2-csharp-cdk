@@ -22,6 +22,7 @@ using Gs2Cdk.Gs2Formation.Model;
 namespace Gs2Cdk.Gs2Formation.Model.Options
 {
     public class SlotOptions {
+        public string propertyId;
         public string metadata;
     }
 }

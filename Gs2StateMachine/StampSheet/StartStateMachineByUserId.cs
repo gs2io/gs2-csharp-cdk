@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
         private string userId;
         private string args;
         private int? ttl;
+        private string? ttlString;
 
 
         public StartStateMachineByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
             this.namespaceName = namespaceName;
             this.args = args;
             this.ttl = ttl;
+            this.userId = userId;
+        }
+
+
+        public StartStateMachineByUserId(
+            string namespaceName,
+            string args = null,
+            string ttl = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.args = args;
+            this.ttlString = ttl;
             this.userId = userId;
         }
 
@@ -55,36 +70,58 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
             if (this.args != null) {
                 properties["args"] = this.args;
             }
-            if (this.ttl != null) {
-                properties["ttl"] = this.ttl;
+            if (this.ttlString != null) {
+                properties["ttl"] = this.ttlString;
+            } else {
+                if (this.ttl != null) {
+                    properties["ttl"] = this.ttl;
+                }
             }
 
             return properties;
         }
 
         public static StartStateMachineByUserId FromProperties(Dictionary<string, object> properties) {
-            return new StartStateMachineByUserId(
-                (string)properties["namespaceName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("args", out var args) ? args as string : null;
-                })(),
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("ttl", out var ttl) ? ttl switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new StartStateMachineByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("args", out var args) ? args as string : null;
+                    })(),
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("ttl", out var ttl) ? ttl switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new StartStateMachineByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("args", out var args) ? args.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("ttl", out var ttl) ? ttl.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

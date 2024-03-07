@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         private string staminaName;
         private string userId;
         private int decreaseValue;
+        private string? decreaseValueString;
 
 
         public DecreaseMaxValueByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             this.namespaceName = namespaceName;
             this.staminaName = staminaName;
             this.decreaseValue = decreaseValue;
+            this.userId = userId;
+        }
+
+
+        public DecreaseMaxValueByUserId(
+            string namespaceName,
+            string staminaName,
+            string decreaseValue,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.staminaName = staminaName;
+            this.decreaseValueString = decreaseValue;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.decreaseValue != null) {
-                properties["decreaseValue"] = this.decreaseValue;
+            if (this.decreaseValueString != null) {
+                properties["decreaseValue"] = this.decreaseValueString;
+            } else {
+                if (this.decreaseValue != null) {
+                    properties["decreaseValue"] = this.decreaseValue;
+                }
             }
 
             return properties;
         }
 
         public static DecreaseMaxValueByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DecreaseMaxValueByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["staminaName"],
-                new Func<int>(() =>
-                {
-                    return properties["decreaseValue"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DecreaseMaxValueByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["staminaName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["decreaseValue"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DecreaseMaxValueByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["staminaName"].ToString(),
+                    properties["decreaseValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

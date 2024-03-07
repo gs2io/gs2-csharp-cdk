@@ -100,7 +100,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                         )).ToList();
             }
             if (this.timingType != null) {
-                properties["timingType"] = this.timingType?.Str(
+                properties["timingType"] = this.timingType.Value.Str(
                 );
             }
             if (this.lockTime != null) {

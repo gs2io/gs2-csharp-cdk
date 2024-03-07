@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         private string userId;
         private string rateName;
         private int? count;
+        private string? countString;
         private Config[] config;
 
 
@@ -45,6 +46,22 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             this.userId = userId;
         }
 
+
+        public CreateAwaitByUserId(
+            string namespaceName,
+            string rateName,
+            string count = null,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.countString = count;
+            this.config = config;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -58,8 +75,12 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             if (this.rateName != null) {
                 properties["rateName"] = this.rateName;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
             if (this.config != null) {
                 properties["config"] = this.config.Select(v => v?.Properties(
@@ -70,36 +91,62 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         }
 
         public static CreateAwaitByUserId FromProperties(Dictionary<string, object> properties) {
-            return new CreateAwaitByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("count", out var count) ? count switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new CreateAwaitByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new CreateAwaitByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count.ToString() : null;
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

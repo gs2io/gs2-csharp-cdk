@@ -58,24 +58,45 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
         }
 
         public static PushByUserId FromProperties(Dictionary<string, object> properties) {
-            return new PushByUserId(
-                (string)properties["namespaceName"],
-                new Func<JobEntry[]>(() =>
-                {
-                    return properties.TryGetValue("jobs", out var jobs) ? jobs switch {
-                        Dictionary<string, object>[] v => v.Select(JobEntry.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ JobEntry.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(JobEntry.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as JobEntry).ToArray(),
-                        { } v => new []{ v as JobEntry },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new PushByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<JobEntry[]>(() =>
+                    {
+                        return properties.TryGetValue("jobs", out var jobs) ? jobs switch {
+                            Dictionary<string, object>[] v => v.Select(JobEntry.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ JobEntry.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(JobEntry.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as JobEntry).ToArray(),
+                            { } v => new []{ v as JobEntry },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new PushByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<JobEntry[]>(() =>
+                    {
+                        return properties.TryGetValue("jobs", out var jobs) ? jobs switch {
+                            Dictionary<string, object>[] v => v.Select(JobEntry.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ JobEntry.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(JobEntry.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as JobEntry).ToArray(),
+                            { } v => new []{ v as JobEntry },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string parameterName;
         private string propertyId;
         private int? count;
+        private string? countString;
 
 
         public AddRarityParameterStatusByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterName = parameterName;
             this.propertyId = propertyId;
             this.count = count;
+            this.userId = userId;
+        }
+
+
+        public AddRarityParameterStatusByUserId(
+            string namespaceName,
+            string parameterName,
+            string propertyId,
+            string count = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.parameterName = parameterName;
+            this.propertyId = propertyId;
+            this.countString = count;
             this.userId = userId;
         }
 
@@ -61,34 +78,54 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;
         }
 
         public static AddRarityParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
-            return new AddRarityParameterStatusByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["parameterName"],
-                (string)properties["propertyId"],
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("count", out var count) ? count switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new AddRarityParameterStatusByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["parameterName"],
+                    (string)properties["propertyId"],
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new AddRarityParameterStatusByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["parameterName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

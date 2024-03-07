@@ -30,6 +30,8 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string itemName;
         private VerifyBigItemByUserIdVerifyType? verifyType;
         private string count;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyBigItemByUserId(
@@ -38,6 +40,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string itemName,
             VerifyBigItemByUserIdVerifyType verifyType,
             string count,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +49,27 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.itemName = itemName;
             this.verifyType = verifyType;
             this.count = count;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyBigItemByUserId(
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            VerifyBigItemByUserIdVerifyType verifyType,
+            string count,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
+            this.verifyType = verifyType;
+            this.count = count;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -66,35 +90,75 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 properties["itemName"] = this.itemName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
             if (this.count != null) {
                 properties["count"] = this.count;
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyBigItemByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyBigItemByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                new Func<VerifyBigItemByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyBigItemByUserIdVerifyType e => e,
-                        string s => VerifyBigItemByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyBigItemByUserIdVerifyType.Less
-                    };
-                })(),
-                (string)properties["count"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyBigItemByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    new Func<VerifyBigItemByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyBigItemByUserIdVerifyType e => e,
+                            string s => VerifyBigItemByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyBigItemByUserIdVerifyType.Less
+                        };
+                    })(),
+                    (string)properties["count"],
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyBigItemByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    new Func<VerifyBigItemByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyBigItemByUserIdVerifyType e => e,
+                            string s => VerifyBigItemByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyBigItemByUserIdVerifyType.Less
+                        };
+                    })(),
+                    properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

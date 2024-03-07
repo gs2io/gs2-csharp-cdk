@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         private string rateName;
         private string userId;
         private int count;
+        private string? countString;
         private Config[] config;
 
 
@@ -45,6 +46,22 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             this.userId = userId;
         }
 
+
+        public ExchangeByUserId(
+            string namespaceName,
+            string rateName,
+            string count,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.countString = count;
+            this.config = config;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -58,8 +75,12 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
             if (this.config != null) {
                 properties["config"] = this.config.Select(v => v?.Properties(
@@ -70,36 +91,59 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         }
 
         public static ExchangeByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ExchangeByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                new Func<int>(() =>
-                {
-                    return properties["count"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ExchangeByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["count"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ExchangeByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

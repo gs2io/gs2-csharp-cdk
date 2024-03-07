@@ -77,36 +77,69 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         }
 
         public static AcquireActionsToPropertyFormProperties FromProperties(Dictionary<string, object> properties) {
-            return new AcquireActionsToPropertyFormProperties(
-                (string)properties["namespaceName"],
-                (string)properties["propertyFormModelName"],
-                (string)properties["propertyId"],
-                new Func<AcquireAction>(() =>
-                {
-                    return properties["acquireAction"] switch {
-                        AcquireAction v => v,
-                        AcquireAction[] v => v.Length > 0 ? v.First() : null,
-                        Dictionary<string, object> v => AcquireAction.FromProperties(v),
-                        Dictionary<string, object>[] v => v.Length > 0 ? AcquireAction.FromProperties(v.First()) : null,
-                        _ => null
-                    };
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new AcquireActionsToPropertyFormProperties(
+                    (string)properties["namespaceName"],
+                    (string)properties["propertyFormModelName"],
+                    (string)properties["propertyId"],
+                    new Func<AcquireAction>(() =>
+                    {
+                        return properties["acquireAction"] switch {
+                            AcquireAction v => v,
+                            AcquireAction[] v => v.Length > 0 ? v.First() : null,
+                            Dictionary<string, object> v => AcquireAction.FromProperties(v),
+                            Dictionary<string, object>[] v => v.Length > 0 ? AcquireAction.FromProperties(v.First()) : null,
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new AcquireActionsToPropertyFormProperties(
+                    properties["namespaceName"].ToString(),
+                    properties["propertyFormModelName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<AcquireAction>(() =>
+                    {
+                        return properties["acquireAction"] switch {
+                            AcquireAction v => v,
+                            AcquireAction[] v => v.Length > 0 ? v.First() : null,
+                            Dictionary<string, object> v => AcquireAction.FromProperties(v),
+                            Dictionary<string, object>[] v => v.Length > 0 ? AcquireAction.FromProperties(v.First()) : null,
+                            _ => null
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

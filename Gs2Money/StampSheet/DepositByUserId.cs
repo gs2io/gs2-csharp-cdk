@@ -26,8 +26,11 @@ namespace Gs2Cdk.Gs2Money.StampSheet
         private string namespaceName;
         private string userId;
         private int slot;
+        private string? slotString;
         private float price;
+        private string? priceString;
         private int count;
+        private string? countString;
 
 
         public DepositByUserId(
@@ -45,6 +48,22 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             this.userId = userId;
         }
 
+
+        public DepositByUserId(
+            string namespaceName,
+            string slot,
+            string price,
+            string count,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.slotString = slot;
+            this.priceString = price;
+            this.countString = count;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -55,60 +74,85 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.slot != null) {
-                properties["slot"] = this.slot;
+            if (this.slotString != null) {
+                properties["slot"] = this.slotString;
+            } else {
+                if (this.slot != null) {
+                    properties["slot"] = this.slot;
+                }
             }
-            if (this.price != null) {
-                properties["price"] = this.price;
+            if (this.priceString != null) {
+                properties["price"] = this.priceString;
+            } else {
+                if (this.price != null) {
+                    properties["price"] = this.price;
+                }
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;
         }
 
         public static DepositByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DepositByUserId(
-                (string)properties["namespaceName"],
-                new Func<int>(() =>
-                {
-                    return properties["slot"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<float>(() =>
-                {
-                    return properties["price"] switch {
-                        long v => (float)v,
-                        int v => (float)v,
-                        float v => (float)v,
-                        double v => (float)v,
-                        string v => float.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<int>(() =>
-                {
-                    return properties["count"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DepositByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["slot"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<float>(() =>
+                    {
+                        return properties["price"] switch {
+                            long v => (float)v,
+                            int v => (float)v,
+                            float v => (float)v,
+                            double v => (float)v,
+                            string v => float.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<int>(() =>
+                    {
+                        return properties["count"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DepositByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["slot"].ToString(),
+                    properties["price"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

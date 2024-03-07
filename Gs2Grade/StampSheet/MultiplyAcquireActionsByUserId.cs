@@ -76,27 +76,51 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         }
 
         public static MultiplyAcquireActionsByUserId FromProperties(Dictionary<string, object> properties) {
-            return new MultiplyAcquireActionsByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["gradeName"],
-                (string)properties["propertyId"],
-                (string)properties["rateName"],
-                new Func<AcquireAction[]>(() =>
-                {
-                    return properties.TryGetValue("acquireActions", out var acquireActions) ? acquireActions switch {
-                        Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
-                        { } v => new []{ v as AcquireAction },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new MultiplyAcquireActionsByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["gradeName"],
+                    (string)properties["propertyId"],
+                    (string)properties["rateName"],
+                    new Func<AcquireAction[]>(() =>
+                    {
+                        return properties.TryGetValue("acquireActions", out var acquireActions) ? acquireActions switch {
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                            { } v => new []{ v as AcquireAction },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new MultiplyAcquireActionsByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["gradeName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    properties["rateName"].ToString(),
+                    new Func<AcquireAction[]>(() =>
+                    {
+                        return properties.TryGetValue("acquireActions", out var acquireActions) ? acquireActions switch {
+                            Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as AcquireAction).ToArray(),
+                            { } v => new []{ v as AcquireAction },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

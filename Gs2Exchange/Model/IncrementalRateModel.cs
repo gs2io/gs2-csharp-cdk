@@ -139,7 +139,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 );
             }
             if (this.calculateType != null) {
-                properties["calculateType"] = this.calculateType?.Str(
+                properties["calculateType"] = this.calculateType.Value.Str(
                 );
             }
             if (this.baseValue != null) {

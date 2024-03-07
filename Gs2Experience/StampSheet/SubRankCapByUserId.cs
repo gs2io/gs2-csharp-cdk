@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string experienceName;
         private string propertyId;
         private long rankCapValue;
+        private string? rankCapValueString;
 
 
         public SubRankCapByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.experienceName = experienceName;
             this.propertyId = propertyId;
             this.rankCapValue = rankCapValue;
+            this.userId = userId;
+        }
+
+
+        public SubRankCapByUserId(
+            string namespaceName,
+            string experienceName,
+            string propertyId,
+            string rankCapValue,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.propertyId = propertyId;
+            this.rankCapValueString = rankCapValue;
             this.userId = userId;
         }
 
@@ -61,34 +78,51 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.rankCapValue != null) {
-                properties["rankCapValue"] = this.rankCapValue;
+            if (this.rankCapValueString != null) {
+                properties["rankCapValue"] = this.rankCapValueString;
+            } else {
+                if (this.rankCapValue != null) {
+                    properties["rankCapValue"] = this.rankCapValue;
+                }
             }
 
             return properties;
         }
 
         public static SubRankCapByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SubRankCapByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["experienceName"],
-                (string)properties["propertyId"],
-                new Func<long>(() =>
-                {
-                    return properties["rankCapValue"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SubRankCapByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["experienceName"],
+                    (string)properties["propertyId"],
+                    new Func<long>(() =>
+                    {
+                        return properties["rankCapValue"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SubRankCapByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["experienceName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    properties["rankCapValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -92,6 +92,7 @@ namespace Gs2Cdk.Gs2Limit.Ref
             string counterName,
             VerifyCounterByUserIdVerifyType verifyType,
             int? count = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyCounterByUserId(
@@ -100,6 +101,7 @@ namespace Gs2Cdk.Gs2Limit.Ref
                 counterName,
                 verifyType,
                 count,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

@@ -30,6 +30,9 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private VerifyGradeByUserIdVerifyType? verifyType;
         private string propertyId;
         private long? gradeValue;
+        private string? gradeValueString;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyGradeByUserId(
@@ -38,6 +41,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             VerifyGradeByUserIdVerifyType verifyType,
             string propertyId,
             long? gradeValue = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +50,27 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.verifyType = verifyType;
             this.propertyId = propertyId;
             this.gradeValue = gradeValue;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyGradeByUserId(
+            string namespaceName,
+            string gradeName,
+            VerifyGradeByUserIdVerifyType verifyType,
+            string propertyId,
+            string gradeValue = null,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.gradeName = gradeName;
+            this.verifyType = verifyType;
+            this.propertyId = propertyId;
+            this.gradeValueString = gradeValue;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -63,48 +88,95 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                 properties["gradeName"] = this.gradeName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.gradeValue != null) {
-                properties["gradeValue"] = this.gradeValue;
+            if (this.gradeValueString != null) {
+                properties["gradeValue"] = this.gradeValueString;
+            } else {
+                if (this.gradeValue != null) {
+                    properties["gradeValue"] = this.gradeValue;
+                }
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyGradeByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyGradeByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["gradeName"],
-                new Func<VerifyGradeByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyGradeByUserIdVerifyType e => e,
-                        string s => VerifyGradeByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyGradeByUserIdVerifyType.Less
-                    };
-                })(),
-                (string)properties["propertyId"],
-                new Func<long?>(() =>
-                {
-                    return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyGradeByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["gradeName"],
+                    new Func<VerifyGradeByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyGradeByUserIdVerifyType e => e,
+                            string s => VerifyGradeByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyGradeByUserIdVerifyType.Less
+                        };
+                    })(),
+                    (string)properties["propertyId"],
+                    new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyGradeByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["gradeName"].ToString(),
+                    new Func<VerifyGradeByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyGradeByUserIdVerifyType e => e,
+                            string s => VerifyGradeByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyGradeByUserIdVerifyType.Less
+                        };
+                    })(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

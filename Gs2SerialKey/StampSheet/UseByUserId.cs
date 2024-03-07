@@ -57,14 +57,25 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
         }
 
         public static UseByUserId FromProperties(Dictionary<string, object> properties) {
-            return new UseByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["code"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new UseByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["code"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new UseByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["code"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

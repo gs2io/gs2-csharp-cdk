@@ -85,7 +85,7 @@ namespace Gs2Cdk.Gs2Log.Model
                 properties["Description"] = this.description;
             }
             if (this.type != null) {
-                properties["Type"] = this.type?.Str(
+                properties["Type"] = this.type.Value.Str(
                 );
             }
             if (this.gcpCredentialJson != null) {

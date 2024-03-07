@@ -135,11 +135,11 @@ namespace Gs2Cdk.Gs2Ranking.Model
                 properties["maximumValue"] = this.maximumValue;
             }
             if (this.orderDirection != null) {
-                properties["orderDirection"] = this.orderDirection?.Str(
+                properties["orderDirection"] = this.orderDirection.Value.Str(
                 );
             }
             if (this.scope != null) {
-                properties["scope"] = this.scope?.Str(
+                properties["scope"] = this.scope.Value.Str(
                 );
             }
             if (this.uniqueByUserId != null) {

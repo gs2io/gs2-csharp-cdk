@@ -107,6 +107,7 @@ namespace Gs2Cdk.Gs2Grade.Ref
             VerifyGradeByUserIdVerifyType verifyType,
             string propertyId,
             long? gradeValue = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyGradeByUserId(
@@ -115,6 +116,7 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 verifyType,
                 propertyId,
                 gradeValue,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

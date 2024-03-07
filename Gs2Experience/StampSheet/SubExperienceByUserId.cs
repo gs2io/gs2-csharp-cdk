@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string experienceName;
         private string propertyId;
         private long? experienceValue;
+        private string? experienceValueString;
 
 
         public SubExperienceByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.experienceName = experienceName;
             this.propertyId = propertyId;
             this.experienceValue = experienceValue;
+            this.userId = userId;
+        }
+
+
+        public SubExperienceByUserId(
+            string namespaceName,
+            string experienceName,
+            string propertyId,
+            string experienceValue = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.propertyId = propertyId;
+            this.experienceValueString = experienceValue;
             this.userId = userId;
         }
 
@@ -61,34 +78,54 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.experienceValue != null) {
-                properties["experienceValue"] = this.experienceValue;
+            if (this.experienceValueString != null) {
+                properties["experienceValue"] = this.experienceValueString;
+            } else {
+                if (this.experienceValue != null) {
+                    properties["experienceValue"] = this.experienceValue;
+                }
             }
 
             return properties;
         }
 
         public static SubExperienceByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SubExperienceByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["experienceName"],
-                (string)properties["propertyId"],
-                new Func<long?>(() =>
-                {
-                    return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SubExperienceByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["experienceName"],
+                    (string)properties["propertyId"],
+                    new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SubExperienceByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["experienceName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

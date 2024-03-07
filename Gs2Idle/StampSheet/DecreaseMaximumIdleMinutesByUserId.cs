@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
         private string userId;
         private string categoryName;
         private int? decreaseMinutes;
+        private string? decreaseMinutesString;
 
 
         public DecreaseMaximumIdleMinutesByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
             this.namespaceName = namespaceName;
             this.categoryName = categoryName;
             this.decreaseMinutes = decreaseMinutes;
+            this.userId = userId;
+        }
+
+
+        public DecreaseMaximumIdleMinutesByUserId(
+            string namespaceName,
+            string categoryName,
+            string decreaseMinutes = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.categoryName = categoryName;
+            this.decreaseMinutesString = decreaseMinutes;
             this.userId = userId;
         }
 
@@ -55,33 +70,52 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
             if (this.categoryName != null) {
                 properties["categoryName"] = this.categoryName;
             }
-            if (this.decreaseMinutes != null) {
-                properties["decreaseMinutes"] = this.decreaseMinutes;
+            if (this.decreaseMinutesString != null) {
+                properties["decreaseMinutes"] = this.decreaseMinutesString;
+            } else {
+                if (this.decreaseMinutes != null) {
+                    properties["decreaseMinutes"] = this.decreaseMinutes;
+                }
             }
 
             return properties;
         }
 
         public static DecreaseMaximumIdleMinutesByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DecreaseMaximumIdleMinutesByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["categoryName"],
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("decreaseMinutes", out var decreaseMinutes) ? decreaseMinutes switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DecreaseMaximumIdleMinutesByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["categoryName"],
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("decreaseMinutes", out var decreaseMinutes) ? decreaseMinutes switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DecreaseMaximumIdleMinutesByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["categoryName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("decreaseMinutes", out var decreaseMinutes) ? decreaseMinutes.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

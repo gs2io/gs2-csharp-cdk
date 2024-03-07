@@ -31,6 +31,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private VerifyRarityParameterStatusByUserIdVerifyType? verifyType;
         private string parameterValueName;
         private int? parameterCount;
+        private string? parameterCountString;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyRarityParameterStatusByUserId(
@@ -40,6 +43,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             VerifyRarityParameterStatusByUserIdVerifyType verifyType,
             string parameterValueName = null,
             int? parameterCount = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -49,6 +53,29 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.verifyType = verifyType;
             this.parameterValueName = parameterValueName;
             this.parameterCount = parameterCount;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyRarityParameterStatusByUserId(
+            string namespaceName,
+            string parameterName,
+            string propertyId,
+            VerifyRarityParameterStatusByUserIdVerifyType verifyType,
+            string parameterValueName = null,
+            string parameterCount = null,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.parameterName = parameterName;
+            this.propertyId = propertyId;
+            this.verifyType = verifyType;
+            this.parameterValueName = parameterValueName;
+            this.parameterCountString = parameterCount;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -69,52 +96,103 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 properties["propertyId"] = this.propertyId;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
             if (this.parameterValueName != null) {
                 properties["parameterValueName"] = this.parameterValueName;
             }
-            if (this.parameterCount != null) {
-                properties["parameterCount"] = this.parameterCount;
+            if (this.parameterCountString != null) {
+                properties["parameterCount"] = this.parameterCountString;
+            } else {
+                if (this.parameterCount != null) {
+                    properties["parameterCount"] = this.parameterCount;
+                }
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyRarityParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyRarityParameterStatusByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["parameterName"],
-                (string)properties["propertyId"],
-                new Func<VerifyRarityParameterStatusByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyRarityParameterStatusByUserIdVerifyType e => e,
-                        string s => VerifyRarityParameterStatusByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyRarityParameterStatusByUserIdVerifyType.Havent
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("parameterValueName", out var parameterValueName) ? parameterValueName as string : null;
-                })(),
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("parameterCount", out var parameterCount) ? parameterCount switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyRarityParameterStatusByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["parameterName"],
+                    (string)properties["propertyId"],
+                    new Func<VerifyRarityParameterStatusByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyRarityParameterStatusByUserIdVerifyType e => e,
+                            string s => VerifyRarityParameterStatusByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyRarityParameterStatusByUserIdVerifyType.Havent
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("parameterValueName", out var parameterValueName) ? parameterValueName as string : null;
+                    })(),
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("parameterCount", out var parameterCount) ? parameterCount switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyRarityParameterStatusByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["parameterName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<VerifyRarityParameterStatusByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyRarityParameterStatusByUserIdVerifyType e => e,
+                            string s => VerifyRarityParameterStatusByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyRarityParameterStatusByUserIdVerifyType.Havent
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("parameterValueName", out var parameterValueName) ? parameterValueName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("parameterCount", out var parameterCount) ? parameterCount.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

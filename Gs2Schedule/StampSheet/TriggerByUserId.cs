@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         private string userId;
         private TriggerByUserIdTriggerStrategy? triggerStrategy;
         private int ttl;
+        private string? ttlString;
 
 
         public TriggerByUserId(
@@ -46,6 +47,22 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             this.userId = userId;
         }
 
+
+        public TriggerByUserId(
+            string namespaceName,
+            string triggerName,
+            TriggerByUserIdTriggerStrategy triggerStrategy,
+            string ttl,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.triggerName = triggerName;
+            this.triggerStrategy = triggerStrategy;
+            this.ttlString = ttl;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -60,44 +77,68 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                 properties["userId"] = this.userId;
             }
             if (this.triggerStrategy != null) {
-                properties["triggerStrategy"] = this.triggerStrategy?.Str(
+                properties["triggerStrategy"] = this.triggerStrategy.Value.Str(
                 );
             }
-            if (this.ttl != null) {
-                properties["ttl"] = this.ttl;
+            if (this.ttlString != null) {
+                properties["ttl"] = this.ttlString;
+            } else {
+                if (this.ttl != null) {
+                    properties["ttl"] = this.ttl;
+                }
             }
 
             return properties;
         }
 
         public static TriggerByUserId FromProperties(Dictionary<string, object> properties) {
-            return new TriggerByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["triggerName"],
-                new Func<TriggerByUserIdTriggerStrategy>(() =>
-                {
-                    return properties["triggerStrategy"] switch {
-                        TriggerByUserIdTriggerStrategy e => e,
-                        string s => TriggerByUserIdTriggerStrategyExt.New(s),
-                        _ => TriggerByUserIdTriggerStrategy.Renew
-                    };
-                })(),
-                new Func<int>(() =>
-                {
-                    return properties["ttl"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new TriggerByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["triggerName"],
+                    new Func<TriggerByUserIdTriggerStrategy>(() =>
+                    {
+                        return properties["triggerStrategy"] switch {
+                            TriggerByUserIdTriggerStrategy e => e,
+                            string s => TriggerByUserIdTriggerStrategyExt.New(s),
+                            _ => TriggerByUserIdTriggerStrategy.Renew
+                        };
+                    })(),
+                    new Func<int>(() =>
+                    {
+                        return properties["ttl"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new TriggerByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["triggerName"].ToString(),
+                    new Func<TriggerByUserIdTriggerStrategy>(() =>
+                    {
+                        return properties["triggerStrategy"] switch {
+                            TriggerByUserIdTriggerStrategy e => e,
+                            string s => TriggerByUserIdTriggerStrategyExt.New(s),
+                            _ => TriggerByUserIdTriggerStrategy.Renew
+                        };
+                    })(),
+                    properties["ttl"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

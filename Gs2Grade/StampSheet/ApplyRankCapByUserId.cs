@@ -63,15 +63,27 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         }
 
         public static ApplyRankCapByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ApplyRankCapByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["gradeName"],
-                (string)properties["propertyId"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ApplyRankCapByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["gradeName"],
+                    (string)properties["propertyId"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ApplyRankCapByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["gradeName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

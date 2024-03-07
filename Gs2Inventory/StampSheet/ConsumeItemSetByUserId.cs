@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string itemName;
         private long consumeCount;
+        private string? consumeCountString;
         private string itemSetName;
 
 
@@ -48,6 +49,24 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.userId = userId;
         }
 
+
+        public ConsumeItemSetByUserId(
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            string consumeCount,
+            string itemSetName = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
+            this.consumeCountString = consumeCount;
+            this.itemSetName = itemSetName;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -64,8 +83,12 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.itemName != null) {
                 properties["itemName"] = this.itemName;
             }
-            if (this.consumeCount != null) {
-                properties["consumeCount"] = this.consumeCount;
+            if (this.consumeCountString != null) {
+                properties["consumeCount"] = this.consumeCountString;
+            } else {
+                if (this.consumeCount != null) {
+                    properties["consumeCount"] = this.consumeCount;
+                }
             }
             if (this.itemSetName != null) {
                 properties["itemSetName"] = this.itemSetName;
@@ -75,30 +98,47 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static ConsumeItemSetByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ConsumeItemSetByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                new Func<long>(() =>
-                {
-                    return properties["consumeCount"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ConsumeItemSetByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    new Func<long>(() =>
+                    {
+                        return properties["consumeCount"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ConsumeItemSetByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    properties["consumeCount"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

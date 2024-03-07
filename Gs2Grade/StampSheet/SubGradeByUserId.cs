@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private string gradeName;
         private string propertyId;
         private long? gradeValue;
+        private string? gradeValueString;
 
 
         public SubGradeByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.gradeName = gradeName;
             this.propertyId = propertyId;
             this.gradeValue = gradeValue;
+            this.userId = userId;
+        }
+
+
+        public SubGradeByUserId(
+            string namespaceName,
+            string gradeName,
+            string propertyId,
+            string gradeValue = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.gradeName = gradeName;
+            this.propertyId = propertyId;
+            this.gradeValueString = gradeValue;
             this.userId = userId;
         }
 
@@ -61,34 +78,54 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.gradeValue != null) {
-                properties["gradeValue"] = this.gradeValue;
+            if (this.gradeValueString != null) {
+                properties["gradeValue"] = this.gradeValueString;
+            } else {
+                if (this.gradeValue != null) {
+                    properties["gradeValue"] = this.gradeValue;
+                }
             }
 
             return properties;
         }
 
         public static SubGradeByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SubGradeByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["gradeName"],
-                (string)properties["propertyId"],
-                new Func<long?>(() =>
-                {
-                    return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SubGradeByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["gradeName"],
+                    (string)properties["propertyId"],
+                    new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SubGradeByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["gradeName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

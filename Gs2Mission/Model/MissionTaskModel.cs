@@ -64,7 +64,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["counterName"] = this.counterName;
             }
             if (this.targetResetType != null) {
-                properties["targetResetType"] = this.targetResetType?.Str(
+                properties["targetResetType"] = this.targetResetType.Value.Str(
                 );
             }
             if (this.targetValue != null) {

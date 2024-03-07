@@ -63,7 +63,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                 properties["gradeName"] = this.gradeName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
             if (this.propertyId != null) {
@@ -77,24 +77,45 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         }
 
         public static VerifyGradeUpMaterialByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyGradeUpMaterialByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["gradeName"],
-                new Func<VerifyGradeUpMaterialByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyGradeUpMaterialByUserIdVerifyType e => e,
-                        string s => VerifyGradeUpMaterialByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyGradeUpMaterialByUserIdVerifyType.Match
-                    };
-                })(),
-                (string)properties["propertyId"],
-                (string)properties["materialPropertyId"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyGradeUpMaterialByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["gradeName"],
+                    new Func<VerifyGradeUpMaterialByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyGradeUpMaterialByUserIdVerifyType e => e,
+                            string s => VerifyGradeUpMaterialByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyGradeUpMaterialByUserIdVerifyType.Match
+                        };
+                    })(),
+                    (string)properties["propertyId"],
+                    (string)properties["materialPropertyId"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyGradeUpMaterialByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["gradeName"].ToString(),
+                    new Func<VerifyGradeUpMaterialByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyGradeUpMaterialByUserIdVerifyType e => e,
+                            string s => VerifyGradeUpMaterialByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyGradeUpMaterialByUserIdVerifyType.Match
+                        };
+                    })(),
+                    properties["propertyId"].ToString(),
+                    properties["materialPropertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

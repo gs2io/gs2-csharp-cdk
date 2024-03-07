@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
         private string displayItemName;
         private string userId;
         private int count;
+        private string? countString;
 
 
         public DecrementPurchaseCountByUserId(
@@ -42,6 +43,22 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             this.showcaseName = showcaseName;
             this.displayItemName = displayItemName;
             this.count = count;
+            this.userId = userId;
+        }
+
+
+        public DecrementPurchaseCountByUserId(
+            string namespaceName,
+            string showcaseName,
+            string displayItemName,
+            string count,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.showcaseName = showcaseName;
+            this.displayItemName = displayItemName;
+            this.countString = count;
             this.userId = userId;
         }
 
@@ -61,34 +78,51 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;
         }
 
         public static DecrementPurchaseCountByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DecrementPurchaseCountByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["showcaseName"],
-                (string)properties["displayItemName"],
-                new Func<int>(() =>
-                {
-                    return properties["count"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DecrementPurchaseCountByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["showcaseName"],
+                    (string)properties["displayItemName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["count"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DecrementPurchaseCountByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["showcaseName"].ToString(),
+                    properties["displayItemName"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

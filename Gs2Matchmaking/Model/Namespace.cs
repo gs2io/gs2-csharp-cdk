@@ -37,6 +37,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         private string createGatheringTriggerScriptId;
         private string completeMatchmakingTriggerRealtimeNamespaceId;
         private string completeMatchmakingTriggerScriptId;
+        private NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;
+        private string collaborateSeasonRatingNamespaceId;
+        private int? collaborateSeasonRatingTtl;
         private ScriptSetting changeRatingScript;
         private NotificationSetting joinNotification;
         private NotificationSetting leaveNotification;
@@ -64,6 +67,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.createGatheringTriggerScriptId = options?.createGatheringTriggerScriptId;
             this.completeMatchmakingTriggerRealtimeNamespaceId = options?.completeMatchmakingTriggerRealtimeNamespaceId;
             this.completeMatchmakingTriggerScriptId = options?.completeMatchmakingTriggerScriptId;
+            this.enableCollaborateSeasonRating = options?.enableCollaborateSeasonRating;
+            this.collaborateSeasonRatingNamespaceId = options?.collaborateSeasonRatingNamespaceId;
+            this.collaborateSeasonRatingTtl = options?.collaborateSeasonRatingTtl;
             this.changeRatingScript = options?.changeRatingScript;
             this.joinNotification = options?.joinNotification;
             this.leaveNotification = options?.leaveNotification;
@@ -100,7 +106,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["EnableRating"] = this.enableRating;
             }
             if (this.createGatheringTriggerType != null) {
-                properties["CreateGatheringTriggerType"] = this.createGatheringTriggerType?.Str(
+                properties["CreateGatheringTriggerType"] = this.createGatheringTriggerType.Value.Str(
                 );
             }
             if (this.createGatheringTriggerRealtimeNamespaceId != null) {
@@ -110,7 +116,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                 properties["CreateGatheringTriggerScriptId"] = this.createGatheringTriggerScriptId;
             }
             if (this.completeMatchmakingTriggerType != null) {
-                properties["CompleteMatchmakingTriggerType"] = this.completeMatchmakingTriggerType?.Str(
+                properties["CompleteMatchmakingTriggerType"] = this.completeMatchmakingTriggerType.Value.Str(
                 );
             }
             if (this.completeMatchmakingTriggerRealtimeNamespaceId != null) {
@@ -118,6 +124,16 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.completeMatchmakingTriggerScriptId != null) {
                 properties["CompleteMatchmakingTriggerScriptId"] = this.completeMatchmakingTriggerScriptId;
+            }
+            if (this.enableCollaborateSeasonRating != null) {
+                properties["EnableCollaborateSeasonRating"] = this.enableCollaborateSeasonRating.Value.Str(
+                );
+            }
+            if (this.collaborateSeasonRatingNamespaceId != null) {
+                properties["CollaborateSeasonRatingNamespaceId"] = this.collaborateSeasonRatingNamespaceId;
+            }
+            if (this.collaborateSeasonRatingTtl != null) {
+                properties["CollaborateSeasonRatingTtl"] = this.collaborateSeasonRatingTtl;
             }
             if (this.changeRatingScript != null) {
                 properties["ChangeRatingScript"] = this.changeRatingScript?.Properties(

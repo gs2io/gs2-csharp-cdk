@@ -57,14 +57,25 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
         }
 
         public static DeleteReceiveStatusByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteReceiveStatusByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["bonusModelName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteReceiveStatusByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["bonusModelName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteReceiveStatusByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["bonusModelName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

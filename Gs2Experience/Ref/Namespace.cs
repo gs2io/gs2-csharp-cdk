@@ -46,9 +46,26 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long? experienceValue = null,
+            bool? truncateExperienceWhenRankUp = null,
             string userId = "#{userId}"
         ){
             return (new AddExperienceByUserId(
+                this.namespaceName,
+                experienceName,
+                propertyId,
+                experienceValue,
+                truncateExperienceWhenRankUp,
+                userId
+            ));
+        }
+
+        public SetExperienceByUserId SetExperience(
+            string experienceName,
+            string propertyId,
+            long? experienceValue = null,
+            string userId = "#{userId}"
+        ){
+            return (new SetExperienceByUserId(
                 this.namespaceName,
                 experienceName,
                 propertyId,
@@ -139,6 +156,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             VerifyRankByUserIdVerifyType verifyType,
             string propertyId,
             long? rankValue = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRankByUserId(
@@ -147,6 +165,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 verifyType,
                 propertyId,
                 rankValue,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }
@@ -156,6 +175,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             VerifyRankCapByUserIdVerifyType verifyType,
             string propertyId,
             long rankCapValue,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRankCapByUserId(
@@ -164,6 +184,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 verifyType,
                 propertyId,
                 rankCapValue,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

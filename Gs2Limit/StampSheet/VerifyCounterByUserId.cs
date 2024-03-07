@@ -30,6 +30,9 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string counterName;
         private VerifyCounterByUserIdVerifyType? verifyType;
         private int? count;
+        private string? countString;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyCounterByUserId(
@@ -38,6 +41,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             string counterName,
             VerifyCounterByUserIdVerifyType verifyType,
             int? count = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +50,27 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             this.counterName = counterName;
             this.verifyType = verifyType;
             this.count = count;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyCounterByUserId(
+            string namespaceName,
+            string limitName,
+            string counterName,
+            VerifyCounterByUserIdVerifyType verifyType,
+            string count = null,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.limitName = limitName;
+            this.counterName = counterName;
+            this.verifyType = verifyType;
+            this.countString = count;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -66,45 +91,92 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                 properties["counterName"] = this.counterName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyCounterByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyCounterByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["limitName"],
-                (string)properties["counterName"],
-                new Func<VerifyCounterByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyCounterByUserIdVerifyType e => e,
-                        string s => VerifyCounterByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyCounterByUserIdVerifyType.Less
-                    };
-                })(),
-                new Func<int?>(() =>
-                {
-                    return properties.TryGetValue("count", out var count) ? count switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyCounterByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["limitName"],
+                    (string)properties["counterName"],
+                    new Func<VerifyCounterByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyCounterByUserIdVerifyType e => e,
+                            string s => VerifyCounterByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyCounterByUserIdVerifyType.Less
+                        };
+                    })(),
+                    new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        } : null;
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyCounterByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["limitName"].ToString(),
+                    properties["counterName"].ToString(),
+                    new Func<VerifyCounterByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyCounterByUserIdVerifyType e => e,
+                            string s => VerifyCounterByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyCounterByUserIdVerifyType.Less
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("count", out var count) ? count.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

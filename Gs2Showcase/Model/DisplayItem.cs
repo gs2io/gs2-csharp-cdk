@@ -81,7 +81,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["displayItemId"] = this.displayItemId;
             }
             if (this.type != null) {
-                properties["type"] = this.type?.Str(
+                properties["type"] = this.type.Value.Str(
                 );
             }
             if (this.salesItem != null) {

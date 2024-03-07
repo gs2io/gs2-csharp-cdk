@@ -51,13 +51,23 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
         }
 
         public static DeleteProgressByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteProgressByUserId(
-                (string)properties["namespaceName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteProgressByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteProgressByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

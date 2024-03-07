@@ -57,23 +57,43 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
         }
 
         public static DeleteEntriesByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteEntriesByUserId(
-                (string)properties["namespaceName"],
-                new Func<string[]>(() =>
-                {
-                    return properties.TryGetValue("entryModelNames", out var entryModelNames) ? entryModelNames switch {
-                        string[] v => v.ToArray(),
-                        List<string> v => v.ToArray(),
-                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
-                        { } v => new []{ v.ToString() },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteEntriesByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string[]>(() =>
+                    {
+                        return properties.TryGetValue("entryModelNames", out var entryModelNames) ? entryModelNames switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteEntriesByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string[]>(() =>
+                    {
+                        return properties.TryGetValue("entryModelNames", out var entryModelNames) ? entryModelNames switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         private string staminaName;
         private string userId;
         private int consumeValue;
+        private string? consumeValueString;
 
 
         public ConsumeStaminaByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             this.namespaceName = namespaceName;
             this.staminaName = staminaName;
             this.consumeValue = consumeValue;
+            this.userId = userId;
+        }
+
+
+        public ConsumeStaminaByUserId(
+            string namespaceName,
+            string staminaName,
+            string consumeValue,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.staminaName = staminaName;
+            this.consumeValueString = consumeValue;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.consumeValue != null) {
-                properties["consumeValue"] = this.consumeValue;
+            if (this.consumeValueString != null) {
+                properties["consumeValue"] = this.consumeValueString;
+            } else {
+                if (this.consumeValue != null) {
+                    properties["consumeValue"] = this.consumeValue;
+                }
             }
 
             return properties;
         }
 
         public static ConsumeStaminaByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ConsumeStaminaByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["staminaName"],
-                new Func<int>(() =>
-                {
-                    return properties["consumeValue"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ConsumeStaminaByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["staminaName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["consumeValue"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ConsumeStaminaByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["staminaName"].ToString(),
+                    properties["consumeValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

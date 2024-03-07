@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         private string targetItemSetId;
         private Material[] materials;
         private bool? force;
+        private string? forceString;
 
 
         public CreateProgressByUserId(
@@ -45,6 +46,24 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             this.targetItemSetId = targetItemSetId;
             this.materials = materials;
             this.force = force;
+            this.userId = userId;
+        }
+
+
+        public CreateProgressByUserId(
+            string namespaceName,
+            string rateName,
+            string targetItemSetId,
+            Material[] materials = null,
+            string force = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.rateName = rateName;
+            this.targetItemSetId = targetItemSetId;
+            this.materials = materials;
+            this.forceString = force;
             this.userId = userId;
         }
 
@@ -68,42 +87,73 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 properties["materials"] = this.materials.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.force != null) {
-                properties["force"] = this.force;
+            if (this.forceString != null) {
+                properties["force"] = this.forceString;
+            } else {
+                if (this.force != null) {
+                    properties["force"] = this.force;
+                }
             }
 
             return properties;
         }
 
         public static CreateProgressByUserId FromProperties(Dictionary<string, object> properties) {
-            return new CreateProgressByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["rateName"],
-                (string)properties["targetItemSetId"],
-                new Func<Material[]>(() =>
-                {
-                    return properties.TryGetValue("materials", out var materials) ? materials switch {
-                        Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Material.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Material).ToArray(),
-                        { } v => new []{ v as Material },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<bool?>(() =>
-                {
-                    return properties.TryGetValue("force", out var force) ? force switch {
-                        bool v => v,
-                        string v => bool.Parse(v),
-                        _ => false
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new CreateProgressByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["rateName"],
+                    (string)properties["targetItemSetId"],
+                    new Func<Material[]>(() =>
+                    {
+                        return properties.TryGetValue("materials", out var materials) ? materials switch {
+                            Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                            { } v => new []{ v as Material },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("force", out var force) ? force switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new CreateProgressByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["rateName"].ToString(),
+                    properties["targetItemSetId"].ToString(),
+                    new Func<Material[]>(() =>
+                    {
+                        return properties.TryGetValue("materials", out var materials) ? materials switch {
+                            Dictionary<string, object>[] v => v.Select(Material.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Material.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Material.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Material).ToArray(),
+                            { } v => new []{ v as Material },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("force", out var force) ? force.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

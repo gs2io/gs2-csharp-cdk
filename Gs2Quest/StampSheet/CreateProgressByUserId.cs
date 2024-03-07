@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
         private string userId;
         private string questModelId;
         private bool? force;
+        private string? forceString;
         private Config[] config;
 
 
@@ -45,6 +46,22 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
             this.userId = userId;
         }
 
+
+        public CreateProgressByUserId(
+            string namespaceName,
+            string questModelId,
+            string force = null,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.questModelId = questModelId;
+            this.forceString = force;
+            this.config = config;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -58,8 +75,12 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
             if (this.questModelId != null) {
                 properties["questModelId"] = this.questModelId;
             }
-            if (this.force != null) {
-                properties["force"] = this.force;
+            if (this.forceString != null) {
+                properties["force"] = this.forceString;
+            } else {
+                if (this.force != null) {
+                    properties["force"] = this.force;
+                }
             }
             if (this.config != null) {
                 properties["config"] = this.config.Select(v => v?.Properties(
@@ -70,33 +91,59 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
         }
 
         public static CreateProgressByUserId FromProperties(Dictionary<string, object> properties) {
-            return new CreateProgressByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["questModelId"],
-                new Func<bool?>(() =>
-                {
-                    return properties.TryGetValue("force", out var force) ? force switch {
-                        bool v => v,
-                        string v => bool.Parse(v),
-                        _ => false
-                    } : null;
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new CreateProgressByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["questModelId"],
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("force", out var force) ? force switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new CreateProgressByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["questModelId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("force", out var force) ? force.ToString() : null;
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

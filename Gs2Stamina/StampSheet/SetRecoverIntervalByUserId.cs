@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         private string staminaName;
         private string userId;
         private int recoverIntervalMinutes;
+        private string? recoverIntervalMinutesString;
 
 
         public SetRecoverIntervalByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             this.namespaceName = namespaceName;
             this.staminaName = staminaName;
             this.recoverIntervalMinutes = recoverIntervalMinutes;
+            this.userId = userId;
+        }
+
+
+        public SetRecoverIntervalByUserId(
+            string namespaceName,
+            string staminaName,
+            string recoverIntervalMinutes,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.staminaName = staminaName;
+            this.recoverIntervalMinutesString = recoverIntervalMinutes;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.recoverIntervalMinutes != null) {
-                properties["recoverIntervalMinutes"] = this.recoverIntervalMinutes;
+            if (this.recoverIntervalMinutesString != null) {
+                properties["recoverIntervalMinutes"] = this.recoverIntervalMinutesString;
+            } else {
+                if (this.recoverIntervalMinutes != null) {
+                    properties["recoverIntervalMinutes"] = this.recoverIntervalMinutes;
+                }
             }
 
             return properties;
         }
 
         public static SetRecoverIntervalByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetRecoverIntervalByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["staminaName"],
-                new Func<int>(() =>
-                {
-                    return properties["recoverIntervalMinutes"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetRecoverIntervalByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["staminaName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["recoverIntervalMinutes"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetRecoverIntervalByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["staminaName"].ToString(),
+                    properties["recoverIntervalMinutes"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

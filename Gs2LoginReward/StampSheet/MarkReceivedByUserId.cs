@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
         private string bonusModelName;
         private string userId;
         private int stepNumber;
+        private string? stepNumberString;
 
 
         public MarkReceivedByUserId(
@@ -39,6 +40,20 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
             this.namespaceName = namespaceName;
             this.bonusModelName = bonusModelName;
             this.stepNumber = stepNumber;
+            this.userId = userId;
+        }
+
+
+        public MarkReceivedByUserId(
+            string namespaceName,
+            string bonusModelName,
+            string stepNumber,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.bonusModelName = bonusModelName;
+            this.stepNumberString = stepNumber;
             this.userId = userId;
         }
 
@@ -55,33 +70,49 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.stepNumber != null) {
-                properties["stepNumber"] = this.stepNumber;
+            if (this.stepNumberString != null) {
+                properties["stepNumber"] = this.stepNumberString;
+            } else {
+                if (this.stepNumber != null) {
+                    properties["stepNumber"] = this.stepNumber;
+                }
             }
 
             return properties;
         }
 
         public static MarkReceivedByUserId FromProperties(Dictionary<string, object> properties) {
-            return new MarkReceivedByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["bonusModelName"],
-                new Func<int>(() =>
-                {
-                    return properties["stepNumber"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new MarkReceivedByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["bonusModelName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["stepNumber"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new MarkReceivedByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["bonusModelName"].ToString(),
+                    properties["stepNumber"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

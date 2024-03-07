@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
         private string lotteryName;
         private string userId;
         private int count;
+        private string? countString;
         private Config[] config;
 
 
@@ -45,6 +46,22 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
             this.userId = userId;
         }
 
+
+        public DrawByUserId(
+            string namespaceName,
+            string lotteryName,
+            string count,
+            Config[] config = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.lotteryName = lotteryName;
+            this.countString = count;
+            this.config = config;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -58,8 +75,12 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
             if (this.config != null) {
                 properties["config"] = this.config.Select(v => v?.Properties(
@@ -70,36 +91,59 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
         }
 
         public static DrawByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DrawByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["lotteryName"],
-                new Func<int>(() =>
-                {
-                    return properties["count"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<Config[]>(() =>
-                {
-                    return properties.TryGetValue("config", out var config) ? config switch {
-                        Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ Config.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as Config).ToArray(),
-                        { } v => new []{ v as Config },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DrawByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["lotteryName"],
+                    new Func<int>(() =>
+                    {
+                        return properties["count"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DrawByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["lotteryName"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

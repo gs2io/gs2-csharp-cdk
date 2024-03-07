@@ -70,26 +70,49 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         }
 
         public static SetRarityParameterStatusByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetRarityParameterStatusByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["parameterName"],
-                (string)properties["propertyId"],
-                new Func<RarityParameterValue[]>(() =>
-                {
-                    return properties.TryGetValue("parameterValues", out var parameterValues) ? parameterValues switch {
-                        Dictionary<string, object>[] v => v.Select(RarityParameterValue.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ RarityParameterValue.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(RarityParameterValue.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as RarityParameterValue).ToArray(),
-                        { } v => new []{ v as RarityParameterValue },
-                        _ => null
-                    } : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetRarityParameterStatusByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["parameterName"],
+                    (string)properties["propertyId"],
+                    new Func<RarityParameterValue[]>(() =>
+                    {
+                        return properties.TryGetValue("parameterValues", out var parameterValues) ? parameterValues switch {
+                            Dictionary<string, object>[] v => v.Select(RarityParameterValue.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ RarityParameterValue.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(RarityParameterValue.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as RarityParameterValue).ToArray(),
+                            { } v => new []{ v as RarityParameterValue },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetRarityParameterStatusByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["parameterName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<RarityParameterValue[]>(() =>
+                    {
+                        return properties.TryGetValue("parameterValues", out var parameterValues) ? parameterValues switch {
+                            Dictionary<string, object>[] v => v.Select(RarityParameterValue.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ RarityParameterValue.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(RarityParameterValue.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as RarityParameterValue).ToArray(),
+                            { } v => new []{ v as RarityParameterValue },
+                            _ => null
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

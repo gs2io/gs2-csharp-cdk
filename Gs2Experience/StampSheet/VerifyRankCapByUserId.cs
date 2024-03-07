@@ -30,6 +30,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private VerifyRankCapByUserIdVerifyType? verifyType;
         private string propertyId;
         private long rankCapValue;
+        private string? rankCapValueString;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyRankCapByUserId(
@@ -38,6 +41,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             VerifyRankCapByUserIdVerifyType verifyType,
             string propertyId,
             long rankCapValue,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +50,27 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.verifyType = verifyType;
             this.propertyId = propertyId;
             this.rankCapValue = rankCapValue;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyRankCapByUserId(
+            string namespaceName,
+            string experienceName,
+            VerifyRankCapByUserIdVerifyType verifyType,
+            string propertyId,
+            string rankCapValue,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.experienceName = experienceName;
+            this.verifyType = verifyType;
+            this.propertyId = propertyId;
+            this.rankCapValueString = rankCapValue;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -63,48 +88,92 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                 properties["experienceName"] = this.experienceName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
             if (this.propertyId != null) {
                 properties["propertyId"] = this.propertyId;
             }
-            if (this.rankCapValue != null) {
-                properties["rankCapValue"] = this.rankCapValue;
+            if (this.rankCapValueString != null) {
+                properties["rankCapValue"] = this.rankCapValueString;
+            } else {
+                if (this.rankCapValue != null) {
+                    properties["rankCapValue"] = this.rankCapValue;
+                }
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyRankCapByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyRankCapByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["experienceName"],
-                new Func<VerifyRankCapByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyRankCapByUserIdVerifyType e => e,
-                        string s => VerifyRankCapByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyRankCapByUserIdVerifyType.Less
-                    };
-                })(),
-                (string)properties["propertyId"],
-                new Func<long>(() =>
-                {
-                    return properties["rankCapValue"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyRankCapByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["experienceName"],
+                    new Func<VerifyRankCapByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyRankCapByUserIdVerifyType e => e,
+                            string s => VerifyRankCapByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyRankCapByUserIdVerifyType.Less
+                        };
+                    })(),
+                    (string)properties["propertyId"],
+                    new Func<long>(() =>
+                    {
+                        return properties["rankCapValue"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyRankCapByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["experienceName"].ToString(),
+                    new Func<VerifyRankCapByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyRankCapByUserIdVerifyType e => e,
+                            string s => VerifyRankCapByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyRankCapByUserIdVerifyType.Less
+                        };
+                    })(),
+                    properties["propertyId"].ToString(),
+                    properties["rankCapValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

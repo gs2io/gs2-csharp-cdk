@@ -86,6 +86,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string itemName,
             VerifySimpleItemByUserIdVerifyType verifyType,
             long count,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifySimpleItemByUserId(
@@ -94,6 +95,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 verifyType,
                 count,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

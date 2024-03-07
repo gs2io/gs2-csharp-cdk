@@ -54,17 +54,31 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         }
 
         public static DeleteAwaitByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteAwaitByUserId(
-                (string)properties["namespaceName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("awaitName", out var awaitName) ? awaitName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteAwaitByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("awaitName", out var awaitName) ? awaitName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteAwaitByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("awaitName", out var awaitName) ? awaitName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

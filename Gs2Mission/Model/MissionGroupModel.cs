@@ -134,14 +134,14 @@ namespace Gs2Cdk.Gs2Mission.Model
                         )).ToList();
             }
             if (this.resetType != null) {
-                properties["resetType"] = this.resetType?.Str(
+                properties["resetType"] = this.resetType.Value.Str(
                 );
             }
             if (this.resetDayOfMonth != null) {
                 properties["resetDayOfMonth"] = this.resetDayOfMonth;
             }
             if (this.resetDayOfWeek != null) {
-                properties["resetDayOfWeek"] = this.resetDayOfWeek?.Str(
+                properties["resetDayOfWeek"] = this.resetDayOfWeek.Value.Str(
                 );
             }
             if (this.resetHour != null) {

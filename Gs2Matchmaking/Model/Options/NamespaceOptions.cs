@@ -30,6 +30,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
         public string createGatheringTriggerScriptId;
         public string completeMatchmakingTriggerRealtimeNamespaceId;
         public string completeMatchmakingTriggerScriptId;
+        public NamespaceEnableCollaborateSeasonRating enableCollaborateSeasonRating;
+        public string collaborateSeasonRatingNamespaceId;
+        public int? collaborateSeasonRatingTtl;
         public ScriptSetting changeRatingScript;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;

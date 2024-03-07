@@ -54,17 +54,31 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
         }
 
         public static DeleteJobByUserId FromProperties(Dictionary<string, object> properties) {
-            return new DeleteJobByUserId(
-                (string)properties["namespaceName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("jobName", out var jobName) ? jobName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new DeleteJobByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("jobName", out var jobName) ? jobName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new DeleteJobByUserId(
+                    properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("jobName", out var jobName) ? jobName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -59,7 +59,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
                 properties["totalValue"] = this.totalValue;
             }
             if (this.initialValueStrategy != null) {
-                properties["initialValueStrategy"] = this.initialValueStrategy?.Str(
+                properties["initialValueStrategy"] = this.initialValueStrategy.Value.Str(
                 );
             }
             if (this.parameters != null) {

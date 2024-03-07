@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string gradeModelId;
         private long gradeValue;
+        private string? gradeValueString;
 
 
         public AcquireItemSetWithGradeByUserId(
@@ -45,6 +46,24 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.itemName = itemName;
             this.gradeModelId = gradeModelId;
             this.gradeValue = gradeValue;
+            this.userId = userId;
+        }
+
+
+        public AcquireItemSetWithGradeByUserId(
+            string namespaceName,
+            string inventoryName,
+            string itemName,
+            string gradeModelId,
+            string gradeValue,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.itemName = itemName;
+            this.gradeModelId = gradeModelId;
+            this.gradeValueString = gradeValue;
             this.userId = userId;
         }
 
@@ -67,35 +86,53 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.gradeModelId != null) {
                 properties["gradeModelId"] = this.gradeModelId;
             }
-            if (this.gradeValue != null) {
-                properties["gradeValue"] = this.gradeValue;
+            if (this.gradeValueString != null) {
+                properties["gradeValue"] = this.gradeValueString;
+            } else {
+                if (this.gradeValue != null) {
+                    properties["gradeValue"] = this.gradeValue;
+                }
             }
 
             return properties;
         }
 
         public static AcquireItemSetWithGradeByUserId FromProperties(Dictionary<string, object> properties) {
-            return new AcquireItemSetWithGradeByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                (string)properties["gradeModelId"],
-                new Func<long>(() =>
-                {
-                    return properties["gradeValue"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new AcquireItemSetWithGradeByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    (string)properties["gradeModelId"],
+                    new Func<long>(() =>
+                    {
+                        return properties["gradeValue"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new AcquireItemSetWithGradeByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    properties["gradeModelId"].ToString(),
+                    properties["gradeValue"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

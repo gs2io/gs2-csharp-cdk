@@ -44,7 +44,7 @@ namespace Gs2Cdk.Gs2Mission.Model
             var properties = new Dictionary<string, object>();
 
             if (this.resetType != null) {
-                properties["resetType"] = this.resetType?.Str(
+                properties["resetType"] = this.resetType.Value.Str(
                 );
             }
             if (this.value != null) {

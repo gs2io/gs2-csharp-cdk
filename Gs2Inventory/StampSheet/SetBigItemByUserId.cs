@@ -69,16 +69,29 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static SetBigItemByUserId FromProperties(Dictionary<string, object> properties) {
-            return new SetBigItemByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                (string)properties["count"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new SetBigItemByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    (string)properties["count"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new SetBigItemByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

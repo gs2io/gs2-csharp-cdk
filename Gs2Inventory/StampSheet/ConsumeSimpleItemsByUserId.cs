@@ -64,25 +64,47 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static ConsumeSimpleItemsByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ConsumeSimpleItemsByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                new Func<ConsumeCount[]>(() =>
-                {
-                    return properties["consumeCounts"] switch {
-                        Dictionary<string, object>[] v => v.Select(ConsumeCount.FromProperties).ToArray(),
-                        Dictionary<string, object> v => new []{ ConsumeCount.FromProperties(v) },
-                        List<Dictionary<string, object>> v => v.Select(ConsumeCount.FromProperties).ToArray(),
-                        object[] v => v.Select(v2 => v2 as ConsumeCount).ToArray(),
-                        { } v => new []{ v as ConsumeCount },
-                        _ => null
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ConsumeSimpleItemsByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    new Func<ConsumeCount[]>(() =>
+                    {
+                        return properties["consumeCounts"] switch {
+                            Dictionary<string, object>[] v => v.Select(ConsumeCount.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ ConsumeCount.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(ConsumeCount.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as ConsumeCount).ToArray(),
+                            { } v => new []{ v as ConsumeCount },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ConsumeSimpleItemsByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    new Func<ConsumeCount[]>(() =>
+                    {
+                        return properties["consumeCounts"] switch {
+                            Dictionary<string, object>[] v => v.Select(ConsumeCount.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ ConsumeCount.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(ConsumeCount.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as ConsumeCount).ToArray(),
+                            { } v => new []{ v as ConsumeCount },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -90,7 +90,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 properties["prizeId"] = this.prizeId;
             }
             if (this.type != null) {
-                properties["type"] = this.type?.Str(
+                properties["type"] = this.type.Value.Str(
                 );
             }
             if (this.acquireActions != null) {

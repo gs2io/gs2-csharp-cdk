@@ -93,6 +93,21 @@ namespace Gs2Cdk.Gs2Formation.Ref
             ));
         }
 
+        public SetFormByUserId SetForm(
+            string moldModelName,
+            int index,
+            Slot[] slots,
+            string userId = "#{userId}"
+        ){
+            return (new SetFormByUserId(
+                this.namespaceName,
+                moldModelName,
+                index,
+                slots,
+                userId
+            ));
+        }
+
         public AcquireActionsToPropertyFormProperties AcquireActionsToPropertyFormProperties(
             string propertyFormModelName,
             string propertyId,

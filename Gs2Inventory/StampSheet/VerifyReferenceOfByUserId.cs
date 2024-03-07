@@ -72,7 +72,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 properties["referenceOf"] = this.referenceOf;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
 
@@ -80,28 +80,53 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static VerifyReferenceOfByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyReferenceOfByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                (string)properties["referenceOf"],
-                new Func<VerifyReferenceOfByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyReferenceOfByUserIdVerifyType e => e,
-                        string s => VerifyReferenceOfByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyReferenceOfByUserIdVerifyType.NotEntry
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyReferenceOfByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    (string)properties["referenceOf"],
+                    new Func<VerifyReferenceOfByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyReferenceOfByUserIdVerifyType e => e,
+                            string s => VerifyReferenceOfByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyReferenceOfByUserIdVerifyType.NotEntry
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyReferenceOfByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    properties["referenceOf"].ToString(),
+                    new Func<VerifyReferenceOfByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyReferenceOfByUserIdVerifyType e => e,
+                            string s => VerifyReferenceOfByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyReferenceOfByUserIdVerifyType.NotEntry
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

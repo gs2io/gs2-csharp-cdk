@@ -63,24 +63,45 @@ namespace Gs2Cdk.Gs2SkillTree.StampSheet
         }
 
         public static MarkRestrainByUserId FromProperties(Dictionary<string, object> properties) {
-            return new MarkRestrainByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["propertyId"],
-                new Func<string[]>(() =>
-                {
-                    return properties["nodeModelNames"] switch {
-                        string[] v => v.ToArray(),
-                        List<string> v => v.ToArray(),
-                        object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
-                        { } v => new []{ v.ToString() },
-                        _ => null
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new MarkRestrainByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["propertyId"],
+                    new Func<string[]>(() =>
+                    {
+                        return properties["nodeModelNames"] switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new MarkRestrainByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["propertyId"].ToString(),
+                    new Func<string[]>(() =>
+                    {
+                        return properties["nodeModelNames"] switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
+                            { } v => new []{ v.ToString() },
+                            _ => null
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

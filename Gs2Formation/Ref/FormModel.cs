@@ -51,6 +51,20 @@ namespace Gs2Cdk.Gs2Formation.Ref
             ));
         }
 
+        public SetFormByUserId SetForm(
+            int index,
+            Slot[] slots,
+            string userId = "#{userId}"
+        ){
+            return (new SetFormByUserId(
+                this.namespaceName,
+                this.moldModelName,
+                index,
+                slots,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

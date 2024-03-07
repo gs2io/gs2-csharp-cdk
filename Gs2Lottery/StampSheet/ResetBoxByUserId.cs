@@ -57,14 +57,25 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
         }
 
         public static ResetBoxByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ResetBoxByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["prizeTableName"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ResetBoxByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["prizeTableName"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ResetBoxByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["prizeTableName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

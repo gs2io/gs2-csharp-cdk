@@ -187,11 +187,11 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.scheduleType != null) {
-                properties["scheduleType"] = this.scheduleType?.Str(
+                properties["scheduleType"] = this.scheduleType.Value.Str(
                 );
             }
             if (this.repeatType != null) {
-                properties["repeatType"] = this.repeatType?.Str(
+                properties["repeatType"] = this.repeatType.Value.Str(
                 );
             }
             if (this.absoluteBegin != null) {
@@ -207,11 +207,11 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 properties["repeatEndDayOfMonth"] = this.repeatEndDayOfMonth;
             }
             if (this.repeatBeginDayOfWeek != null) {
-                properties["repeatBeginDayOfWeek"] = this.repeatBeginDayOfWeek?.Str(
+                properties["repeatBeginDayOfWeek"] = this.repeatBeginDayOfWeek.Value.Str(
                 );
             }
             if (this.repeatEndDayOfWeek != null) {
-                properties["repeatEndDayOfWeek"] = this.repeatEndDayOfWeek?.Str(
+                properties["repeatEndDayOfWeek"] = this.repeatEndDayOfWeek.Value.Str(
                 );
             }
             if (this.repeatBeginHour != null) {

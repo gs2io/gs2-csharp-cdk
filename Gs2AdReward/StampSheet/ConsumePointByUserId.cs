@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
         private string namespaceName;
         private string userId;
         private long point;
+        private string? pointString;
 
 
         public ConsumePointByUserId(
@@ -39,6 +40,18 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
             this.userId = userId;
         }
 
+
+        public ConsumePointByUserId(
+            string namespaceName,
+            string point,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.pointString = point;
+            this.userId = userId;
+        }
+
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
@@ -49,32 +62,47 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.point != null) {
-                properties["point"] = this.point;
+            if (this.pointString != null) {
+                properties["point"] = this.pointString;
+            } else {
+                if (this.point != null) {
+                    properties["point"] = this.point;
+                }
             }
 
             return properties;
         }
 
         public static ConsumePointByUserId FromProperties(Dictionary<string, object> properties) {
-            return new ConsumePointByUserId(
-                (string)properties["namespaceName"],
-                new Func<long>(() =>
-                {
-                    return properties["point"] switch {
-                        long v => (long)v,
-                        int v => (long)v,
-                        float v => (long)v,
-                        double v => (long)v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new ConsumePointByUserId(
+                    (string)properties["namespaceName"],
+                    new Func<long>(() =>
+                    {
+                        return properties["point"] switch {
+                            long v => (long)v,
+                            int v => (long)v,
+                            float v => (long)v,
+                            double v => (long)v,
+                            string v => long.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new ConsumePointByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["point"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

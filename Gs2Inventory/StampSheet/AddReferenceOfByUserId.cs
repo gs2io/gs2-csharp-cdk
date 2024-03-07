@@ -72,20 +72,37 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         }
 
         public static AddReferenceOfByUserId FromProperties(Dictionary<string, object> properties) {
-            return new AddReferenceOfByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                (string)properties["itemName"],
-                (string)properties["referenceOf"],
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new AddReferenceOfByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    (string)properties["itemName"],
+                    (string)properties["referenceOf"],
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new AddReferenceOfByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    properties["itemName"].ToString(),
+                    properties["referenceOf"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

@@ -141,6 +141,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
             VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyInventoryCurrentMaxCapacityByUserId(
@@ -148,6 +149,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.inventoryName,
                 verifyType,
                 currentInventoryMaxCapacity,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }
@@ -173,6 +175,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             VerifyItemSetByUserIdVerifyType verifyType,
             long count,
             string itemSetName = null,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
             return (new VerifyItemSetByUserId(
@@ -182,6 +185,7 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 verifyType,
                 count,
                 itemSetName,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

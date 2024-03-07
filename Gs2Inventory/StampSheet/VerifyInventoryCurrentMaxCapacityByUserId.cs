@@ -29,6 +29,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private VerifyInventoryCurrentMaxCapacityByUserIdVerifyType? verifyType;
         private int currentInventoryMaxCapacity;
+        private string? currentInventoryMaxCapacityString;
+        private bool? multiplyValueSpecifyingQuantity;
+        private string? multiplyValueSpecifyingQuantityString;
 
 
         public VerifyInventoryCurrentMaxCapacityByUserId(
@@ -36,6 +39,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string inventoryName,
             VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
+            bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +47,25 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.inventoryName = inventoryName;
             this.verifyType = verifyType;
             this.currentInventoryMaxCapacity = currentInventoryMaxCapacity;
+            this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.userId = userId;
+        }
+
+
+        public VerifyInventoryCurrentMaxCapacityByUserId(
+            string namespaceName,
+            string inventoryName,
+            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
+            string currentInventoryMaxCapacity,
+            string multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+
+            this.namespaceName = namespaceName;
+            this.inventoryName = inventoryName;
+            this.verifyType = verifyType;
+            this.currentInventoryMaxCapacityString = currentInventoryMaxCapacity;
+            this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.userId = userId;
         }
 
@@ -60,44 +83,87 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 properties["inventoryName"] = this.inventoryName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
-            if (this.currentInventoryMaxCapacity != null) {
-                properties["currentInventoryMaxCapacity"] = this.currentInventoryMaxCapacity;
+            if (this.currentInventoryMaxCapacityString != null) {
+                properties["currentInventoryMaxCapacity"] = this.currentInventoryMaxCapacityString;
+            } else {
+                if (this.currentInventoryMaxCapacity != null) {
+                    properties["currentInventoryMaxCapacity"] = this.currentInventoryMaxCapacity;
+                }
+            }
+            if (this.multiplyValueSpecifyingQuantityString != null) {
+                properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantityString;
+            } else {
+                if (this.multiplyValueSpecifyingQuantity != null) {
+                    properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
+                }
             }
 
             return properties;
         }
 
         public static VerifyInventoryCurrentMaxCapacityByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyInventoryCurrentMaxCapacityByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["inventoryName"],
-                new Func<VerifyInventoryCurrentMaxCapacityByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyInventoryCurrentMaxCapacityByUserIdVerifyType e => e,
-                        string s => VerifyInventoryCurrentMaxCapacityByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyInventoryCurrentMaxCapacityByUserIdVerifyType.Less
-                    };
-                })(),
-                new Func<int>(() =>
-                {
-                    return properties["currentInventoryMaxCapacity"] switch {
-                        long v => (int)v,
-                        int v => (int)v,
-                        float v => (int)v,
-                        double v => (int)v,
-                        string v => int.Parse(v),
-                        _ => 0
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyInventoryCurrentMaxCapacityByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["inventoryName"],
+                    new Func<VerifyInventoryCurrentMaxCapacityByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType e => e,
+                            string s => VerifyInventoryCurrentMaxCapacityByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyInventoryCurrentMaxCapacityByUserIdVerifyType.Less
+                        };
+                    })(),
+                    new Func<int>(() =>
+                    {
+                        return properties["currentInventoryMaxCapacity"] switch {
+                            long v => (int)v,
+                            int v => (int)v,
+                            float v => (int)v,
+                            double v => (int)v,
+                            string v => int.Parse(v),
+                            _ => 0
+                        };
+                    })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyInventoryCurrentMaxCapacityByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["inventoryName"].ToString(),
+                    new Func<VerifyInventoryCurrentMaxCapacityByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType e => e,
+                            string s => VerifyInventoryCurrentMaxCapacityByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyInventoryCurrentMaxCapacityByUserIdVerifyType.Less
+                        };
+                    })(),
+                    properties["currentInventoryMaxCapacity"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {

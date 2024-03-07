@@ -135,11 +135,11 @@ namespace Gs2Cdk.Gs2Version.Model
                 properties["metadata"] = this.metadata;
             }
             if (this.scope != null) {
-                properties["scope"] = this.scope?.Str(
+                properties["scope"] = this.scope.Value.Str(
                 );
             }
             if (this.type != null) {
-                properties["type"] = this.type?.Str(
+                properties["type"] = this.type.Value.Str(
                 );
             }
             if (this.currentVersion != null) {

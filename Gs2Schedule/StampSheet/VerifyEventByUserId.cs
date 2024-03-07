@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                 properties["eventName"] = this.eventName;
             }
             if (this.verifyType != null) {
-                properties["verifyType"] = this.verifyType?.Str(
+                properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
 
@@ -65,22 +65,41 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         }
 
         public static VerifyEventByUserId FromProperties(Dictionary<string, object> properties) {
-            return new VerifyEventByUserId(
-                (string)properties["namespaceName"],
-                (string)properties["eventName"],
-                new Func<VerifyEventByUserIdVerifyType>(() =>
-                {
-                    return properties["verifyType"] switch {
-                        VerifyEventByUserIdVerifyType e => e,
-                        string s => VerifyEventByUserIdVerifyTypeExt.New(s),
-                        _ => VerifyEventByUserIdVerifyType.InSchedule
-                    };
-                })(),
-                new Func<string>(() =>
-                {
-                    return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
-                })()
-            );
+            try {
+                return new VerifyEventByUserId(
+                    (string)properties["namespaceName"],
+                    (string)properties["eventName"],
+                    new Func<VerifyEventByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyEventByUserIdVerifyType e => e,
+                            string s => VerifyEventByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyEventByUserIdVerifyType.InSchedule
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            } catch (Exception e) when (e is FormatException || e is OverflowException) {
+                return new VerifyEventByUserId(
+                    properties["namespaceName"].ToString(),
+                    properties["eventName"].ToString(),
+                    new Func<VerifyEventByUserIdVerifyType>(() =>
+                    {
+                        return properties["verifyType"] switch {
+                            VerifyEventByUserIdVerifyType e => e,
+                            string s => VerifyEventByUserIdVerifyTypeExt.New(s),
+                            _ => VerifyEventByUserIdVerifyType.InSchedule
+                        };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
+                    })()
+                );
+            }
         }
 
         public override string Action() {
