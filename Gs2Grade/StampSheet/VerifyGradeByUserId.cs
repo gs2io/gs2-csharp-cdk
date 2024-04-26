@@ -33,6 +33,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private string? gradeValueString;
         private bool? multiplyValueSpecifyingQuantity;
         private string? multiplyValueSpecifyingQuantityString;
+        private string timeOffsetToken;
 
 
         public VerifyGradeByUserId(
@@ -42,6 +43,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             string propertyId,
             long? gradeValue = null,
             bool? multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -51,6 +53,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.propertyId = propertyId;
             this.gradeValue = gradeValue;
             this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -62,6 +65,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             string propertyId,
             string gradeValue = null,
             string multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -71,6 +75,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.propertyId = propertyId;
             this.gradeValueString = gradeValue;
             this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -107,6 +112,9 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                 if (this.multiplyValueSpecifyingQuantity != null) {
                     properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -147,6 +155,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -170,6 +182,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

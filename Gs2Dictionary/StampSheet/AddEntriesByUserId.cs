@@ -26,16 +26,19 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
         private string namespaceName;
         private string userId;
         private string[] entryModelNames;
+        private string timeOffsetToken;
 
 
         public AddEntriesByUserId(
             string namespaceName,
             string[] entryModelNames = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.entryModelNames = entryModelNames;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -51,6 +54,9 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
             }
             if (this.entryModelNames != null) {
                 properties["entryModelNames"] = this.entryModelNames;
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -72,6 +78,10 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -87,6 +97,10 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                             { } v => new []{ v.ToString() },
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

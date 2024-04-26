@@ -26,16 +26,19 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         private string namespaceName;
         private string userId;
         private string triggerName;
+        private string timeOffsetToken;
 
 
         public DeleteTriggerByUserId(
             string namespaceName,
             string triggerName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.triggerName = triggerName;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,9 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             if (this.triggerName != null) {
                 properties["triggerName"] = this.triggerName;
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -63,6 +69,10 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                     (string)properties["triggerName"],
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -70,6 +80,10 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                 return new DeleteTriggerByUserId(
                     properties["namespaceName"].ToString(),
                     properties["triggerName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

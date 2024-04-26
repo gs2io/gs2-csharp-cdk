@@ -27,18 +27,21 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private string userId;
         private HeldCount[] counts;
+        private string timeOffsetToken;
 
 
         public SetSimpleItemsByUserId(
             string namespaceName,
             string inventoryName,
             HeldCount[] counts,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.inventoryName = inventoryName;
             this.counts = counts;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -58,6 +61,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.counts != null) {
                 properties["counts"] = this.counts.Select(v => v?.Properties(
                         )).ToList();
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -81,6 +87,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -98,6 +108,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                             { } v => new []{ v as HeldCount },
                             _ => null
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

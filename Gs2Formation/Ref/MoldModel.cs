@@ -45,24 +45,28 @@ namespace Gs2Cdk.Gs2Formation.Ref
 
         public AddMoldCapacityByUserId AddMoldCapacity(
             int capacity,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddMoldCapacityByUserId(
                 this.namespaceName,
                 this.moldModelName,
                 capacity,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public SetMoldCapacityByUserId SetMoldCapacity(
             int capacity,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetMoldCapacityByUserId(
                 this.namespaceName,
                 this.moldModelName,
                 capacity,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -71,6 +75,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             int index,
             AcquireAction acquireAction,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
@@ -79,6 +84,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 index,
                 acquireAction,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -86,6 +92,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public SetFormByUserId SetForm(
             int index,
             Slot[] slots,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetFormByUserId(
@@ -93,18 +100,21 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 this.moldModelName,
                 index,
                 slots,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public SubMoldCapacityByUserId SubMoldCapacity(
             int capacity,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SubMoldCapacityByUserId(
                 this.namespaceName,
                 this.moldModelName,
                 capacity,
+                timeOffsetToken,
                 userId
             ));
         }

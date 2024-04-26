@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string userId;
         private int? countDownValue;
         private string? countDownValueString;
+        private string timeOffsetToken;
 
 
         public CountDownByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             string limitName,
             string counterName,
             int? countDownValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             this.limitName = limitName;
             this.counterName = counterName;
             this.countDownValue = countDownValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             string limitName,
             string counterName,
             string countDownValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
             this.limitName = limitName;
             this.counterName = counterName;
             this.countDownValueString = countDownValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                     properties["countDownValue"] = this.countDownValue;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -108,6 +116,10 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -119,6 +131,10 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("countDownValue", out var countDownValue) ? countDownValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

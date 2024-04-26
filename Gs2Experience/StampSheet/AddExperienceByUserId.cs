@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string? experienceValueString;
         private bool? truncateExperienceWhenRankUp;
         private string? truncateExperienceWhenRankUpString;
+        private string timeOffsetToken;
 
 
         public AddExperienceByUserId(
@@ -39,6 +40,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string propertyId,
             long? experienceValue = null,
             bool? truncateExperienceWhenRankUp = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -47,6 +49,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.propertyId = propertyId;
             this.experienceValue = experienceValue;
             this.truncateExperienceWhenRankUp = truncateExperienceWhenRankUp;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -57,6 +60,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string propertyId,
             string experienceValue = null,
             string truncateExperienceWhenRankUp = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -65,6 +69,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.propertyId = propertyId;
             this.experienceValueString = experienceValue;
             this.truncateExperienceWhenRankUpString = truncateExperienceWhenRankUp;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -98,6 +103,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     properties["truncateExperienceWhenRankUp"] = this.truncateExperienceWhenRankUp;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -129,6 +137,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -144,6 +156,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("truncateExperienceWhenRankUp", out var truncateExperienceWhenRankUp) ? truncateExperienceWhenRankUp.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

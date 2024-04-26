@@ -53,7 +53,7 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
                     ),
                     "serialKey",
                     this.namespaceName,
-                    "master",
+                    "model",
                     "campaign",
                     this.campaignModelName,
                     "issue",

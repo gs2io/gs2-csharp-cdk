@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string parameterName;
         private string propertyId;
         private BalanceParameterValue[] parameterValues;
+        private string timeOffsetToken;
 
 
         public SetBalanceParameterStatusByUserId(
@@ -35,6 +36,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterName,
             string propertyId,
             BalanceParameterValue[] parameterValues,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -42,6 +44,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterName = parameterName;
             this.propertyId = propertyId;
             this.parameterValues = parameterValues;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -64,6 +67,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             if (this.parameterValues != null) {
                 properties["parameterValues"] = this.parameterValues.Select(v => v?.Properties(
                         )).ToList();
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -88,6 +94,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -106,6 +116,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                             { } v => new []{ v as BalanceParameterValue },
                             _ => null
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

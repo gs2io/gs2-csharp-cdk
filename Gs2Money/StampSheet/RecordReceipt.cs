@@ -27,18 +27,21 @@ namespace Gs2Cdk.Gs2Money.StampSheet
         private string userId;
         private string contentsId;
         private string receipt;
+        private string timeOffsetToken;
 
 
         public RecordReceipt(
             string namespaceName,
             string contentsId,
             string receipt,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.contentsId = contentsId;
             this.receipt = receipt;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -58,6 +61,9 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             if (this.receipt != null) {
                 properties["receipt"] = this.receipt;
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -70,6 +76,10 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                     (string)properties["receipt"],
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -78,6 +88,10 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                     properties["namespaceName"].ToString(),
                     properties["contentsId"].ToString(),
                     properties["receipt"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

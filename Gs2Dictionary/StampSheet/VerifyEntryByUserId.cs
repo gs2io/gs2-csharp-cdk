@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
         private string userId;
         private string entryModelName;
         private VerifyEntryByUserIdVerifyType? verifyType;
+        private string timeOffsetToken;
 
 
         public VerifyEntryByUserId(
             string namespaceName,
             string entryModelName,
             VerifyEntryByUserIdVerifyType verifyType,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.entryModelName = entryModelName;
             this.verifyType = verifyType;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -60,6 +63,9 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                 properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -79,6 +85,10 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -93,6 +103,10 @@ namespace Gs2Cdk.Gs2Dictionary.StampSheet
                             string s => VerifyEntryByUserIdVerifyTypeExt.New(s),
                             _ => VerifyEntryByUserIdVerifyType.Havent
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

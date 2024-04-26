@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
         public bool? enableDirectExchange;
         public TransactionSetting transactionSetting;
         public ScriptSetting exchangeScript;
+        public ScriptSetting incrementalExchangeScript;
         public LogSetting logSetting;
         public string queueNamespaceId;
         public string keyId;

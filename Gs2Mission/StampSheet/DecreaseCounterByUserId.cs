@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         private string userId;
         private long value;
         private string? valueString;
+        private string timeOffsetToken;
 
 
         public DecreaseCounterByUserId(
             string namespaceName,
             string counterName,
             long value,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.counterName = counterName;
             this.value = value;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             string namespaceName,
             string counterName,
             string value,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.counterName = counterName;
             this.valueString = value;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -77,6 +82,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                     properties["value"] = this.value;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -99,6 +107,10 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -107,6 +119,10 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                     properties["namespaceName"].ToString(),
                     properties["counterName"].ToString(),
                     properties["value"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

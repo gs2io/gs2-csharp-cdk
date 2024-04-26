@@ -55,6 +55,7 @@ namespace Gs2Cdk.Gs2Enhance.Ref
             string targetItemSetId,
             Material[] materials = null,
             bool? force = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new CreateProgressByUserId(
@@ -63,15 +64,18 @@ namespace Gs2Cdk.Gs2Enhance.Ref
                 targetItemSetId,
                 materials,
                 force,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteProgressByUserId DeleteProgress(
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteProgressByUserId(
                 this.namespaceName,
+                timeOffsetToken,
                 userId
             ));
         }

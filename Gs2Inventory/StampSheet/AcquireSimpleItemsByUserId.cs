@@ -27,18 +27,21 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private string userId;
         private AcquireCount[] acquireCounts;
+        private string timeOffsetToken;
 
 
         public AcquireSimpleItemsByUserId(
             string namespaceName,
             string inventoryName,
             AcquireCount[] acquireCounts,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.inventoryName = inventoryName;
             this.acquireCounts = acquireCounts;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -58,6 +61,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.acquireCounts != null) {
                 properties["acquireCounts"] = this.acquireCounts.Select(v => v?.Properties(
                         )).ToList();
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -81,6 +87,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -98,6 +108,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                             { } v => new []{ v as AcquireCount },
                             _ => null
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
         private string userId;
         private int count;
         private string? countString;
+        private string timeOffsetToken;
 
 
         public IncrementPurchaseCountByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             string showcaseName,
             string displayItemName,
             int count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             this.showcaseName = showcaseName;
             this.displayItemName = displayItemName;
             this.count = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             string showcaseName,
             string displayItemName,
             string count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
             this.showcaseName = showcaseName;
             this.displayItemName = displayItemName;
             this.countString = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
                     properties["count"] = this.count;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -108,6 +116,10 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -117,6 +129,10 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
                     properties["showcaseName"].ToString(),
                     properties["displayItemName"].ToString(),
                     properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

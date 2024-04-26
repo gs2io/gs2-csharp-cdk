@@ -36,6 +36,7 @@ namespace Gs2Cdk.Gs2Money.Ref
             int slot,
             float price,
             int count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DepositByUserId(
@@ -43,17 +44,20 @@ namespace Gs2Cdk.Gs2Money.Ref
                 slot,
                 price,
                 count,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public RevertRecordReceipt RevertRecordReceipt(
             string receipt,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new RevertRecordReceipt(
                 this.namespaceName,
                 receipt,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -62,6 +66,7 @@ namespace Gs2Cdk.Gs2Money.Ref
             int slot,
             int count,
             bool? paidOnly = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new WithdrawByUserId(
@@ -69,6 +74,7 @@ namespace Gs2Cdk.Gs2Money.Ref
                 slot,
                 count,
                 paidOnly,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -76,12 +82,14 @@ namespace Gs2Cdk.Gs2Money.Ref
         public RecordReceipt RecordReceipt(
             string contentsId,
             string receipt,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new RecordReceipt(
                 this.namespaceName,
                 contentsId,
                 receipt,
+                timeOffsetToken,
                 userId
             ));
         }

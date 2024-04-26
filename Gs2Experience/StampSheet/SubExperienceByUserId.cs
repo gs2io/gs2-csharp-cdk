@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string propertyId;
         private long? experienceValue;
         private string? experienceValueString;
+        private string timeOffsetToken;
 
 
         public SubExperienceByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string experienceName,
             string propertyId,
             long? experienceValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.experienceName = experienceName;
             this.propertyId = propertyId;
             this.experienceValue = experienceValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string experienceName,
             string propertyId,
             string experienceValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.experienceName = experienceName;
             this.propertyId = propertyId;
             this.experienceValueString = experienceValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     properties["experienceValue"] = this.experienceValue;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -108,6 +116,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -119,6 +131,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("experienceValue", out var experienceValue) ? experienceValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

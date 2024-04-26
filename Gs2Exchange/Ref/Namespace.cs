@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Exchange.Model;
 using Gs2Cdk.Gs2Exchange.StampSheet;
+using Gs2Cdk.Gs2Exchange.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Exchange.Ref
 {
@@ -54,6 +57,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string rateName,
             int count,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ExchangeByUserId(
@@ -61,6 +65,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
                 rateName,
                 count,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -69,6 +74,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string rateName,
             int count,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new IncrementalExchangeByUserId(
@@ -76,6 +82,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
                 rateName,
                 count,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -83,12 +90,14 @@ namespace Gs2Cdk.Gs2Exchange.Ref
         public UnlockIncrementalExchangeByUserId UnlockIncrementalExchange(
             string rateName,
             string lockTransactionId,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new UnlockIncrementalExchangeByUserId(
                 this.namespaceName,
                 rateName,
                 lockTransactionId,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -97,6 +106,7 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             string rateName,
             int? count = null,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new CreateAwaitByUserId(
@@ -104,17 +114,20 @@ namespace Gs2Cdk.Gs2Exchange.Ref
                 rateName,
                 count,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteAwaitByUserId DeleteAwait(
             string awaitName = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteAwaitByUserId(
                 this.namespaceName,
                 awaitName,
+                timeOffsetToken,
                 userId
             ));
         }

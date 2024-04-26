@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         private string moldModelName;
         private int capacity;
         private string? capacityString;
+        private string timeOffsetToken;
 
 
         public SubMoldCapacityByUserId(
             string namespaceName,
             string moldModelName,
             int capacity,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.moldModelName = moldModelName;
             this.capacity = capacity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             string namespaceName,
             string moldModelName,
             string capacity,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.moldModelName = moldModelName;
             this.capacityString = capacity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -77,6 +82,9 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                     properties["capacity"] = this.capacity;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -99,6 +107,10 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -107,6 +119,10 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                     properties["namespaceName"].ToString(),
                     properties["moldModelName"].ToString(),
                     properties["capacity"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

@@ -25,7 +25,6 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
     public class RateModelTimingTypeIsImmediateOptions {
         public string metadata;
         public ConsumeAction[] consumeActions;
-        public ConsumeAction[] skipConsumeActions;
         public AcquireAction[] acquireActions;
     }
 }

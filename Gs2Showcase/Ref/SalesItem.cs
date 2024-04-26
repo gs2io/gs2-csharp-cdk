@@ -23,15 +23,9 @@ using Gs2Cdk.Gs2Showcase.Model;
 namespace Gs2Cdk.Gs2Showcase.Ref
 {
     public class SalesItemRef {
-        private string namespaceName;
-        private string displayItemId;
 
         public SalesItemRef(
-            string namespaceName,
-            string displayItemId
         ){
-            this.namespaceName = namespaceName;
-            this.displayItemId = displayItemId;
         }
     }
 }

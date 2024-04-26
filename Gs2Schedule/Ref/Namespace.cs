@@ -37,6 +37,7 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             string triggerName,
             TriggerByUserIdTriggerStrategy triggerStrategy,
             int ttl,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new TriggerByUserId(
@@ -44,17 +45,20 @@ namespace Gs2Cdk.Gs2Schedule.Ref
                 triggerName,
                 triggerStrategy,
                 ttl,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteTriggerByUserId DeleteTrigger(
             string triggerName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteTriggerByUserId(
                 this.namespaceName,
                 triggerName,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -62,12 +66,14 @@ namespace Gs2Cdk.Gs2Schedule.Ref
         public VerifyEventByUserId VerifyEvent(
             string eventName,
             VerifyEventByUserIdVerifyType verifyType,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyEventByUserId(
                 this.namespaceName,
                 eventName,
                 verifyType,
+                timeOffsetToken,
                 userId
             ));
         }

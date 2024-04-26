@@ -34,6 +34,8 @@ namespace Gs2Cdk.Gs2Inventory.Model
         private ScriptSetting consumeScript;
         private ScriptSetting simpleItemAcquireScript;
         private ScriptSetting simpleItemConsumeScript;
+        private ScriptSetting bigItemAcquireScript;
+        private ScriptSetting bigItemConsumeScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -52,6 +54,8 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.consumeScript = options?.consumeScript;
             this.simpleItemAcquireScript = options?.simpleItemAcquireScript;
             this.simpleItemConsumeScript = options?.simpleItemConsumeScript;
+            this.bigItemAcquireScript = options?.bigItemAcquireScript;
+            this.bigItemConsumeScript = options?.bigItemConsumeScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -97,6 +101,14 @@ namespace Gs2Cdk.Gs2Inventory.Model
             }
             if (this.simpleItemConsumeScript != null) {
                 properties["SimpleItemConsumeScript"] = this.simpleItemConsumeScript?.Properties(
+                );
+            }
+            if (this.bigItemAcquireScript != null) {
+                properties["BigItemAcquireScript"] = this.bigItemAcquireScript?.Properties(
+                );
+            }
+            if (this.bigItemConsumeScript != null) {
+                properties["BigItemConsumeScript"] = this.bigItemConsumeScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

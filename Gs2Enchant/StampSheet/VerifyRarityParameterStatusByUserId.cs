@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string? parameterCountString;
         private bool? multiplyValueSpecifyingQuantity;
         private string? multiplyValueSpecifyingQuantityString;
+        private string timeOffsetToken;
 
 
         public VerifyRarityParameterStatusByUserId(
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterValueName = null,
             int? parameterCount = null,
             bool? multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -54,6 +56,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterValueName = parameterValueName;
             this.parameterCount = parameterCount;
             this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -66,6 +69,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterValueName = null,
             string parameterCount = null,
             string multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -76,6 +80,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterValueName = parameterValueName;
             this.parameterCountString = parameterCount;
             this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -115,6 +120,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                 if (this.multiplyValueSpecifyingQuantity != null) {
                     properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -159,6 +167,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -186,6 +198,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

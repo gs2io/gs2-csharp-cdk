@@ -22,5 +22,7 @@ using Gs2Cdk.Gs2Auth.Model;
 namespace Gs2Cdk.Gs2Auth.Model.Options
 {
     public class AccessTokenOptions {
+        public string federationFromUserId;
+        public string federationPolicyDocument;
     }
 }

@@ -25,14 +25,17 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
     public class DeleteProgressByUserId : ConsumeAction {
         private string namespaceName;
         private string userId;
+        private string timeOffsetToken;
 
 
         public DeleteProgressByUserId(
             string namespaceName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -46,6 +49,9 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -56,12 +62,20 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
                     (string)properties["namespaceName"],
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
             } catch (Exception e) when (e is FormatException || e is OverflowException) {
                 return new DeleteProgressByUserId(
                     properties["namespaceName"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

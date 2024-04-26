@@ -52,11 +52,13 @@ namespace Gs2Cdk.Gs2Lottery.Ref
 
         public ResetBoxByUserId ResetBox(
             string prizeTableName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ResetBoxByUserId(
                 this.namespaceName,
                 prizeTableName,
+                timeOffsetToken,
                 userId
             ));
         }

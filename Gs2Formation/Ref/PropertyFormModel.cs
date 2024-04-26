@@ -39,6 +39,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string propertyId,
             AcquireAction acquireAction,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
@@ -47,6 +48,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 propertyId,
                 acquireAction,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }

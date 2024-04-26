@@ -38,6 +38,7 @@ namespace Gs2Cdk.Gs2Lottery.Ref
         public DrawByUserId Draw(
             int count,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DrawByUserId(
@@ -45,6 +46,7 @@ namespace Gs2Cdk.Gs2Lottery.Ref
                 this.lotteryName,
                 count,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }

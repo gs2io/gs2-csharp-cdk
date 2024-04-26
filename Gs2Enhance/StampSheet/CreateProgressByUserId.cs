@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         private Material[] materials;
         private bool? force;
         private string? forceString;
+        private string timeOffsetToken;
 
 
         public CreateProgressByUserId(
@@ -38,6 +39,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             string targetItemSetId,
             Material[] materials = null,
             bool? force = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             this.targetItemSetId = targetItemSetId;
             this.materials = materials;
             this.force = force;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -56,6 +59,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             string targetItemSetId,
             Material[] materials = null,
             string force = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -64,6 +68,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             this.targetItemSetId = targetItemSetId;
             this.materials = materials;
             this.forceString = force;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -93,6 +98,9 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                 if (this.force != null) {
                     properties["force"] = this.force;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -125,6 +133,10 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -147,6 +159,10 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("force", out var force) ? force.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

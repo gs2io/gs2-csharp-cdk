@@ -43,11 +43,13 @@ namespace Gs2Cdk.Gs2LoginReward.Ref
 
         public DeleteReceiveStatusByUserId DeleteReceiveStatus(
             string bonusModelName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteReceiveStatusByUserId(
                 this.namespaceName,
                 bonusModelName,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -55,12 +57,14 @@ namespace Gs2Cdk.Gs2LoginReward.Ref
         public UnmarkReceivedByUserId UnmarkReceived(
             string bonusModelName,
             int stepNumber,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new UnmarkReceivedByUserId(
                 this.namespaceName,
                 bonusModelName,
                 stepNumber,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -68,12 +72,14 @@ namespace Gs2Cdk.Gs2LoginReward.Ref
         public MarkReceivedByUserId MarkReceived(
             string bonusModelName,
             int stepNumber,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new MarkReceivedByUserId(
                 this.namespaceName,
                 bonusModelName,
                 stepNumber,
+                timeOffsetToken,
                 userId
             ));
         }

@@ -36,6 +36,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string showcaseName,
             string displayItemName,
             int count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DecrementPurchaseCountByUserId(
@@ -43,17 +44,20 @@ namespace Gs2Cdk.Gs2Showcase.Ref
                 showcaseName,
                 displayItemName,
                 count,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public ForceReDrawByUserId ForceReDraw(
             string showcaseName,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ForceReDrawByUserId(
                 this.namespaceName,
                 showcaseName,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -62,6 +66,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
             string showcaseName,
             string displayItemName,
             int count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new IncrementPurchaseCountByUserId(
@@ -69,6 +74,7 @@ namespace Gs2Cdk.Gs2Showcase.Ref
                 showcaseName,
                 displayItemName,
                 count,
+                timeOffsetToken,
                 userId
             ));
         }

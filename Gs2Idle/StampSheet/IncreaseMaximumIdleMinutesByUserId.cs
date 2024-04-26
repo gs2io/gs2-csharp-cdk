@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
         private string categoryName;
         private int? increaseMinutes;
         private string? increaseMinutesString;
+        private string timeOffsetToken;
 
 
         public IncreaseMaximumIdleMinutesByUserId(
             string namespaceName,
             string categoryName,
             int? increaseMinutes = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.categoryName = categoryName;
             this.increaseMinutes = increaseMinutes;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
             string namespaceName,
             string categoryName,
             string increaseMinutes = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.categoryName = categoryName;
             this.increaseMinutesString = increaseMinutes;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -77,6 +82,9 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
                     properties["increaseMinutes"] = this.increaseMinutes;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -99,6 +107,10 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -109,6 +121,10 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("increaseMinutes", out var increaseMinutes) ? increaseMinutes.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

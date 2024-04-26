@@ -26,16 +26,19 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
         private string namespaceName;
         private string userId;
         private JobEntry[] jobs;
+        private string timeOffsetToken;
 
 
         public PushByUserId(
             string namespaceName,
             JobEntry[] jobs = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.jobs = jobs;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,9 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
             if (this.jobs != null) {
                 properties["jobs"] = this.jobs.Select(v => v?.Properties(
                         )).ToList();
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -74,6 +80,10 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -90,6 +100,10 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
                             { } v => new []{ v as JobEntry },
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

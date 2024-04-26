@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string propertyId;
         private string rateName;
         private AcquireAction[] acquireActions;
+        private string timeOffsetToken;
 
 
         public MultiplyAcquireActionsByUserId(
@@ -37,6 +38,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             string propertyId,
             string rateName,
             AcquireAction[] acquireActions = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -45,6 +47,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
             this.propertyId = propertyId;
             this.rateName = rateName;
             this.acquireActions = acquireActions;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -71,6 +74,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -95,6 +101,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -114,6 +124,10 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
                             { } v => new []{ v as AcquireAction },
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

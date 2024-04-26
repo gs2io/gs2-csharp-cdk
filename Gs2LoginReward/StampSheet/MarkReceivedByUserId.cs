@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
         private string userId;
         private int stepNumber;
         private string? stepNumberString;
+        private string timeOffsetToken;
 
 
         public MarkReceivedByUserId(
             string namespaceName,
             string bonusModelName,
             int stepNumber,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.bonusModelName = bonusModelName;
             this.stepNumber = stepNumber;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
             string namespaceName,
             string bonusModelName,
             string stepNumber,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.bonusModelName = bonusModelName;
             this.stepNumberString = stepNumber;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -77,6 +82,9 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
                     properties["stepNumber"] = this.stepNumber;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -99,6 +107,10 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -107,6 +119,10 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
                     properties["namespaceName"].ToString(),
                     properties["bonusModelName"].ToString(),
                     properties["stepNumber"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

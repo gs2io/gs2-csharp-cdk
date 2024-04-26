@@ -30,8 +30,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private string metadata;
         private ConsumeAction[] consumeActions;
         private int? lockTime;
-        private bool? enableSkip;
-        private ConsumeAction[] skipConsumeActions;
         private AcquireAction[] acquireActions;
 
         public RateModel(
@@ -44,8 +42,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
             this.metadata = options?.metadata;
             this.consumeActions = options?.consumeActions;
             this.lockTime = options?.lockTime;
-            this.enableSkip = options?.enableSkip;
-            this.skipConsumeActions = options?.skipConsumeActions;
             this.acquireActions = options?.acquireActions;
         }
 
@@ -59,7 +55,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 new RateModelOptions {
                     metadata = options?.metadata,
                     consumeActions = options?.consumeActions,
-                    skipConsumeActions = options?.skipConsumeActions,
                     acquireActions = options?.acquireActions,
                 }
             ));
@@ -68,7 +63,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
         public static RateModel TimingTypeIsAwait(
             string name,
             int? lockTime,
-            bool? enableSkip,
             RateModelTimingTypeIsAwaitOptions options = null
         ){
             return (new RateModel(
@@ -76,10 +70,8 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 RateModelTimingType.Await,
                 new RateModelOptions {
                     lockTime = lockTime,
-                    enableSkip = enableSkip,
                     metadata = options?.metadata,
                     consumeActions = options?.consumeActions,
-                    skipConsumeActions = options?.skipConsumeActions,
                     acquireActions = options?.acquireActions,
                 }
             ));
@@ -105,13 +97,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.lockTime != null) {
                 properties["lockTime"] = this.lockTime;
-            }
-            if (this.enableSkip != null) {
-                properties["enableSkip"] = this.enableSkip;
-            }
-            if (this.skipConsumeActions != null) {
-                properties["skipConsumeActions"] = this.skipConsumeActions.Select(v => v?.Properties(
-                        )).ToList();
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
@@ -154,24 +139,6 @@ namespace Gs2Cdk.Gs2Exchange.Model
                             _ => null
                         } : null;
                     })(),
-                    enableSkip = new Func<bool?>(() =>
-                    {
-                        return properties.TryGetValue("enableSkip", out var enableSkip) ? enableSkip switch {
-                            bool v => v,
-                            string v => bool.Parse(v),
-                            _ => null
-                        } : null;
-                    })(),
-                    skipConsumeActions = properties.TryGetValue("skipConsumeActions", out var skipConsumeActions) ? new Func<ConsumeAction[]>(() =>
-                    {
-                        return skipConsumeActions switch {
-                            ConsumeAction[] v => v,
-                            List<ConsumeAction> v => v.ToArray(),
-                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
-                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
-                            _ => null
-                        };
-                    })() : null,
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                     {
                         return acquireActions switch {

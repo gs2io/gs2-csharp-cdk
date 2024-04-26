@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
         private string args;
         private int? ttl;
         private string? ttlString;
+        private string timeOffsetToken;
 
 
         public StartStateMachineByUserId(
             string namespaceName,
             string args = null,
             int? ttl = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.args = args;
             this.ttl = ttl;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
             string namespaceName,
             string args = null,
             string ttl = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.args = args;
             this.ttlString = ttl;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -76,6 +81,9 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
                 if (this.ttl != null) {
                     properties["ttl"] = this.ttl;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -102,6 +110,10 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -115,6 +127,10 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("ttl", out var ttl) ? ttl.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

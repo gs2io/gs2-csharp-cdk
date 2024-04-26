@@ -26,8 +26,6 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
         public string metadata;
         public ConsumeAction[] consumeActions;
         public int? lockTime;
-        public bool? enableSkip;
-        public ConsumeAction[] skipConsumeActions;
         public AcquireAction[] acquireActions;
     }
 }

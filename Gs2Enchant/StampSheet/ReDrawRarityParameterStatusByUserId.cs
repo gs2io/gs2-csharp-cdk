@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string parameterName;
         private string propertyId;
         private string[] fixedParameterNames;
+        private string timeOffsetToken;
 
 
         public ReDrawRarityParameterStatusByUserId(
@@ -35,6 +36,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterName,
             string propertyId,
             string[] fixedParameterNames = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -42,6 +44,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterName = parameterName;
             this.propertyId = propertyId;
             this.fixedParameterNames = fixedParameterNames;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -63,6 +66,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             }
             if (this.fixedParameterNames != null) {
                 properties["fixedParameterNames"] = this.fixedParameterNames;
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -86,6 +92,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -103,6 +113,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                             { } v => new []{ v.ToString() },
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

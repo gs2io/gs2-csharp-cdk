@@ -26,16 +26,19 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
         private string namespaceName;
         private string userId;
         private string code;
+        private string timeOffsetToken;
 
 
         public UseByUserId(
             string namespaceName,
             string code,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.code = code;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,9 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             if (this.code != null) {
                 properties["code"] = this.code;
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -63,6 +69,10 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
                     (string)properties["code"],
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -70,6 +80,10 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
                 return new UseByUserId(
                     properties["namespaceName"].ToString(),
                     properties["code"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

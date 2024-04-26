@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private bool? createNewItemSet;
         private string? createNewItemSetString;
         private string itemSetName;
+        private string timeOffsetToken;
 
 
         public AcquireItemSetByUserId(
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             long? expiresAt = null,
             bool? createNewItemSet = null,
             string itemSetName = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -54,6 +56,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.expiresAt = expiresAt;
             this.createNewItemSet = createNewItemSet;
             this.itemSetName = itemSetName;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -66,6 +69,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             string expiresAt = null,
             string createNewItemSet = null,
             string itemSetName = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -76,6 +80,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.expiresAtString = expiresAt;
             this.createNewItemSetString = createNewItemSet;
             this.itemSetName = itemSetName;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -118,6 +123,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             }
             if (this.itemSetName != null) {
                 properties["itemSetName"] = this.itemSetName;
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -165,6 +173,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -185,6 +197,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("itemSetName", out var itemSetName) ? itemSetName.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

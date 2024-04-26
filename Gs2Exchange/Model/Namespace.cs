@@ -33,6 +33,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private bool? enableDirectExchange;
         private TransactionSetting transactionSetting;
         private ScriptSetting exchangeScript;
+        private ScriptSetting incrementalExchangeScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -50,6 +51,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             this.enableDirectExchange = options?.enableDirectExchange;
             this.transactionSetting = options?.transactionSetting;
             this.exchangeScript = options?.exchangeScript;
+            this.incrementalExchangeScript = options?.incrementalExchangeScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -89,6 +91,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.exchangeScript != null) {
                 properties["ExchangeScript"] = this.exchangeScript?.Properties(
+                );
+            }
+            if (this.incrementalExchangeScript != null) {
+                properties["IncrementalExchangeScript"] = this.incrementalExchangeScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

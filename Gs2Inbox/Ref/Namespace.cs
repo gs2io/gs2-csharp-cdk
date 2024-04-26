@@ -46,6 +46,7 @@ namespace Gs2Cdk.Gs2Inbox.Ref
             AcquireAction[] readAcquireActions = null,
             long? expiresAt = null,
             TimeSpan_ expiresTimeSpan = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SendMessageByUserId(
@@ -54,28 +55,33 @@ namespace Gs2Cdk.Gs2Inbox.Ref
                 readAcquireActions,
                 expiresAt,
                 expiresTimeSpan,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public OpenMessageByUserId OpenMessage(
             string messageName = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new OpenMessageByUserId(
                 this.namespaceName,
                 messageName,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteMessageByUserId DeleteMessage(
             string messageName = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteMessageByUserId(
                 this.namespaceName,
                 messageName,
+                timeOffsetToken,
                 userId
             ));
         }

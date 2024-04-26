@@ -39,6 +39,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
             int index,
             AcquireAction acquireAction,
             Config[] config = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
@@ -47,6 +48,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 index,
                 acquireAction,
                 config,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -54,6 +56,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public SetFormByUserId SetForm(
             int index,
             Slot[] slots,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetFormByUserId(
@@ -61,6 +64,7 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 this.moldModelName,
                 index,
                 slots,
+                timeOffsetToken,
                 userId
             ));
         }

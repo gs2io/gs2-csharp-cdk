@@ -27,16 +27,19 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
         private string userId;
         private long point;
         private string? pointString;
+        private string timeOffsetToken;
 
 
         public ConsumePointByUserId(
             string namespaceName,
             long point,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.point = point;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -44,11 +47,13 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
         public ConsumePointByUserId(
             string namespaceName,
             string point,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.pointString = point;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -68,6 +73,9 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
                 if (this.point != null) {
                     properties["point"] = this.point;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -90,6 +98,10 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -97,6 +109,10 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
                 return new ConsumePointByUserId(
                     properties["namespaceName"].ToString(),
                     properties["point"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

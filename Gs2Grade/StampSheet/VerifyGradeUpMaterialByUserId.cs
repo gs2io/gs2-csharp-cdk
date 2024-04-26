@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private VerifyGradeUpMaterialByUserIdVerifyType? verifyType;
         private string propertyId;
         private string materialPropertyId;
+        private string timeOffsetToken;
 
 
         public VerifyGradeUpMaterialByUserId(
@@ -38,6 +39,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             VerifyGradeUpMaterialByUserIdVerifyType verifyType,
             string propertyId,
             string materialPropertyId,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.verifyType = verifyType;
             this.propertyId = propertyId;
             this.materialPropertyId = materialPropertyId;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -72,6 +75,9 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             if (this.materialPropertyId != null) {
                 properties["materialPropertyId"] = this.materialPropertyId;
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -93,6 +99,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     (string)properties["materialPropertyId"],
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -110,6 +120,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     })(),
                     properties["propertyId"].ToString(),
                     properties["materialPropertyId"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

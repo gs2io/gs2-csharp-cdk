@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private string propertyId;
         private long? gradeValue;
         private string? gradeValueString;
+        private string timeOffsetToken;
 
 
         public AddGradeByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             string gradeName,
             string propertyId,
             long? gradeValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.gradeName = gradeName;
             this.propertyId = propertyId;
             this.gradeValue = gradeValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             string gradeName,
             string propertyId,
             string gradeValue = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
             this.gradeName = gradeName;
             this.propertyId = propertyId;
             this.gradeValueString = gradeValue;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     properties["gradeValue"] = this.gradeValue;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -108,6 +116,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -119,6 +131,10 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("gradeValue", out var gradeValue) ? gradeValue.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

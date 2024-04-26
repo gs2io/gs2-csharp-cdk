@@ -26,20 +26,27 @@ namespace Gs2Cdk.Gs2Auth.Model
     public class AccessToken {
         private string ownerId;
         private string userId;
+        private string realUserId;
         private long? expire;
         private int? timeOffset;
+        private string federationFromUserId;
+        private string federationPolicyDocument;
 
         public AccessToken(
             string ownerId,
             string userId,
+            string realUserId,
             long? expire,
             int? timeOffset,
             AccessTokenOptions options = null
         ){
             this.ownerId = ownerId;
             this.userId = userId;
+            this.realUserId = realUserId;
             this.expire = expire;
             this.timeOffset = timeOffset;
+            this.federationFromUserId = options?.federationFromUserId;
+            this.federationPolicyDocument = options?.federationPolicyDocument;
         }
 
         public Dictionary<string, object> Properties(
@@ -51,6 +58,15 @@ namespace Gs2Cdk.Gs2Auth.Model
             }
             if (this.userId != null) {
                 properties["userId"] = this.userId;
+            }
+            if (this.realUserId != null) {
+                properties["realUserId"] = this.realUserId;
+            }
+            if (this.federationFromUserId != null) {
+                properties["federationFromUserId"] = this.federationFromUserId;
+            }
+            if (this.federationPolicyDocument != null) {
+                properties["federationPolicyDocument"] = this.federationPolicyDocument;
             }
             if (this.expire != null) {
                 properties["expire"] = this.expire;
@@ -68,6 +84,7 @@ namespace Gs2Cdk.Gs2Auth.Model
             var model = new AccessToken(
                 (string)properties["ownerId"],
                 (string)properties["userId"],
+                (string)properties["realUserId"],
                 new Func<long?>(() =>
                 {
                     return properties["expire"] switch {
@@ -85,6 +102,8 @@ namespace Gs2Cdk.Gs2Auth.Model
                     };
                 })(),
                 new AccessTokenOptions {
+                    federationFromUserId = properties.TryGetValue("federationFromUserId", out var federationFromUserId) ? (string)federationFromUserId : null,
+                    federationPolicyDocument = properties.TryGetValue("federationPolicyDocument", out var federationPolicyDocument) ? (string)federationPolicyDocument : null
                 }
             );
 

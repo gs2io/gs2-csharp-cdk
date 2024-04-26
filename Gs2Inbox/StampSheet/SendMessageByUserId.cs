@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
         private long? expiresAt;
         private string? expiresAtString;
         private TimeSpan_ expiresTimeSpan;
+        private string timeOffsetToken;
 
 
         public SendMessageByUserId(
@@ -38,6 +39,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             AcquireAction[] readAcquireActions = null,
             long? expiresAt = null,
             TimeSpan_ expiresTimeSpan = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             this.readAcquireActions = readAcquireActions;
             this.expiresAt = expiresAt;
             this.expiresTimeSpan = expiresTimeSpan;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -56,6 +59,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             AcquireAction[] readAcquireActions = null,
             string expiresAt = null,
             TimeSpan_ expiresTimeSpan = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -64,6 +68,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             this.readAcquireActions = readAcquireActions;
             this.expiresAtString = expiresAt;
             this.expiresTimeSpan = expiresTimeSpan;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -94,6 +99,9 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             if (this.expiresTimeSpan != null) {
                 properties["expiresTimeSpan"] = this.expiresTimeSpan?.Properties(
                 );
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -138,6 +146,10 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -169,6 +181,10 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
                             Dictionary<string, object>[] v => v.Length > 0 ? TimeSpan_.FromProperties(v.First()) : null,
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

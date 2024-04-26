@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         private int index;
         private string? indexString;
         private Slot[] slots;
+        private string timeOffsetToken;
 
 
         public SetFormByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             string moldModelName,
             int index,
             Slot[] slots,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             this.moldModelName = moldModelName;
             this.index = index;
             this.slots = slots;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             string moldModelName,
             string index,
             Slot[] slots,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             this.moldModelName = moldModelName;
             this.indexString = index;
             this.slots = slots;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
             if (this.slots != null) {
                 properties["slots"] = this.slots.Select(v => v?.Properties(
                         )).ToList();
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -119,6 +127,10 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -137,6 +149,10 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
                             { } v => new []{ v as Slot },
                             _ => null
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

@@ -28,18 +28,21 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         private string userId;
         private int recoverIntervalMinutes;
         private string? recoverIntervalMinutesString;
+        private string timeOffsetToken;
 
 
         public SetRecoverIntervalByUserId(
             string namespaceName,
             string staminaName,
             int recoverIntervalMinutes,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.staminaName = staminaName;
             this.recoverIntervalMinutes = recoverIntervalMinutes;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -48,12 +51,14 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
             string namespaceName,
             string staminaName,
             string recoverIntervalMinutes,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
             this.namespaceName = namespaceName;
             this.staminaName = staminaName;
             this.recoverIntervalMinutesString = recoverIntervalMinutes;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -77,6 +82,9 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
                     properties["recoverIntervalMinutes"] = this.recoverIntervalMinutes;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -99,6 +107,10 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -107,6 +119,10 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
                     properties["namespaceName"].ToString(),
                     properties["staminaName"].ToString(),
                     properties["recoverIntervalMinutes"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";

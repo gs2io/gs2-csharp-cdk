@@ -38,22 +38,26 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
 
         public AddEntriesByUserId AddEntries(
             string[] entryModelNames = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddEntriesByUserId(
                 this.namespaceName,
                 entryModelNames,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteEntriesByUserId DeleteEntries(
             string[] entryModelNames = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteEntriesByUserId(
                 this.namespaceName,
                 entryModelNames,
+                timeOffsetToken,
                 userId
             ));
         }
@@ -61,12 +65,14 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
         public VerifyEntryByUserId VerifyEntry(
             string entryModelName,
             VerifyEntryByUserIdVerifyType verifyType,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyEntryByUserId(
                 this.namespaceName,
                 entryModelName,
                 verifyType,
+                timeOffsetToken,
                 userId
             ));
         }

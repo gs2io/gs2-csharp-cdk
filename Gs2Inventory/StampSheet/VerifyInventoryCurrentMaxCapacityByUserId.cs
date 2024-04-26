@@ -32,6 +32,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string? currentInventoryMaxCapacityString;
         private bool? multiplyValueSpecifyingQuantity;
         private string? multiplyValueSpecifyingQuantityString;
+        private string timeOffsetToken;
 
 
         public VerifyInventoryCurrentMaxCapacityByUserId(
@@ -40,6 +41,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
             bool? multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -48,6 +50,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.verifyType = verifyType;
             this.currentInventoryMaxCapacity = currentInventoryMaxCapacity;
             this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -58,6 +61,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             string currentInventoryMaxCapacity,
             string multiplyValueSpecifyingQuantity = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -66,6 +70,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             this.verifyType = verifyType;
             this.currentInventoryMaxCapacityString = currentInventoryMaxCapacity;
             this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -99,6 +104,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                 if (this.multiplyValueSpecifyingQuantity != null) {
                     properties["multiplyValueSpecifyingQuantity"] = this.multiplyValueSpecifyingQuantity;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -138,6 +146,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -157,6 +169,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("multiplyValueSpecifyingQuantity", out var multiplyValueSpecifyingQuantity) ? multiplyValueSpecifyingQuantity.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

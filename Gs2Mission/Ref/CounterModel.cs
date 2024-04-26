@@ -37,24 +37,42 @@ namespace Gs2Cdk.Gs2Mission.Ref
 
         public IncreaseCounterByUserId IncreaseCounter(
             long value,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new IncreaseCounterByUserId(
                 this.namespaceName,
                 this.counterName,
                 value,
+                timeOffsetToken,
+                userId
+            ));
+        }
+
+        public SetCounterByUserId SetCounter(
+            ScopedValue[] values = null,
+            string timeOffsetToken = null,
+            string userId = "#{userId}"
+        ){
+            return (new SetCounterByUserId(
+                this.namespaceName,
+                this.counterName,
+                values,
+                timeOffsetToken,
                 userId
             ));
         }
 
         public DecreaseCounterByUserId DecreaseCounter(
             long value,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DecreaseCounterByUserId(
                 this.namespaceName,
                 this.counterName,
                 value,
+                timeOffsetToken,
                 userId
             ));
         }

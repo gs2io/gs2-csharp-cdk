@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string propertyId;
         private int? count;
         private string? countString;
+        private string timeOffsetToken;
 
 
         public AddRarityParameterStatusByUserId(
@@ -36,6 +37,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterName,
             string propertyId,
             int? count = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -43,6 +45,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterName = parameterName;
             this.propertyId = propertyId;
             this.count = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -52,6 +55,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             string parameterName,
             string propertyId,
             string count = null,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -59,6 +63,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
             this.parameterName = parameterName;
             this.propertyId = propertyId;
             this.countString = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -85,6 +90,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     properties["count"] = this.count;
                 }
             }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
+            }
 
             return properties;
         }
@@ -108,6 +116,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -119,6 +131,10 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("count", out var count) ? count.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

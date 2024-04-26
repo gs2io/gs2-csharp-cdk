@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
         private string? priceString;
         private int count;
         private string? countString;
+        private string timeOffsetToken;
 
 
         public DepositByUserId(
@@ -38,6 +39,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             int slot,
             float price,
             int count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -45,6 +47,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             this.slot = slot;
             this.price = price;
             this.count = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -54,6 +57,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             string slot,
             string price,
             string count,
+            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
@@ -61,6 +65,7 @@ namespace Gs2Cdk.Gs2Money.StampSheet
             this.slotString = slot;
             this.priceString = price;
             this.countString = count;
+            this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
 
@@ -94,6 +99,9 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                 if (this.count != null) {
                     properties["count"] = this.count;
                 }
+            }
+            if (this.timeOffsetToken != null) {
+                properties["timeOffsetToken"] = this.timeOffsetToken;
             }
 
             return properties;
@@ -138,6 +146,10 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
                     })()
                 );
@@ -147,6 +159,10 @@ namespace Gs2Cdk.Gs2Money.StampSheet
                     properties["slot"].ToString(),
                     properties["price"].ToString(),
                     properties["count"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("userId", out var userId) ? userId as string : "#{userId}";
