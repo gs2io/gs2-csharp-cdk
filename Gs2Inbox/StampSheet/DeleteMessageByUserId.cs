@@ -52,6 +52,9 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.messageName != null) {
+                properties["messageName"] = this.messageName;
+            }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
             }

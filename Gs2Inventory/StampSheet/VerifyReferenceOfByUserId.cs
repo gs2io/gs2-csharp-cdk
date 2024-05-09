@@ -71,6 +71,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
             if (this.itemName != null) {
                 properties["itemName"] = this.itemName;
             }
+            if (this.itemSetName != null) {
+                properties["itemSetName"] = this.itemSetName;
+            }
             if (this.referenceOf != null) {
                 properties["referenceOf"] = this.referenceOf;
             }

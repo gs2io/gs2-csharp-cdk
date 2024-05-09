@@ -84,6 +84,9 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.awaitName != null) {
+                properties["awaitName"] = this.awaitName;
+            }
             if (this.skipType != null) {
                 properties["skipType"] = this.skipType.Value.Str(
                 );

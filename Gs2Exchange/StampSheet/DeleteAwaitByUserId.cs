@@ -52,6 +52,9 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.awaitName != null) {
+                properties["awaitName"] = this.awaitName;
+            }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
             }

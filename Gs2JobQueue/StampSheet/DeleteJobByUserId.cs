@@ -52,6 +52,9 @@ namespace Gs2Cdk.Gs2JobQueue.StampSheet
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
+            if (this.jobName != null) {
+                properties["jobName"] = this.jobName;
+            }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
             }
