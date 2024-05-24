@@ -25,7 +25,10 @@ namespace Gs2Cdk.Gs2AdReward.Model.Options
     public class NamespaceOptions {
         public AdMob admob;
         public UnityAd unityAd;
+        public AppLovinMax[] appLovinMaxes;
         public string description;
+        public ScriptSetting acquirePointScript;
+        public ScriptSetting consumePointScript;
         public NotificationSetting changePointNotification;
         public LogSetting logSetting;
     }

@@ -30,7 +30,10 @@ namespace Gs2Cdk.Gs2AdReward.Model
         private string name;
         private AdMob admob;
         private UnityAd unityAd;
+        private AppLovinMax[] appLovinMaxes;
         private string description;
+        private ScriptSetting acquirePointScript;
+        private ScriptSetting consumePointScript;
         private NotificationSetting changePointNotification;
         private LogSetting logSetting;
 
@@ -46,7 +49,10 @@ namespace Gs2Cdk.Gs2AdReward.Model
             this.name = name;
             this.admob = options?.admob;
             this.unityAd = options?.unityAd;
+            this.appLovinMaxes = options?.appLovinMaxes;
             this.description = options?.description;
+            this.acquirePointScript = options?.acquirePointScript;
+            this.consumePointScript = options?.consumePointScript;
             this.changePointNotification = options?.changePointNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -80,8 +86,20 @@ namespace Gs2Cdk.Gs2AdReward.Model
                 properties["UnityAd"] = this.unityAd?.Properties(
                 );
             }
+            if (this.appLovinMaxes != null) {
+                properties["AppLovinMaxes"] = this.appLovinMaxes.Select(v => v?.Properties(
+                        )).ToList();
+            }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.acquirePointScript != null) {
+                properties["AcquirePointScript"] = this.acquirePointScript?.Properties(
+                );
+            }
+            if (this.consumePointScript != null) {
+                properties["ConsumePointScript"] = this.consumePointScript?.Properties(
+                );
             }
             if (this.changePointNotification != null) {
                 properties["ChangePointNotification"] = this.changePointNotification?.Properties(

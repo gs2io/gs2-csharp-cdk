@@ -33,6 +33,8 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         private NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         private string description;
         private bool? enableRating;
+        private NamespaceEnableDisconnectDetection? enableDisconnectDetection;
+        private int? disconnectDetectionTimeoutSeconds;
         private string createGatheringTriggerRealtimeNamespaceId;
         private string createGatheringTriggerScriptId;
         private string completeMatchmakingTriggerRealtimeNamespaceId;
@@ -63,6 +65,8 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.completeMatchmakingTriggerType = completeMatchmakingTriggerType;
             this.description = options?.description;
             this.enableRating = options?.enableRating;
+            this.enableDisconnectDetection = options?.enableDisconnectDetection;
+            this.disconnectDetectionTimeoutSeconds = options?.disconnectDetectionTimeoutSeconds;
             this.createGatheringTriggerRealtimeNamespaceId = options?.createGatheringTriggerRealtimeNamespaceId;
             this.createGatheringTriggerScriptId = options?.createGatheringTriggerScriptId;
             this.completeMatchmakingTriggerRealtimeNamespaceId = options?.completeMatchmakingTriggerRealtimeNamespaceId;
@@ -104,6 +108,13 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.enableRating != null) {
                 properties["EnableRating"] = this.enableRating;
+            }
+            if (this.enableDisconnectDetection != null) {
+                properties["EnableDisconnectDetection"] = this.enableDisconnectDetection.Value.Str(
+                );
+            }
+            if (this.disconnectDetectionTimeoutSeconds != null) {
+                properties["DisconnectDetectionTimeoutSeconds"] = this.disconnectDetectionTimeoutSeconds;
             }
             if (this.createGatheringTriggerType != null) {
                 properties["CreateGatheringTriggerType"] = this.createGatheringTriggerType.Value.Str(

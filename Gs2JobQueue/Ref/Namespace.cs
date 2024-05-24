@@ -34,26 +34,22 @@ namespace Gs2Cdk.Gs2JobQueue.Ref
 
         public PushByUserId Push(
             JobEntry[] jobs = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new PushByUserId(
                 this.namespaceName,
                 jobs,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteJobByUserId DeleteJob(
             string jobName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteJobByUserId(
                 this.namespaceName,
                 jobName,
-                timeOffsetToken,
                 userId
             ));
         }

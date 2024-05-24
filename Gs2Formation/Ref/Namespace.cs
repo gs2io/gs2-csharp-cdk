@@ -53,14 +53,12 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public AddMoldCapacityByUserId AddMoldCapacity(
             string moldModelName,
             int capacity,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddMoldCapacityByUserId(
                 this.namespaceName,
                 moldModelName,
                 capacity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -68,14 +66,12 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public SetMoldCapacityByUserId SetMoldCapacity(
             string moldModelName,
             int capacity,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetMoldCapacityByUserId(
                 this.namespaceName,
                 moldModelName,
                 capacity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -85,7 +81,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
             int index,
             AcquireAction acquireAction,
             Config[] config = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToFormProperties(
@@ -94,7 +89,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 index,
                 acquireAction,
                 config,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -103,7 +97,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string moldModelName,
             int index,
             Slot[] slots,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetFormByUserId(
@@ -111,7 +104,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 moldModelName,
                 index,
                 slots,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -121,7 +113,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
             string propertyId,
             AcquireAction acquireAction,
             Config[] config = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireActionsToPropertyFormProperties(
@@ -130,7 +121,6 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 propertyId,
                 acquireAction,
                 config,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -138,14 +128,12 @@ namespace Gs2Cdk.Gs2Formation.Ref
         public SubMoldCapacityByUserId SubMoldCapacity(
             string moldModelName,
             int capacity,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SubMoldCapacityByUserId(
                 this.namespaceName,
                 moldModelName,
                 capacity,
-                timeOffsetToken,
                 userId
             ));
         }

@@ -44,14 +44,12 @@ namespace Gs2Cdk.Gs2Idle.Ref
         public IncreaseMaximumIdleMinutesByUserId IncreaseMaximumIdleMinutes(
             string categoryName,
             int? increaseMinutes = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new IncreaseMaximumIdleMinutesByUserId(
                 this.namespaceName,
                 categoryName,
                 increaseMinutes,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -59,14 +57,12 @@ namespace Gs2Cdk.Gs2Idle.Ref
         public SetMaximumIdleMinutesByUserId SetMaximumIdleMinutes(
             string categoryName,
             int? maximumIdleMinutes = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetMaximumIdleMinutesByUserId(
                 this.namespaceName,
                 categoryName,
                 maximumIdleMinutes,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -74,14 +70,12 @@ namespace Gs2Cdk.Gs2Idle.Ref
         public DecreaseMaximumIdleMinutesByUserId DecreaseMaximumIdleMinutes(
             string categoryName,
             int? decreaseMinutes = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DecreaseMaximumIdleMinutesByUserId(
                 this.namespaceName,
                 categoryName,
                 decreaseMinutes,
-                timeOffsetToken,
                 userId
             ));
         }

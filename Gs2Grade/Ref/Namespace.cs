@@ -46,7 +46,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
             string gradeName,
             string propertyId,
             long? gradeValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddGradeByUserId(
@@ -54,7 +53,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 gradeName,
                 propertyId,
                 gradeValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -62,14 +60,12 @@ namespace Gs2Cdk.Gs2Grade.Ref
         public ApplyRankCapByUserId ApplyRankCap(
             string gradeName,
             string propertyId,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ApplyRankCapByUserId(
                 this.namespaceName,
                 gradeName,
                 propertyId,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -79,7 +75,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
             string propertyId,
             string rateName,
             AcquireAction[] acquireActions = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new MultiplyAcquireActionsByUserId(
@@ -88,7 +83,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 propertyId,
                 rateName,
                 acquireActions,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -97,7 +91,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
             string gradeName,
             string propertyId,
             long? gradeValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SubGradeByUserId(
@@ -105,7 +98,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 gradeName,
                 propertyId,
                 gradeValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -116,7 +108,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
             string propertyId,
             long? gradeValue = null,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyGradeByUserId(
@@ -126,7 +117,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 propertyId,
                 gradeValue,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -136,7 +126,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
             VerifyGradeUpMaterialByUserIdVerifyType verifyType,
             string propertyId,
             string materialPropertyId,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyGradeUpMaterialByUserId(
@@ -145,7 +134,6 @@ namespace Gs2Cdk.Gs2Grade.Ref
                 verifyType,
                 propertyId,
                 materialPropertyId,
-                timeOffsetToken,
                 userId
             ));
         }

@@ -47,7 +47,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string propertyId,
             long? experienceValue = null,
             bool? truncateExperienceWhenRankUp = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddExperienceByUserId(
@@ -56,7 +55,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 propertyId,
                 experienceValue,
                 truncateExperienceWhenRankUp,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -65,7 +63,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long? experienceValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetExperienceByUserId(
@@ -73,7 +70,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 experienceValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -82,7 +78,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long rankCapValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddRankCapByUserId(
@@ -90,7 +85,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 rankCapValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -99,7 +93,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long rankCapValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetRankCapByUserId(
@@ -107,7 +100,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 rankCapValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -117,7 +109,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string propertyId,
             string rateName,
             AcquireAction[] acquireActions = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new MultiplyAcquireActionsByUserId(
@@ -126,7 +117,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 propertyId,
                 rateName,
                 acquireActions,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -135,7 +125,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long? experienceValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SubExperienceByUserId(
@@ -143,7 +132,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 experienceValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -152,7 +140,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string experienceName,
             string propertyId,
             long rankCapValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SubRankCapByUserId(
@@ -160,7 +147,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 rankCapValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -171,7 +157,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string propertyId,
             long? rankValue = null,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRankByUserId(
@@ -181,7 +166,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 propertyId,
                 rankValue,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -192,7 +176,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string propertyId,
             long rankCapValue,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRankCapByUserId(
@@ -202,7 +185,6 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 propertyId,
                 rankCapValue,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }

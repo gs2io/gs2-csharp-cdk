@@ -45,7 +45,6 @@ namespace Gs2Cdk.Gs2Quest.Ref
             string questModelId,
             bool? force = null,
             Config[] config = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new CreateProgressByUserId(
@@ -53,18 +52,15 @@ namespace Gs2Cdk.Gs2Quest.Ref
                 questModelId,
                 force,
                 config,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public DeleteProgressByUserId DeleteProgress(
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteProgressByUserId(
                 this.namespaceName,
-                timeOffsetToken,
                 userId
             ));
         }

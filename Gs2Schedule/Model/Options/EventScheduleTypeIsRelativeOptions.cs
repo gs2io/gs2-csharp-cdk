@@ -24,5 +24,7 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
 {
     public class EventScheduleTypeIsRelativeOptions {
         public string metadata;
+        public long? absoluteBegin;
+        public long? absoluteEnd;
     }
 }

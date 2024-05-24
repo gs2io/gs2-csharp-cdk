@@ -49,7 +49,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public AcquireBigItemByUserId AcquireBigItem(
             string itemName,
             string acquireCount,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireBigItemByUserId(
@@ -57,7 +56,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.inventoryName,
                 itemName,
                 acquireCount,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -65,7 +63,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public SetBigItemByUserId SetBigItem(
             string itemName,
             string count,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetBigItemByUserId(
@@ -73,7 +70,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.inventoryName,
                 itemName,
                 count,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -81,7 +77,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
         public ConsumeBigItemByUserId ConsumeBigItem(
             string itemName,
             string consumeCount,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ConsumeBigItemByUserId(
@@ -89,7 +84,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 this.inventoryName,
                 itemName,
                 consumeCount,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -99,7 +93,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             VerifyBigItemByUserIdVerifyType verifyType,
             string count,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyBigItemByUserId(
@@ -109,7 +102,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 verifyType,
                 count,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }

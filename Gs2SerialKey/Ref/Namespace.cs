@@ -43,26 +43,22 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
 
         public RevertUseByUserId RevertUse(
             string code,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new RevertUseByUserId(
                 this.namespaceName,
                 code,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public UseByUserId Use(
             string code,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new UseByUserId(
                 this.namespaceName,
                 code,
-                timeOffsetToken,
                 userId
             ));
         }

@@ -46,7 +46,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
             string limitName,
             string counterName,
             int? countDownValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new CountDownByUserId(
@@ -54,7 +53,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
                 limitName,
                 counterName,
                 countDownValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -62,14 +60,12 @@ namespace Gs2Cdk.Gs2Limit.Ref
         public DeleteCounterByUserId DeleteCounter(
             string limitName,
             string counterName,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteCounterByUserId(
                 this.namespaceName,
                 limitName,
                 counterName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -79,7 +75,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
             string counterName,
             int? countUpValue = null,
             int? maxValue = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new CountUpByUserId(
@@ -88,7 +83,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
                 counterName,
                 countUpValue,
                 maxValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -99,7 +93,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
             VerifyCounterByUserIdVerifyType verifyType,
             int? count = null,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyCounterByUserId(
@@ -109,7 +102,6 @@ namespace Gs2Cdk.Gs2Limit.Ref
                 verifyType,
                 count,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }

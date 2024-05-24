@@ -26,6 +26,8 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
     public class NamespaceOptions {
         public string description;
         public bool? enableRating;
+        public NamespaceEnableDisconnectDetection enableDisconnectDetection;
+        public int? disconnectDetectionTimeoutSeconds;
         public string createGatheringTriggerRealtimeNamespaceId;
         public string createGatheringTriggerScriptId;
         public string completeMatchmakingTriggerRealtimeNamespaceId;

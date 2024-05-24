@@ -55,7 +55,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             string[] fixedParameterNames = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ReDrawBalanceParameterStatusByUserId(
@@ -63,7 +62,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 fixedParameterNames,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -72,7 +70,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             BalanceParameterValue[] parameterValues,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetBalanceParameterStatusByUserId(
@@ -80,7 +77,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 parameterValues,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -89,7 +85,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             string[] fixedParameterNames = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ReDrawRarityParameterStatusByUserId(
@@ -97,7 +92,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 fixedParameterNames,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -106,7 +100,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             int? count = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddRarityParameterStatusByUserId(
@@ -114,7 +107,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 count,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -123,7 +115,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterName,
             string propertyId,
             RarityParameterValue[] parameterValues = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetRarityParameterStatusByUserId(
@@ -131,7 +122,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterName,
                 propertyId,
                 parameterValues,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -143,7 +133,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             string parameterValueName = null,
             int? parameterCount = null,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyRarityParameterStatusByUserId(
@@ -154,7 +143,6 @@ namespace Gs2Cdk.Gs2Enchant.Ref
                 parameterValueName,
                 parameterCount,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }

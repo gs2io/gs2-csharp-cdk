@@ -48,28 +48,24 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public AddCapacityByUserId AddCapacity(
             int addCapacityValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddCapacityByUserId(
                 this.namespaceName,
                 this.inventoryName,
                 addCapacityValue,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public SetCapacityByUserId SetCapacity(
             int newCapacityValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetCapacityByUserId(
                 this.namespaceName,
                 this.inventoryName,
                 newCapacityValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -80,7 +76,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             long? expiresAt = null,
             bool? createNewItemSet = null,
             string itemSetName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireItemSetByUserId(
@@ -91,7 +86,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 expiresAt,
                 createNewItemSet,
                 itemSetName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -100,7 +94,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string itemName,
             string gradeModelId,
             long gradeValue,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireItemSetWithGradeByUserId(
@@ -109,7 +102,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 gradeModelId,
                 gradeValue,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -118,7 +110,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string itemName,
             string referenceOf,
             string itemSetName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AddReferenceOfByUserId(
@@ -127,7 +118,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 referenceOf,
                 itemSetName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -136,7 +126,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string itemName,
             string referenceOf,
             string itemSetName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DeleteReferenceOfByUserId(
@@ -145,7 +134,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 referenceOf,
                 itemSetName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -154,7 +142,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
             int currentInventoryMaxCapacity,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyInventoryCurrentMaxCapacityByUserId(
@@ -163,7 +150,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 verifyType,
                 currentInventoryMaxCapacity,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -172,7 +158,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string itemName,
             long consumeCount,
             string itemSetName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ConsumeItemSetByUserId(
@@ -181,7 +166,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 consumeCount,
                 itemSetName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -192,7 +176,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             long count,
             string itemSetName = null,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyItemSetByUserId(
@@ -203,7 +186,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 count,
                 itemSetName,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -213,7 +195,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             string referenceOf,
             VerifyReferenceOfByUserIdVerifyType verifyType,
             string itemSetName = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifyReferenceOfByUserId(
@@ -223,7 +204,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 referenceOf,
                 verifyType,
                 itemSetName,
-                timeOffsetToken,
                 userId
             ));
         }

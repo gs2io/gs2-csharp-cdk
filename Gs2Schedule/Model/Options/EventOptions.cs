@@ -26,12 +26,12 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
         public string metadata;
         public long? absoluteBegin;
         public long? absoluteEnd;
+        public string relativeTriggerName;
         public int? repeatBeginDayOfMonth;
         public int? repeatEndDayOfMonth;
         public EventRepeatBeginDayOfWeek repeatBeginDayOfWeek;
         public EventRepeatEndDayOfWeek repeatEndDayOfWeek;
         public int? repeatBeginHour;
         public int? repeatEndHour;
-        public string relativeTriggerName;
     }
 }

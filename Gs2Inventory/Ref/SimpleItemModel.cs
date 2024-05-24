@@ -41,42 +41,36 @@ namespace Gs2Cdk.Gs2Inventory.Ref
 
         public AcquireSimpleItemsByUserId AcquireSimpleItems(
             AcquireCount[] acquireCounts,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquireSimpleItemsByUserId(
                 this.namespaceName,
                 this.inventoryName,
                 acquireCounts,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public SetSimpleItemsByUserId SetSimpleItems(
             HeldCount[] counts,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetSimpleItemsByUserId(
                 this.namespaceName,
                 this.inventoryName,
                 counts,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public ConsumeSimpleItemsByUserId ConsumeSimpleItems(
             ConsumeCount[] consumeCounts,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ConsumeSimpleItemsByUserId(
                 this.namespaceName,
                 this.inventoryName,
                 consumeCounts,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -85,7 +79,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             VerifySimpleItemByUserIdVerifyType verifyType,
             long count,
             bool? multiplyValueSpecifyingQuantity = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new VerifySimpleItemByUserId(
@@ -95,7 +88,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 verifyType,
                 count,
                 multiplyValueSpecifyingQuantity,
-                timeOffsetToken,
                 userId
             ));
         }

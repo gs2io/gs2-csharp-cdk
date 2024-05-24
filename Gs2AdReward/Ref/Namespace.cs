@@ -34,26 +34,22 @@ namespace Gs2Cdk.Gs2AdReward.Ref
 
         public AcquirePointByUserId AcquirePoint(
             long point,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new AcquirePointByUserId(
                 this.namespaceName,
                 point,
-                timeOffsetToken,
                 userId
             ));
         }
 
         public ConsumePointByUserId ConsumePoint(
             long point,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ConsumePointByUserId(
                 this.namespaceName,
                 point,
-                timeOffsetToken,
                 userId
             ));
         }

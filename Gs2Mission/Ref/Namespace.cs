@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Mission.Model;
 using Gs2Cdk.Gs2Mission.StampSheet;
+using Gs2Cdk.Gs2Mission.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Mission.Ref
 {
@@ -53,14 +54,12 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public RevertReceiveByUserId RevertReceive(
             string missionGroupName,
             string missionTaskName,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new RevertReceiveByUserId(
                 this.namespaceName,
                 missionGroupName,
                 missionTaskName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -68,14 +67,12 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public IncreaseCounterByUserId IncreaseCounter(
             string counterName,
             long value,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new IncreaseCounterByUserId(
                 this.namespaceName,
                 counterName,
                 value,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -83,14 +80,12 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public SetCounterByUserId SetCounter(
             string counterName,
             ScopedValue[] values = null,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new SetCounterByUserId(
                 this.namespaceName,
                 counterName,
                 values,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -98,14 +93,12 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public ReceiveByUserId Receive(
             string missionGroupName,
             string missionTaskName,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new ReceiveByUserId(
                 this.namespaceName,
                 missionGroupName,
                 missionTaskName,
-                timeOffsetToken,
                 userId
             ));
         }
@@ -113,14 +106,31 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public DecreaseCounterByUserId DecreaseCounter(
             string counterName,
             long value,
-            string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
             return (new DecreaseCounterByUserId(
                 this.namespaceName,
                 counterName,
                 value,
-                timeOffsetToken,
+                userId
+            ));
+        }
+
+        public VerifyCounterValueByUserId VerifyCounterValue(
+            string counterName,
+            VerifyCounterValueByUserIdVerifyType verifyType,
+            VerifyCounterValueByUserIdResetType resetType,
+            long? value = null,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyCounterValueByUserId(
+                this.namespaceName,
+                counterName,
+                verifyType,
+                resetType,
+                value,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

@@ -27,60 +27,64 @@ namespace Gs2Cdk.Gs2Schedule.Model
     public class Event {
         private string name;
         private EventScheduleType? scheduleType;
+        private RepeatSetting repeatSetting;
         private EventRepeatType? repeatType;
         private string metadata;
         private long? absoluteBegin;
         private long? absoluteEnd;
+        private string relativeTriggerName;
         private int? repeatBeginDayOfMonth;
         private int? repeatEndDayOfMonth;
         private EventRepeatBeginDayOfWeek? repeatBeginDayOfWeek;
         private EventRepeatEndDayOfWeek? repeatEndDayOfWeek;
         private int? repeatBeginHour;
         private int? repeatEndHour;
-        private string relativeTriggerName;
 
         public Event(
             string name,
             EventScheduleType scheduleType,
+            RepeatSetting repeatSetting,
             EventRepeatType repeatType,
             EventOptions options = null
         ){
             this.name = name;
             this.scheduleType = scheduleType;
+            this.repeatSetting = repeatSetting;
             this.repeatType = repeatType;
             this.metadata = options?.metadata;
             this.absoluteBegin = options?.absoluteBegin;
             this.absoluteEnd = options?.absoluteEnd;
+            this.relativeTriggerName = options?.relativeTriggerName;
             this.repeatBeginDayOfMonth = options?.repeatBeginDayOfMonth;
             this.repeatEndDayOfMonth = options?.repeatEndDayOfMonth;
             this.repeatBeginDayOfWeek = options?.repeatBeginDayOfWeek;
             this.repeatEndDayOfWeek = options?.repeatEndDayOfWeek;
             this.repeatBeginHour = options?.repeatBeginHour;
             this.repeatEndHour = options?.repeatEndHour;
-            this.relativeTriggerName = options?.relativeTriggerName;
         }
 
         public static Event ScheduleTypeIsAbsolute(
             string name,
+            RepeatSetting repeatSetting,
             EventRepeatType repeatType,
-            long? absoluteBegin,
-            long? absoluteEnd,
             EventScheduleTypeIsAbsoluteOptions options = null
         ){
             return (new Event(
                 name,
                 EventScheduleType.Absolute,
+                repeatSetting,
                 repeatType,
                 new EventOptions {
-                    absoluteBegin = absoluteBegin,
-                    absoluteEnd = absoluteEnd,
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
 
         public static Event ScheduleTypeIsRelative(
             string name,
+            RepeatSetting repeatSetting,
             EventRepeatType repeatType,
             string relativeTriggerName,
             EventScheduleTypeIsRelativeOptions options = null
@@ -88,10 +92,13 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 EventScheduleType.Relative,
+                repeatSetting,
                 repeatType,
                 new EventOptions {
                     relativeTriggerName = relativeTriggerName,
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
@@ -99,14 +106,18 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event RepeatTypeIsAlways(
             string name,
             EventScheduleType scheduleType,
+            RepeatSetting repeatSetting,
             EventRepeatTypeIsAlwaysOptions options = null
         ){
             return (new Event(
                 name,
                 scheduleType,
+                repeatSetting,
                 EventRepeatType.Always,
                 new EventOptions {
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
@@ -114,6 +125,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event RepeatTypeIsDaily(
             string name,
             EventScheduleType scheduleType,
+            RepeatSetting repeatSetting,
             int? repeatBeginHour,
             int? repeatEndHour,
             EventRepeatTypeIsDailyOptions options = null
@@ -121,11 +133,14 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                repeatSetting,
                 EventRepeatType.Daily,
                 new EventOptions {
                     repeatBeginHour = repeatBeginHour,
                     repeatEndHour = repeatEndHour,
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
@@ -133,6 +148,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event RepeatTypeIsWeekly(
             string name,
             EventScheduleType scheduleType,
+            RepeatSetting repeatSetting,
             EventRepeatBeginDayOfWeek repeatBeginDayOfWeek,
             EventRepeatEndDayOfWeek repeatEndDayOfWeek,
             int? repeatBeginHour,
@@ -142,6 +158,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                repeatSetting,
                 EventRepeatType.Weekly,
                 new EventOptions {
                     repeatBeginDayOfWeek = repeatBeginDayOfWeek,
@@ -149,6 +166,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
                     repeatBeginHour = repeatBeginHour,
                     repeatEndHour = repeatEndHour,
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
@@ -156,6 +175,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event RepeatTypeIsMonthly(
             string name,
             EventScheduleType scheduleType,
+            RepeatSetting repeatSetting,
             int? repeatBeginDayOfMonth,
             int? repeatEndDayOfMonth,
             int? repeatBeginHour,
@@ -165,6 +185,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
             return (new Event(
                 name,
                 scheduleType,
+                repeatSetting,
                 EventRepeatType.Monthly,
                 new EventOptions {
                     repeatBeginDayOfMonth = repeatBeginDayOfMonth,
@@ -172,6 +193,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
                     repeatBeginHour = repeatBeginHour,
                     repeatEndHour = repeatEndHour,
                     metadata = options?.metadata,
+                    absoluteBegin = options?.absoluteBegin,
+                    absoluteEnd = options?.absoluteEnd,
                 }
             ));
         }
@@ -190,15 +213,22 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 properties["scheduleType"] = this.scheduleType.Value.Str(
                 );
             }
-            if (this.repeatType != null) {
-                properties["repeatType"] = this.repeatType.Value.Str(
-                );
-            }
             if (this.absoluteBegin != null) {
                 properties["absoluteBegin"] = this.absoluteBegin;
             }
             if (this.absoluteEnd != null) {
                 properties["absoluteEnd"] = this.absoluteEnd;
+            }
+            if (this.relativeTriggerName != null) {
+                properties["relativeTriggerName"] = this.relativeTriggerName;
+            }
+            if (this.repeatSetting != null) {
+                properties["repeatSetting"] = this.repeatSetting?.Properties(
+                );
+            }
+            if (this.repeatType != null) {
+                properties["repeatType"] = this.repeatType.Value.Str(
+                );
             }
             if (this.repeatBeginDayOfMonth != null) {
                 properties["repeatBeginDayOfMonth"] = this.repeatBeginDayOfMonth;
@@ -220,9 +250,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
             if (this.repeatEndHour != null) {
                 properties["repeatEndHour"] = this.repeatEndHour;
             }
-            if (this.relativeTriggerName != null) {
-                properties["relativeTriggerName"] = this.relativeTriggerName;
-            }
 
             return properties;
         }
@@ -238,6 +265,16 @@ namespace Gs2Cdk.Gs2Schedule.Model
                         EventScheduleType e => e,
                         string s => EventScheduleTypeExt.New(s),
                         _ => EventScheduleType.Absolute
+                    };
+                })(),
+                new Func<RepeatSetting>(() =>
+                {
+                    return properties["repeatSetting"] switch {
+                        RepeatSetting v => v,
+                        RepeatSetting[] v => v.Length > 0 ? v.First() : null,
+                        Dictionary<string, object> v => RepeatSetting.FromProperties(v),
+                        Dictionary<string, object>[] v => v.Length > 0 ? RepeatSetting.FromProperties(v.First()) : null,
+                        _ => null
                     };
                 })(),
                 new Func<EventRepeatType>(() =>
@@ -266,6 +303,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
                             _ => null
                         } : null;
                     })(),
+                    relativeTriggerName = properties.TryGetValue("relativeTriggerName", out var relativeTriggerName) ? (string)relativeTriggerName : null,
                     repeatBeginDayOfMonth = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("repeatBeginDayOfMonth", out var repeatBeginDayOfMonth) ? repeatBeginDayOfMonth switch {
@@ -299,8 +337,7 @@ namespace Gs2Cdk.Gs2Schedule.Model
                             string v => int.Parse(v),
                             _ => null
                         } : null;
-                    })(),
-                    relativeTriggerName = properties.TryGetValue("relativeTriggerName", out var relativeTriggerName) ? (string)relativeTriggerName : null
+                    })()
                 }
             );
 
