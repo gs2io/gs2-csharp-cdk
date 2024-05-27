@@ -26,68 +26,75 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class CategoryModel {
         private string name;
+        private bool? sum;
         private CategoryModelOrderDirection? orderDirection;
         private CategoryModelScope? scope;
         private string metadata;
         private long? minimumValue;
         private long? maximumValue;
+        private GlobalRankingSetting globalRankingSetting;
+        private string entryPeriodEventId;
+        private string accessPeriodEventId;
         private bool? uniqueByUserId;
-        private bool? sum;
         private int? calculateFixedTimingHour;
         private int? calculateFixedTimingMinute;
         private int? calculateIntervalMinutes;
         private Scope[] additionalScopes;
-        private string entryPeriodEventId;
-        private string accessPeriodEventId;
         private string[] ignoreUserIds;
         private string generation;
 
         public CategoryModel(
             string name,
+            bool? sum,
             CategoryModelOrderDirection orderDirection,
             CategoryModelScope scope,
             CategoryModelOptions options = null
         ){
             this.name = name;
+            this.sum = sum;
             this.orderDirection = orderDirection;
             this.scope = scope;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.maximumValue = options?.maximumValue;
+            this.globalRankingSetting = options?.globalRankingSetting;
+            this.entryPeriodEventId = options?.entryPeriodEventId;
+            this.accessPeriodEventId = options?.accessPeriodEventId;
             this.uniqueByUserId = options?.uniqueByUserId;
-            this.sum = options?.sum;
             this.calculateFixedTimingHour = options?.calculateFixedTimingHour;
             this.calculateFixedTimingMinute = options?.calculateFixedTimingMinute;
             this.calculateIntervalMinutes = options?.calculateIntervalMinutes;
             this.additionalScopes = options?.additionalScopes;
-            this.entryPeriodEventId = options?.entryPeriodEventId;
-            this.accessPeriodEventId = options?.accessPeriodEventId;
             this.ignoreUserIds = options?.ignoreUserIds;
             this.generation = options?.generation;
         }
 
         public static CategoryModel ScopeIsGlobal(
             string name,
+            bool? sum,
             CategoryModelOrderDirection orderDirection,
+            GlobalRankingSetting globalRankingSetting,
             bool? uniqueByUserId,
             int? calculateIntervalMinutes,
             CategoryModelScopeIsGlobalOptions options = null
         ){
             return (new CategoryModel(
                 name,
+                sum,
                 orderDirection,
                 CategoryModelScope.Global,
                 new CategoryModelOptions {
+                    globalRankingSetting = globalRankingSetting,
                     uniqueByUserId = uniqueByUserId,
                     calculateIntervalMinutes = calculateIntervalMinutes,
                     metadata = options?.metadata,
                     minimumValue = options?.minimumValue,
                     maximumValue = options?.maximumValue,
+                    entryPeriodEventId = options?.entryPeriodEventId,
+                    accessPeriodEventId = options?.accessPeriodEventId,
                     calculateFixedTimingHour = options?.calculateFixedTimingHour,
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
                     additionalScopes = options?.additionalScopes,
-                    entryPeriodEventId = options?.entryPeriodEventId,
-                    accessPeriodEventId = options?.accessPeriodEventId,
                     ignoreUserIds = options?.ignoreUserIds,
                     generation = options?.generation,
                 }
@@ -96,22 +103,24 @@ namespace Gs2Cdk.Gs2Ranking.Model
 
         public static CategoryModel ScopeIsScoped(
             string name,
+            bool? sum,
             CategoryModelOrderDirection orderDirection,
             CategoryModelScopeIsScopedOptions options = null
         ){
             return (new CategoryModel(
                 name,
+                sum,
                 orderDirection,
                 CategoryModelScope.Scoped,
                 new CategoryModelOptions {
                     metadata = options?.metadata,
                     minimumValue = options?.minimumValue,
                     maximumValue = options?.maximumValue,
+                    entryPeriodEventId = options?.entryPeriodEventId,
+                    accessPeriodEventId = options?.accessPeriodEventId,
                     calculateFixedTimingHour = options?.calculateFixedTimingHour,
                     calculateFixedTimingMinute = options?.calculateFixedTimingMinute,
                     additionalScopes = options?.additionalScopes,
-                    entryPeriodEventId = options?.entryPeriodEventId,
-                    accessPeriodEventId = options?.accessPeriodEventId,
                     ignoreUserIds = options?.ignoreUserIds,
                     generation = options?.generation,
                 }
@@ -134,6 +143,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.maximumValue != null) {
                 properties["maximumValue"] = this.maximumValue;
             }
+            if (this.sum != null) {
+                properties["sum"] = this.sum;
+            }
             if (this.orderDirection != null) {
                 properties["orderDirection"] = this.orderDirection.Value.Str(
                 );
@@ -142,11 +154,18 @@ namespace Gs2Cdk.Gs2Ranking.Model
                 properties["scope"] = this.scope.Value.Str(
                 );
             }
+            if (this.globalRankingSetting != null) {
+                properties["globalRankingSetting"] = this.globalRankingSetting?.Properties(
+                );
+            }
+            if (this.entryPeriodEventId != null) {
+                properties["entryPeriodEventId"] = this.entryPeriodEventId;
+            }
+            if (this.accessPeriodEventId != null) {
+                properties["accessPeriodEventId"] = this.accessPeriodEventId;
+            }
             if (this.uniqueByUserId != null) {
                 properties["uniqueByUserId"] = this.uniqueByUserId;
-            }
-            if (this.sum != null) {
-                properties["sum"] = this.sum;
             }
             if (this.calculateFixedTimingHour != null) {
                 properties["calculateFixedTimingHour"] = this.calculateFixedTimingHour;
@@ -160,12 +179,6 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.additionalScopes != null) {
                 properties["additionalScopes"] = this.additionalScopes.Select(v => v?.Properties(
                         )).ToList();
-            }
-            if (this.entryPeriodEventId != null) {
-                properties["entryPeriodEventId"] = this.entryPeriodEventId;
-            }
-            if (this.accessPeriodEventId != null) {
-                properties["accessPeriodEventId"] = this.accessPeriodEventId;
             }
             if (this.ignoreUserIds != null) {
                 properties["ignoreUserIds"] = this.ignoreUserIds;
@@ -182,6 +195,14 @@ namespace Gs2Cdk.Gs2Ranking.Model
         ){
             var model = new CategoryModel(
                 (string)properties["name"],
+                new Func<bool?>(() =>
+                {
+                    return properties["sum"] switch {
+                        bool v => v,
+                        string v => bool.Parse(v),
+                        _ => false
+                    };
+                })(),
                 new Func<CategoryModelOrderDirection>(() =>
                 {
                     return properties["orderDirection"] switch {
@@ -216,17 +237,19 @@ namespace Gs2Cdk.Gs2Ranking.Model
                             _ => null
                         } : null;
                     })(),
+                    globalRankingSetting = properties.TryGetValue("globalRankingSetting", out var globalRankingSetting) ? new Func<GlobalRankingSetting>(() =>
+                    {
+                        return globalRankingSetting switch {
+                            GlobalRankingSetting v => v,
+                            Dictionary<string, object> v => GlobalRankingSetting.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    entryPeriodEventId = properties.TryGetValue("entryPeriodEventId", out var entryPeriodEventId) ? (string)entryPeriodEventId : null,
+                    accessPeriodEventId = properties.TryGetValue("accessPeriodEventId", out var accessPeriodEventId) ? (string)accessPeriodEventId : null,
                     uniqueByUserId = new Func<bool?>(() =>
                     {
                         return properties.TryGetValue("uniqueByUserId", out var uniqueByUserId) ? uniqueByUserId switch {
-                            bool v => v,
-                            string v => bool.Parse(v),
-                            _ => null
-                        } : null;
-                    })(),
-                    sum = new Func<bool?>(() =>
-                    {
-                        return properties.TryGetValue("sum", out var sum) ? sum switch {
                             bool v => v,
                             string v => bool.Parse(v),
                             _ => null
@@ -266,8 +289,6 @@ namespace Gs2Cdk.Gs2Ranking.Model
                             _ => null
                         };
                     })() : null,
-                    entryPeriodEventId = properties.TryGetValue("entryPeriodEventId", out var entryPeriodEventId) ? (string)entryPeriodEventId : null,
-                    accessPeriodEventId = properties.TryGetValue("accessPeriodEventId", out var accessPeriodEventId) ? (string)accessPeriodEventId : null,
                     ignoreUserIds = properties.TryGetValue("ignoreUserIds", out var ignoreUserIds) ? new Func<string[]>(() =>
                     {
                         return ignoreUserIds switch {

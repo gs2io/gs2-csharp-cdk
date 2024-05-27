@@ -26,14 +26,14 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
         public string metadata;
         public long? minimumValue;
         public long? maximumValue;
+        public GlobalRankingSetting globalRankingSetting;
+        public string entryPeriodEventId;
+        public string accessPeriodEventId;
         public bool? uniqueByUserId;
-        public bool? sum;
         public int? calculateFixedTimingHour;
         public int? calculateFixedTimingMinute;
         public int? calculateIntervalMinutes;
         public Scope[] additionalScopes;
-        public string entryPeriodEventId;
-        public string accessPeriodEventId;
         public string[] ignoreUserIds;
         public string generation;
     }
