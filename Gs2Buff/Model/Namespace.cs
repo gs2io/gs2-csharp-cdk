@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Buff.Model
         private Stack? stack;
         private string name;
         private string description;
+        private ScriptSetting applyBuffScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -42,6 +43,7 @@ namespace Gs2Cdk.Gs2Buff.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.applyBuffScript = options?.applyBuffScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -68,6 +70,10 @@ namespace Gs2Cdk.Gs2Buff.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.applyBuffScript != null) {
+                properties["ApplyBuffScript"] = this.applyBuffScript?.Properties(
+                );
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
