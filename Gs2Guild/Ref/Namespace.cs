@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Guild.Model;
 using Gs2Cdk.Gs2Guild.StampSheet;
+using Gs2Cdk.Gs2Guild.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Guild.Ref
 {
@@ -77,6 +78,38 @@ namespace Gs2Cdk.Gs2Guild.Ref
                 guildModelName,
                 guildName,
                 value
+            ));
+        }
+
+        public VerifyCurrentMaximumMemberCountByGuildName VerifyCurrentMaximumMemberCountByGuildName(
+            string guildModelName,
+            string guildName,
+            VerifyCurrentMaximumMemberCountByGuildNameVerifyType verifyType,
+            int? value = null,
+            bool? multiplyValueSpecifyingQuantity = null
+        ){
+            return (new VerifyCurrentMaximumMemberCountByGuildName(
+                this.namespaceName,
+                guildModelName,
+                guildName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity
+            ));
+        }
+
+        public VerifyIncludeMemberByUserId VerifyIncludeMember(
+            string guildModelName,
+            VerifyIncludeMemberByUserIdVerifyType verifyType,
+            string guildName = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyIncludeMemberByUserId(
+                this.namespaceName,
+                guildModelName,
+                verifyType,
+                guildName,
+                userId
             ));
         }
 

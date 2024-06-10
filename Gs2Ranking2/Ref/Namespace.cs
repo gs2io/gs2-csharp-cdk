@@ -18,10 +18,10 @@ using System.Linq;
 
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Idle.Model;
-using Gs2Cdk.Gs2Idle.StampSheet;
+using Gs2Cdk.Gs2Ranking2.Model;
+using Gs2Cdk.Gs2Ranking2.StampSheet;
 
-namespace Gs2Cdk.Gs2Idle.Ref
+namespace Gs2Cdk.Gs2Ranking2.Ref
 {
     public class NamespaceRef {
         private string namespaceName;
@@ -32,63 +32,57 @@ namespace Gs2Cdk.Gs2Idle.Ref
             this.namespaceName = namespaceName;
         }
 
-        public CategoryModelRef CategoryModel(
-            string categoryName
+        public GlobalRankingModelRef GlobalRankingModel(
+            string rankingName
         ){
-            return (new CategoryModelRef(
+            return (new GlobalRankingModelRef(
                 this.namespaceName,
-                categoryName
+                rankingName
             ));
         }
 
-        public IncreaseMaximumIdleMinutesByUserId IncreaseMaximumIdleMinutes(
-            string categoryName,
-            int? increaseMinutes = null,
+        public SubscribeRankingModelRef SubscribeRankingModel(
+            string rankingName
+        ){
+            return (new SubscribeRankingModelRef(
+                this.namespaceName,
+                rankingName
+            ));
+        }
+
+        public ClusterRankingModelRef ClusterRankingModel(
+            string rankingName
+        ){
+            return (new ClusterRankingModelRef(
+                this.namespaceName,
+                rankingName
+            ));
+        }
+
+        public CreateGlobalRankingReceivedRewardByUserId CreateGlobalRankingReceivedReward(
+            string rankingName,
+            long? season = null,
             string userId = "#{userId}"
         ){
-            return (new IncreaseMaximumIdleMinutesByUserId(
+            return (new CreateGlobalRankingReceivedRewardByUserId(
                 this.namespaceName,
-                categoryName,
-                increaseMinutes,
+                rankingName,
+                season,
                 userId
             ));
         }
 
-        public SetMaximumIdleMinutesByUserId SetMaximumIdleMinutes(
-            string categoryName,
-            int? maximumIdleMinutes = null,
+        public CreateClusterRankingReceivedRewardByUserId CreateClusterRankingReceivedReward(
+            string rankingName,
+            string clusterName,
+            long? season = null,
             string userId = "#{userId}"
         ){
-            return (new SetMaximumIdleMinutesByUserId(
+            return (new CreateClusterRankingReceivedRewardByUserId(
                 this.namespaceName,
-                categoryName,
-                maximumIdleMinutes,
-                userId
-            ));
-        }
-
-        public ReceiveByUserId Receive(
-            string categoryName,
-            Config[] config = null,
-            string userId = "#{userId}"
-        ){
-            return (new ReceiveByUserId(
-                this.namespaceName,
-                categoryName,
-                config,
-                userId
-            ));
-        }
-
-        public DecreaseMaximumIdleMinutesByUserId DecreaseMaximumIdleMinutes(
-            string categoryName,
-            int? decreaseMinutes = null,
-            string userId = "#{userId}"
-        ){
-            return (new DecreaseMaximumIdleMinutesByUserId(
-                this.namespaceName,
-                categoryName,
-                decreaseMinutes,
+                rankingName,
+                clusterName,
+                season,
                 userId
             ));
         }
@@ -107,7 +101,7 @@ namespace Gs2Cdk.Gs2Idle.Ref
                     GetAttr.OwnerId(
                     ).Str(
                     ),
-                    "idle",
+                    "ranking2",
                     this.namespaceName
                 }
             )).Str(
