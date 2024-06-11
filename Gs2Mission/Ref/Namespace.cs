@@ -103,6 +103,23 @@ namespace Gs2Cdk.Gs2Mission.Ref
             ));
         }
 
+        public VerifyCompleteByUserId VerifyComplete(
+            string missionGroupName,
+            VerifyCompleteByUserIdVerifyType verifyType,
+            string missionTaskName,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyCompleteByUserId(
+                this.namespaceName,
+                missionGroupName,
+                verifyType,
+                missionTaskName,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
         public DecreaseCounterByUserId DecreaseCounter(
             string counterName,
             long value,
