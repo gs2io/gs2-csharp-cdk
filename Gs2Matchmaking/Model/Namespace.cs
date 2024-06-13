@@ -191,12 +191,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         }
 
         public Namespace MasterData(
-            RatingModel[] ratingModels
+            RatingModel[] ratingModels,
+            SeasonModel[] seasonModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                ratingModels
+                ratingModels,
+                seasonModels
             )).AddDependsOn(
                 this
             );
@@ -216,6 +218,16 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
                         List<RatingModel> v => v.ToArray(),
                         Dictionary<string, object>[] v => v.Select(RatingModel.FromProperties).ToArray(),
                         List<Dictionary<string, object>> v => v.Select(RatingModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<SeasonModel[]>(() =>
+                {
+                    return properties["seasonModels"] switch {
+                        SeasonModel[] v => v,
+                        List<SeasonModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(SeasonModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(SeasonModel.FromProperties).ToArray(),
                         _ => null,
                     };
                 })()

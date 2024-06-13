@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         private string? version= "2020-06-24";
         private string? namespaceName;
         private RatingModel[] ratingModels;
+        private SeasonModel[] seasonModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            RatingModel[] ratingModels
+            RatingModel[] ratingModels,
+            SeasonModel[] seasonModels
         ): base(
-            "Matchmaking_CurrentRatingModelMaster_" + namespaceName
+            "Matchmaking_CurrentModelMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.ratingModels = ratingModels;
+            this.seasonModels = seasonModels;
             stack.AddResource(
                 this
             );
@@ -48,7 +51,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 
         public override string ResourceType(
         ){
-            return "GS2::Matchmaking::CurrentRatingModelMaster";
+            return "GS2::Matchmaking::CurrentModelMaster";
         }
 
         public override Dictionary<string, object> Properties(
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             settings["version"] = this.version;
             if (this.ratingModels != null) {
                 settings["ratingModels"] = this.ratingModels.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.seasonModels != null) {
+                settings["seasonModels"] = this.seasonModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

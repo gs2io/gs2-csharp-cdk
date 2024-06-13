@@ -22,31 +22,16 @@ using Gs2Cdk.Gs2Matchmaking.Model;
 
 namespace Gs2Cdk.Gs2Matchmaking.Ref
 {
-    public class NamespaceRef {
+    public class SeasonModelRef {
         private string namespaceName;
+        private string seasonName;
 
-        public NamespaceRef(
-            string namespaceName
-        ){
-            this.namespaceName = namespaceName;
-        }
-
-        public RatingModelRef RatingModel(
-            string ratingName
-        ){
-            return (new RatingModelRef(
-                this.namespaceName,
-                ratingName
-            ));
-        }
-
-        public SeasonModelRef SeasonModel(
+        public SeasonModelRef(
+            string namespaceName,
             string seasonName
         ){
-            return (new SeasonModelRef(
-                this.namespaceName,
-                seasonName
-            ));
+            this.namespaceName = namespaceName;
+            this.seasonName = seasonName;
         }
 
         public string Grn(
@@ -64,7 +49,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Ref
                     ).Str(
                     ),
                     "matchmaking",
-                    this.namespaceName
+                    this.namespaceName,
+                    "model",
+                    this.seasonName
                 }
             )).Str(
             );
