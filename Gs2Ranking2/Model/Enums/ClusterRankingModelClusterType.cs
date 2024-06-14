@@ -20,7 +20,8 @@ namespace Gs2Cdk.Gs2Ranking2.Model.Enums
     
     public enum ClusterRankingModelClusterType {
         Raw,
-        Gs2Guild_guild
+        Gs2Guild_guild,
+        Gs2Matchmaking_seasonGathering
     }
 
     public static class ClusterRankingModelClusterTypeExt
@@ -31,6 +32,8 @@ namespace Gs2Cdk.Gs2Ranking2.Model.Enums
                     return "Raw";
                 case ClusterRankingModelClusterType.Gs2Guild_guild:
                     return "Gs2Guild::Guild";
+                case ClusterRankingModelClusterType.Gs2Matchmaking_seasonGathering:
+                    return "Gs2Matchmaking::SeasonGathering";
             }
             return "unknown";
         }
@@ -41,6 +44,8 @@ namespace Gs2Cdk.Gs2Ranking2.Model.Enums
                     return ClusterRankingModelClusterType.Raw;
                 case "Gs2Guild::Guild":
                     return ClusterRankingModelClusterType.Gs2Guild_guild;
+                case "Gs2Matchmaking::SeasonGathering":
+                    return ClusterRankingModelClusterType.Gs2Matchmaking_seasonGathering;
             }
             return ClusterRankingModelClusterType.Raw;
         }

@@ -19,6 +19,8 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.StampSheet;
+using Gs2Cdk.Gs2Matchmaking.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Matchmaking.Ref
 {
@@ -46,6 +48,25 @@ namespace Gs2Cdk.Gs2Matchmaking.Ref
             return (new SeasonModelRef(
                 this.namespaceName,
                 seasonName
+            ));
+        }
+
+        public VerifyIncludeParticipantByUserId VerifyIncludeParticipant(
+            string seasonName,
+            long season,
+            long tier,
+            VerifyIncludeParticipantByUserIdVerifyType verifyType,
+            string seasonGatheringName = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyIncludeParticipantByUserId(
+                this.namespaceName,
+                seasonName,
+                season,
+                tier,
+                verifyType,
+                seasonGatheringName,
+                userId
             ));
         }
 
