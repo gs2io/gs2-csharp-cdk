@@ -19,30 +19,35 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
 {
     
     public enum BuffEntryModelExpression {
-        Add,
-        Mul
+        RateAdd,
+        Mul,
+        ValueAdd
     }
 
     public static class BuffEntryModelExpressionExt
     {
         public static string Str(this BuffEntryModelExpression self) {
             switch (self) {
-                case BuffEntryModelExpression.Add:
-                    return "add";
+                case BuffEntryModelExpression.RateAdd:
+                    return "rate_add";
                 case BuffEntryModelExpression.Mul:
                     return "mul";
+                case BuffEntryModelExpression.ValueAdd:
+                    return "value_add";
             }
             return "unknown";
         }
 
         public static BuffEntryModelExpression New(string value) {
             switch (value) {
-                case "add":
-                    return BuffEntryModelExpression.Add;
+                case "rate_add":
+                    return BuffEntryModelExpression.RateAdd;
                 case "mul":
                     return BuffEntryModelExpression.Mul;
+                case "value_add":
+                    return BuffEntryModelExpression.ValueAdd;
             }
-            return BuffEntryModelExpression.Add;
+            return BuffEntryModelExpression.RateAdd;
         }
     }
 }

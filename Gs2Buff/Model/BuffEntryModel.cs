@@ -145,7 +145,7 @@ namespace Gs2Cdk.Gs2Buff.Model
                     return properties["expression"] switch {
                         BuffEntryModelExpression e => e,
                         string s => BuffEntryModelExpressionExt.New(s),
-                        _ => BuffEntryModelExpression.Add
+                        _ => BuffEntryModelExpression.RateAdd
                     };
                 })(),
                 new Func<int>(() =>
