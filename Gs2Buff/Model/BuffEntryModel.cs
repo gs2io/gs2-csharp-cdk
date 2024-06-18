@@ -26,8 +26,8 @@ namespace Gs2Cdk.Gs2Buff.Model
 {
     public class BuffEntryModel {
         private string name;
-        private BuffEntryModelTargetType? targetType;
         private BuffEntryModelExpression? expression;
+        private BuffEntryModelTargetType? targetType;
         private int priority;
         private string metadata;
         private BuffTargetModel targetModel;
@@ -36,14 +36,14 @@ namespace Gs2Cdk.Gs2Buff.Model
 
         public BuffEntryModel(
             string name,
-            BuffEntryModelTargetType targetType,
             BuffEntryModelExpression expression,
+            BuffEntryModelTargetType targetType,
             int priority,
             BuffEntryModelOptions options = null
         ){
             this.name = name;
-            this.targetType = targetType;
             this.expression = expression;
+            this.targetType = targetType;
             this.priority = priority;
             this.metadata = options?.metadata;
             this.targetModel = options?.targetModel;
@@ -60,8 +60,8 @@ namespace Gs2Cdk.Gs2Buff.Model
         ){
             return (new BuffEntryModel(
                 name,
-                BuffEntryModelTargetType.Model,
                 expression,
+                BuffEntryModelTargetType.Model,
                 priority,
                 new BuffEntryModelOptions {
                     targetModel = targetModel,
@@ -80,8 +80,8 @@ namespace Gs2Cdk.Gs2Buff.Model
         ){
             return (new BuffEntryModel(
                 name,
-                BuffEntryModelTargetType.Action,
                 expression,
+                BuffEntryModelTargetType.Action,
                 priority,
                 new BuffEntryModelOptions {
                     targetAction = targetAction,
@@ -101,6 +101,10 @@ namespace Gs2Cdk.Gs2Buff.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
+            if (this.expression != null) {
+                properties["expression"] = this.expression.Value.Str(
+                );
+            }
             if (this.targetType != null) {
                 properties["targetType"] = this.targetType.Value.Str(
                 );
@@ -111,10 +115,6 @@ namespace Gs2Cdk.Gs2Buff.Model
             }
             if (this.targetAction != null) {
                 properties["targetAction"] = this.targetAction?.Properties(
-                );
-            }
-            if (this.expression != null) {
-                properties["expression"] = this.expression.Value.Str(
                 );
             }
             if (this.priority != null) {
@@ -132,20 +132,20 @@ namespace Gs2Cdk.Gs2Buff.Model
         ){
             var model = new BuffEntryModel(
                 (string)properties["name"],
-                new Func<BuffEntryModelTargetType>(() =>
-                {
-                    return properties["targetType"] switch {
-                        BuffEntryModelTargetType e => e,
-                        string s => BuffEntryModelTargetTypeExt.New(s),
-                        _ => BuffEntryModelTargetType.Model
-                    };
-                })(),
                 new Func<BuffEntryModelExpression>(() =>
                 {
                     return properties["expression"] switch {
                         BuffEntryModelExpression e => e,
                         string s => BuffEntryModelExpressionExt.New(s),
                         _ => BuffEntryModelExpression.RateAdd
+                    };
+                })(),
+                new Func<BuffEntryModelTargetType>(() =>
+                {
+                    return properties["targetType"] switch {
+                        BuffEntryModelTargetType e => e,
+                        string s => BuffEntryModelTargetTypeExt.New(s),
+                        _ => BuffEntryModelTargetType.Model
                     };
                 })(),
                 new Func<int>(() =>
