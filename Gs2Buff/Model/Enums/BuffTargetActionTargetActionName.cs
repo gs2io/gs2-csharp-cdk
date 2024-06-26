@@ -32,6 +32,9 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
         Gs2InventoryConsumeSimpleItemsByUserId,
         Gs2LimitCountUp,
         Gs2LimitCountUpByUserId,
+        Gs2Money2DepositByUserId,
+        Gs2Money2Withdraw,
+        Gs2Money2WithdrawByUserId,
         Gs2MoneyDepositByUserId,
         Gs2MoneyWithdraw,
         Gs2MoneyWithdrawByUserId,
@@ -70,6 +73,12 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return "Gs2Limit:CountUp";
                 case BuffTargetActionTargetActionName.Gs2LimitCountUpByUserId:
                     return "Gs2Limit:CountUpByUserId";
+                case BuffTargetActionTargetActionName.Gs2Money2DepositByUserId:
+                    return "Gs2Money2:DepositByUserId";
+                case BuffTargetActionTargetActionName.Gs2Money2Withdraw:
+                    return "Gs2Money2:Withdraw";
+                case BuffTargetActionTargetActionName.Gs2Money2WithdrawByUserId:
+                    return "Gs2Money2:WithdrawByUserId";
                 case BuffTargetActionTargetActionName.Gs2MoneyDepositByUserId:
                     return "Gs2Money:DepositByUserId";
                 case BuffTargetActionTargetActionName.Gs2MoneyWithdraw:
@@ -114,6 +123,12 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return BuffTargetActionTargetActionName.Gs2LimitCountUp;
                 case "Gs2Limit:CountUpByUserId":
                     return BuffTargetActionTargetActionName.Gs2LimitCountUpByUserId;
+                case "Gs2Money2:DepositByUserId":
+                    return BuffTargetActionTargetActionName.Gs2Money2DepositByUserId;
+                case "Gs2Money2:Withdraw":
+                    return BuffTargetActionTargetActionName.Gs2Money2Withdraw;
+                case "Gs2Money2:WithdrawByUserId":
+                    return BuffTargetActionTargetActionName.Gs2Money2WithdrawByUserId;
                 case "Gs2Money:DepositByUserId":
                     return BuffTargetActionTargetActionName.Gs2MoneyDepositByUserId;
                 case "Gs2Money:Withdraw":
