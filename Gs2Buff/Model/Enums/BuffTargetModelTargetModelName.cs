@@ -39,6 +39,7 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
         Gs2LoginRewardBonusModel,
         Gs2MissionMissionGroupModel,
         Gs2MissionMissionTaskModel,
+        Gs2Money2Wallet,
         Gs2MoneyWallet,
         Gs2QuestQuestGroupModel,
         Gs2QuestQuestModel,
@@ -95,6 +96,8 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return "Gs2Mission:MissionGroupModel";
                 case BuffTargetModelTargetModelName.Gs2MissionMissionTaskModel:
                     return "Gs2Mission:MissionTaskModel";
+                case BuffTargetModelTargetModelName.Gs2Money2Wallet:
+                    return "Gs2Money2:Wallet";
                 case BuffTargetModelTargetModelName.Gs2MoneyWallet:
                     return "Gs2Money:Wallet";
                 case BuffTargetModelTargetModelName.Gs2QuestQuestGroupModel:
@@ -161,6 +164,8 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return BuffTargetModelTargetModelName.Gs2MissionMissionGroupModel;
                 case "Gs2Mission:MissionTaskModel":
                     return BuffTargetModelTargetModelName.Gs2MissionMissionTaskModel;
+                case "Gs2Money2:Wallet":
+                    return BuffTargetModelTargetModelName.Gs2Money2Wallet;
                 case "Gs2Money:Wallet":
                     return BuffTargetModelTargetModelName.Gs2MoneyWallet;
                 case "Gs2Quest:QuestGroupModel":
