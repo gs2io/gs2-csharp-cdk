@@ -17,17 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Idle.Model;
+using Gs2Cdk.Gs2Money2.Model;
 
-namespace Gs2Cdk.Gs2Idle.Model.Options
+namespace Gs2Cdk.Gs2Money2.Model.Options
 {
-    public class NamespaceOptions {
-        public string description;
-        public TransactionSetting transactionSetting;
-        public ScriptSetting receiveScript;
-        public string overrideAcquireActionsScriptId;
-        public LogSetting logSetting;
+    public class DailyTransactionHistoryOptions {
+        public long? revision;
     }
 }
-

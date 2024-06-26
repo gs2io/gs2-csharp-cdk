@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Idle.Model
         private string description;
         private TransactionSetting transactionSetting;
         private ScriptSetting receiveScript;
+        private string overrideAcquireActionsScriptId;
         private LogSetting logSetting;
 
         public Namespace(
@@ -46,6 +47,7 @@ namespace Gs2Cdk.Gs2Idle.Model
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
             this.receiveScript = options?.receiveScript;
+            this.overrideAcquireActionsScriptId = options?.overrideAcquireActionsScriptId;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -80,6 +82,9 @@ namespace Gs2Cdk.Gs2Idle.Model
             if (this.receiveScript != null) {
                 properties["ReceiveScript"] = this.receiveScript?.Properties(
                 );
+            }
+            if (this.overrideAcquireActionsScriptId != null) {
+                properties["OverrideAcquireActionsScriptId"] = this.overrideAcquireActionsScriptId;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
