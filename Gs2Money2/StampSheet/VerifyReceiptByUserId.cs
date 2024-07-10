@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -26,14 +28,14 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
         private string namespaceName;
         private string userId;
         private string contentName;
-        private Receipt receipt;
+        private string receipt;
         private string timeOffsetToken;
 
 
         public VerifyReceiptByUserId(
             string namespaceName,
             string contentName,
-            Receipt receipt,
+            string receipt,
             string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
@@ -59,8 +61,7 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
                 properties["contentName"] = this.contentName;
             }
             if (this.receipt != null) {
-                properties["receipt"] = this.receipt?.Properties(
-                );
+                properties["receipt"] = this.receipt;
             }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
@@ -74,16 +75,7 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
                 return new VerifyReceiptByUserId(
                     (string)properties["namespaceName"],
                     (string)properties["contentName"],
-                    new Func<Receipt>(() =>
-                    {
-                        return properties["receipt"] switch {
-                            Receipt v => v,
-                            Receipt[] v => v.Length > 0 ? v.First() : null,
-                            Dictionary<string, object> v => Receipt.FromProperties(v),
-                            Dictionary<string, object>[] v => v.Length > 0 ? Receipt.FromProperties(v.First()) : null,
-                            _ => null
-                        };
-                    })(),
+                    (string)properties["receipt"],
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
@@ -97,16 +89,7 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
                 return new VerifyReceiptByUserId(
                     properties["namespaceName"].ToString(),
                     properties["contentName"].ToString(),
-                    new Func<Receipt>(() =>
-                    {
-                        return properties["receipt"] switch {
-                            Receipt v => v,
-                            Receipt[] v => v.Length > 0 ? v.First() : null,
-                            Dictionary<string, object> v => Receipt.FromProperties(v),
-                            Dictionary<string, object>[] v => v.Length > 0 ? Receipt.FromProperties(v.First()) : null,
-                            _ => null
-                        };
-                    })(),
+                    properties["receipt"].ToString(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;

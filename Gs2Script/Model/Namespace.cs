@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Script.Model
         private Stack? stack;
         private string name;
         private string description;
+        private TransactionSetting transactionSetting;
         private LogSetting logSetting;
 
         public Namespace(
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Script.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -70,6 +72,10 @@ namespace Gs2Cdk.Gs2Script.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(

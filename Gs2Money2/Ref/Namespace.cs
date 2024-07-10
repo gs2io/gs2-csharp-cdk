@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +73,7 @@ namespace Gs2Cdk.Gs2Money2.Ref
 
         public VerifyReceiptByUserId VerifyReceipt(
             string contentName,
-            Receipt receipt,
+            string receipt = "#{receipt}",
             string userId = "#{userId}"
         ){
             return (new VerifyReceiptByUserId(
