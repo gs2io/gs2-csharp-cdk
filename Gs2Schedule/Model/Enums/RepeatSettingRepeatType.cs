@@ -22,7 +22,8 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
         Always,
         Daily,
         Weekly,
-        Monthly
+        Monthly,
+        Custom
     }
 
     public static class RepeatSettingRepeatTypeExt
@@ -37,6 +38,8 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
                     return "weekly";
                 case RepeatSettingRepeatType.Monthly:
                     return "monthly";
+                case RepeatSettingRepeatType.Custom:
+                    return "custom";
             }
             return "unknown";
         }
@@ -51,6 +54,8 @@ namespace Gs2Cdk.Gs2Schedule.Model.Enums
                     return RepeatSettingRepeatType.Weekly;
                 case "monthly":
                     return RepeatSettingRepeatType.Monthly;
+                case "custom":
+                    return RepeatSettingRepeatType.Custom;
             }
             return RepeatSettingRepeatType.Always;
         }

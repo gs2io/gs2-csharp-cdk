@@ -36,6 +36,12 @@ namespace Gs2Cdk.Gs2Schedule.Model
         private string beginHourString;
         private int? endHour;
         private string endHourString;
+        private long? anchorTimestamp;
+        private string anchorTimestampString;
+        private int? activeDays;
+        private string activeDaysString;
+        private int? inactiveDays;
+        private string inactiveDaysString;
 
         public RepeatSetting(
             RepeatSettingRepeatType repeatType,
@@ -48,6 +54,9 @@ namespace Gs2Cdk.Gs2Schedule.Model
             this.endDayOfWeek = options?.endDayOfWeek;
             this.beginHour = options?.beginHour;
             this.endHour = options?.endHour;
+            this.anchorTimestamp = options?.anchorTimestamp;
+            this.activeDays = options?.activeDays;
+            this.inactiveDays = options?.inactiveDays;
         }
 
         public static RepeatSetting RepeatTypeIsAlways(
@@ -110,6 +119,22 @@ namespace Gs2Cdk.Gs2Schedule.Model
             ));
         }
 
+        public static RepeatSetting RepeatTypeIsCustom(
+            long? anchorTimestamp,
+            int? activeDays,
+            int? inactiveDays,
+            RepeatSettingRepeatTypeIsCustomOptions options = null
+        ){
+            return (new RepeatSetting(
+                RepeatSettingRepeatType.Custom,
+                new RepeatSettingOptions {
+                    anchorTimestamp = anchorTimestamp,
+                    activeDays = activeDays,
+                    inactiveDays = inactiveDays,
+                }
+            ));
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -152,6 +177,27 @@ namespace Gs2Cdk.Gs2Schedule.Model
             } else {
                 if (this.endHour != null) {
                     properties["endHour"] = this.endHour;
+                }
+            }
+            if (this.anchorTimestampString != null) {
+                properties["anchorTimestamp"] = this.anchorTimestampString;
+            } else {
+                if (this.anchorTimestamp != null) {
+                    properties["anchorTimestamp"] = this.anchorTimestamp;
+                }
+            }
+            if (this.activeDaysString != null) {
+                properties["activeDays"] = this.activeDaysString;
+            } else {
+                if (this.activeDays != null) {
+                    properties["activeDays"] = this.activeDays;
+                }
+            }
+            if (this.inactiveDaysString != null) {
+                properties["inactiveDays"] = this.inactiveDaysString;
+            } else {
+                if (this.inactiveDays != null) {
+                    properties["inactiveDays"] = this.inactiveDays;
                 }
             }
 
@@ -200,6 +246,30 @@ namespace Gs2Cdk.Gs2Schedule.Model
                     endHour = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("endHour", out var endHour) ? endHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    anchorTimestamp = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("anchorTimestamp", out var anchorTimestamp) ? anchorTimestamp switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    activeDays = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("activeDays", out var activeDays) ? activeDays switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    inactiveDays = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("inactiveDays", out var inactiveDays) ? inactiveDays switch {
                             int v => v,
                             string v => int.Parse(v),
                             _ => null
