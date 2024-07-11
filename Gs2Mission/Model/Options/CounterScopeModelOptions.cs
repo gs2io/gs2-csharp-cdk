@@ -24,7 +24,9 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class CounterScopeModelOptions {
         public int? resetDayOfMonth;
+        public string resetDayOfMonthString;
         public CounterScopeModelResetDayOfWeek resetDayOfWeek;
         public int? resetHour;
+        public string resetHourString;
     }
 }

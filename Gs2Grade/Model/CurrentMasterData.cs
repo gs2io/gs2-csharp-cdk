@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Grade.Model;
 namespace Gs2Cdk.Gs2Grade.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2023-12-25";
-        private string? namespaceName;
+        private string version= "2023-12-25";
+        private string namespaceName;
         private GradeModel[] gradeModels;
 
         public CurrentMasterData(

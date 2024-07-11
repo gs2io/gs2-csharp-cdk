@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Account.Model
     public class BanStatus {
         private string reason;
         private long releaseTimestamp;
+        private string releaseTimestampString;
 
         public BanStatus(
             string reason,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Account.Model
             this.releaseTimestamp = releaseTimestamp;
         }
 
+
+        public BanStatus(
+            string reason,
+            string releaseTimestamp,
+            BanStatusOptions options = null
+        ){
+            this.reason = reason;
+            this.releaseTimestampString = releaseTimestamp;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Account.Model
             if (this.reason != null) {
                 properties["reason"] = this.reason;
             }
-            if (this.releaseTimestamp != null) {
-                properties["releaseTimestamp"] = this.releaseTimestamp;
+            if (this.releaseTimestampString != null) {
+                properties["releaseTimestamp"] = this.releaseTimestampString;
+            } else {
+                if (this.releaseTimestamp != null) {
+                    properties["releaseTimestamp"] = this.releaseTimestamp;
+                }
             }
 
             return properties;

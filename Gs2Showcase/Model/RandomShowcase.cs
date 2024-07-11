@@ -26,9 +26,12 @@ namespace Gs2Cdk.Gs2Showcase.Model
     public class RandomShowcase {
         private string name;
         private int maximumNumberOfChoice;
+        private string maximumNumberOfChoiceString;
         private RandomDisplayItemModel[] displayItems;
         private long baseTimestamp;
+        private string baseTimestampString;
         private int resetIntervalHours;
+        private string resetIntervalHoursString;
         private string metadata;
         private string salesPeriodEventId;
 
@@ -49,6 +52,24 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.salesPeriodEventId = options?.salesPeriodEventId;
         }
 
+
+        public RandomShowcase(
+            string name,
+            string maximumNumberOfChoice,
+            RandomDisplayItemModel[] displayItems,
+            string baseTimestamp,
+            string resetIntervalHours,
+            RandomShowcaseOptions options = null
+        ){
+            this.name = name;
+            this.maximumNumberOfChoiceString = maximumNumberOfChoice;
+            this.displayItems = displayItems;
+            this.baseTimestampString = baseTimestamp;
+            this.resetIntervalHoursString = resetIntervalHours;
+            this.metadata = options?.metadata;
+            this.salesPeriodEventId = options?.salesPeriodEventId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -59,18 +80,30 @@ namespace Gs2Cdk.Gs2Showcase.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.maximumNumberOfChoice != null) {
-                properties["maximumNumberOfChoice"] = this.maximumNumberOfChoice;
+            if (this.maximumNumberOfChoiceString != null) {
+                properties["maximumNumberOfChoice"] = this.maximumNumberOfChoiceString;
+            } else {
+                if (this.maximumNumberOfChoice != null) {
+                    properties["maximumNumberOfChoice"] = this.maximumNumberOfChoice;
+                }
             }
             if (this.displayItems != null) {
                 properties["displayItems"] = this.displayItems.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.baseTimestamp != null) {
-                properties["baseTimestamp"] = this.baseTimestamp;
+            if (this.baseTimestampString != null) {
+                properties["baseTimestamp"] = this.baseTimestampString;
+            } else {
+                if (this.baseTimestamp != null) {
+                    properties["baseTimestamp"] = this.baseTimestamp;
+                }
             }
-            if (this.resetIntervalHours != null) {
-                properties["resetIntervalHours"] = this.resetIntervalHours;
+            if (this.resetIntervalHoursString != null) {
+                properties["resetIntervalHours"] = this.resetIntervalHoursString;
+            } else {
+                if (this.resetIntervalHours != null) {
+                    properties["resetIntervalHours"] = this.resetIntervalHours;
+                }
             }
             if (this.salesPeriodEventId != null) {
                 properties["salesPeriodEventId"] = this.salesPeriodEventId;

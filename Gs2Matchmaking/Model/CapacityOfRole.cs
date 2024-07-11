@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class CapacityOfRole {
         private string roleName;
         private int capacity;
+        private string capacityString;
         private string[] roleAliases;
         private Player[] participants;
 
@@ -40,6 +41,18 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.participants = options?.participants;
         }
 
+
+        public CapacityOfRole(
+            string roleName,
+            string capacity,
+            CapacityOfRoleOptions options = null
+        ){
+            this.roleName = roleName;
+            this.capacityString = capacity;
+            this.roleAliases = options?.roleAliases;
+            this.participants = options?.participants;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -50,8 +63,12 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             if (this.roleAliases != null) {
                 properties["roleAliases"] = this.roleAliases;
             }
-            if (this.capacity != null) {
-                properties["capacity"] = this.capacity;
+            if (this.capacityString != null) {
+                properties["capacity"] = this.capacityString;
+            } else {
+                if (this.capacity != null) {
+                    properties["capacity"] = this.capacity;
+                }
             }
             if (this.participants != null) {
                 properties["participants"] = this.participants.Select(v => v?.Properties(

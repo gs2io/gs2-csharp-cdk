@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Formation.Model;
 namespace Gs2Cdk.Gs2Formation.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-09-09";
-        private string? namespaceName;
+        private string version= "2019-09-09";
+        private string namespaceName;
         private MoldModel[] moldModels;
         private PropertyFormModel[] propertyFormModels;
 

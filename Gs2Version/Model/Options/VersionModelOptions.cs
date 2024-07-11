@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Version.Model.Options
         public Version_ errorVersion;
         public ScheduleVersion[] scheduleVersions;
         public bool? needSignature;
+        public string needSignatureString;
         public string signatureKeyId;
     }
 }

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         private string guildName;
         private string[] fromUserIds;
         private long? revision;
+        private string revisionString;
 
         public Inbox(
             string guildName,

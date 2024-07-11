@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private string userId;
         private int addCapacityValue;
-        private string? addCapacityValueString;
+        private string addCapacityValueString;
         private string timeOffsetToken;
 
 

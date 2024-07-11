@@ -26,8 +26,11 @@ namespace Gs2Cdk.Gs2Experience.Model
     public class ExperienceModel {
         private string name;
         private long? defaultExperience;
+        private string defaultExperienceString;
         private long defaultRankCap;
+        private string defaultRankCapString;
         private long maxRankCap;
+        private string maxRankCapString;
         private Threshold rankThreshold;
         private string metadata;
         private AcquireActionRate[] acquireActionRates;
@@ -49,6 +52,24 @@ namespace Gs2Cdk.Gs2Experience.Model
             this.acquireActionRates = options?.acquireActionRates;
         }
 
+
+        public ExperienceModel(
+            string name,
+            string defaultExperience,
+            string defaultRankCap,
+            string maxRankCap,
+            Threshold rankThreshold,
+            ExperienceModelOptions options = null
+        ){
+            this.name = name;
+            this.defaultExperienceString = defaultExperience;
+            this.defaultRankCapString = defaultRankCap;
+            this.maxRankCapString = maxRankCap;
+            this.rankThreshold = rankThreshold;
+            this.metadata = options?.metadata;
+            this.acquireActionRates = options?.acquireActionRates;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -59,14 +80,26 @@ namespace Gs2Cdk.Gs2Experience.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.defaultExperience != null) {
-                properties["defaultExperience"] = this.defaultExperience;
+            if (this.defaultExperienceString != null) {
+                properties["defaultExperience"] = this.defaultExperienceString;
+            } else {
+                if (this.defaultExperience != null) {
+                    properties["defaultExperience"] = this.defaultExperience;
+                }
             }
-            if (this.defaultRankCap != null) {
-                properties["defaultRankCap"] = this.defaultRankCap;
+            if (this.defaultRankCapString != null) {
+                properties["defaultRankCap"] = this.defaultRankCapString;
+            } else {
+                if (this.defaultRankCap != null) {
+                    properties["defaultRankCap"] = this.defaultRankCap;
+                }
             }
-            if (this.maxRankCap != null) {
-                properties["maxRankCap"] = this.maxRankCap;
+            if (this.maxRankCapString != null) {
+                properties["maxRankCap"] = this.maxRankCapString;
+            } else {
+                if (this.maxRankCap != null) {
+                    properties["maxRankCap"] = this.maxRankCap;
+                }
             }
             if (this.rankThreshold != null) {
                 properties["rankThreshold"] = this.rankThreshold?.Properties(

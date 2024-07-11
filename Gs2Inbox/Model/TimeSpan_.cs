@@ -25,8 +25,11 @@ namespace Gs2Cdk.Gs2Inbox.Model
 {
     public class TimeSpan_ {
         private int? days;
+        private string daysString;
         private int? hours;
+        private string hoursString;
         private int? minutes;
+        private string minutesString;
 
         public TimeSpan_(
             int? days,
@@ -39,18 +42,42 @@ namespace Gs2Cdk.Gs2Inbox.Model
             this.minutes = minutes;
         }
 
+
+        public TimeSpan_(
+            string days,
+            string hours,
+            string minutes,
+            TimeSpanOptions options = null
+        ){
+            this.daysString = days;
+            this.hoursString = hours;
+            this.minutesString = minutes;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.days != null) {
-                properties["days"] = this.days;
+            if (this.daysString != null) {
+                properties["days"] = this.daysString;
+            } else {
+                if (this.days != null) {
+                    properties["days"] = this.days;
+                }
             }
-            if (this.hours != null) {
-                properties["hours"] = this.hours;
+            if (this.hoursString != null) {
+                properties["hours"] = this.hoursString;
+            } else {
+                if (this.hours != null) {
+                    properties["hours"] = this.hours;
+                }
             }
-            if (this.minutes != null) {
-                properties["minutes"] = this.minutes;
+            if (this.minutesString != null) {
+                properties["minutes"] = this.minutesString;
+            } else {
+                if (this.minutes != null) {
+                    properties["minutes"] = this.minutes;
+                }
             }
 
             return properties;

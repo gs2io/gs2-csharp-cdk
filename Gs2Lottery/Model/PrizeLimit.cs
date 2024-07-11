@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Lottery.Model
     public class PrizeLimit {
         private string prizeId;
         private int drawnCount;
+        private string drawnCountString;
         private long? revision;
+        private string revisionString;
 
         public PrizeLimit(
             string prizeId,
@@ -38,6 +40,18 @@ namespace Gs2Cdk.Gs2Lottery.Model
             this.revision = options?.revision;
         }
 
+
+        public PrizeLimit(
+            string prizeId,
+            string drawnCount,
+            PrizeLimitOptions options = null
+        ){
+            this.prizeId = prizeId;
+            this.drawnCountString = drawnCount;
+            this.revision = options?.revision;
+            this.revisionString = options?.revisionString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -45,8 +59,12 @@ namespace Gs2Cdk.Gs2Lottery.Model
             if (this.prizeId != null) {
                 properties["prizeId"] = this.prizeId;
             }
-            if (this.drawnCount != null) {
-                properties["drawnCount"] = this.drawnCount;
+            if (this.drawnCountString != null) {
+                properties["drawnCount"] = this.drawnCountString;
+            } else {
+                if (this.drawnCount != null) {
+                    properties["drawnCount"] = this.drawnCount;
+                }
             }
 
             return properties;

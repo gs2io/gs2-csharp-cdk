@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Inbox.Model;
 namespace Gs2Cdk.Gs2Inbox.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2020-03-12";
-        private string? namespaceName;
+        private string version= "2020-03-12";
+        private string namespaceName;
         private GlobalMessage[] globalMessages;
 
         public CurrentMasterData(

@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Lottery.Model.Options
     public class PrizeOptions {
         public AcquireAction[] acquireActions;
         public int? drawnLimit;
+        public string drawnLimitString;
         public string limitFailOverPrizeId;
         public string prizeTableName;
     }

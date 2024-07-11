@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2MegaField.Model
     public class Scope {
         private string layerName;
         private float r;
+        private string rString;
         private int limit;
+        private string limitString;
 
         public Scope(
             string layerName,
@@ -39,6 +41,18 @@ namespace Gs2Cdk.Gs2MegaField.Model
             this.limit = limit;
         }
 
+
+        public Scope(
+            string layerName,
+            string r,
+            string limit,
+            ScopeOptions options = null
+        ){
+            this.layerName = layerName;
+            this.rString = r;
+            this.limitString = limit;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -46,11 +60,19 @@ namespace Gs2Cdk.Gs2MegaField.Model
             if (this.layerName != null) {
                 properties["layerName"] = this.layerName;
             }
-            if (this.r != null) {
-                properties["r"] = this.r;
+            if (this.rString != null) {
+                properties["r"] = this.rString;
+            } else {
+                if (this.r != null) {
+                    properties["r"] = this.r;
+                }
             }
-            if (this.limit != null) {
-                properties["limit"] = this.limit;
+            if (this.limitString != null) {
+                properties["limit"] = this.limitString;
+            } else {
+                if (this.limit != null) {
+                    properties["limit"] = this.limit;
+                }
             }
 
             return properties;

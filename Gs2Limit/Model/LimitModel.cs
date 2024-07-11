@@ -29,8 +29,10 @@ namespace Gs2Cdk.Gs2Limit.Model
         private LimitModelResetType? resetType;
         private string metadata;
         private int? resetDayOfMonth;
+        private string resetDayOfMonthString;
         private LimitModelResetDayOfWeek? resetDayOfWeek;
         private int? resetHour;
+        private string resetHourString;
 
         public LimitModel(
             string name,
@@ -121,15 +123,23 @@ namespace Gs2Cdk.Gs2Limit.Model
                 properties["resetType"] = this.resetType.Value.Str(
                 );
             }
-            if (this.resetDayOfMonth != null) {
-                properties["resetDayOfMonth"] = this.resetDayOfMonth;
+            if (this.resetDayOfMonthString != null) {
+                properties["resetDayOfMonth"] = this.resetDayOfMonthString;
+            } else {
+                if (this.resetDayOfMonth != null) {
+                    properties["resetDayOfMonth"] = this.resetDayOfMonth;
+                }
             }
             if (this.resetDayOfWeek != null) {
                 properties["resetDayOfWeek"] = this.resetDayOfWeek.Value.Str(
                 );
             }
-            if (this.resetHour != null) {
-                properties["resetHour"] = this.resetHour;
+            if (this.resetHourString != null) {
+                properties["resetHour"] = this.resetHourString;
+            } else {
+                if (this.resetHour != null) {
+                    properties["resetHour"] = this.resetHour;
+                }
             }
 
             return properties;

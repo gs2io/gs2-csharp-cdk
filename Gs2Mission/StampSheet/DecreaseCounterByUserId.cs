@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         private string counterName;
         private string userId;
         private long value;
-        private string? valueString;
+        private string valueString;
         private string timeOffsetToken;
 
 

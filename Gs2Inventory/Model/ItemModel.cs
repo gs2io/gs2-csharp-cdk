@@ -26,8 +26,11 @@ namespace Gs2Cdk.Gs2Inventory.Model
     public class ItemModel {
         private string name;
         private long stackingLimit;
+        private string stackingLimitString;
         private bool allowMultipleStacks;
+        private string allowMultipleStacksString;
         private int sortValue;
+        private string sortValueString;
         private string metadata;
 
         public ItemModel(
@@ -44,6 +47,21 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.metadata = options?.metadata;
         }
 
+
+        public ItemModel(
+            string name,
+            string stackingLimit,
+            string allowMultipleStacks,
+            string sortValue,
+            ItemModelOptions options = null
+        ){
+            this.name = name;
+            this.stackingLimitString = stackingLimit;
+            this.allowMultipleStacksString = allowMultipleStacks;
+            this.sortValueString = sortValue;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -54,14 +72,26 @@ namespace Gs2Cdk.Gs2Inventory.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.stackingLimit != null) {
-                properties["stackingLimit"] = this.stackingLimit;
+            if (this.stackingLimitString != null) {
+                properties["stackingLimit"] = this.stackingLimitString;
+            } else {
+                if (this.stackingLimit != null) {
+                    properties["stackingLimit"] = this.stackingLimit;
+                }
             }
-            if (this.allowMultipleStacks != null) {
-                properties["allowMultipleStacks"] = this.allowMultipleStacks;
+            if (this.allowMultipleStacksString != null) {
+                properties["allowMultipleStacks"] = this.allowMultipleStacksString;
+            } else {
+                if (this.allowMultipleStacks != null) {
+                    properties["allowMultipleStacks"] = this.allowMultipleStacks;
+                }
             }
-            if (this.sortValue != null) {
-                properties["sortValue"] = this.sortValue;
+            if (this.sortValueString != null) {
+                properties["sortValue"] = this.sortValueString;
+            } else {
+                if (this.sortValue != null) {
+                    properties["sortValue"] = this.sortValue;
+                }
             }
 
             return properties;

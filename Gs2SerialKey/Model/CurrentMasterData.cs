@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2SerialKey.Model;
 namespace Gs2Cdk.Gs2SerialKey.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2022-09-13";
-        private string? namespaceName;
+        private string version= "2022-09-13";
+        private string namespaceName;
         private CampaignModel[] campaignModels;
 
         public CurrentMasterData(

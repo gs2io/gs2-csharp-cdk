@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2News.Model
     public class Output {
         private string text;
         private long? revision;
+        private string revisionString;
 
         public Output(
             string text,

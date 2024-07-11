@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private string gradeName;
         private string propertyId;
         private long? gradeValue;
-        private string? gradeValueString;
+        private string gradeValueString;
         private string timeOffsetToken;
 
 

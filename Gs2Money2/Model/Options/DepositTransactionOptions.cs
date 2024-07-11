@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
     public class DepositTransactionOptions {
         public string currency;
         public long? depositedAt;
+        public string depositedAtString;
     }
 }

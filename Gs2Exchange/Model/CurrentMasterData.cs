@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Exchange.Model;
 namespace Gs2Cdk.Gs2Exchange.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-08-19";
-        private string? namespaceName;
+        private string version= "2019-08-19";
+        private string namespaceName;
         private RateModel[] rateModels;
         private IncrementalRateModel[] incrementalRateModels;
 

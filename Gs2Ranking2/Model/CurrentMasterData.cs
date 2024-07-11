@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Ranking2.Model;
 namespace Gs2Cdk.Gs2Ranking2.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2024-05-30";
-        private string? namespaceName;
+        private string version= "2024-05-30";
+        private string namespaceName;
         private GlobalRankingModel[] globalRankingModels;
         private ClusterRankingModel[] clusterRankingModels;
         private SubscribeRankingModel[] subscribeRankingModels;

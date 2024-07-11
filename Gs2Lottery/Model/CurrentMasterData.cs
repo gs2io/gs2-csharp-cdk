@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Lottery.Model;
 namespace Gs2Cdk.Gs2Lottery.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-02-21";
-        private string? namespaceName;
+        private string version= "2019-02-21";
+        private string namespaceName;
         private LotteryModel[] lotteryModels;
         private PrizeTable[] prizeTables;
 

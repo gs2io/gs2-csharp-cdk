@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Inbox.StampSheet
         private string metadata;
         private AcquireAction[] readAcquireActions;
         private long? expiresAt;
-        private string? expiresAtString;
+        private string expiresAtString;
         private TimeSpan_ expiresTimeSpan;
         private string timeOffsetToken;
 

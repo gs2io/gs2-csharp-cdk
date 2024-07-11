@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Inventory.Model.Options
     public class InventoryModelOptions {
         public string metadata;
         public bool? protectReferencedItem;
+        public string protectReferencedItemString;
     }
 }

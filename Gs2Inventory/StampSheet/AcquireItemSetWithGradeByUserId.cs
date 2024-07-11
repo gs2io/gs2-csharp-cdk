@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string gradeModelId;
         private long gradeValue;
-        private string? gradeValueString;
+        private string gradeValueString;
         private string timeOffsetToken;
 
 

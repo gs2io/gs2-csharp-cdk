@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
         private string metadata;
         private string periodEventId;
         private int? resetHour;
+        private string resetHourString;
         private BonusModelRepeat? repeat;
         private Reward[] rewards;
         private ConsumeAction[] missedReceiveReliefConsumeActions;
@@ -143,8 +144,12 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             if (this.periodEventId != null) {
                 properties["periodEventId"] = this.periodEventId;
             }
-            if (this.resetHour != null) {
-                properties["resetHour"] = this.resetHour;
+            if (this.resetHourString != null) {
+                properties["resetHour"] = this.resetHourString;
+            } else {
+                if (this.resetHour != null) {
+                    properties["resetHour"] = this.resetHour;
+                }
             }
             if (this.repeat != null) {
                 properties["repeat"] = this.repeat.Value.Str(

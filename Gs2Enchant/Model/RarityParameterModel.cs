@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
     public class RarityParameterModel {
         private string name;
         private int maximumParameterCount;
+        private string maximumParameterCountString;
         private RarityParameterCountModel[] parameterCounts;
         private RarityParameterValueModel[] parameters;
         private string metadata;
@@ -44,6 +45,21 @@ namespace Gs2Cdk.Gs2Enchant.Model
             this.metadata = options?.metadata;
         }
 
+
+        public RarityParameterModel(
+            string name,
+            string maximumParameterCount,
+            RarityParameterCountModel[] parameterCounts,
+            RarityParameterValueModel[] parameters,
+            RarityParameterModelOptions options = null
+        ){
+            this.name = name;
+            this.maximumParameterCountString = maximumParameterCount;
+            this.parameterCounts = parameterCounts;
+            this.parameters = parameters;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -54,8 +70,12 @@ namespace Gs2Cdk.Gs2Enchant.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.maximumParameterCount != null) {
-                properties["maximumParameterCount"] = this.maximumParameterCount;
+            if (this.maximumParameterCountString != null) {
+                properties["maximumParameterCount"] = this.maximumParameterCountString;
+            } else {
+                if (this.maximumParameterCount != null) {
+                    properties["maximumParameterCount"] = this.maximumParameterCount;
+                }
             }
             if (this.parameterCounts != null) {
                 properties["parameterCounts"] = this.parameterCounts.Select(v => v?.Properties(

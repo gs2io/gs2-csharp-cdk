@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Inventory.Model;
 namespace Gs2Cdk.Gs2Inventory.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-02-05";
-        private string? namespaceName;
+        private string version= "2019-02-05";
+        private string namespaceName;
         private InventoryModel[] inventoryModels;
         private SimpleInventoryModel[] simpleInventoryModels;
         private BigInventoryModel[] bigInventoryModels;

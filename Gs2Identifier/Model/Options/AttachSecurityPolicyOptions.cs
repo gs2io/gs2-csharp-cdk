@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Identifier.Model.Options
     public class AttachSecurityPolicyOptions {
         public string[] securityPolicyIds;
         public long? revision;
+        public string revisionString;
     }
 }

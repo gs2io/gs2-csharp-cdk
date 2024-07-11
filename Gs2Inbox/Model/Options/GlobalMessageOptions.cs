@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Inbox.Model.Options
         public AcquireAction[] readAcquireActions;
         public TimeSpan_ expiresTimeSpan;
         public long? expiresAt;
+        public string expiresAtString;
         public string messageReceptionPeriodEventId;
     }
 }

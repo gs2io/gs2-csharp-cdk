@@ -26,11 +26,16 @@ namespace Gs2Cdk.Gs2Stamina.Model
     public class StaminaModel {
         private string name;
         private int recoverIntervalMinutes;
+        private string recoverIntervalMinutesString;
         private int? recoverValue;
+        private string recoverValueString;
         private int initialCapacity;
+        private string initialCapacityString;
         private bool isOverflow;
+        private string isOverflowString;
         private string metadata;
         private int? maxCapacity;
+        private string maxCapacityString;
         private MaxStaminaTable maxStaminaTable;
         private RecoverIntervalTable recoverIntervalTable;
         private RecoverValueTable recoverValueTable;
@@ -55,6 +60,28 @@ namespace Gs2Cdk.Gs2Stamina.Model
             this.recoverValueTable = options?.recoverValueTable;
         }
 
+
+        public StaminaModel(
+            string name,
+            string recoverIntervalMinutes,
+            string recoverValue,
+            string initialCapacity,
+            string isOverflow,
+            StaminaModelOptions options = null
+        ){
+            this.name = name;
+            this.recoverIntervalMinutesString = recoverIntervalMinutes;
+            this.recoverValueString = recoverValue;
+            this.initialCapacityString = initialCapacity;
+            this.isOverflowString = isOverflow;
+            this.metadata = options?.metadata;
+            this.maxCapacity = options?.maxCapacity;
+            this.maxCapacityString = options?.maxCapacityString;
+            this.maxStaminaTable = options?.maxStaminaTable;
+            this.recoverIntervalTable = options?.recoverIntervalTable;
+            this.recoverValueTable = options?.recoverValueTable;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -65,20 +92,40 @@ namespace Gs2Cdk.Gs2Stamina.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.recoverIntervalMinutes != null) {
-                properties["recoverIntervalMinutes"] = this.recoverIntervalMinutes;
+            if (this.recoverIntervalMinutesString != null) {
+                properties["recoverIntervalMinutes"] = this.recoverIntervalMinutesString;
+            } else {
+                if (this.recoverIntervalMinutes != null) {
+                    properties["recoverIntervalMinutes"] = this.recoverIntervalMinutes;
+                }
             }
-            if (this.recoverValue != null) {
-                properties["recoverValue"] = this.recoverValue;
+            if (this.recoverValueString != null) {
+                properties["recoverValue"] = this.recoverValueString;
+            } else {
+                if (this.recoverValue != null) {
+                    properties["recoverValue"] = this.recoverValue;
+                }
             }
-            if (this.initialCapacity != null) {
-                properties["initialCapacity"] = this.initialCapacity;
+            if (this.initialCapacityString != null) {
+                properties["initialCapacity"] = this.initialCapacityString;
+            } else {
+                if (this.initialCapacity != null) {
+                    properties["initialCapacity"] = this.initialCapacity;
+                }
             }
-            if (this.isOverflow != null) {
-                properties["isOverflow"] = this.isOverflow;
+            if (this.isOverflowString != null) {
+                properties["isOverflow"] = this.isOverflowString;
+            } else {
+                if (this.isOverflow != null) {
+                    properties["isOverflow"] = this.isOverflow;
+                }
             }
-            if (this.maxCapacity != null) {
-                properties["maxCapacity"] = this.maxCapacity;
+            if (this.maxCapacityString != null) {
+                properties["maxCapacity"] = this.maxCapacityString;
+            } else {
+                if (this.maxCapacity != null) {
+                    properties["maxCapacity"] = this.maxCapacity;
+                }
             }
             if (this.maxStaminaTable != null) {
                 properties["maxStaminaTable"] = this.maxStaminaTable?.Properties(

@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Dictionary.Model;
 namespace Gs2Cdk.Gs2Dictionary.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2020-04-30";
-        private string? namespaceName;
+        private string version= "2020-04-30";
+        private string namespaceName;
         private EntryModel[] entryModels;
 
         public CurrentMasterData(

@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
     public class CalculatedAt {
         private string categoryName;
         private long calculatedAt;
+        private string calculatedAtString;
 
         public CalculatedAt(
             string categoryName,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Ranking.Model
             this.calculatedAt = calculatedAt;
         }
 
+
+        public CalculatedAt(
+            string categoryName,
+            string calculatedAt,
+            CalculatedAtOptions options = null
+        ){
+            this.categoryName = categoryName;
+            this.calculatedAtString = calculatedAt;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.categoryName != null) {
                 properties["categoryName"] = this.categoryName;
             }
-            if (this.calculatedAt != null) {
-                properties["calculatedAt"] = this.calculatedAt;
+            if (this.calculatedAtString != null) {
+                properties["calculatedAt"] = this.calculatedAtString;
+            } else {
+                if (this.calculatedAt != null) {
+                    properties["calculatedAt"] = this.calculatedAt;
+                }
             }
 
             return properties;

@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         private string userId;
         private TriggerByUserIdTriggerStrategy? triggerStrategy;
         private int ttl;
-        private string? ttlString;
+        private string ttlString;
         private string timeOffsetToken;
 
 

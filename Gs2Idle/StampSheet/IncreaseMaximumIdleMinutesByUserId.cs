@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
         private string userId;
         private string categoryName;
         private int? increaseMinutes;
-        private string? increaseMinutesString;
+        private string increaseMinutesString;
         private string timeOffsetToken;
 
 

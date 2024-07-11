@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2SeasonRating.Model;
 namespace Gs2Cdk.Gs2SeasonRating.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2024-02-23";
-        private string? namespaceName;
+        private string version= "2024-02-23";
+        private string namespaceName;
         private SeasonModel[] seasonModels;
 
         public CurrentMasterData(

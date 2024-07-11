@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2LoginReward.StampSheet
         private string bonusModelName;
         private string userId;
         private int stepNumber;
-        private string? stepNumberString;
+        private string stepNumberString;
         private string timeOffsetToken;
 
 

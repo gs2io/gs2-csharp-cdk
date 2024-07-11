@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Enhance.Model;
 namespace Gs2Cdk.Gs2Enhance.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2020-08-22";
-        private string? namespaceName;
+        private string version= "2020-08-22";
+        private string namespaceName;
         private RateModel[] rateModels;
         private UnleashRateModel[] unleashRateModels;
 

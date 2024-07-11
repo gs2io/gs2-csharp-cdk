@@ -30,9 +30,9 @@ namespace Gs2Cdk.Gs2Grade.StampSheet
         private VerifyGradeByUserIdVerifyType? verifyType;
         private string propertyId;
         private long? gradeValue;
-        private string? gradeValueString;
+        private string gradeValueString;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

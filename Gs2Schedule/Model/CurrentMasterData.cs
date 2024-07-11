@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Schedule.Model;
 namespace Gs2Cdk.Gs2Schedule.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-03-31";
-        private string? namespaceName;
+        private string version= "2019-03-31";
+        private string namespaceName;
         private Event[] events;
 
         public CurrentMasterData(

@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class GlobalRankingSetting {
         private bool? uniqueByUserId;
+        private string uniqueByUserIdString;
         private int calculateIntervalMinutes;
+        private string calculateIntervalMinutesString;
         private FixedTiming calculateFixedTiming;
         private Scope[] additionalScopes;
         private string[] ignoreUserIds;
@@ -44,15 +46,37 @@ namespace Gs2Cdk.Gs2Ranking.Model
             this.generation = options?.generation;
         }
 
+
+        public GlobalRankingSetting(
+            string uniqueByUserId,
+            string calculateIntervalMinutes,
+            GlobalRankingSettingOptions options = null
+        ){
+            this.uniqueByUserIdString = uniqueByUserId;
+            this.calculateIntervalMinutesString = calculateIntervalMinutes;
+            this.calculateFixedTiming = options?.calculateFixedTiming;
+            this.additionalScopes = options?.additionalScopes;
+            this.ignoreUserIds = options?.ignoreUserIds;
+            this.generation = options?.generation;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.uniqueByUserId != null) {
-                properties["uniqueByUserId"] = this.uniqueByUserId;
+            if (this.uniqueByUserIdString != null) {
+                properties["uniqueByUserId"] = this.uniqueByUserIdString;
+            } else {
+                if (this.uniqueByUserId != null) {
+                    properties["uniqueByUserId"] = this.uniqueByUserId;
+                }
             }
-            if (this.calculateIntervalMinutes != null) {
-                properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
+            if (this.calculateIntervalMinutesString != null) {
+                properties["calculateIntervalMinutes"] = this.calculateIntervalMinutesString;
+            } else {
+                if (this.calculateIntervalMinutes != null) {
+                    properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
+                }
             }
             if (this.calculateFixedTiming != null) {
                 properties["calculateFixedTiming"] = this.calculateFixedTiming?.Properties(

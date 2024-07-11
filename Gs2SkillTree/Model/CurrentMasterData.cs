@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2SkillTree.Model;
 namespace Gs2Cdk.Gs2SkillTree.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2023-09-06";
-        private string? namespaceName;
+        private string version= "2023-09-06";
+        private string namespaceName;
         private NodeModel[] nodeModels;
 
         public CurrentMasterData(

@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Money2.Model
     public class UnusedBalance {
         private string currency;
         private float balance;
+        private string balanceString;
         private long? revision;
+        private string revisionString;
 
         public UnusedBalance(
             string currency,
@@ -38,6 +40,18 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.revision = options?.revision;
         }
 
+
+        public UnusedBalance(
+            string currency,
+            string balance,
+            UnusedBalanceOptions options = null
+        ){
+            this.currency = currency;
+            this.balanceString = balance;
+            this.revision = options?.revision;
+            this.revisionString = options?.revisionString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -45,8 +59,12 @@ namespace Gs2Cdk.Gs2Money2.Model
             if (this.currency != null) {
                 properties["currency"] = this.currency;
             }
-            if (this.balance != null) {
-                properties["balance"] = this.balance;
+            if (this.balanceString != null) {
+                properties["balance"] = this.balanceString;
+            } else {
+                if (this.balance != null) {
+                    properties["balance"] = this.balance;
+                }
             }
 
             return properties;

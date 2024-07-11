@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
 {
     public class GameResult {
         private int rank;
+        private string rankString;
         private string userId;
 
         public GameResult(
@@ -36,12 +37,26 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
             this.userId = userId;
         }
 
+
+        public GameResult(
+            string rank,
+            string userId,
+            GameResultOptions options = null
+        ){
+            this.rankString = rank;
+            this.userId = userId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.rank != null) {
-                properties["rank"] = this.rank;
+            if (this.rankString != null) {
+                properties["rank"] = this.rankString;
+            } else {
+                if (this.rank != null) {
+                    properties["rank"] = this.rank;
+                }
             }
             if (this.userId != null) {
                 properties["userId"] = this.userId;

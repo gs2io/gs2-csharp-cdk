@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2StateMachine.StampSheet
         private string userId;
         private string args;
         private int? ttl;
-        private string? ttlString;
+        private string ttlString;
         private string timeOffsetToken;
 
 

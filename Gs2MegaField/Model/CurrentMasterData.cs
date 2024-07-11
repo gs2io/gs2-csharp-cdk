@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2MegaField.Model;
 namespace Gs2Cdk.Gs2MegaField.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2022-08-28";
-        private string? namespaceName;
+        private string version= "2022-08-28";
+        private string namespaceName;
         private AreaModel[] areaModels;
 
         public CurrentMasterData(

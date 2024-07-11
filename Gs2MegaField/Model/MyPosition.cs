@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2MegaField.Model
         private Position position;
         private Vector vector;
         private float? r;
+        private string rString;
 
         public MyPosition(
             Position position,
@@ -37,6 +38,18 @@ namespace Gs2Cdk.Gs2MegaField.Model
             this.position = position;
             this.vector = vector;
             this.r = r;
+        }
+
+
+        public MyPosition(
+            Position position,
+            Vector vector,
+            string r,
+            MyPositionOptions options = null
+        ){
+            this.position = position;
+            this.vector = vector;
+            this.rString = r;
         }
 
         public Dictionary<string, object> Properties(
@@ -51,8 +64,12 @@ namespace Gs2Cdk.Gs2MegaField.Model
                 properties["vector"] = this.vector?.Properties(
                 );
             }
-            if (this.r != null) {
-                properties["r"] = this.r;
+            if (this.rString != null) {
+                properties["r"] = this.rString;
+            } else {
+                if (this.r != null) {
+                    properties["r"] = this.r;
+                }
             }
 
             return properties;

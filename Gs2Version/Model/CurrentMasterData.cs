@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Version.Model;
 namespace Gs2Cdk.Gs2Version.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-10-09";
-        private string? namespaceName;
+        private string version= "2019-10-09";
+        private string namespaceName;
         private VersionModel[] versionModels;
 
         public CurrentMasterData(

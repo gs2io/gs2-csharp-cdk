@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Quest.Model
         private string request;
         private string itemId;
         private int value;
+        private string valueString;
 
         public Reward(
             string action,
@@ -40,6 +41,20 @@ namespace Gs2Cdk.Gs2Quest.Model
             this.request = request;
             this.itemId = itemId;
             this.value = value;
+        }
+
+
+        public Reward(
+            string action,
+            string request,
+            string itemId,
+            string value,
+            RewardOptions options = null
+        ){
+            this.action = action;
+            this.request = request;
+            this.itemId = itemId;
+            this.valueString = value;
         }
 
         public Dictionary<string, object> Properties(
@@ -55,8 +70,12 @@ namespace Gs2Cdk.Gs2Quest.Model
             if (this.itemId != null) {
                 properties["itemId"] = this.itemId;
             }
-            if (this.value != null) {
-                properties["value"] = this.value;
+            if (this.valueString != null) {
+                properties["value"] = this.valueString;
+            } else {
+                if (this.value != null) {
+                    properties["value"] = this.value;
+                }
             }
 
             return properties;

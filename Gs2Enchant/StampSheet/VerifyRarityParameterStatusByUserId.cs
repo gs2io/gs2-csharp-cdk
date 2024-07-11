@@ -31,9 +31,9 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private VerifyRarityParameterStatusByUserIdVerifyType? verifyType;
         private string parameterValueName;
         private int? parameterCount;
-        private string? parameterCountString;
+        private string parameterCountString;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

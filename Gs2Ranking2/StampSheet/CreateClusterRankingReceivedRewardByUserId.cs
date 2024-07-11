@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Ranking2.StampSheet
         private string clusterName;
         private string userId;
         private long? season;
-        private string? seasonString;
+        private string seasonString;
         private string timeOffsetToken;
 
 

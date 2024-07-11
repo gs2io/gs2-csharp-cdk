@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Idle.Model;
 namespace Gs2Cdk.Gs2Idle.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2023-06-06";
-        private string? namespaceName;
+        private string version= "2023-06-06";
+        private string namespaceName;
         private CategoryModel[] categoryModels;
 
         public CurrentMasterData(

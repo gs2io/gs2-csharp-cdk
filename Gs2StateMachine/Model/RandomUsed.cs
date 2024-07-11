@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2StateMachine.Model
 {
     public class RandomUsed {
         private long category;
+        private string categoryString;
         private long used;
+        private string usedString;
 
         public RandomUsed(
             long category,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             this.used = used;
         }
 
+
+        public RandomUsed(
+            string category,
+            string used,
+            RandomUsedOptions options = null
+        ){
+            this.categoryString = category;
+            this.usedString = used;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.category != null) {
-                properties["category"] = this.category;
+            if (this.categoryString != null) {
+                properties["category"] = this.categoryString;
+            } else {
+                if (this.category != null) {
+                    properties["category"] = this.category;
+                }
             }
-            if (this.used != null) {
-                properties["used"] = this.used;
+            if (this.usedString != null) {
+                properties["used"] = this.usedString;
+            } else {
+                if (this.used != null) {
+                    properties["used"] = this.used;
+                }
             }
 
             return properties;

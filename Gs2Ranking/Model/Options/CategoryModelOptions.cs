@@ -25,14 +25,20 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
     public class CategoryModelOptions {
         public string metadata;
         public long? minimumValue;
+        public string minimumValueString;
         public long? maximumValue;
+        public string maximumValueString;
         public GlobalRankingSetting globalRankingSetting;
         public string entryPeriodEventId;
         public string accessPeriodEventId;
         public bool? uniqueByUserId;
+        public string uniqueByUserIdString;
         public int? calculateFixedTimingHour;
+        public string calculateFixedTimingHourString;
         public int? calculateFixedTimingMinute;
+        public string calculateFixedTimingMinuteString;
         public int? calculateIntervalMinutes;
+        public string calculateIntervalMinutesString;
         public Scope[] additionalScopes;
         public string[] ignoreUserIds;
         public string generation;

@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Matchmaking.Model;
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2020-06-24";
-        private string? namespaceName;
+        private string version= "2020-06-24";
+        private string namespaceName;
         private RatingModel[] ratingModels;
         private SeasonModel[] seasonModels;
 

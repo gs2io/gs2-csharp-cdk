@@ -25,8 +25,11 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class WalletSummary {
         private int? paid;
+        private string paidString;
         private int? free;
+        private string freeString;
         private int? total;
+        private string totalString;
 
         public WalletSummary(
             int? paid,
@@ -39,18 +42,42 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.total = total;
         }
 
+
+        public WalletSummary(
+            string paid,
+            string free,
+            string total,
+            WalletSummaryOptions options = null
+        ){
+            this.paidString = paid;
+            this.freeString = free;
+            this.totalString = total;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.paid != null) {
-                properties["paid"] = this.paid;
+            if (this.paidString != null) {
+                properties["paid"] = this.paidString;
+            } else {
+                if (this.paid != null) {
+                    properties["paid"] = this.paid;
+                }
             }
-            if (this.free != null) {
-                properties["free"] = this.free;
+            if (this.freeString != null) {
+                properties["free"] = this.freeString;
+            } else {
+                if (this.free != null) {
+                    properties["free"] = this.free;
+                }
             }
-            if (this.total != null) {
-                properties["total"] = this.total;
+            if (this.totalString != null) {
+                properties["total"] = this.totalString;
+            } else {
+                if (this.total != null) {
+                    properties["total"] = this.total;
+                }
             }
 
             return properties;

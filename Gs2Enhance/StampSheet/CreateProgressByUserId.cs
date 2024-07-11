@@ -29,7 +29,7 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         private string targetItemSetId;
         private Material[] materials;
         private bool? force;
-        private string? forceString;
+        private string forceString;
         private string timeOffsetToken;
 
 

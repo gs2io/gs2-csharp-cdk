@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Key.Model
         private string encryptionKeyName;
         private string description;
         private long? revision;
+        private string revisionString;
 
         public GitHubApiKey(
             string name,

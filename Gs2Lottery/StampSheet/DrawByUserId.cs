@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Lottery.StampSheet
         private string lotteryName;
         private string userId;
         private int count;
-        private string? countString;
+        private string countString;
         private Config[] config;
         private string timeOffsetToken;
 

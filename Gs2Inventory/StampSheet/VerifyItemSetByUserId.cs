@@ -30,10 +30,10 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string itemName;
         private VerifyItemSetByUserIdVerifyType? verifyType;
         private long count;
-        private string? countString;
+        private string countString;
         private string itemSetName;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

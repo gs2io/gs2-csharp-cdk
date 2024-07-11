@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Enhance.Model
 {
     public class BonusRate {
         private float? rate;
+        private string rateString;
         private int? weight;
+        private string weightString;
 
         public BonusRate(
             float? rate,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.weight = weight;
         }
 
+
+        public BonusRate(
+            string rate,
+            string weight,
+            BonusRateOptions options = null
+        ){
+            this.rateString = rate;
+            this.weightString = weight;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.rate != null) {
-                properties["rate"] = this.rate;
+            if (this.rateString != null) {
+                properties["rate"] = this.rateString;
+            } else {
+                if (this.rate != null) {
+                    properties["rate"] = this.rate;
+                }
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

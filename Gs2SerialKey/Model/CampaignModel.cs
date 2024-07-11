@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
     public class CampaignModel {
         private string name;
         private bool? enableCampaignCode;
+        private string enableCampaignCodeString;
         private string metadata;
 
         public CampaignModel(
@@ -35,6 +36,17 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         ){
             this.name = name;
             this.enableCampaignCode = enableCampaignCode;
+            this.metadata = options?.metadata;
+        }
+
+
+        public CampaignModel(
+            string name,
+            string enableCampaignCode,
+            CampaignModelOptions options = null
+        ){
+            this.name = name;
+            this.enableCampaignCodeString = enableCampaignCode;
             this.metadata = options?.metadata;
         }
 
@@ -48,8 +60,12 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.enableCampaignCode != null) {
-                properties["enableCampaignCode"] = this.enableCampaignCode;
+            if (this.enableCampaignCodeString != null) {
+                properties["enableCampaignCode"] = this.enableCampaignCodeString;
+            } else {
+                if (this.enableCampaignCode != null) {
+                    properties["enableCampaignCode"] = this.enableCampaignCode;
+                }
             }
 
             return properties;

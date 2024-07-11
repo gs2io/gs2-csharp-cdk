@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2JobQueue.Model
 {
     public class JobResultBody {
         private int tryNumber;
+        private string tryNumberString;
         private int statusCode;
+        private string statusCodeString;
         private string result;
 
         public JobResultBody(
@@ -39,15 +41,35 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             this.result = result;
         }
 
+
+        public JobResultBody(
+            string tryNumber,
+            string statusCode,
+            string result,
+            JobResultBodyOptions options = null
+        ){
+            this.tryNumberString = tryNumber;
+            this.statusCodeString = statusCode;
+            this.result = result;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.tryNumber != null) {
-                properties["tryNumber"] = this.tryNumber;
+            if (this.tryNumberString != null) {
+                properties["tryNumber"] = this.tryNumberString;
+            } else {
+                if (this.tryNumber != null) {
+                    properties["tryNumber"] = this.tryNumber;
+                }
             }
-            if (this.statusCode != null) {
-                properties["statusCode"] = this.statusCode;
+            if (this.statusCodeString != null) {
+                properties["statusCode"] = this.statusCodeString;
+            } else {
+                if (this.statusCode != null) {
+                    properties["statusCode"] = this.statusCode;
+                }
             }
             if (this.result != null) {
                 properties["result"] = this.result;

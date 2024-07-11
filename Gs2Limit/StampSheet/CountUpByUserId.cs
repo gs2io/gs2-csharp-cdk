@@ -28,9 +28,9 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string counterName;
         private string userId;
         private int? countUpValue;
-        private string? countUpValueString;
+        private string countUpValueString;
         private int? maxValue;
-        private string? maxValueString;
+        private string maxValueString;
         private string timeOffsetToken;
 
 

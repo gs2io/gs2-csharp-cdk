@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Experience.Model;
 namespace Gs2Cdk.Gs2Experience.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-01-11";
-        private string? namespaceName;
+        private string version= "2019-01-11";
+        private string namespaceName;
         private ExperienceModel[] experienceModels;
 
         public CurrentMasterData(

@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         private string userId;
         private string rateName;
         private int? count;
-        private string? countString;
+        private string countString;
         private Config[] config;
         private string timeOffsetToken;
 

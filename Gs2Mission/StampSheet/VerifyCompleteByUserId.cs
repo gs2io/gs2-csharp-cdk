@@ -30,7 +30,7 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         private VerifyCompleteByUserIdVerifyType? verifyType;
         private string missionTaskName;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

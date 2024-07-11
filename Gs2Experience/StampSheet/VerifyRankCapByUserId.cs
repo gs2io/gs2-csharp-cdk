@@ -30,9 +30,9 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private VerifyRankCapByUserIdVerifyType? verifyType;
         private string propertyId;
         private long rankCapValue;
-        private string? rankCapValueString;
+        private string rankCapValueString;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

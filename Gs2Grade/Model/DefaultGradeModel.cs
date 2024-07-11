@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Grade.Model
     public class DefaultGradeModel {
         private string propertyIdRegex;
         private long defaultGradeValue;
+        private string defaultGradeValueString;
 
         public DefaultGradeModel(
             string propertyIdRegex,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Grade.Model
             this.defaultGradeValue = defaultGradeValue;
         }
 
+
+        public DefaultGradeModel(
+            string propertyIdRegex,
+            string defaultGradeValue,
+            DefaultGradeModelOptions options = null
+        ){
+            this.propertyIdRegex = propertyIdRegex;
+            this.defaultGradeValueString = defaultGradeValue;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Grade.Model
             if (this.propertyIdRegex != null) {
                 properties["propertyIdRegex"] = this.propertyIdRegex;
             }
-            if (this.defaultGradeValue != null) {
-                properties["defaultGradeValue"] = this.defaultGradeValue;
+            if (this.defaultGradeValueString != null) {
+                properties["defaultGradeValue"] = this.defaultGradeValueString;
+            } else {
+                if (this.defaultGradeValue != null) {
+                    properties["defaultGradeValue"] = this.defaultGradeValue;
+                }
             }
 
             return properties;

@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Idle.StampSheet
         private string userId;
         private string categoryName;
         private int? maximumIdleMinutes;
-        private string? maximumIdleMinutesString;
+        private string maximumIdleMinutesString;
         private string timeOffsetToken;
 
 

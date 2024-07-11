@@ -26,7 +26,7 @@ namespace Gs2Cdk.Gs2AdReward.StampSheet
         private string namespaceName;
         private string userId;
         private long point;
-        private string? pointString;
+        private string pointString;
         private string timeOffsetToken;
 
 

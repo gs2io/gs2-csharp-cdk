@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
     public class BalanceParameterModel {
         private string name;
         private long totalValue;
+        private string totalValueString;
         private BalanceParameterModelInitialValueStrategy? initialValueStrategy;
         private BalanceParameterValueModel[] parameters;
         private string metadata;
@@ -45,6 +46,21 @@ namespace Gs2Cdk.Gs2Enchant.Model
             this.metadata = options?.metadata;
         }
 
+
+        public BalanceParameterModel(
+            string name,
+            string totalValue,
+            BalanceParameterModelInitialValueStrategy initialValueStrategy,
+            BalanceParameterValueModel[] parameters,
+            BalanceParameterModelOptions options = null
+        ){
+            this.name = name;
+            this.totalValueString = totalValue;
+            this.initialValueStrategy = initialValueStrategy;
+            this.parameters = parameters;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -55,8 +71,12 @@ namespace Gs2Cdk.Gs2Enchant.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.totalValue != null) {
-                properties["totalValue"] = this.totalValue;
+            if (this.totalValueString != null) {
+                properties["totalValue"] = this.totalValueString;
+            } else {
+                if (this.totalValue != null) {
+                    properties["totalValue"] = this.totalValue;
+                }
             }
             if (this.initialValueStrategy != null) {
                 properties["initialValueStrategy"] = this.initialValueStrategy.Value.Str(

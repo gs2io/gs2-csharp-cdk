@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class ExecuteStampTaskLog {
         private long timestamp;
+        private string timestampString;
         private string taskId;
         private string service;
         private string method;
@@ -51,12 +52,36 @@ namespace Gs2Cdk.Gs2Log.Model
             this.args = args;
         }
 
+
+        public ExecuteStampTaskLog(
+            string timestamp,
+            string taskId,
+            string service,
+            string method,
+            string userId,
+            string action,
+            string args,
+            ExecuteStampTaskLogOptions options = null
+        ){
+            this.timestampString = timestamp;
+            this.taskId = taskId;
+            this.service = service;
+            this.method = method;
+            this.userId = userId;
+            this.action = action;
+            this.args = args;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
             if (this.taskId != null) {
                 properties["taskId"] = this.taskId;

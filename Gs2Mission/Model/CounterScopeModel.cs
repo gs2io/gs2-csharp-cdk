@@ -27,8 +27,10 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class CounterScopeModel {
         private CounterScopeModelResetType? resetType;
         private int? resetDayOfMonth;
+        private string resetDayOfMonthString;
         private CounterScopeModelResetDayOfWeek? resetDayOfWeek;
         private int? resetHour;
+        private string resetHourString;
 
         public CounterScopeModel(
             CounterScopeModelResetType resetType,
@@ -98,15 +100,23 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["resetType"] = this.resetType.Value.Str(
                 );
             }
-            if (this.resetDayOfMonth != null) {
-                properties["resetDayOfMonth"] = this.resetDayOfMonth;
+            if (this.resetDayOfMonthString != null) {
+                properties["resetDayOfMonth"] = this.resetDayOfMonthString;
+            } else {
+                if (this.resetDayOfMonth != null) {
+                    properties["resetDayOfMonth"] = this.resetDayOfMonth;
+                }
             }
             if (this.resetDayOfWeek != null) {
                 properties["resetDayOfWeek"] = this.resetDayOfWeek.Value.Str(
                 );
             }
-            if (this.resetHour != null) {
-                properties["resetHour"] = this.resetHour;
+            if (this.resetHourString != null) {
+                properties["resetHour"] = this.resetHourString;
+            } else {
+                if (this.resetHour != null) {
+                    properties["resetHour"] = this.resetHour;
+                }
             }
 
             return properties;

@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Quest.StampSheet
         private string userId;
         private string questModelId;
         private bool? force;
-        private string? forceString;
+        private string forceString;
         private Config[] config;
         private string timeOffsetToken;
 

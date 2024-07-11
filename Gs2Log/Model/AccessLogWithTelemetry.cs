@@ -26,9 +26,11 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class AccessLogWithTelemetry {
         private long timestamp;
+        private string timestampString;
         private string sourceRequestId;
         private string requestId;
         private long duration;
+        private string durationString;
         private string service;
         private string method;
         private string request;
@@ -60,12 +62,41 @@ namespace Gs2Cdk.Gs2Log.Model
             this.userId = options?.userId;
         }
 
+
+        public AccessLogWithTelemetry(
+            string timestamp,
+            string sourceRequestId,
+            string requestId,
+            string duration,
+            string service,
+            string method,
+            string request,
+            string result,
+            AccessLogWithTelemetryStatus status,
+            AccessLogWithTelemetryOptions options = null
+        ){
+            this.timestampString = timestamp;
+            this.sourceRequestId = sourceRequestId;
+            this.requestId = requestId;
+            this.durationString = duration;
+            this.service = service;
+            this.method = method;
+            this.request = request;
+            this.result = result;
+            this.status = status;
+            this.userId = options?.userId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
             if (this.sourceRequestId != null) {
                 properties["sourceRequestId"] = this.sourceRequestId;
@@ -73,8 +104,12 @@ namespace Gs2Cdk.Gs2Log.Model
             if (this.requestId != null) {
                 properties["requestId"] = this.requestId;
             }
-            if (this.duration != null) {
-                properties["duration"] = this.duration;
+            if (this.durationString != null) {
+                properties["duration"] = this.durationString;
+            } else {
+                if (this.duration != null) {
+                    properties["duration"] = this.duration;
+                }
             }
             if (this.service != null) {
                 properties["service"] = this.service;

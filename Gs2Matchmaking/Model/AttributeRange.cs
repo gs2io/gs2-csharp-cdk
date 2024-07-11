@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class AttributeRange {
         private string name;
         private int? min;
+        private string minString;
         private int? max;
+        private string maxString;
 
         public AttributeRange(
             string name,
@@ -39,6 +41,18 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.max = max;
         }
 
+
+        public AttributeRange(
+            string name,
+            string min,
+            string max,
+            AttributeRangeOptions options = null
+        ){
+            this.name = name;
+            this.minString = min;
+            this.maxString = max;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -46,11 +60,19 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.min != null) {
-                properties["min"] = this.min;
+            if (this.minString != null) {
+                properties["min"] = this.minString;
+            } else {
+                if (this.min != null) {
+                    properties["min"] = this.min;
+                }
             }
-            if (this.max != null) {
-                properties["max"] = this.max;
+            if (this.maxString != null) {
+                properties["max"] = this.maxString;
+            } else {
+                if (this.max != null) {
+                    properties["max"] = this.max;
+                }
             }
 
             return properties;

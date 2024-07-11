@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Formation.Model
     public class MoldModel {
         private string name;
         private int initialMaxCapacity;
+        private string initialMaxCapacityString;
         private int maxCapacity;
+        private string maxCapacityString;
         private FormModel formModel;
         private string metadata;
 
@@ -44,6 +46,21 @@ namespace Gs2Cdk.Gs2Formation.Model
             this.metadata = options?.metadata;
         }
 
+
+        public MoldModel(
+            string name,
+            string initialMaxCapacity,
+            string maxCapacity,
+            FormModel formModel,
+            MoldModelOptions options = null
+        ){
+            this.name = name;
+            this.initialMaxCapacityString = initialMaxCapacity;
+            this.maxCapacityString = maxCapacity;
+            this.formModel = formModel;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -54,11 +71,19 @@ namespace Gs2Cdk.Gs2Formation.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.initialMaxCapacity != null) {
-                properties["initialMaxCapacity"] = this.initialMaxCapacity;
+            if (this.initialMaxCapacityString != null) {
+                properties["initialMaxCapacity"] = this.initialMaxCapacityString;
+            } else {
+                if (this.initialMaxCapacity != null) {
+                    properties["initialMaxCapacity"] = this.initialMaxCapacity;
+                }
             }
-            if (this.maxCapacity != null) {
-                properties["maxCapacity"] = this.maxCapacity;
+            if (this.maxCapacityString != null) {
+                properties["maxCapacity"] = this.maxCapacityString;
+            } else {
+                if (this.maxCapacity != null) {
+                    properties["maxCapacity"] = this.maxCapacity;
+                }
             }
             if (this.formModel != null) {
                 properties["formModel"] = this.formModel?.Properties(

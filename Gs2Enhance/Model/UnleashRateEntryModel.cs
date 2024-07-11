@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Enhance.Model
 {
     public class UnleashRateEntryModel {
         private long gradeValue;
+        private string gradeValueString;
         private int needCount;
+        private string needCountString;
 
         public UnleashRateEntryModel(
             long gradeValue,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.needCount = needCount;
         }
 
+
+        public UnleashRateEntryModel(
+            string gradeValue,
+            string needCount,
+            UnleashRateEntryModelOptions options = null
+        ){
+            this.gradeValueString = gradeValue;
+            this.needCountString = needCount;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.gradeValue != null) {
-                properties["gradeValue"] = this.gradeValue;
+            if (this.gradeValueString != null) {
+                properties["gradeValue"] = this.gradeValueString;
+            } else {
+                if (this.gradeValue != null) {
+                    properties["gradeValue"] = this.gradeValue;
+                }
             }
-            if (this.needCount != null) {
-                properties["needCount"] = this.needCount;
+            if (this.needCountString != null) {
+                properties["needCount"] = this.needCountString;
+            } else {
+                if (this.needCount != null) {
+                    properties["needCount"] = this.needCount;
+                }
             }
 
             return properties;

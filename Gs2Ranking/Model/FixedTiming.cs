@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class FixedTiming {
         private int? hour;
+        private string hourString;
         private int? minute;
+        private string minuteString;
 
         public FixedTiming(
             FixedTimingOptions options = null
@@ -38,11 +40,19 @@ namespace Gs2Cdk.Gs2Ranking.Model
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.hour != null) {
-                properties["hour"] = this.hour;
+            if (this.hourString != null) {
+                properties["hour"] = this.hourString;
+            } else {
+                if (this.hour != null) {
+                    properties["hour"] = this.hour;
+                }
             }
-            if (this.minute != null) {
-                properties["minute"] = this.minute;
+            if (this.minuteString != null) {
+                properties["minute"] = this.minuteString;
+            } else {
+                if (this.minute != null) {
+                    properties["minute"] = this.minute;
+                }
             }
 
             return properties;

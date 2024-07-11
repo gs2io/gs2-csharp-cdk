@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Ranking.Model;
 namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-09-17";
-        private string? namespaceName;
+        private string version= "2019-09-17";
+        private string namespaceName;
         private CategoryModel[] categoryModels;
 
         public CurrentMasterData(

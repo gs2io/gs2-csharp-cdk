@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Distributor.Model;
 namespace Gs2Cdk.Gs2Distributor.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-03-01";
-        private string? namespaceName;
+        private string version= "2019-03-01";
+        private string namespaceName;
         private DistributorModel[] distributorModels;
 
         public CurrentMasterData(

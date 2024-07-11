@@ -25,13 +25,19 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
     public class EventOptions {
         public string metadata;
         public long? absoluteBegin;
+        public string absoluteBeginString;
         public long? absoluteEnd;
+        public string absoluteEndString;
         public string relativeTriggerName;
         public int? repeatBeginDayOfMonth;
+        public string repeatBeginDayOfMonthString;
         public int? repeatEndDayOfMonth;
+        public string repeatEndDayOfMonthString;
         public EventRepeatBeginDayOfWeek repeatBeginDayOfWeek;
         public EventRepeatEndDayOfWeek repeatEndDayOfWeek;
         public int? repeatBeginHour;
+        public string repeatBeginHourString;
         public int? repeatEndHour;
+        public string repeatEndHourString;
     }
 }

@@ -27,10 +27,13 @@ namespace Gs2Cdk.Gs2SerialKey.Model
     public class IssueJob {
         private string name;
         private int? issuedCount;
+        private string issuedCountString;
         private int issueRequestCount;
+        private string issueRequestCountString;
         private IssueJobStatus? status;
         private string metadata;
         private long? revision;
+        private string revisionString;
 
         public IssueJob(
             string name,
@@ -47,6 +50,23 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             this.revision = options?.revision;
         }
 
+
+        public IssueJob(
+            string name,
+            string issuedCount,
+            string issueRequestCount,
+            IssueJobStatus status,
+            IssueJobOptions options = null
+        ){
+            this.name = name;
+            this.issuedCountString = issuedCount;
+            this.issueRequestCountString = issueRequestCount;
+            this.status = status;
+            this.metadata = options?.metadata;
+            this.revision = options?.revision;
+            this.revisionString = options?.revisionString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -57,11 +77,19 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.issuedCount != null) {
-                properties["issuedCount"] = this.issuedCount;
+            if (this.issuedCountString != null) {
+                properties["issuedCount"] = this.issuedCountString;
+            } else {
+                if (this.issuedCount != null) {
+                    properties["issuedCount"] = this.issuedCount;
+                }
             }
-            if (this.issueRequestCount != null) {
-                properties["issueRequestCount"] = this.issueRequestCount;
+            if (this.issueRequestCountString != null) {
+                properties["issueRequestCount"] = this.issueRequestCountString;
+            } else {
+                if (this.issueRequestCount != null) {
+                    properties["issueRequestCount"] = this.issueRequestCount;
+                }
             }
             if (this.status != null) {
                 properties["status"] = this.status.Value.Str(

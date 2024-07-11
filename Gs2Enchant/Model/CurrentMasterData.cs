@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Enchant.Model;
 namespace Gs2Cdk.Gs2Enchant.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2023-07-18";
-        private string? namespaceName;
+        private string version= "2023-07-18";
+        private string namespaceName;
         private BalanceParameterModel[] balanceParameterModels;
         private RarityParameterModel[] rarityParameterModels;
 

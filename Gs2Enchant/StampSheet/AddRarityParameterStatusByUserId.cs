@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Enchant.StampSheet
         private string parameterName;
         private string propertyId;
         private int? count;
-        private string? countString;
+        private string countString;
         private string timeOffsetToken;
 
 

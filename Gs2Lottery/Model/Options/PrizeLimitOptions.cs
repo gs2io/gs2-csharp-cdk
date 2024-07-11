@@ -23,5 +23,6 @@ namespace Gs2Cdk.Gs2Lottery.Model.Options
 {
     public class PrizeLimitOptions {
         public long? revision;
+        public string revisionString;
     }
 }

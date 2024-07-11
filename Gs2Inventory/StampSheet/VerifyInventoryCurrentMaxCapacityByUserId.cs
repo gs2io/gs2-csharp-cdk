@@ -29,9 +29,9 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string inventoryName;
         private VerifyInventoryCurrentMaxCapacityByUserIdVerifyType? verifyType;
         private int currentInventoryMaxCapacity;
-        private string? currentInventoryMaxCapacityString;
+        private string currentInventoryMaxCapacityString;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

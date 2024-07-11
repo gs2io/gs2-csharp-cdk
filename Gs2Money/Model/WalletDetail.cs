@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Money.Model
 {
     public class WalletDetail {
         private float price;
+        private string priceString;
         private int count;
+        private string countString;
 
         public WalletDetail(
             float price,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2Money.Model
             this.count = count;
         }
 
+
+        public WalletDetail(
+            string price,
+            string count,
+            WalletDetailOptions options = null
+        ){
+            this.priceString = price;
+            this.countString = count;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.price != null) {
-                properties["price"] = this.price;
+            if (this.priceString != null) {
+                properties["price"] = this.priceString;
+            } else {
+                if (this.price != null) {
+                    properties["price"] = this.price;
+                }
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

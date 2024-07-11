@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Stamina.Model.Options
     public class StaminaModelOptions {
         public string metadata;
         public int? maxCapacity;
+        public string maxCapacityString;
         public MaxStaminaTable maxStaminaTable;
         public RecoverIntervalTable recoverIntervalTable;
         public RecoverValueTable recoverValueTable;

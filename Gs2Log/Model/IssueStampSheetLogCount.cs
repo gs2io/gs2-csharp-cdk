@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class IssueStampSheetLogCount {
         private long count;
+        private string countString;
         private string service;
         private string method;
         private string userId;
@@ -35,6 +36,18 @@ namespace Gs2Cdk.Gs2Log.Model
             IssueStampSheetLogCountOptions options = null
         ){
             this.count = count;
+            this.service = options?.service;
+            this.method = options?.method;
+            this.userId = options?.userId;
+            this.action = options?.action;
+        }
+
+
+        public IssueStampSheetLogCount(
+            string count,
+            IssueStampSheetLogCountOptions options = null
+        ){
+            this.countString = count;
             this.service = options?.service;
             this.method = options?.method;
             this.userId = options?.userId;
@@ -57,8 +70,12 @@ namespace Gs2Cdk.Gs2Log.Model
             if (this.action != null) {
                 properties["action"] = this.action;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

@@ -26,11 +26,14 @@ namespace Gs2Cdk.Gs2Guild.Model
     public class GuildModel {
         private string name;
         private int defaultMaximumMemberCount;
+        private string defaultMaximumMemberCountString;
         private int maximumMemberCount;
+        private string maximumMemberCountString;
         private RoleModel[] roles;
         private string guildMasterRole;
         private string guildMemberDefaultRole;
         private int? rejoinCoolTimeMinutes;
+        private string rejoinCoolTimeMinutesString;
         private string metadata;
 
         public GuildModel(
@@ -53,6 +56,27 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.metadata = options?.metadata;
         }
 
+
+        public GuildModel(
+            string name,
+            string defaultMaximumMemberCount,
+            string maximumMemberCount,
+            RoleModel[] roles,
+            string guildMasterRole,
+            string guildMemberDefaultRole,
+            string rejoinCoolTimeMinutes,
+            GuildModelOptions options = null
+        ){
+            this.name = name;
+            this.defaultMaximumMemberCountString = defaultMaximumMemberCount;
+            this.maximumMemberCountString = maximumMemberCount;
+            this.roles = roles;
+            this.guildMasterRole = guildMasterRole;
+            this.guildMemberDefaultRole = guildMemberDefaultRole;
+            this.rejoinCoolTimeMinutesString = rejoinCoolTimeMinutes;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -63,11 +87,19 @@ namespace Gs2Cdk.Gs2Guild.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.defaultMaximumMemberCount != null) {
-                properties["defaultMaximumMemberCount"] = this.defaultMaximumMemberCount;
+            if (this.defaultMaximumMemberCountString != null) {
+                properties["defaultMaximumMemberCount"] = this.defaultMaximumMemberCountString;
+            } else {
+                if (this.defaultMaximumMemberCount != null) {
+                    properties["defaultMaximumMemberCount"] = this.defaultMaximumMemberCount;
+                }
             }
-            if (this.maximumMemberCount != null) {
-                properties["maximumMemberCount"] = this.maximumMemberCount;
+            if (this.maximumMemberCountString != null) {
+                properties["maximumMemberCount"] = this.maximumMemberCountString;
+            } else {
+                if (this.maximumMemberCount != null) {
+                    properties["maximumMemberCount"] = this.maximumMemberCount;
+                }
             }
             if (this.roles != null) {
                 properties["roles"] = this.roles.Select(v => v?.Properties(
@@ -79,8 +111,12 @@ namespace Gs2Cdk.Gs2Guild.Model
             if (this.guildMemberDefaultRole != null) {
                 properties["guildMemberDefaultRole"] = this.guildMemberDefaultRole;
             }
-            if (this.rejoinCoolTimeMinutes != null) {
-                properties["rejoinCoolTimeMinutes"] = this.rejoinCoolTimeMinutes;
+            if (this.rejoinCoolTimeMinutesString != null) {
+                properties["rejoinCoolTimeMinutes"] = this.rejoinCoolTimeMinutesString;
+            } else {
+                if (this.rejoinCoolTimeMinutes != null) {
+                    properties["rejoinCoolTimeMinutes"] = this.rejoinCoolTimeMinutes;
+                }
             }
 
             return properties;

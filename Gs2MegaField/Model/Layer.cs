@@ -27,8 +27,11 @@ namespace Gs2Cdk.Gs2MegaField.Model
         private string areaModelName;
         private string layerModelName;
         private int? numberOfMinEntries;
+        private string numberOfMinEntriesString;
         private int? numberOfMaxEntries;
+        private string numberOfMaxEntriesString;
         private int height;
+        private string heightString;
         private string root;
 
         public Layer(
@@ -47,6 +50,23 @@ namespace Gs2Cdk.Gs2MegaField.Model
             this.root = options?.root;
         }
 
+
+        public Layer(
+            string areaModelName,
+            string layerModelName,
+            string numberOfMinEntries,
+            string numberOfMaxEntries,
+            string height,
+            LayerOptions options = null
+        ){
+            this.areaModelName = areaModelName;
+            this.layerModelName = layerModelName;
+            this.numberOfMinEntriesString = numberOfMinEntries;
+            this.numberOfMaxEntriesString = numberOfMaxEntries;
+            this.heightString = height;
+            this.root = options?.root;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -60,14 +80,26 @@ namespace Gs2Cdk.Gs2MegaField.Model
             if (this.root != null) {
                 properties["root"] = this.root;
             }
-            if (this.numberOfMinEntries != null) {
-                properties["numberOfMinEntries"] = this.numberOfMinEntries;
+            if (this.numberOfMinEntriesString != null) {
+                properties["numberOfMinEntries"] = this.numberOfMinEntriesString;
+            } else {
+                if (this.numberOfMinEntries != null) {
+                    properties["numberOfMinEntries"] = this.numberOfMinEntries;
+                }
             }
-            if (this.numberOfMaxEntries != null) {
-                properties["numberOfMaxEntries"] = this.numberOfMaxEntries;
+            if (this.numberOfMaxEntriesString != null) {
+                properties["numberOfMaxEntries"] = this.numberOfMaxEntriesString;
+            } else {
+                if (this.numberOfMaxEntries != null) {
+                    properties["numberOfMaxEntries"] = this.numberOfMaxEntries;
+                }
             }
-            if (this.height != null) {
-                properties["height"] = this.height;
+            if (this.heightString != null) {
+                properties["height"] = this.heightString;
+            } else {
+                if (this.height != null) {
+                    properties["height"] = this.height;
+                }
             }
 
             return properties;

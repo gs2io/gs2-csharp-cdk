@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
     public class Material {
         private string materialItemSetId;
         private int? count;
+        private string countString;
 
         public Material(
             string materialItemSetId,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.count = count;
         }
 
+
+        public Material(
+            string materialItemSetId,
+            string count,
+            MaterialOptions options = null
+        ){
+            this.materialItemSetId = materialItemSetId;
+            this.countString = count;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Enhance.Model
             if (this.materialItemSetId != null) {
                 properties["materialItemSetId"] = this.materialItemSetId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

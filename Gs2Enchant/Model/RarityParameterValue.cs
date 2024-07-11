@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
         private string name;
         private string resourceName;
         private long resourceValue;
+        private string resourceValueString;
 
         public RarityParameterValue(
             string name,
@@ -39,6 +40,18 @@ namespace Gs2Cdk.Gs2Enchant.Model
             this.resourceValue = resourceValue;
         }
 
+
+        public RarityParameterValue(
+            string name,
+            string resourceName,
+            string resourceValue,
+            RarityParameterValueOptions options = null
+        ){
+            this.name = name;
+            this.resourceName = resourceName;
+            this.resourceValueString = resourceValue;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -49,8 +62,12 @@ namespace Gs2Cdk.Gs2Enchant.Model
             if (this.resourceName != null) {
                 properties["resourceName"] = this.resourceName;
             }
-            if (this.resourceValue != null) {
-                properties["resourceValue"] = this.resourceValue;
+            if (this.resourceValueString != null) {
+                properties["resourceValue"] = this.resourceValueString;
+            } else {
+                if (this.resourceValue != null) {
+                    properties["resourceValue"] = this.resourceValue;
+                }
             }
 
             return properties;

@@ -30,9 +30,12 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private IncrementalRateModelCalculateType? calculateType;
         private string exchangeCountId;
         private int? maximumExchangeCount;
+        private string maximumExchangeCountString;
         private string metadata;
         private long? baseValue;
+        private string baseValueString;
         private long? coefficientValue;
+        private string coefficientValueString;
         private string calculateScriptId;
         private AcquireAction[] acquireActions;
 
@@ -124,6 +127,29 @@ namespace Gs2Cdk.Gs2Exchange.Model
             ));
         }
 
+
+        public IncrementalRateModel(
+            string name,
+            ConsumeAction consumeAction,
+            IncrementalRateModelCalculateType calculateType,
+            string exchangeCountId,
+            string maximumExchangeCount,
+            IncrementalRateModelOptions options = null
+        ){
+            this.name = name;
+            this.consumeAction = consumeAction;
+            this.calculateType = calculateType;
+            this.exchangeCountId = exchangeCountId;
+            this.maximumExchangeCountString = maximumExchangeCount;
+            this.metadata = options?.metadata;
+            this.baseValue = options?.baseValue;
+            this.baseValueString = options?.baseValueString;
+            this.coefficientValue = options?.coefficientValue;
+            this.coefficientValueString = options?.coefficientValueString;
+            this.calculateScriptId = options?.calculateScriptId;
+            this.acquireActions = options?.acquireActions;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -142,11 +168,19 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 properties["calculateType"] = this.calculateType.Value.Str(
                 );
             }
-            if (this.baseValue != null) {
-                properties["baseValue"] = this.baseValue;
+            if (this.baseValueString != null) {
+                properties["baseValue"] = this.baseValueString;
+            } else {
+                if (this.baseValue != null) {
+                    properties["baseValue"] = this.baseValue;
+                }
             }
-            if (this.coefficientValue != null) {
-                properties["coefficientValue"] = this.coefficientValue;
+            if (this.coefficientValueString != null) {
+                properties["coefficientValue"] = this.coefficientValueString;
+            } else {
+                if (this.coefficientValue != null) {
+                    properties["coefficientValue"] = this.coefficientValue;
+                }
             }
             if (this.calculateScriptId != null) {
                 properties["calculateScriptId"] = this.calculateScriptId;
@@ -154,8 +188,12 @@ namespace Gs2Cdk.Gs2Exchange.Model
             if (this.exchangeCountId != null) {
                 properties["exchangeCountId"] = this.exchangeCountId;
             }
-            if (this.maximumExchangeCount != null) {
-                properties["maximumExchangeCount"] = this.maximumExchangeCount;
+            if (this.maximumExchangeCountString != null) {
+                properties["maximumExchangeCount"] = this.maximumExchangeCountString;
+            } else {
+                if (this.maximumExchangeCount != null) {
+                    properties["maximumExchangeCount"] = this.maximumExchangeCount;
+                }
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(

@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Mission.Model;
 namespace Gs2Cdk.Gs2Mission.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-05-28";
-        private string? namespaceName;
+        private string version= "2019-05-28";
+        private string namespaceName;
         private MissionGroupModel[] groups;
         private CounterModel[] counters;
 

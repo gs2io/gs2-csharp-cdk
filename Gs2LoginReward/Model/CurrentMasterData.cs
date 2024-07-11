@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2LoginReward.Model;
 namespace Gs2Cdk.Gs2LoginReward.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2023-07-11";
-        private string? namespaceName;
+        private string version= "2023-07-11";
+        private string namespaceName;
         private BonusModel[] bonusModels;
 
         public CurrentMasterData(

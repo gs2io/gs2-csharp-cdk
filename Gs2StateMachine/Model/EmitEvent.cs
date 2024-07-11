@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model
         private string event_;
         private string parameters;
         private long timestamp;
+        private string timestampString;
 
         public EmitEvent(
             string event_,
@@ -39,6 +40,18 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             this.timestamp = timestamp;
         }
 
+
+        public EmitEvent(
+            string event_,
+            string parameters,
+            string timestamp,
+            EmitEventOptions options = null
+        ){
+            this.event_ = event_;
+            this.parameters = parameters;
+            this.timestampString = timestamp;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -49,8 +62,12 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             if (this.parameters != null) {
                 properties["parameters"] = this.parameters;
             }
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
 
             return properties;

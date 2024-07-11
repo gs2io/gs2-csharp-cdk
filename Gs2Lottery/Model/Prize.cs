@@ -28,8 +28,10 @@ namespace Gs2Cdk.Gs2Lottery.Model
         private string prizeId;
         private PrizeType? type;
         private int weight;
+        private string weightString;
         private AcquireAction[] acquireActions;
         private int? drawnLimit;
+        private string drawnLimitString;
         private string limitFailOverPrizeId;
         private string prizeTableName;
 
@@ -82,6 +84,23 @@ namespace Gs2Cdk.Gs2Lottery.Model
             ));
         }
 
+
+        public Prize(
+            string prizeId,
+            PrizeType type,
+            string weight,
+            PrizeOptions options = null
+        ){
+            this.prizeId = prizeId;
+            this.type = type;
+            this.weightString = weight;
+            this.acquireActions = options?.acquireActions;
+            this.drawnLimit = options?.drawnLimit;
+            this.drawnLimitString = options?.drawnLimitString;
+            this.limitFailOverPrizeId = options?.limitFailOverPrizeId;
+            this.prizeTableName = options?.prizeTableName;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -97,8 +116,12 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.drawnLimit != null) {
-                properties["drawnLimit"] = this.drawnLimit;
+            if (this.drawnLimitString != null) {
+                properties["drawnLimit"] = this.drawnLimitString;
+            } else {
+                if (this.drawnLimit != null) {
+                    properties["drawnLimit"] = this.drawnLimit;
+                }
             }
             if (this.limitFailOverPrizeId != null) {
                 properties["limitFailOverPrizeId"] = this.limitFailOverPrizeId;
@@ -106,8 +129,12 @@ namespace Gs2Cdk.Gs2Lottery.Model
             if (this.prizeTableName != null) {
                 properties["prizeTableName"] = this.prizeTableName;
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

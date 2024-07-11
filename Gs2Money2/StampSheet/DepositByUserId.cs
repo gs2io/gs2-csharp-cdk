@@ -26,7 +26,7 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
         private string namespaceName;
         private string userId;
         private int slot;
-        private string? slotString;
+        private string slotString;
         private DepositTransaction[] depositTransactions;
         private string timeOffsetToken;
 

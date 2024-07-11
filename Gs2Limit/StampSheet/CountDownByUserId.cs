@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string counterName;
         private string userId;
         private int? countDownValue;
-        private string? countDownValueString;
+        private string countDownValueString;
         private string timeOffsetToken;
 
 

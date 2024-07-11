@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
     public class InboxOptions {
         public string[] fromUserIds;
         public long? revision;
+        public string revisionString;
     }
 }

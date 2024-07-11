@@ -24,10 +24,14 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
 {
     public class RepeatSettingOptions {
         public int? beginDayOfMonth;
+        public string beginDayOfMonthString;
         public int? endDayOfMonth;
+        public string endDayOfMonthString;
         public RepeatSettingBeginDayOfWeek beginDayOfWeek;
         public RepeatSettingEndDayOfWeek endDayOfWeek;
         public int? beginHour;
+        public string beginHourString;
         public int? endHour;
+        public string endHourString;
     }
 }

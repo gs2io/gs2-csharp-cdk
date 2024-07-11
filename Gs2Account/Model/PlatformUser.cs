@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Account.Model
 {
     public class PlatformUser {
         private int type;
+        private string typeString;
         private string userIdentifier;
         private string userId;
 
@@ -39,12 +40,28 @@ namespace Gs2Cdk.Gs2Account.Model
             this.userId = userId;
         }
 
+
+        public PlatformUser(
+            string type,
+            string userIdentifier,
+            string userId,
+            PlatformUserOptions options = null
+        ){
+            this.typeString = type;
+            this.userIdentifier = userIdentifier;
+            this.userId = userId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.type != null) {
-                properties["type"] = this.type;
+            if (this.typeString != null) {
+                properties["type"] = this.typeString;
+            } else {
+                if (this.type != null) {
+                    properties["type"] = this.type;
+                }
             }
             if (this.userIdentifier != null) {
                 properties["userIdentifier"] = this.userIdentifier;

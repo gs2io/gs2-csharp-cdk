@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
         private AcquireAction[] readAcquireActions;
         private TimeSpan_ expiresTimeSpan;
         private long? expiresAt;
+        private string expiresAtString;
         private string messageReceptionPeriodEventId;
 
         public GlobalMessage(
@@ -62,8 +63,12 @@ namespace Gs2Cdk.Gs2Inbox.Model
                 properties["expiresTimeSpan"] = this.expiresTimeSpan?.Properties(
                 );
             }
-            if (this.expiresAt != null) {
-                properties["expiresAt"] = this.expiresAt;
+            if (this.expiresAtString != null) {
+                properties["expiresAt"] = this.expiresAtString;
+            } else {
+                if (this.expiresAt != null) {
+                    properties["expiresAt"] = this.expiresAt;
+                }
             }
             if (this.messageReceptionPeriodEventId != null) {
                 properties["messageReceptionPeriodEventId"] = this.messageReceptionPeriodEventId;

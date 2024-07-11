@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Money2.Model;
 namespace Gs2Cdk.Gs2Money2.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2024-06-20";
-        private string? namespaceName;
+        private string version= "2024-06-20";
+        private string namespaceName;
         private StoreContentModel[] storeContentModels;
 
         public CurrentMasterData(

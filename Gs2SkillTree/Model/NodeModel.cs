@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
         private string name;
         private ConsumeAction[] releaseConsumeActions;
         private float? restrainReturnRate;
+        private string restrainReturnRateString;
         private string metadata;
         private AcquireAction[] returnAcquireActions;
         private string[] premiseNodeNames;
@@ -40,6 +41,21 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             this.name = name;
             this.releaseConsumeActions = releaseConsumeActions;
             this.restrainReturnRate = restrainReturnRate;
+            this.metadata = options?.metadata;
+            this.returnAcquireActions = options?.returnAcquireActions;
+            this.premiseNodeNames = options?.premiseNodeNames;
+        }
+
+
+        public NodeModel(
+            string name,
+            ConsumeAction[] releaseConsumeActions,
+            string restrainReturnRate,
+            NodeModelOptions options = null
+        ){
+            this.name = name;
+            this.releaseConsumeActions = releaseConsumeActions;
+            this.restrainReturnRateString = restrainReturnRate;
             this.metadata = options?.metadata;
             this.returnAcquireActions = options?.returnAcquireActions;
             this.premiseNodeNames = options?.premiseNodeNames;
@@ -59,8 +75,12 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                 properties["releaseConsumeActions"] = this.releaseConsumeActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.restrainReturnRate != null) {
-                properties["restrainReturnRate"] = this.restrainReturnRate;
+            if (this.restrainReturnRateString != null) {
+                properties["restrainReturnRate"] = this.restrainReturnRateString;
+            } else {
+                if (this.restrainReturnRate != null) {
+                    properties["restrainReturnRate"] = this.restrainReturnRate;
+                }
             }
             if (this.premiseNodeNames != null) {
                 properties["premiseNodeNames"] = this.premiseNodeNames;

@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class ExecuteStampSheetLog {
         private long timestamp;
+        private string timestampString;
         private string transactionId;
         private string service;
         private string method;
@@ -51,12 +52,36 @@ namespace Gs2Cdk.Gs2Log.Model
             this.args = args;
         }
 
+
+        public ExecuteStampSheetLog(
+            string timestamp,
+            string transactionId,
+            string service,
+            string method,
+            string userId,
+            string action,
+            string args,
+            ExecuteStampSheetLogOptions options = null
+        ){
+            this.timestampString = timestamp;
+            this.transactionId = transactionId;
+            this.service = service;
+            this.method = method;
+            this.userId = userId;
+            this.action = action;
+            this.args = args;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
             if (this.transactionId != null) {
                 properties["transactionId"] = this.transactionId;

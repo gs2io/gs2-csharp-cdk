@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
     public class AcquireCount {
         private string itemName;
         private long count;
+        private string countString;
 
         public AcquireCount(
             string itemName,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.count = count;
         }
 
+
+        public AcquireCount(
+            string itemName,
+            string count,
+            AcquireCountOptions options = null
+        ){
+            this.itemName = itemName;
+            this.countString = count;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Inventory.Model
             if (this.itemName != null) {
                 properties["itemName"] = this.itemName;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

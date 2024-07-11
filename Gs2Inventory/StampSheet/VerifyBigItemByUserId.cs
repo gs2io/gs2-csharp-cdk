@@ -31,7 +31,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private VerifyBigItemByUserIdVerifyType? verifyType;
         private string count;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

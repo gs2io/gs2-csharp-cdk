@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class WithdrawEvent {
         private int slot;
+        private string slotString;
         private WalletSummary status;
         private DepositTransaction[] withdrawDetails;
 
@@ -38,12 +39,27 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.withdrawDetails = options?.withdrawDetails;
         }
 
+
+        public WithdrawEvent(
+            string slot,
+            WalletSummary status,
+            WithdrawEventOptions options = null
+        ){
+            this.slotString = slot;
+            this.status = status;
+            this.withdrawDetails = options?.withdrawDetails;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.slot != null) {
-                properties["slot"] = this.slot;
+            if (this.slotString != null) {
+                properties["slot"] = this.slotString;
+            } else {
+                if (this.slot != null) {
+                    properties["slot"] = this.slot;
+                }
             }
             if (this.withdrawDetails != null) {
                 properties["withdrawDetails"] = this.withdrawDetails.Select(v => v?.Properties(

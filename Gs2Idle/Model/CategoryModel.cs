@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Idle.Model
     public class CategoryModel {
         private string name;
         private int rewardIntervalMinutes;
+        private string rewardIntervalMinutesString;
         private int defaultMaximumIdleMinutes;
+        private string defaultMaximumIdleMinutesString;
         private AcquireActionList[] acquireActions;
         private string metadata;
         private string idlePeriodScheduleId;
@@ -48,6 +50,23 @@ namespace Gs2Cdk.Gs2Idle.Model
             this.receivePeriodScheduleId = options?.receivePeriodScheduleId;
         }
 
+
+        public CategoryModel(
+            string name,
+            string rewardIntervalMinutes,
+            string defaultMaximumIdleMinutes,
+            AcquireActionList[] acquireActions,
+            CategoryModelOptions options = null
+        ){
+            this.name = name;
+            this.rewardIntervalMinutesString = rewardIntervalMinutes;
+            this.defaultMaximumIdleMinutesString = defaultMaximumIdleMinutes;
+            this.acquireActions = acquireActions;
+            this.metadata = options?.metadata;
+            this.idlePeriodScheduleId = options?.idlePeriodScheduleId;
+            this.receivePeriodScheduleId = options?.receivePeriodScheduleId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -58,11 +77,19 @@ namespace Gs2Cdk.Gs2Idle.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.rewardIntervalMinutes != null) {
-                properties["rewardIntervalMinutes"] = this.rewardIntervalMinutes;
+            if (this.rewardIntervalMinutesString != null) {
+                properties["rewardIntervalMinutes"] = this.rewardIntervalMinutesString;
+            } else {
+                if (this.rewardIntervalMinutes != null) {
+                    properties["rewardIntervalMinutes"] = this.rewardIntervalMinutes;
+                }
             }
-            if (this.defaultMaximumIdleMinutes != null) {
-                properties["defaultMaximumIdleMinutes"] = this.defaultMaximumIdleMinutes;
+            if (this.defaultMaximumIdleMinutesString != null) {
+                properties["defaultMaximumIdleMinutes"] = this.defaultMaximumIdleMinutesString;
+            } else {
+                if (this.defaultMaximumIdleMinutes != null) {
+                    properties["defaultMaximumIdleMinutes"] = this.defaultMaximumIdleMinutes;
+                }
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(

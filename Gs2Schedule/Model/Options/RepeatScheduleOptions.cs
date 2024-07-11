@@ -23,8 +23,12 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
 {
     public class RepeatScheduleOptions {
         public long? currentRepeatStartAt;
+        public string currentRepeatStartAtString;
         public long? currentRepeatEndAt;
+        public string currentRepeatEndAtString;
         public long? lastRepeatEndAt;
+        public string lastRepeatEndAtString;
         public long? nextRepeatStartAt;
+        public string nextRepeatStartAtString;
     }
 }

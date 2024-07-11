@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Chat.Model
 {
     public class NotificationType {
         private int? category;
+        private string categoryString;
         private bool? enableTransferMobilePushNotification;
+        private string enableTransferMobilePushNotificationString;
 
         public NotificationType(
             int? category,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2Chat.Model
             this.enableTransferMobilePushNotification = enableTransferMobilePushNotification;
         }
 
+
+        public NotificationType(
+            string category,
+            string enableTransferMobilePushNotification,
+            NotificationTypeOptions options = null
+        ){
+            this.categoryString = category;
+            this.enableTransferMobilePushNotificationString = enableTransferMobilePushNotification;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.category != null) {
-                properties["category"] = this.category;
+            if (this.categoryString != null) {
+                properties["category"] = this.categoryString;
+            } else {
+                if (this.category != null) {
+                    properties["category"] = this.category;
+                }
             }
-            if (this.enableTransferMobilePushNotification != null) {
-                properties["enableTransferMobilePushNotification"] = this.enableTransferMobilePushNotification;
+            if (this.enableTransferMobilePushNotificationString != null) {
+                properties["enableTransferMobilePushNotification"] = this.enableTransferMobilePushNotificationString;
+            } else {
+                if (this.enableTransferMobilePushNotification != null) {
+                    properties["enableTransferMobilePushNotification"] = this.enableTransferMobilePushNotification;
+                }
             }
 
             return properties;

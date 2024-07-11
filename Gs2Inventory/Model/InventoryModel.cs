@@ -26,10 +26,13 @@ namespace Gs2Cdk.Gs2Inventory.Model
     public class InventoryModel {
         private string name;
         private int initialCapacity;
+        private string initialCapacityString;
         private int maxCapacity;
+        private string maxCapacityString;
         private ItemModel[] itemModels;
         private string metadata;
         private bool? protectReferencedItem;
+        private string protectReferencedItemString;
 
         public InventoryModel(
             string name,
@@ -46,6 +49,23 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.protectReferencedItem = options?.protectReferencedItem;
         }
 
+
+        public InventoryModel(
+            string name,
+            string initialCapacity,
+            string maxCapacity,
+            ItemModel[] itemModels,
+            InventoryModelOptions options = null
+        ){
+            this.name = name;
+            this.initialCapacityString = initialCapacity;
+            this.maxCapacityString = maxCapacity;
+            this.itemModels = itemModels;
+            this.metadata = options?.metadata;
+            this.protectReferencedItem = options?.protectReferencedItem;
+            this.protectReferencedItemString = options?.protectReferencedItemString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -56,14 +76,26 @@ namespace Gs2Cdk.Gs2Inventory.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.initialCapacity != null) {
-                properties["initialCapacity"] = this.initialCapacity;
+            if (this.initialCapacityString != null) {
+                properties["initialCapacity"] = this.initialCapacityString;
+            } else {
+                if (this.initialCapacity != null) {
+                    properties["initialCapacity"] = this.initialCapacity;
+                }
             }
-            if (this.maxCapacity != null) {
-                properties["maxCapacity"] = this.maxCapacity;
+            if (this.maxCapacityString != null) {
+                properties["maxCapacity"] = this.maxCapacityString;
+            } else {
+                if (this.maxCapacity != null) {
+                    properties["maxCapacity"] = this.maxCapacity;
+                }
             }
-            if (this.protectReferencedItem != null) {
-                properties["protectReferencedItem"] = this.protectReferencedItem;
+            if (this.protectReferencedItemString != null) {
+                properties["protectReferencedItem"] = this.protectReferencedItemString;
+            } else {
+                if (this.protectReferencedItem != null) {
+                    properties["protectReferencedItem"] = this.protectReferencedItem;
+                }
             }
             if (this.itemModels != null) {
                 properties["itemModels"] = this.itemModels.Select(v => v?.Properties(

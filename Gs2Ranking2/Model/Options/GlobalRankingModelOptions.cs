@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Ranking2.Model.Options
     public class GlobalRankingModelOptions {
         public string metadata;
         public long? minimumValue;
+        public string minimumValueString;
         public long? maximumValue;
+        public string maximumValueString;
         public string entryPeriodEventId;
         public RankingReward[] rankingRewards;
         public string accessPeriodEventId;

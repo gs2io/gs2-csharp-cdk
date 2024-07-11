@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Showcase.Model;
 namespace Gs2Cdk.Gs2Showcase.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-04-04";
-        private string? namespaceName;
+        private string version= "2019-04-04";
+        private string namespaceName;
         private Showcase[] showcases;
         private RandomShowcase[] randomShowcases;
 

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2JobQueue.Model
         private string scriptId;
         private string args;
         private int? maxTryCount;
+        private string maxTryCountString;
 
         public JobEntry(
             string scriptId,
@@ -39,6 +40,18 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             this.maxTryCount = maxTryCount;
         }
 
+
+        public JobEntry(
+            string scriptId,
+            string args,
+            string maxTryCount,
+            JobEntryOptions options = null
+        ){
+            this.scriptId = scriptId;
+            this.args = args;
+            this.maxTryCountString = maxTryCount;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -49,8 +62,12 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             if (this.args != null) {
                 properties["args"] = this.args;
             }
-            if (this.maxTryCount != null) {
-                properties["maxTryCount"] = this.maxTryCount;
+            if (this.maxTryCountString != null) {
+                properties["maxTryCount"] = this.maxTryCountString;
+            } else {
+                if (this.maxTryCount != null) {
+                    properties["maxTryCount"] = this.maxTryCount;
+                }
             }
 
             return properties;

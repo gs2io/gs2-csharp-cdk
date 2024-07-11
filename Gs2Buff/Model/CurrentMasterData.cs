@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Buff.Model;
 namespace Gs2Cdk.Gs2Buff.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2024-04-15";
-        private string? namespaceName;
+        private string version= "2024-04-15";
+        private string namespaceName;
         private BuffEntryModel[] buffEntryModels;
 
         public CurrentMasterData(

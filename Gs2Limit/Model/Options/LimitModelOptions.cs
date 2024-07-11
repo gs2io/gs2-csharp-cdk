@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Limit.Model.Options
     public class LimitModelOptions {
         public string metadata;
         public int? resetDayOfMonth;
+        public string resetDayOfMonthString;
         public LimitModelResetDayOfWeek resetDayOfWeek;
         public int? resetHour;
+        public string resetHourString;
     }
 }

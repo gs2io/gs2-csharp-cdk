@@ -30,9 +30,9 @@ namespace Gs2Cdk.Gs2Limit.StampSheet
         private string counterName;
         private VerifyCounterByUserIdVerifyType? verifyType;
         private int? count;
-        private string? countString;
+        private string countString;
         private bool? multiplyValueSpecifyingQuantity;
-        private string? multiplyValueSpecifyingQuantityString;
+        private string multiplyValueSpecifyingQuantityString;
         private string timeOffsetToken;
 
 

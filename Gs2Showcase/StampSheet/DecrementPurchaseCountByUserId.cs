@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Showcase.StampSheet
         private string displayItemName;
         private string userId;
         private int count;
-        private string? countString;
+        private string countString;
         private string timeOffsetToken;
 
 

@@ -26,8 +26,11 @@ namespace Gs2Cdk.Gs2News.Model
     public class Progress {
         private string uploadToken;
         private int generated;
+        private string generatedString;
         private int patternCount;
+        private string patternCountString;
         private long? revision;
+        private string revisionString;
 
         public Progress(
             string uploadToken,
@@ -41,6 +44,20 @@ namespace Gs2Cdk.Gs2News.Model
             this.revision = options?.revision;
         }
 
+
+        public Progress(
+            string uploadToken,
+            string generated,
+            string patternCount,
+            ProgressOptions options = null
+        ){
+            this.uploadToken = uploadToken;
+            this.generatedString = generated;
+            this.patternCountString = patternCount;
+            this.revision = options?.revision;
+            this.revisionString = options?.revisionString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -48,11 +65,19 @@ namespace Gs2Cdk.Gs2News.Model
             if (this.uploadToken != null) {
                 properties["uploadToken"] = this.uploadToken;
             }
-            if (this.generated != null) {
-                properties["generated"] = this.generated;
+            if (this.generatedString != null) {
+                properties["generated"] = this.generatedString;
+            } else {
+                if (this.generated != null) {
+                    properties["generated"] = this.generated;
+                }
             }
-            if (this.patternCount != null) {
-                properties["patternCount"] = this.patternCount;
+            if (this.patternCountString != null) {
+                properties["patternCount"] = this.patternCountString;
+            } else {
+                if (this.patternCount != null) {
+                    properties["patternCount"] = this.patternCount;
+                }
             }
 
             return properties;

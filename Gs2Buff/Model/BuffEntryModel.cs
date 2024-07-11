@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Buff.Model
         private BuffEntryModelExpression? expression;
         private BuffEntryModelTargetType? targetType;
         private int priority;
+        private string priorityString;
         private string metadata;
         private BuffTargetModel targetModel;
         private BuffTargetAction targetAction;
@@ -91,6 +92,24 @@ namespace Gs2Cdk.Gs2Buff.Model
             ));
         }
 
+
+        public BuffEntryModel(
+            string name,
+            BuffEntryModelExpression expression,
+            BuffEntryModelTargetType targetType,
+            string priority,
+            BuffEntryModelOptions options = null
+        ){
+            this.name = name;
+            this.expression = expression;
+            this.targetType = targetType;
+            this.priorityString = priority;
+            this.metadata = options?.metadata;
+            this.targetModel = options?.targetModel;
+            this.targetAction = options?.targetAction;
+            this.applyPeriodScheduleEventId = options?.applyPeriodScheduleEventId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -117,8 +136,12 @@ namespace Gs2Cdk.Gs2Buff.Model
                 properties["targetAction"] = this.targetAction?.Properties(
                 );
             }
-            if (this.priority != null) {
-                properties["priority"] = this.priority;
+            if (this.priorityString != null) {
+                properties["priority"] = this.priorityString;
+            } else {
+                if (this.priority != null) {
+                    properties["priority"] = this.priority;
+                }
             }
             if (this.applyPeriodScheduleEventId != null) {
                 properties["applyPeriodScheduleEventId"] = this.applyPeriodScheduleEventId;

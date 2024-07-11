@@ -27,7 +27,9 @@ namespace Gs2Cdk.Gs2Enchant.Model
         private string name;
         private string resourceName;
         private long resourceValue;
+        private string resourceValueString;
         private int weight;
+        private string weightString;
         private string metadata;
 
         public RarityParameterValueModel(
@@ -44,6 +46,21 @@ namespace Gs2Cdk.Gs2Enchant.Model
             this.metadata = options?.metadata;
         }
 
+
+        public RarityParameterValueModel(
+            string name,
+            string resourceName,
+            string resourceValue,
+            string weight,
+            RarityParameterValueModelOptions options = null
+        ){
+            this.name = name;
+            this.resourceName = resourceName;
+            this.resourceValueString = resourceValue;
+            this.weightString = weight;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -57,11 +74,19 @@ namespace Gs2Cdk.Gs2Enchant.Model
             if (this.resourceName != null) {
                 properties["resourceName"] = this.resourceName;
             }
-            if (this.resourceValue != null) {
-                properties["resourceValue"] = this.resourceValue;
+            if (this.resourceValueString != null) {
+                properties["resourceValue"] = this.resourceValueString;
+            } else {
+                if (this.resourceValue != null) {
+                    properties["resourceValue"] = this.resourceValue;
+                }
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

@@ -23,6 +23,8 @@ namespace Gs2Cdk.Gs2Ranking.Model.Options
 {
     public class FixedTimingOptions {
         public int? hour;
+        public string hourString;
         public int? minute;
+        public string minuteString;
     }
 }

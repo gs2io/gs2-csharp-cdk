@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private string metadata;
         private ConsumeAction[] consumeActions;
         private int? lockTime;
+        private string lockTimeString;
         private AcquireAction[] acquireActions;
 
         public RateModel(
@@ -95,8 +96,12 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 properties["timingType"] = this.timingType.Value.Str(
                 );
             }
-            if (this.lockTime != null) {
-                properties["lockTime"] = this.lockTime;
+            if (this.lockTimeString != null) {
+                properties["lockTime"] = this.lockTimeString;
+            } else {
+                if (this.lockTime != null) {
+                    properties["lockTime"] = this.lockTime;
+                }
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(

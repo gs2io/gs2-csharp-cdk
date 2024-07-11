@@ -26,11 +26,11 @@ namespace Gs2Cdk.Gs2Money2.StampSheet
         private string namespaceName;
         private string userId;
         private int slot;
-        private string? slotString;
+        private string slotString;
         private int withdrawCount;
-        private string? withdrawCountString;
+        private string withdrawCountString;
         private bool? paidOnly;
-        private string? paidOnlyString;
+        private string paidOnlyString;
         private string timeOffsetToken;
 
 

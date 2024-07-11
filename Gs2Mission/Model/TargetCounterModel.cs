@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class TargetCounterModel {
         private string counterName;
         private long value;
+        private string valueString;
         private TargetCounterModelResetType? resetType;
 
         public TargetCounterModel(
@@ -36,6 +37,17 @@ namespace Gs2Cdk.Gs2Mission.Model
         ){
             this.counterName = counterName;
             this.value = value;
+            this.resetType = options?.resetType;
+        }
+
+
+        public TargetCounterModel(
+            string counterName,
+            string value,
+            TargetCounterModelOptions options = null
+        ){
+            this.counterName = counterName;
+            this.valueString = value;
             this.resetType = options?.resetType;
         }
 
@@ -50,8 +62,12 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["resetType"] = this.resetType.Value.Str(
                 );
             }
-            if (this.value != null) {
-                properties["value"] = this.value;
+            if (this.valueString != null) {
+                properties["value"] = this.valueString;
+            } else {
+                if (this.value != null) {
+                    properties["value"] = this.value;
+                }
             }
 
             return properties;

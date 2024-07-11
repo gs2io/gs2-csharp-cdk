@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model
 {
     public class RandomStatus {
         private long seed;
+        private string seedString;
         private RandomUsed[] used;
 
         public RandomStatus(
@@ -35,12 +36,25 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             this.used = options?.used;
         }
 
+
+        public RandomStatus(
+            string seed,
+            RandomStatusOptions options = null
+        ){
+            this.seedString = seed;
+            this.used = options?.used;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.seed != null) {
-                properties["seed"] = this.seed;
+            if (this.seedString != null) {
+                properties["seed"] = this.seedString;
+            } else {
+                if (this.seed != null) {
+                    properties["seed"] = this.seed;
+                }
             }
             if (this.used != null) {
                 properties["used"] = this.used.Select(v => v?.Properties(

@@ -27,7 +27,9 @@ namespace Gs2Cdk.Gs2Showcase.Model
         private string name;
         private AcquireAction[] acquireActions;
         private int stock;
+        private string stockString;
         private int weight;
+        private string weightString;
         private string metadata;
         private ConsumeAction[] consumeActions;
 
@@ -42,6 +44,22 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.acquireActions = acquireActions;
             this.stock = stock;
             this.weight = weight;
+            this.metadata = options?.metadata;
+            this.consumeActions = options?.consumeActions;
+        }
+
+
+        public RandomDisplayItemModel(
+            string name,
+            AcquireAction[] acquireActions,
+            string stock,
+            string weight,
+            RandomDisplayItemModelOptions options = null
+        ){
+            this.name = name;
+            this.acquireActions = acquireActions;
+            this.stockString = stock;
+            this.weightString = weight;
             this.metadata = options?.metadata;
             this.consumeActions = options?.consumeActions;
         }
@@ -64,11 +82,19 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.stock != null) {
-                properties["stock"] = this.stock;
+            if (this.stockString != null) {
+                properties["stock"] = this.stockString;
+            } else {
+                if (this.stock != null) {
+                    properties["stock"] = this.stock;
+                }
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Buff.Model
     public class OverrideBuffRate {
         private string name;
         private float rate;
+        private string rateString;
 
         public OverrideBuffRate(
             string name,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Buff.Model
             this.rate = rate;
         }
 
+
+        public OverrideBuffRate(
+            string name,
+            string rate,
+            OverrideBuffRateOptions options = null
+        ){
+            this.name = name;
+            this.rateString = rate;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Buff.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.rate != null) {
-                properties["rate"] = this.rate;
+            if (this.rateString != null) {
+                properties["rate"] = this.rateString;
+            } else {
+                if (this.rate != null) {
+                    properties["rate"] = this.rate;
+                }
             }
 
             return properties;

@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Quest.Model
 {
     public class Contents {
         private int? weight;
+        private string weightString;
         private string metadata;
         private AcquireAction[] completeAcquireActions;
 
@@ -33,6 +34,16 @@ namespace Gs2Cdk.Gs2Quest.Model
             ContentsOptions options = null
         ){
             this.weight = weight;
+            this.metadata = options?.metadata;
+            this.completeAcquireActions = options?.completeAcquireActions;
+        }
+
+
+        public Contents(
+            string weight,
+            ContentsOptions options = null
+        ){
+            this.weightString = weight;
             this.metadata = options?.metadata;
             this.completeAcquireActions = options?.completeAcquireActions;
         }
@@ -48,8 +59,12 @@ namespace Gs2Cdk.Gs2Quest.Model
                 properties["completeAcquireActions"] = this.completeAcquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

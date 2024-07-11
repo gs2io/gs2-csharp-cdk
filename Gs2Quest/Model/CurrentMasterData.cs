@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Quest.Model;
 namespace Gs2Cdk.Gs2Quest.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-05-14";
-        private string? namespaceName;
+        private string version= "2019-05-14";
+        private string namespaceName;
         private QuestGroupModel[] questGroupModels;
 
         public CurrentMasterData(

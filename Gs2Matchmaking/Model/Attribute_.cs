@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class Attribute_ {
         private string name;
         private int? value;
+        private string valueString;
 
         public Attribute_(
             string name,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.value = value;
         }
 
+
+        public Attribute_(
+            string name,
+            string value,
+            AttributeOptions options = null
+        ){
+            this.name = name;
+            this.valueString = value;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.value != null) {
-                properties["value"] = this.value;
+            if (this.valueString != null) {
+                properties["value"] = this.valueString;
+            } else {
+                if (this.value != null) {
+                    properties["value"] = this.value;
+                }
             }
 
             return properties;

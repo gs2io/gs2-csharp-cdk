@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Ranking2.Model
 {
     public class RankingReward {
         private int thresholdRank;
+        private string thresholdRankString;
         private string metadata;
         private AcquireAction[] acquireActions;
 
@@ -37,12 +38,26 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             this.acquireActions = options?.acquireActions;
         }
 
+
+        public RankingReward(
+            string thresholdRank,
+            RankingRewardOptions options = null
+        ){
+            this.thresholdRankString = thresholdRank;
+            this.metadata = options?.metadata;
+            this.acquireActions = options?.acquireActions;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.thresholdRank != null) {
-                properties["thresholdRank"] = this.thresholdRank;
+            if (this.thresholdRankString != null) {
+                properties["thresholdRank"] = this.thresholdRankString;
+            } else {
+                if (this.thresholdRank != null) {
+                    properties["thresholdRank"] = this.thresholdRank;
+                }
             }
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;

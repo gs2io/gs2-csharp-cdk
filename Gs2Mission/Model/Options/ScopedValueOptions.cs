@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class ScopedValueOptions {
         public long? nextResetAt;
+        public string nextResetAtString;
     }
 }

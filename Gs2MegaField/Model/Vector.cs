@@ -25,8 +25,11 @@ namespace Gs2Cdk.Gs2MegaField.Model
 {
     public class Vector {
         private float x;
+        private string xString;
         private float y;
+        private string yString;
         private float z;
+        private string zString;
 
         public Vector(
             float x,
@@ -39,18 +42,42 @@ namespace Gs2Cdk.Gs2MegaField.Model
             this.z = z;
         }
 
+
+        public Vector(
+            string x,
+            string y,
+            string z,
+            VectorOptions options = null
+        ){
+            this.xString = x;
+            this.yString = y;
+            this.zString = z;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.x != null) {
-                properties["x"] = this.x;
+            if (this.xString != null) {
+                properties["x"] = this.xString;
+            } else {
+                if (this.x != null) {
+                    properties["x"] = this.x;
+                }
             }
-            if (this.y != null) {
-                properties["y"] = this.y;
+            if (this.yString != null) {
+                properties["y"] = this.yString;
+            } else {
+                if (this.y != null) {
+                    properties["y"] = this.y;
+                }
             }
-            if (this.z != null) {
-                properties["z"] = this.z;
+            if (this.zString != null) {
+                properties["z"] = this.zString;
+            } else {
+                if (this.z != null) {
+                    properties["z"] = this.z;
+                }
             }
 
             return properties;

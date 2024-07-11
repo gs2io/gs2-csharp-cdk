@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Stamina.Model;
 namespace Gs2Cdk.Gs2Stamina.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-02-14";
-        private string? namespaceName;
+        private string version= "2019-02-14";
+        private string namespaceName;
         private StaminaModel[] staminaModels;
 
         public CurrentMasterData(

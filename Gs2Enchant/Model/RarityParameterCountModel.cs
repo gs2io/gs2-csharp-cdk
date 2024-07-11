@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Enchant.Model
 {
     public class RarityParameterCountModel {
         private int count;
+        private string countString;
         private int weight;
+        private string weightString;
 
         public RarityParameterCountModel(
             int count,
@@ -36,15 +38,33 @@ namespace Gs2Cdk.Gs2Enchant.Model
             this.weight = weight;
         }
 
+
+        public RarityParameterCountModel(
+            string count,
+            string weight,
+            RarityParameterCountModelOptions options = null
+        ){
+            this.countString = count;
+            this.weightString = weight;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
-            if (this.weight != null) {
-                properties["weight"] = this.weight;
+            if (this.weightString != null) {
+                properties["weight"] = this.weightString;
+            } else {
+                if (this.weight != null) {
+                    properties["weight"] = this.weight;
+                }
             }
 
             return properties;

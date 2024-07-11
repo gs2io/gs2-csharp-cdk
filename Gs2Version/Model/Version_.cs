@@ -25,8 +25,11 @@ namespace Gs2Cdk.Gs2Version.Model
 {
     public class Version_ {
         private int major;
+        private string majorString;
         private int minor;
+        private string minorString;
         private int micro;
+        private string microString;
 
         public Version_(
             int major,
@@ -39,18 +42,42 @@ namespace Gs2Cdk.Gs2Version.Model
             this.micro = micro;
         }
 
+
+        public Version_(
+            string major,
+            string minor,
+            string micro,
+            VersionOptions options = null
+        ){
+            this.majorString = major;
+            this.minorString = minor;
+            this.microString = micro;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.major != null) {
-                properties["major"] = this.major;
+            if (this.majorString != null) {
+                properties["major"] = this.majorString;
+            } else {
+                if (this.major != null) {
+                    properties["major"] = this.major;
+                }
             }
-            if (this.minor != null) {
-                properties["minor"] = this.minor;
+            if (this.minorString != null) {
+                properties["minor"] = this.minorString;
+            } else {
+                if (this.minor != null) {
+                    properties["minor"] = this.minor;
+                }
             }
-            if (this.micro != null) {
-                properties["micro"] = this.micro;
+            if (this.microString != null) {
+                properties["micro"] = this.microString;
+            } else {
+                if (this.micro != null) {
+                    properties["micro"] = this.micro;
+                }
             }
 
             return properties;

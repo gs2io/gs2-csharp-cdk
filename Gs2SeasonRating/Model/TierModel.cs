@@ -25,9 +25,13 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
 {
     public class TierModel {
         private int raiseRankBonus;
+        private string raiseRankBonusString;
         private int entryFee;
+        private string entryFeeString;
         private int minimumChangePoint;
+        private string minimumChangePointString;
         private int maximumChangePoint;
+        private string maximumChangePointString;
         private string metadata;
 
         public TierModel(
@@ -44,6 +48,21 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
             this.metadata = options?.metadata;
         }
 
+
+        public TierModel(
+            string raiseRankBonus,
+            string entryFee,
+            string minimumChangePoint,
+            string maximumChangePoint,
+            TierModelOptions options = null
+        ){
+            this.raiseRankBonusString = raiseRankBonus;
+            this.entryFeeString = entryFee;
+            this.minimumChangePointString = minimumChangePoint;
+            this.maximumChangePointString = maximumChangePoint;
+            this.metadata = options?.metadata;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -51,17 +70,33 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.raiseRankBonus != null) {
-                properties["raiseRankBonus"] = this.raiseRankBonus;
+            if (this.raiseRankBonusString != null) {
+                properties["raiseRankBonus"] = this.raiseRankBonusString;
+            } else {
+                if (this.raiseRankBonus != null) {
+                    properties["raiseRankBonus"] = this.raiseRankBonus;
+                }
             }
-            if (this.entryFee != null) {
-                properties["entryFee"] = this.entryFee;
+            if (this.entryFeeString != null) {
+                properties["entryFee"] = this.entryFeeString;
+            } else {
+                if (this.entryFee != null) {
+                    properties["entryFee"] = this.entryFee;
+                }
             }
-            if (this.minimumChangePoint != null) {
-                properties["minimumChangePoint"] = this.minimumChangePoint;
+            if (this.minimumChangePointString != null) {
+                properties["minimumChangePoint"] = this.minimumChangePointString;
+            } else {
+                if (this.minimumChangePoint != null) {
+                    properties["minimumChangePoint"] = this.minimumChangePoint;
+                }
             }
-            if (this.maximumChangePoint != null) {
-                properties["maximumChangePoint"] = this.maximumChangePoint;
+            if (this.maximumChangePointString != null) {
+                properties["maximumChangePoint"] = this.maximumChangePointString;
+            } else {
+                if (this.maximumChangePoint != null) {
+                    properties["maximumChangePoint"] = this.maximumChangePoint;
+                }
             }
 
             return properties;

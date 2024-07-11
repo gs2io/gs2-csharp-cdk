@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class AccessLogCount {
         private long count;
+        private string countString;
         private string service;
         private string method;
         private string userId;
@@ -34,6 +35,17 @@ namespace Gs2Cdk.Gs2Log.Model
             AccessLogCountOptions options = null
         ){
             this.count = count;
+            this.service = options?.service;
+            this.method = options?.method;
+            this.userId = options?.userId;
+        }
+
+
+        public AccessLogCount(
+            string count,
+            AccessLogCountOptions options = null
+        ){
+            this.countString = count;
             this.service = options?.service;
             this.method = options?.method;
             this.userId = options?.userId;
@@ -52,8 +64,12 @@ namespace Gs2Cdk.Gs2Log.Model
             if (this.userId != null) {
                 properties["userId"] = this.userId;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

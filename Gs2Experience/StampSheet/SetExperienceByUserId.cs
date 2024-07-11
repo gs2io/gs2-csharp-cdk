@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Experience.StampSheet
         private string experienceName;
         private string propertyId;
         private long? experienceValue;
-        private string? experienceValueString;
+        private string experienceValueString;
         private string timeOffsetToken;
 
 

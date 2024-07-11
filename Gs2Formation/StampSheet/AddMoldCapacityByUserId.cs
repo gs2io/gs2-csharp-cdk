@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Formation.StampSheet
         private string userId;
         private string moldModelName;
         private int capacity;
-        private string? capacityString;
+        private string capacityString;
         private string timeOffsetToken;
 
 

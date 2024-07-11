@@ -28,11 +28,11 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string itemName;
         private string userId;
         private long acquireCount;
-        private string? acquireCountString;
+        private string acquireCountString;
         private long? expiresAt;
-        private string? expiresAtString;
+        private string expiresAtString;
         private bool? createNewItemSet;
-        private string? createNewItemSetString;
+        private string createNewItemSetString;
         private string itemSetName;
         private string timeOffsetToken;
 

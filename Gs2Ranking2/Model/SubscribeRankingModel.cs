@@ -27,10 +27,13 @@ namespace Gs2Cdk.Gs2Ranking2.Model
     public class SubscribeRankingModel {
         private string name;
         private bool? sum;
+        private string sumString;
         private SubscribeRankingModelOrderDirection? orderDirection;
         private string metadata;
         private long? minimumValue;
+        private string minimumValueString;
         private long? maximumValue;
+        private string maximumValueString;
         private string entryPeriodEventId;
         private string accessPeriodEventId;
 
@@ -50,6 +53,25 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             this.accessPeriodEventId = options?.accessPeriodEventId;
         }
 
+
+        public SubscribeRankingModel(
+            string name,
+            string sum,
+            SubscribeRankingModelOrderDirection orderDirection,
+            SubscribeRankingModelOptions options = null
+        ){
+            this.name = name;
+            this.sumString = sum;
+            this.orderDirection = orderDirection;
+            this.metadata = options?.metadata;
+            this.minimumValue = options?.minimumValue;
+            this.minimumValueString = options?.minimumValueString;
+            this.maximumValue = options?.maximumValue;
+            this.maximumValueString = options?.maximumValueString;
+            this.entryPeriodEventId = options?.entryPeriodEventId;
+            this.accessPeriodEventId = options?.accessPeriodEventId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -60,14 +82,26 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.minimumValue != null) {
-                properties["minimumValue"] = this.minimumValue;
+            if (this.minimumValueString != null) {
+                properties["minimumValue"] = this.minimumValueString;
+            } else {
+                if (this.minimumValue != null) {
+                    properties["minimumValue"] = this.minimumValue;
+                }
             }
-            if (this.maximumValue != null) {
-                properties["maximumValue"] = this.maximumValue;
+            if (this.maximumValueString != null) {
+                properties["maximumValue"] = this.maximumValueString;
+            } else {
+                if (this.maximumValue != null) {
+                    properties["maximumValue"] = this.maximumValue;
+                }
             }
-            if (this.sum != null) {
-                properties["sum"] = this.sum;
+            if (this.sumString != null) {
+                properties["sum"] = this.sumString;
+            } else {
+                if (this.sum != null) {
+                    properties["sum"] = this.sum;
+                }
             }
             if (this.orderDirection != null) {
                 properties["orderDirection"] = this.orderDirection.Value.Str(

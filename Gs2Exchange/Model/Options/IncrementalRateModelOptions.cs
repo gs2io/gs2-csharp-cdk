@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
     public class IncrementalRateModelOptions {
         public string metadata;
         public long? baseValue;
+        public string baseValueString;
         public long? coefficientValue;
+        public string coefficientValueString;
         public string calculateScriptId;
         public AcquireAction[] acquireActions;
     }

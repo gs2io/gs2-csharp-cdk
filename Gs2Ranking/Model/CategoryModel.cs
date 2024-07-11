@@ -27,18 +27,25 @@ namespace Gs2Cdk.Gs2Ranking.Model
     public class CategoryModel {
         private string name;
         private bool? sum;
+        private string sumString;
         private CategoryModelOrderDirection? orderDirection;
         private CategoryModelScope? scope;
         private string metadata;
         private long? minimumValue;
+        private string minimumValueString;
         private long? maximumValue;
+        private string maximumValueString;
         private GlobalRankingSetting globalRankingSetting;
         private string entryPeriodEventId;
         private string accessPeriodEventId;
         private bool? uniqueByUserId;
+        private string uniqueByUserIdString;
         private int? calculateFixedTimingHour;
+        private string calculateFixedTimingHourString;
         private int? calculateFixedTimingMinute;
+        private string calculateFixedTimingMinuteString;
         private int? calculateIntervalMinutes;
+        private string calculateIntervalMinutesString;
         private Scope[] additionalScopes;
         private string[] ignoreUserIds;
         private string generation;
@@ -127,6 +134,39 @@ namespace Gs2Cdk.Gs2Ranking.Model
             ));
         }
 
+
+        public CategoryModel(
+            string name,
+            string sum,
+            CategoryModelOrderDirection orderDirection,
+            CategoryModelScope scope,
+            CategoryModelOptions options = null
+        ){
+            this.name = name;
+            this.sumString = sum;
+            this.orderDirection = orderDirection;
+            this.scope = scope;
+            this.metadata = options?.metadata;
+            this.minimumValue = options?.minimumValue;
+            this.minimumValueString = options?.minimumValueString;
+            this.maximumValue = options?.maximumValue;
+            this.maximumValueString = options?.maximumValueString;
+            this.globalRankingSetting = options?.globalRankingSetting;
+            this.entryPeriodEventId = options?.entryPeriodEventId;
+            this.accessPeriodEventId = options?.accessPeriodEventId;
+            this.uniqueByUserId = options?.uniqueByUserId;
+            this.uniqueByUserIdString = options?.uniqueByUserIdString;
+            this.calculateFixedTimingHour = options?.calculateFixedTimingHour;
+            this.calculateFixedTimingHourString = options?.calculateFixedTimingHourString;
+            this.calculateFixedTimingMinute = options?.calculateFixedTimingMinute;
+            this.calculateFixedTimingMinuteString = options?.calculateFixedTimingMinuteString;
+            this.calculateIntervalMinutes = options?.calculateIntervalMinutes;
+            this.calculateIntervalMinutesString = options?.calculateIntervalMinutesString;
+            this.additionalScopes = options?.additionalScopes;
+            this.ignoreUserIds = options?.ignoreUserIds;
+            this.generation = options?.generation;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -137,14 +177,26 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.minimumValue != null) {
-                properties["minimumValue"] = this.minimumValue;
+            if (this.minimumValueString != null) {
+                properties["minimumValue"] = this.minimumValueString;
+            } else {
+                if (this.minimumValue != null) {
+                    properties["minimumValue"] = this.minimumValue;
+                }
             }
-            if (this.maximumValue != null) {
-                properties["maximumValue"] = this.maximumValue;
+            if (this.maximumValueString != null) {
+                properties["maximumValue"] = this.maximumValueString;
+            } else {
+                if (this.maximumValue != null) {
+                    properties["maximumValue"] = this.maximumValue;
+                }
             }
-            if (this.sum != null) {
-                properties["sum"] = this.sum;
+            if (this.sumString != null) {
+                properties["sum"] = this.sumString;
+            } else {
+                if (this.sum != null) {
+                    properties["sum"] = this.sum;
+                }
             }
             if (this.orderDirection != null) {
                 properties["orderDirection"] = this.orderDirection.Value.Str(
@@ -164,17 +216,33 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.accessPeriodEventId != null) {
                 properties["accessPeriodEventId"] = this.accessPeriodEventId;
             }
-            if (this.uniqueByUserId != null) {
-                properties["uniqueByUserId"] = this.uniqueByUserId;
+            if (this.uniqueByUserIdString != null) {
+                properties["uniqueByUserId"] = this.uniqueByUserIdString;
+            } else {
+                if (this.uniqueByUserId != null) {
+                    properties["uniqueByUserId"] = this.uniqueByUserId;
+                }
             }
-            if (this.calculateFixedTimingHour != null) {
-                properties["calculateFixedTimingHour"] = this.calculateFixedTimingHour;
+            if (this.calculateFixedTimingHourString != null) {
+                properties["calculateFixedTimingHour"] = this.calculateFixedTimingHourString;
+            } else {
+                if (this.calculateFixedTimingHour != null) {
+                    properties["calculateFixedTimingHour"] = this.calculateFixedTimingHour;
+                }
             }
-            if (this.calculateFixedTimingMinute != null) {
-                properties["calculateFixedTimingMinute"] = this.calculateFixedTimingMinute;
+            if (this.calculateFixedTimingMinuteString != null) {
+                properties["calculateFixedTimingMinute"] = this.calculateFixedTimingMinuteString;
+            } else {
+                if (this.calculateFixedTimingMinute != null) {
+                    properties["calculateFixedTimingMinute"] = this.calculateFixedTimingMinute;
+                }
             }
-            if (this.calculateIntervalMinutes != null) {
-                properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
+            if (this.calculateIntervalMinutesString != null) {
+                properties["calculateIntervalMinutes"] = this.calculateIntervalMinutesString;
+            } else {
+                if (this.calculateIntervalMinutes != null) {
+                    properties["calculateIntervalMinutes"] = this.calculateIntervalMinutes;
+                }
             }
             if (this.additionalScopes != null) {
                 properties["additionalScopes"] = this.additionalScopes.Select(v => v?.Properties(

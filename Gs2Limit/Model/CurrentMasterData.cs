@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Limit.Model;
 namespace Gs2Cdk.Gs2Limit.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2019-04-05";
-        private string? namespaceName;
+        private string version= "2019-04-05";
+        private string namespaceName;
         private LimitModel[] limitModels;
 
         public CurrentMasterData(

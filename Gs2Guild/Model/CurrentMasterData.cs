@@ -22,8 +22,8 @@ using Gs2Cdk.Gs2Guild.Model;
 namespace Gs2Cdk.Gs2Guild.Model
 {
     public class CurrentMasterData : CdkResource {
-        private string? version= "2024-04-25";
-        private string? namespaceName;
+        private string version= "2024-04-25";
+        private string namespaceName;
         private GuildModel[] guildModels;
 
         public CurrentMasterData(

@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class AccessLog {
         private long timestamp;
+        private string timestampString;
         private string requestId;
         private string service;
         private string method;
@@ -50,12 +51,35 @@ namespace Gs2Cdk.Gs2Log.Model
             this.userId = options?.userId;
         }
 
+
+        public AccessLog(
+            string timestamp,
+            string requestId,
+            string service,
+            string method,
+            string request,
+            string result,
+            AccessLogOptions options = null
+        ){
+            this.timestampString = timestamp;
+            this.requestId = requestId;
+            this.service = service;
+            this.method = method;
+            this.request = request;
+            this.result = result;
+            this.userId = options?.userId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
             if (this.requestId != null) {
                 properties["requestId"] = this.requestId;

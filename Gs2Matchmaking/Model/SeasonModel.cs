@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class SeasonModel {
         private string name;
         private int maximumParticipants;
+        private string maximumParticipantsString;
         private string challengePeriodEventId;
         private string metadata;
         private string experienceModelId;
@@ -43,6 +44,20 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.experienceModelId = options?.experienceModelId;
         }
 
+
+        public SeasonModel(
+            string name,
+            string maximumParticipants,
+            string challengePeriodEventId,
+            SeasonModelOptions options = null
+        ){
+            this.name = name;
+            this.maximumParticipantsString = maximumParticipants;
+            this.challengePeriodEventId = challengePeriodEventId;
+            this.metadata = options?.metadata;
+            this.experienceModelId = options?.experienceModelId;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -53,8 +68,12 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
-            if (this.maximumParticipants != null) {
-                properties["maximumParticipants"] = this.maximumParticipants;
+            if (this.maximumParticipantsString != null) {
+                properties["maximumParticipants"] = this.maximumParticipantsString;
+            } else {
+                if (this.maximumParticipants != null) {
+                    properties["maximumParticipants"] = this.maximumParticipants;
+                }
             }
             if (this.experienceModelId != null) {
                 properties["experienceModelId"] = this.experienceModelId;

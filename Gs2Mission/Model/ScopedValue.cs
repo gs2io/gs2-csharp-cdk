@@ -27,7 +27,9 @@ namespace Gs2Cdk.Gs2Mission.Model
     public class ScopedValue {
         private ScopedValueResetType? resetType;
         private long? value;
+        private string valueString;
         private long? nextResetAt;
+        private string nextResetAtString;
 
         public ScopedValue(
             ScopedValueResetType resetType,
@@ -39,6 +41,18 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.nextResetAt = options?.nextResetAt;
         }
 
+
+        public ScopedValue(
+            ScopedValueResetType resetType,
+            string value,
+            ScopedValueOptions options = null
+        ){
+            this.resetType = resetType;
+            this.valueString = value;
+            this.nextResetAt = options?.nextResetAt;
+            this.nextResetAtString = options?.nextResetAtString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -47,11 +61,19 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["resetType"] = this.resetType.Value.Str(
                 );
             }
-            if (this.value != null) {
-                properties["value"] = this.value;
+            if (this.valueString != null) {
+                properties["value"] = this.valueString;
+            } else {
+                if (this.value != null) {
+                    properties["value"] = this.value;
+                }
             }
-            if (this.nextResetAt != null) {
-                properties["nextResetAt"] = this.nextResetAt;
+            if (this.nextResetAtString != null) {
+                properties["nextResetAt"] = this.nextResetAtString;
+            } else {
+                if (this.nextResetAt != null) {
+                    properties["nextResetAt"] = this.nextResetAt;
+                }
             }
 
             return properties;

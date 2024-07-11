@@ -29,9 +29,9 @@ namespace Gs2Cdk.Gs2Exchange.StampSheet
         private string awaitName;
         private SkipByUserIdSkipType? skipType;
         private int? minutes;
-        private string? minutesString;
+        private string minutesString;
         private float? rate;
-        private string? rateString;
+        private string rateString;
         private string timeOffsetToken;
 
 

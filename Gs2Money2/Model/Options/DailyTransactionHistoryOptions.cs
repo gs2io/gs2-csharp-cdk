@@ -23,5 +23,6 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
 {
     public class DailyTransactionHistoryOptions {
         public long? revision;
+        public string revisionString;
     }
 }

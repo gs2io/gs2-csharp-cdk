@@ -25,9 +25,12 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class DepositTransaction {
         private float price;
+        private string priceString;
         private int count;
+        private string countString;
         private string currency;
         private long? depositedAt;
+        private string depositedAtString;
 
         public DepositTransaction(
             float price,
@@ -40,21 +43,46 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.depositedAt = options?.depositedAt;
         }
 
+
+        public DepositTransaction(
+            string price,
+            string count,
+            DepositTransactionOptions options = null
+        ){
+            this.priceString = price;
+            this.countString = count;
+            this.currency = options?.currency;
+            this.depositedAt = options?.depositedAt;
+            this.depositedAtString = options?.depositedAtString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.price != null) {
-                properties["price"] = this.price;
+            if (this.priceString != null) {
+                properties["price"] = this.priceString;
+            } else {
+                if (this.price != null) {
+                    properties["price"] = this.price;
+                }
             }
             if (this.currency != null) {
                 properties["currency"] = this.currency;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
-            if (this.depositedAt != null) {
-                properties["depositedAt"] = this.depositedAt;
+            if (this.depositedAtString != null) {
+                properties["depositedAt"] = this.depositedAtString;
+            } else {
+                if (this.depositedAt != null) {
+                    properties["depositedAt"] = this.depositedAt;
+                }
             }
 
             return properties;

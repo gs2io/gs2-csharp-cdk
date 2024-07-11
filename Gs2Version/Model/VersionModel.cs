@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Version.Model
         private Version_ errorVersion;
         private ScheduleVersion[] scheduleVersions;
         private bool? needSignature;
+        private string needSignatureString;
         private string signatureKeyId;
 
         public VersionModel(
@@ -158,8 +159,12 @@ namespace Gs2Cdk.Gs2Version.Model
                 properties["scheduleVersions"] = this.scheduleVersions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.needSignature != null) {
-                properties["needSignature"] = this.needSignature;
+            if (this.needSignatureString != null) {
+                properties["needSignature"] = this.needSignatureString;
+            } else {
+                if (this.needSignature != null) {
+                    properties["needSignature"] = this.needSignature;
+                }
             }
             if (this.signatureKeyId != null) {
                 properties["signatureKeyId"] = this.signatureKeyId;

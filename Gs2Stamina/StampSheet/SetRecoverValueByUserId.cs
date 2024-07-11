@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Stamina.StampSheet
         private string staminaName;
         private string userId;
         private int recoverValue;
-        private string? recoverValueString;
+        private string recoverValueString;
         private string timeOffsetToken;
 
 

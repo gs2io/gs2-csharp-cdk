@@ -28,7 +28,7 @@ namespace Gs2Cdk.Gs2Inventory.StampSheet
         private string userId;
         private string itemName;
         private long consumeCount;
-        private string? consumeCountString;
+        private string consumeCountString;
         private string itemSetName;
         private string timeOffsetToken;
 

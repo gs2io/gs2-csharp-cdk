@@ -27,9 +27,9 @@ namespace Gs2Cdk.Gs2Matchmaking.StampSheet
         private string namespaceName;
         private string seasonName;
         private long season;
-        private string? seasonString;
+        private string seasonString;
         private long tier;
-        private string? tierString;
+        private string tierString;
         private string userId;
         private VerifyIncludeParticipantByUserIdVerifyType? verifyType;
         private string seasonGatheringName;

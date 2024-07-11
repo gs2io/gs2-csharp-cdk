@@ -25,10 +25,15 @@ namespace Gs2Cdk.Gs2Schedule.Model
 {
     public class RepeatSchedule {
         private int repeatCount;
+        private string repeatCountString;
         private long? currentRepeatStartAt;
+        private string currentRepeatStartAtString;
         private long? currentRepeatEndAt;
+        private string currentRepeatEndAtString;
         private long? lastRepeatEndAt;
+        private string lastRepeatEndAtString;
         private long? nextRepeatStartAt;
+        private string nextRepeatStartAtString;
 
         public RepeatSchedule(
             int repeatCount,
@@ -41,24 +46,60 @@ namespace Gs2Cdk.Gs2Schedule.Model
             this.nextRepeatStartAt = options?.nextRepeatStartAt;
         }
 
+
+        public RepeatSchedule(
+            string repeatCount,
+            RepeatScheduleOptions options = null
+        ){
+            this.repeatCountString = repeatCount;
+            this.currentRepeatStartAt = options?.currentRepeatStartAt;
+            this.currentRepeatStartAtString = options?.currentRepeatStartAtString;
+            this.currentRepeatEndAt = options?.currentRepeatEndAt;
+            this.currentRepeatEndAtString = options?.currentRepeatEndAtString;
+            this.lastRepeatEndAt = options?.lastRepeatEndAt;
+            this.lastRepeatEndAtString = options?.lastRepeatEndAtString;
+            this.nextRepeatStartAt = options?.nextRepeatStartAt;
+            this.nextRepeatStartAtString = options?.nextRepeatStartAtString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.repeatCount != null) {
-                properties["repeatCount"] = this.repeatCount;
+            if (this.repeatCountString != null) {
+                properties["repeatCount"] = this.repeatCountString;
+            } else {
+                if (this.repeatCount != null) {
+                    properties["repeatCount"] = this.repeatCount;
+                }
             }
-            if (this.currentRepeatStartAt != null) {
-                properties["currentRepeatStartAt"] = this.currentRepeatStartAt;
+            if (this.currentRepeatStartAtString != null) {
+                properties["currentRepeatStartAt"] = this.currentRepeatStartAtString;
+            } else {
+                if (this.currentRepeatStartAt != null) {
+                    properties["currentRepeatStartAt"] = this.currentRepeatStartAt;
+                }
             }
-            if (this.currentRepeatEndAt != null) {
-                properties["currentRepeatEndAt"] = this.currentRepeatEndAt;
+            if (this.currentRepeatEndAtString != null) {
+                properties["currentRepeatEndAt"] = this.currentRepeatEndAtString;
+            } else {
+                if (this.currentRepeatEndAt != null) {
+                    properties["currentRepeatEndAt"] = this.currentRepeatEndAt;
+                }
             }
-            if (this.lastRepeatEndAt != null) {
-                properties["lastRepeatEndAt"] = this.lastRepeatEndAt;
+            if (this.lastRepeatEndAtString != null) {
+                properties["lastRepeatEndAt"] = this.lastRepeatEndAtString;
+            } else {
+                if (this.lastRepeatEndAt != null) {
+                    properties["lastRepeatEndAt"] = this.lastRepeatEndAt;
+                }
             }
-            if (this.nextRepeatStartAt != null) {
-                properties["nextRepeatStartAt"] = this.nextRepeatStartAt;
+            if (this.nextRepeatStartAtString != null) {
+                properties["nextRepeatStartAt"] = this.nextRepeatStartAtString;
+            } else {
+                if (this.nextRepeatStartAt != null) {
+                    properties["nextRepeatStartAt"] = this.nextRepeatStartAt;
+                }
             }
 
             return properties;

@@ -27,6 +27,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model
         private string taskName;
         private string hash;
         private long timestamp;
+        private string timestampString;
 
         public ChangeStateEvent(
             string taskName,
@@ -39,6 +40,18 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             this.timestamp = timestamp;
         }
 
+
+        public ChangeStateEvent(
+            string taskName,
+            string hash,
+            string timestamp,
+            ChangeStateEventOptions options = null
+        ){
+            this.taskName = taskName;
+            this.hash = hash;
+            this.timestampString = timestamp;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -49,8 +62,12 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             if (this.hash != null) {
                 properties["hash"] = this.hash;
             }
-            if (this.timestamp != null) {
-                properties["timestamp"] = this.timestamp;
+            if (this.timestampString != null) {
+                properties["timestamp"] = this.timestampString;
+            } else {
+                if (this.timestamp != null) {
+                    properties["timestamp"] = this.timestamp;
+                }
             }
 
             return properties;

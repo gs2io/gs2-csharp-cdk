@@ -25,12 +25,18 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class DailyTransactionHistory {
         private int year;
+        private string yearString;
         private int month;
+        private string monthString;
         private int day;
+        private string dayString;
         private string currency;
         private float? depositAmount;
+        private string depositAmountString;
         private float? withdrawAmount;
+        private string withdrawAmountString;
         private long? revision;
+        private string revisionString;
 
         public DailyTransactionHistory(
             int year,
@@ -50,27 +56,67 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.revision = options?.revision;
         }
 
+
+        public DailyTransactionHistory(
+            string year,
+            string month,
+            string day,
+            string currency,
+            string depositAmount,
+            string withdrawAmount,
+            DailyTransactionHistoryOptions options = null
+        ){
+            this.yearString = year;
+            this.monthString = month;
+            this.dayString = day;
+            this.currency = currency;
+            this.depositAmountString = depositAmount;
+            this.withdrawAmountString = withdrawAmount;
+            this.revision = options?.revision;
+            this.revisionString = options?.revisionString;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.year != null) {
-                properties["year"] = this.year;
+            if (this.yearString != null) {
+                properties["year"] = this.yearString;
+            } else {
+                if (this.year != null) {
+                    properties["year"] = this.year;
+                }
             }
-            if (this.month != null) {
-                properties["month"] = this.month;
+            if (this.monthString != null) {
+                properties["month"] = this.monthString;
+            } else {
+                if (this.month != null) {
+                    properties["month"] = this.month;
+                }
             }
-            if (this.day != null) {
-                properties["day"] = this.day;
+            if (this.dayString != null) {
+                properties["day"] = this.dayString;
+            } else {
+                if (this.day != null) {
+                    properties["day"] = this.day;
+                }
             }
             if (this.currency != null) {
                 properties["currency"] = this.currency;
             }
-            if (this.depositAmount != null) {
-                properties["depositAmount"] = this.depositAmount;
+            if (this.depositAmountString != null) {
+                properties["depositAmount"] = this.depositAmountString;
+            } else {
+                if (this.depositAmount != null) {
+                    properties["depositAmount"] = this.depositAmount;
+                }
             }
-            if (this.withdrawAmount != null) {
-                properties["withdrawAmount"] = this.withdrawAmount;
+            if (this.withdrawAmountString != null) {
+                properties["withdrawAmount"] = this.withdrawAmountString;
+            } else {
+                if (this.withdrawAmount != null) {
+                    properties["withdrawAmount"] = this.withdrawAmount;
+                }
             }
 
             return properties;

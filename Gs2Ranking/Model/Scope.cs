@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
     public class Scope {
         private string name;
         private long targetDays;
+        private string targetDaysString;
 
         public Scope(
             string name,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Ranking.Model
             this.targetDays = targetDays;
         }
 
+
+        public Scope(
+            string name,
+            string targetDays,
+            ScopeOptions options = null
+        ){
+            this.name = name;
+            this.targetDaysString = targetDays;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Ranking.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.targetDays != null) {
-                properties["targetDays"] = this.targetDays;
+            if (this.targetDaysString != null) {
+                properties["targetDays"] = this.targetDaysString;
+            } else {
+                if (this.targetDays != null) {
+                    properties["targetDays"] = this.targetDays;
+                }
             }
 
             return properties;

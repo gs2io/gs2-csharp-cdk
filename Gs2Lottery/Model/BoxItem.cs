@@ -26,7 +26,9 @@ namespace Gs2Cdk.Gs2Lottery.Model
     public class BoxItem {
         private string prizeId;
         private int remaining;
+        private string remainingString;
         private int initial;
+        private string initialString;
         private AcquireAction[] acquireActions;
 
         public BoxItem(
@@ -41,6 +43,19 @@ namespace Gs2Cdk.Gs2Lottery.Model
             this.acquireActions = options?.acquireActions;
         }
 
+
+        public BoxItem(
+            string prizeId,
+            string remaining,
+            string initial,
+            BoxItemOptions options = null
+        ){
+            this.prizeId = prizeId;
+            this.remainingString = remaining;
+            this.initialString = initial;
+            this.acquireActions = options?.acquireActions;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -52,11 +67,19 @@ namespace Gs2Cdk.Gs2Lottery.Model
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
                         )).ToList();
             }
-            if (this.remaining != null) {
-                properties["remaining"] = this.remaining;
+            if (this.remainingString != null) {
+                properties["remaining"] = this.remainingString;
+            } else {
+                if (this.remaining != null) {
+                    properties["remaining"] = this.remaining;
+                }
             }
-            if (this.initial != null) {
-                properties["initial"] = this.initial;
+            if (this.initialString != null) {
+                properties["initial"] = this.initialString;
+            } else {
+                if (this.initial != null) {
+                    properties["initial"] = this.initial;
+                }
             }
 
             return properties;

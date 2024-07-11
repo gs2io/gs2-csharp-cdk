@@ -23,5 +23,6 @@ namespace Gs2Cdk.Gs2News.Model.Options
 {
     public class ProgressOptions {
         public long? revision;
+        public string revisionString;
     }
 }

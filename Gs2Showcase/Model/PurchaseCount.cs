@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
     public class PurchaseCount {
         private string name;
         private int count;
+        private string countString;
 
         public PurchaseCount(
             string name,
@@ -36,6 +37,16 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.count = count;
         }
 
+
+        public PurchaseCount(
+            string name,
+            string count,
+            PurchaseCountOptions options = null
+        ){
+            this.name = name;
+            this.countString = count;
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -43,8 +54,12 @@ namespace Gs2Cdk.Gs2Showcase.Model
             if (this.name != null) {
                 properties["name"] = this.name;
             }
-            if (this.count != null) {
-                properties["count"] = this.count;
+            if (this.countString != null) {
+                properties["count"] = this.countString;
+            } else {
+                if (this.count != null) {
+                    properties["count"] = this.count;
+                }
             }
 
             return properties;

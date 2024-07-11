@@ -27,11 +27,15 @@ namespace Gs2Cdk.Gs2Schedule.Model
     public class RepeatSetting {
         private RepeatSettingRepeatType? repeatType;
         private int? beginDayOfMonth;
+        private string beginDayOfMonthString;
         private int? endDayOfMonth;
+        private string endDayOfMonthString;
         private RepeatSettingBeginDayOfWeek? beginDayOfWeek;
         private RepeatSettingEndDayOfWeek? endDayOfWeek;
         private int? beginHour;
+        private string beginHourString;
         private int? endHour;
+        private string endHourString;
 
         public RepeatSetting(
             RepeatSettingRepeatType repeatType,
@@ -114,11 +118,19 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 properties["repeatType"] = this.repeatType.Value.Str(
                 );
             }
-            if (this.beginDayOfMonth != null) {
-                properties["beginDayOfMonth"] = this.beginDayOfMonth;
+            if (this.beginDayOfMonthString != null) {
+                properties["beginDayOfMonth"] = this.beginDayOfMonthString;
+            } else {
+                if (this.beginDayOfMonth != null) {
+                    properties["beginDayOfMonth"] = this.beginDayOfMonth;
+                }
             }
-            if (this.endDayOfMonth != null) {
-                properties["endDayOfMonth"] = this.endDayOfMonth;
+            if (this.endDayOfMonthString != null) {
+                properties["endDayOfMonth"] = this.endDayOfMonthString;
+            } else {
+                if (this.endDayOfMonth != null) {
+                    properties["endDayOfMonth"] = this.endDayOfMonth;
+                }
             }
             if (this.beginDayOfWeek != null) {
                 properties["beginDayOfWeek"] = this.beginDayOfWeek.Value.Str(
@@ -128,11 +140,19 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 properties["endDayOfWeek"] = this.endDayOfWeek.Value.Str(
                 );
             }
-            if (this.beginHour != null) {
-                properties["beginHour"] = this.beginHour;
+            if (this.beginHourString != null) {
+                properties["beginHour"] = this.beginHourString;
+            } else {
+                if (this.beginHour != null) {
+                    properties["beginHour"] = this.beginHour;
+                }
             }
-            if (this.endHour != null) {
-                properties["endHour"] = this.endHour;
+            if (this.endHourString != null) {
+                properties["endHour"] = this.endHourString;
+            } else {
+                if (this.endHour != null) {
+                    properties["endHour"] = this.endHour;
+                }
             }
 
             return properties;
