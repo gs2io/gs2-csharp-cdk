@@ -20,6 +20,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
     
     public enum TriggerByUserIdTriggerStrategy {
         Renew,
+        Extend,
         Drop
     }
 
@@ -29,6 +30,8 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
             switch (self) {
                 case TriggerByUserIdTriggerStrategy.Renew:
                     return "renew";
+                case TriggerByUserIdTriggerStrategy.Extend:
+                    return "extend";
                 case TriggerByUserIdTriggerStrategy.Drop:
                     return "drop";
             }
@@ -39,6 +42,8 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
             switch (value) {
                 case "renew":
                     return TriggerByUserIdTriggerStrategy.Renew;
+                case "extend":
+                    return TriggerByUserIdTriggerStrategy.Extend;
                 case "drop":
                     return TriggerByUserIdTriggerStrategy.Drop;
             }
