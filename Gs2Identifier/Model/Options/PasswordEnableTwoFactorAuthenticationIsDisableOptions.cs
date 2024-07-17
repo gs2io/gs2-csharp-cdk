@@ -17,13 +17,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2Identifier.Model;
 using Gs2Cdk.Gs2Identifier.Model.Enums;
 
 namespace Gs2Cdk.Gs2Identifier.Model.Options
 {
-    public class PasswordOptions {
+    public class PasswordEnableTwoFactorAuthenticationIsDisableOptions {
+        public TwoFactorAuthenticationSetting twoFactorAuthenticationSetting;
+        public long? revision;
     }
 }
-
