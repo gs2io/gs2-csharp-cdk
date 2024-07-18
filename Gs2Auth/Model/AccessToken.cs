@@ -28,7 +28,9 @@ namespace Gs2Cdk.Gs2Auth.Model
         private string userId;
         private string realUserId;
         private long? expire;
+        private string expireString;
         private int? timeOffset;
+        private string timeOffsetString;
         private string federationFromUserId;
         private string federationPolicyDocument;
 
@@ -45,6 +47,24 @@ namespace Gs2Cdk.Gs2Auth.Model
             this.realUserId = realUserId;
             this.expire = expire;
             this.timeOffset = timeOffset;
+            this.federationFromUserId = options?.federationFromUserId;
+            this.federationPolicyDocument = options?.federationPolicyDocument;
+        }
+
+
+        public AccessToken(
+            string ownerId,
+            string userId,
+            string realUserId,
+            string expire,
+            string timeOffset,
+            AccessTokenOptions options = null
+        ){
+            this.ownerId = ownerId;
+            this.userId = userId;
+            this.realUserId = realUserId;
+            this.expireString = expire;
+            this.timeOffsetString = timeOffset;
             this.federationFromUserId = options?.federationFromUserId;
             this.federationPolicyDocument = options?.federationPolicyDocument;
         }
@@ -68,11 +88,19 @@ namespace Gs2Cdk.Gs2Auth.Model
             if (this.federationPolicyDocument != null) {
                 properties["federationPolicyDocument"] = this.federationPolicyDocument;
             }
-            if (this.expire != null) {
-                properties["expire"] = this.expire;
+            if (this.expireString != null) {
+                properties["expire"] = this.expireString;
+            } else {
+                if (this.expire != null) {
+                    properties["expire"] = this.expire;
+                }
             }
-            if (this.timeOffset != null) {
-                properties["timeOffset"] = this.timeOffset;
+            if (this.timeOffsetString != null) {
+                properties["timeOffset"] = this.timeOffsetString;
+            } else {
+                if (this.timeOffset != null) {
+                    properties["timeOffset"] = this.timeOffset;
+                }
             }
 
             return properties;
