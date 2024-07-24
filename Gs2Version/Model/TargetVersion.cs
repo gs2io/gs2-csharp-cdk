@@ -64,7 +64,10 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new TargetVersion(
-                (string)properties["versionName"],
+                properties.TryGetValue("versionName", out var versionName) ? new Func<string>(() =>
+                {
+                    return (string) versionName;
+                })() : default,
                 new TargetVersionOptions {
                     body = properties.TryGetValue("body", out var body) ? (string)body : null,
                     signature = properties.TryGetValue("signature", out var signature) ? (string)signature : null,

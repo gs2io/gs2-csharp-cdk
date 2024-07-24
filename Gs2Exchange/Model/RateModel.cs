@@ -115,15 +115,18 @@ namespace Gs2Cdk.Gs2Exchange.Model
             Dictionary<string, object> properties
         ){
             var model = new RateModel(
-                (string)properties["name"],
-                new Func<RateModelTimingType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["timingType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("timingType", out var timingType) ? new Func<RateModelTimingType>(() =>
+                {
+                    return timingType switch {
                         RateModelTimingType e => e,
                         string s => RateModelTimingTypeExt.New(s),
                         _ => RateModelTimingType.Immediate
                     };
-                })(),
+                })() : default,
                 new RateModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>

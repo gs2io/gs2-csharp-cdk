@@ -59,8 +59,14 @@ namespace Gs2Cdk.Gs2Formation.Model
             Dictionary<string, object> properties
         ){
             var model = new SlotModel(
-                (string)properties["name"],
-                (string)properties["propertyRegex"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("propertyRegex", out var propertyRegex) ? new Func<string>(() =>
+                {
+                    return (string) propertyRegex;
+                })() : default,
                 new SlotModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

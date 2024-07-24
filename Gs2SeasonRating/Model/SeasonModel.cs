@@ -71,10 +71,13 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
             Dictionary<string, object> properties
         ){
             var model = new SeasonModel(
-                (string)properties["name"],
-                new Func<TierModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["tiers"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("tiers", out var tiers) ? new Func<TierModel[]>(() =>
+                {
+                    return tiers switch {
                         Dictionary<string, object>[] v => v.Select(TierModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ TierModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(TierModel.FromProperties).ToArray(),
@@ -82,8 +85,11 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
                         { } v => new []{ v as TierModel },
                         _ => null
                     };
-                })(),
-                (string)properties["experienceModelId"],
+                })() : null,
+                properties.TryGetValue("experienceModelId", out var experienceModelId) ? new Func<string>(() =>
+                {
+                    return (string) experienceModelId;
+                })() : default,
                 new SeasonModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null

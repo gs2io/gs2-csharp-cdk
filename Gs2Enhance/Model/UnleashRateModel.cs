@@ -77,12 +77,21 @@ namespace Gs2Cdk.Gs2Enhance.Model
             Dictionary<string, object> properties
         ){
             var model = new UnleashRateModel(
-                (string)properties["name"],
-                (string)properties["targetInventoryModelId"],
-                (string)properties["gradeModelId"],
-                new Func<UnleashRateEntryModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["gradeEntries"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("targetInventoryModelId", out var targetInventoryModelId) ? new Func<string>(() =>
+                {
+                    return (string) targetInventoryModelId;
+                })() : default,
+                properties.TryGetValue("gradeModelId", out var gradeModelId) ? new Func<string>(() =>
+                {
+                    return (string) gradeModelId;
+                })() : default,
+                properties.TryGetValue("gradeEntries", out var gradeEntries) ? new Func<UnleashRateEntryModel[]>(() =>
+                {
+                    return gradeEntries switch {
                         Dictionary<string, object>[] v => v.Select(UnleashRateEntryModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ UnleashRateEntryModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(UnleashRateEntryModel.FromProperties).ToArray(),
@@ -90,7 +99,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
                         { } v => new []{ v as UnleashRateEntryModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new UnleashRateModelOptions {
                     description = properties.TryGetValue("description", out var description) ? (string)description : null,
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null

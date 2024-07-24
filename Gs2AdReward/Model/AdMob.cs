@@ -48,16 +48,16 @@ namespace Gs2Cdk.Gs2AdReward.Model
             Dictionary<string, object> properties
         ){
             var model = new AdMob(
-                new Func<string[]>(() =>
+                properties.TryGetValue("allowAdUnitIds", out var allowAdUnitIds) ? new Func<string[]>(() =>
                 {
-                    return properties["allowAdUnitIds"] switch {
+                    return allowAdUnitIds switch {
                         string[] v => v.ToArray(),
                         List<string> v => v.ToArray(),
                         object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
                         { } v => new []{ v.ToString() },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new AdMobOptions {
                 }
             );

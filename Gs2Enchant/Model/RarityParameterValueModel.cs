@@ -96,24 +96,30 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new RarityParameterValueModel(
-                (string)properties["name"],
-                (string)properties["resourceName"],
-                new Func<long>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["resourceValue"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("resourceName", out var resourceName) ? new Func<string>(() =>
+                {
+                    return (string) resourceName;
+                })() : default,
+                properties.TryGetValue("resourceValue", out var resourceValue) ? new Func<long>(() =>
+                {
+                    return resourceValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("weight", out var weight) ? new Func<int>(() =>
                 {
-                    return properties["weight"] switch {
+                    return weight switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RarityParameterValueModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

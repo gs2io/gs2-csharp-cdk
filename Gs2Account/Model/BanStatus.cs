@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Account.Model
             Dictionary<string, object> properties
         ){
             var model = new BanStatus(
-                (string)properties["reason"],
-                new Func<long>(() =>
+                properties.TryGetValue("reason", out var reason) ? new Func<string>(() =>
                 {
-                    return properties["releaseTimestamp"] switch {
+                    return (string) reason;
+                })() : default,
+                properties.TryGetValue("releaseTimestamp", out var releaseTimestamp) ? new Func<long>(() =>
+                {
+                    return releaseTimestamp switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new BanStatusOptions {
                 }
             );

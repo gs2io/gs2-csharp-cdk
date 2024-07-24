@@ -288,33 +288,36 @@ namespace Gs2Cdk.Gs2Schedule.Model
             Dictionary<string, object> properties
         ){
             var model = new Event(
-                (string)properties["name"],
-                new Func<EventScheduleType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["scheduleType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("scheduleType", out var scheduleType) ? new Func<EventScheduleType>(() =>
+                {
+                    return scheduleType switch {
                         EventScheduleType e => e,
                         string s => EventScheduleTypeExt.New(s),
                         _ => EventScheduleType.Absolute
                     };
-                })(),
-                new Func<RepeatSetting>(() =>
+                })() : default,
+                properties.TryGetValue("repeatSetting", out var repeatSetting) ? new Func<RepeatSetting>(() =>
                 {
-                    return properties["repeatSetting"] switch {
+                    return repeatSetting switch {
                         RepeatSetting v => v,
                         RepeatSetting[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => RepeatSetting.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? RepeatSetting.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<EventRepeatType>(() =>
+                })() : null,
+                properties.TryGetValue("repeatType", out var repeatType) ? new Func<EventRepeatType>(() =>
                 {
-                    return properties["repeatType"] switch {
+                    return repeatType switch {
                         EventRepeatType e => e,
                         string s => EventRepeatTypeExt.New(s),
                         _ => EventRepeatType.Always
                     };
-                })(),
+                })() : default,
                 new EventOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     absoluteBegin = new Func<long?>(() =>

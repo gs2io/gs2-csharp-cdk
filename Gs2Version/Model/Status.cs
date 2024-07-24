@@ -55,16 +55,16 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new Status(
-                new Func<VersionModel>(() =>
+                properties.TryGetValue("versionModel", out var versionModel) ? new Func<VersionModel>(() =>
                 {
-                    return properties["versionModel"] switch {
+                    return versionModel switch {
                         VersionModel v => v,
                         VersionModel[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => VersionModel.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? VersionModel.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new StatusOptions {
                     currentVersion = properties.TryGetValue("currentVersion", out var currentVersion) ? new Func<Version_>(() =>
                     {

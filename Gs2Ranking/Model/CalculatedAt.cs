@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Ranking.Model
             Dictionary<string, object> properties
         ){
             var model = new CalculatedAt(
-                (string)properties["categoryName"],
-                new Func<long>(() =>
+                properties.TryGetValue("categoryName", out var categoryName) ? new Func<string>(() =>
                 {
-                    return properties["calculatedAt"] switch {
+                    return (string) categoryName;
+                })() : default,
+                properties.TryGetValue("calculatedAt", out var calculatedAt) ? new Func<long>(() =>
+                {
+                    return calculatedAt switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new CalculatedAtOptions {
                 }
             );

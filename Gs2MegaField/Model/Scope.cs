@@ -82,23 +82,26 @@ namespace Gs2Cdk.Gs2MegaField.Model
             Dictionary<string, object> properties
         ){
             var model = new Scope(
-                (string)properties["layerName"],
-                new Func<float>(() =>
+                properties.TryGetValue("layerName", out var layerName) ? new Func<string>(() =>
                 {
-                    return properties["r"] switch {
+                    return (string) layerName;
+                })() : default,
+                properties.TryGetValue("r", out var r) ? new Func<float>(() =>
+                {
+                    return r switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("limit", out var limit) ? new Func<int>(() =>
                 {
-                    return properties["limit"] switch {
+                    return limit switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new ScopeOptions {
                 }
             );

@@ -177,23 +177,26 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new VersionModel(
-                (string)properties["name"],
-                new Func<VersionModelScope>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["scope"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("scope", out var scope) ? new Func<VersionModelScope>(() =>
+                {
+                    return scope switch {
                         VersionModelScope e => e,
                         string s => VersionModelScopeExt.New(s),
                         _ => VersionModelScope.Passive
                     };
-                })(),
-                new Func<VersionModelType>(() =>
+                })() : default,
+                properties.TryGetValue("type", out var type) ? new Func<VersionModelType>(() =>
                 {
-                    return properties["type"] switch {
+                    return type switch {
                         VersionModelType e => e,
                         string s => VersionModelTypeExt.New(s),
                         _ => VersionModelType.Simple
                     };
-                })(),
+                })() : default,
                 new VersionModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     currentVersion = properties.TryGetValue("currentVersion", out var currentVersion) ? new Func<Version_>(() =>

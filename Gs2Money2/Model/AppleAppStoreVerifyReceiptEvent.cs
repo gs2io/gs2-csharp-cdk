@@ -50,14 +50,14 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new AppleAppStoreVerifyReceiptEvent(
-                new Func<AppleAppStoreVerifyReceiptEventEnvironment>(() =>
+                properties.TryGetValue("environment", out var environment) ? new Func<AppleAppStoreVerifyReceiptEventEnvironment>(() =>
                 {
-                    return properties["environment"] switch {
+                    return environment switch {
                         AppleAppStoreVerifyReceiptEventEnvironment e => e,
                         string s => AppleAppStoreVerifyReceiptEventEnvironmentExt.New(s),
                         _ => AppleAppStoreVerifyReceiptEventEnvironment.Sandbox
                     };
-                })(),
+                })() : default,
                 new AppleAppStoreVerifyReceiptEventOptions {
                 }
             );

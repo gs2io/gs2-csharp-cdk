@@ -82,23 +82,26 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new AttributeRange(
-                (string)properties["name"],
-                new Func<int?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["min"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("min", out var min) ? new Func<int?>(() =>
+                {
+                    return min switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("max", out var max) ? new Func<int?>(() =>
                 {
-                    return properties["max"] switch {
+                    return max switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new AttributeRangeOptions {
                 }
             );

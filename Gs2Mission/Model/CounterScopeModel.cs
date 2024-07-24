@@ -126,14 +126,14 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new CounterScopeModel(
-                new Func<CounterScopeModelResetType>(() =>
+                properties.TryGetValue("resetType", out var resetType) ? new Func<CounterScopeModelResetType>(() =>
                 {
-                    return properties["resetType"] switch {
+                    return resetType switch {
                         CounterScopeModelResetType e => e,
                         string s => CounterScopeModelResetTypeExt.New(s),
                         _ => CounterScopeModelResetType.NotReset
                     };
-                })(),
+                })() : default,
                 new CounterScopeModelOptions {
                     resetDayOfMonth = new Func<int?>(() =>
                     {

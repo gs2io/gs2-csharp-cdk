@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2Distributor.Model
             Dictionary<string, object> properties
         ){
             var model = new DistributeResource(
-                (string)properties["action"],
-                (string)properties["request"],
+                properties.TryGetValue("action", out var action) ? new Func<string>(() =>
+                {
+                    return (string) action;
+                })() : default,
+                properties.TryGetValue("request", out var request) ? new Func<string>(() =>
+                {
+                    return (string) request;
+                })() : default,
                 new DistributeResourceOptions {
                 }
             );

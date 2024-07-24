@@ -85,17 +85,26 @@ namespace Gs2Cdk.Gs2Quest.Model
             Dictionary<string, object> properties
         ){
             var model = new Reward(
-                (string)properties["action"],
-                (string)properties["request"],
-                (string)properties["itemId"],
-                new Func<int>(() =>
+                properties.TryGetValue("action", out var action) ? new Func<string>(() =>
                 {
-                    return properties["value"] switch {
+                    return (string) action;
+                })() : default,
+                properties.TryGetValue("request", out var request) ? new Func<string>(() =>
+                {
+                    return (string) request;
+                })() : default,
+                properties.TryGetValue("itemId", out var itemId) ? new Func<string>(() =>
+                {
+                    return (string) itemId;
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<int>(() =>
+                {
+                    return value switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RewardOptions {
                 }
             );

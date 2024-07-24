@@ -53,7 +53,10 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new BalanceParameterValueModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new BalanceParameterValueModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

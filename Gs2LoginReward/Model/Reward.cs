@@ -49,9 +49,9 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             Dictionary<string, object> properties
         ){
             var model = new Reward(
-                new Func<AcquireAction[]>(() =>
+                properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                 {
-                    return properties["acquireActions"] switch {
+                    return acquireActions switch {
                         Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
@@ -59,7 +59,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                         { } v => new []{ v as AcquireAction },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new RewardOptions {
                 }
             );

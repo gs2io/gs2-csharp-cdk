@@ -56,15 +56,18 @@ namespace Gs2Cdk.Gs2Identifier.Model
             Dictionary<string, object> properties
         ){
             var model = new TwoFactorAuthenticationSetting(
-                (string)properties["authenticationKey"],
-                new Func<TwoFactorAuthenticationSettingStatus>(() =>
+                properties.TryGetValue("authenticationKey", out var authenticationKey) ? new Func<string>(() =>
                 {
-                    return properties["status"] switch {
+                    return (string) authenticationKey;
+                })() : default,
+                properties.TryGetValue("status", out var status) ? new Func<TwoFactorAuthenticationSettingStatus>(() =>
+                {
+                    return status switch {
                         TwoFactorAuthenticationSettingStatus e => e,
                         string s => TwoFactorAuthenticationSettingStatusExt.New(s),
                         _ => TwoFactorAuthenticationSettingStatus.Verifying
                     };
-                })(),
+                })() : default,
                 new TwoFactorAuthenticationSettingOptions {
                 }
             );

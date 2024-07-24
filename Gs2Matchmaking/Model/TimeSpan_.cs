@@ -87,30 +87,30 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new TimeSpan_(
-                new Func<int?>(() =>
+                properties.TryGetValue("days", out var days) ? new Func<int?>(() =>
                 {
-                    return properties["days"] switch {
+                    return days switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("hours", out var hours) ? new Func<int?>(() =>
                 {
-                    return properties["hours"] switch {
+                    return hours switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("minutes", out var minutes) ? new Func<int?>(() =>
                 {
-                    return properties["minutes"] switch {
+                    return minutes switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new TimeSpanOptions {
                 }
             );

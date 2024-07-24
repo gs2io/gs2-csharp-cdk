@@ -68,36 +68,36 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new ScheduleVersion(
-                new Func<Version_>(() =>
+                properties.TryGetValue("currentVersion", out var currentVersion) ? new Func<Version_>(() =>
                 {
-                    return properties["currentVersion"] switch {
+                    return currentVersion switch {
                         Version_ v => v,
                         Version_[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Version_.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<Version_>(() =>
+                })() : null,
+                properties.TryGetValue("warningVersion", out var warningVersion) ? new Func<Version_>(() =>
                 {
-                    return properties["warningVersion"] switch {
+                    return warningVersion switch {
                         Version_ v => v,
                         Version_[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Version_.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<Version_>(() =>
+                })() : null,
+                properties.TryGetValue("errorVersion", out var errorVersion) ? new Func<Version_>(() =>
                 {
-                    return properties["errorVersion"] switch {
+                    return errorVersion switch {
                         Version_ v => v,
                         Version_[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Version_.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new ScheduleVersionOptions {
                     scheduleEventId = properties.TryGetValue("scheduleEventId", out var scheduleEventId) ? (string)scheduleEventId : null
                 }

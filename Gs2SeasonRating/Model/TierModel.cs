@@ -106,38 +106,38 @@ namespace Gs2Cdk.Gs2SeasonRating.Model
             Dictionary<string, object> properties
         ){
             var model = new TierModel(
-                new Func<int>(() =>
+                properties.TryGetValue("raiseRankBonus", out var raiseRankBonus) ? new Func<int>(() =>
                 {
-                    return properties["raiseRankBonus"] switch {
+                    return raiseRankBonus switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("entryFee", out var entryFee) ? new Func<int>(() =>
                 {
-                    return properties["entryFee"] switch {
+                    return entryFee switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("minimumChangePoint", out var minimumChangePoint) ? new Func<int>(() =>
                 {
-                    return properties["minimumChangePoint"] switch {
+                    return minimumChangePoint switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("maximumChangePoint", out var maximumChangePoint) ? new Func<int>(() =>
                 {
-                    return properties["maximumChangePoint"] switch {
+                    return maximumChangePoint switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new TierModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

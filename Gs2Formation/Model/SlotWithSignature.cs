@@ -71,15 +71,18 @@ namespace Gs2Cdk.Gs2Formation.Model
             Dictionary<string, object> properties
         ){
             var model = new SlotWithSignature(
-                (string)properties["name"],
-                new Func<SlotWithSignaturePropertyType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["propertyType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("propertyType", out var propertyType) ? new Func<SlotWithSignaturePropertyType>(() =>
+                {
+                    return propertyType switch {
                         SlotWithSignaturePropertyType e => e,
                         string s => SlotWithSignaturePropertyTypeExt.New(s),
                         _ => SlotWithSignaturePropertyType.Gs2Inventory
                     };
-                })(),
+                })() : default,
                 new SlotWithSignatureOptions {
                     body = properties.TryGetValue("body", out var body) ? (string)body : null,
                     signature = properties.TryGetValue("signature", out var signature) ? (string)signature : null,

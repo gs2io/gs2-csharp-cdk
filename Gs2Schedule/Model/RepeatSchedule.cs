@@ -109,14 +109,14 @@ namespace Gs2Cdk.Gs2Schedule.Model
             Dictionary<string, object> properties
         ){
             var model = new RepeatSchedule(
-                new Func<int>(() =>
+                properties.TryGetValue("repeatCount", out var repeatCount) ? new Func<int>(() =>
                 {
-                    return properties["repeatCount"] switch {
+                    return repeatCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RepeatScheduleOptions {
                     currentRepeatStartAt = new Func<long?>(() =>
                     {

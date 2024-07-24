@@ -78,11 +78,17 @@ namespace Gs2Cdk.Gs2Grade.Model
             Dictionary<string, object> properties
         ){
             var model = new GradeModel(
-                (string)properties["name"],
-                (string)properties["experienceModelId"],
-                new Func<GradeEntryModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["gradeEntries"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("experienceModelId", out var experienceModelId) ? new Func<string>(() =>
+                {
+                    return (string) experienceModelId;
+                })() : default,
+                properties.TryGetValue("gradeEntries", out var gradeEntries) ? new Func<GradeEntryModel[]>(() =>
+                {
+                    return gradeEntries switch {
                         Dictionary<string, object>[] v => v.Select(GradeEntryModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ GradeEntryModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(GradeEntryModel.FromProperties).ToArray(),
@@ -90,7 +96,7 @@ namespace Gs2Cdk.Gs2Grade.Model
                         { } v => new []{ v as GradeEntryModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new GradeModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     defaultGrades = properties.TryGetValue("defaultGrades", out var defaultGrades) ? new Func<DefaultGradeModel[]>(() =>

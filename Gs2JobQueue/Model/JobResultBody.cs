@@ -82,23 +82,26 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             Dictionary<string, object> properties
         ){
             var model = new JobResultBody(
-                new Func<int>(() =>
+                properties.TryGetValue("tryNumber", out var tryNumber) ? new Func<int>(() =>
                 {
-                    return properties["tryNumber"] switch {
+                    return tryNumber switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("statusCode", out var statusCode) ? new Func<int>(() =>
                 {
-                    return properties["statusCode"] switch {
+                    return statusCode switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["result"],
+                })() : default,
+                properties.TryGetValue("result", out var result) ? new Func<string>(() =>
+                {
+                    return (string) result;
+                })() : default,
                 new JobResultBodyOptions {
                 }
             );

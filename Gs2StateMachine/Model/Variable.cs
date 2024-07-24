@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             Dictionary<string, object> properties
         ){
             var model = new Variable(
-                (string)properties["stateMachineName"],
-                (string)properties["value"],
+                properties.TryGetValue("stateMachineName", out var stateMachineName) ? new Func<string>(() =>
+                {
+                    return (string) stateMachineName;
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<string>(() =>
+                {
+                    return (string) value;
+                })() : default,
                 new VariableOptions {
                 }
             );

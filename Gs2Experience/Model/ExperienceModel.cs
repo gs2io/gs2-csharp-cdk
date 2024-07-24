@@ -117,41 +117,44 @@ namespace Gs2Cdk.Gs2Experience.Model
             Dictionary<string, object> properties
         ){
             var model = new ExperienceModel(
-                (string)properties["name"],
-                new Func<long?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["defaultExperience"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("defaultExperience", out var defaultExperience) ? new Func<long?>(() =>
+                {
+                    return defaultExperience switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<long>(() =>
+                })() : default,
+                properties.TryGetValue("defaultRankCap", out var defaultRankCap) ? new Func<long>(() =>
                 {
-                    return properties["defaultRankCap"] switch {
+                    return defaultRankCap switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<long>(() =>
+                })() : default,
+                properties.TryGetValue("maxRankCap", out var maxRankCap) ? new Func<long>(() =>
                 {
-                    return properties["maxRankCap"] switch {
+                    return maxRankCap switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<Threshold>(() =>
+                })() : default,
+                properties.TryGetValue("rankThreshold", out var rankThreshold) ? new Func<Threshold>(() =>
                 {
-                    return properties["rankThreshold"] switch {
+                    return rankThreshold switch {
                         Threshold v => v,
                         Threshold[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Threshold.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Threshold.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new ExperienceModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     acquireActionRates = properties.TryGetValue("acquireActionRates", out var acquireActionRates) ? new Func<AcquireActionRate[]>(() =>

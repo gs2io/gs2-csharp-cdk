@@ -100,22 +100,22 @@ namespace Gs2Cdk.Gs2Ranking.Model
             Dictionary<string, object> properties
         ){
             var model = new GlobalRankingSetting(
-                new Func<bool?>(() =>
+                properties.TryGetValue("uniqueByUserId", out var uniqueByUserId) ? new Func<bool?>(() =>
                 {
-                    return properties["uniqueByUserId"] switch {
+                    return uniqueByUserId switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("calculateIntervalMinutes", out var calculateIntervalMinutes) ? new Func<int>(() =>
                 {
-                    return properties["calculateIntervalMinutes"] switch {
+                    return calculateIntervalMinutes switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new GlobalRankingSettingOptions {
                     calculateFixedTiming = properties.TryGetValue("calculateFixedTiming", out var calculateFixedTiming) ? new Func<FixedTiming>(() =>
                     {

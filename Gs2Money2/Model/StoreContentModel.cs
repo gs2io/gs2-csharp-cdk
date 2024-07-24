@@ -65,7 +65,10 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new StoreContentModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new StoreContentModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     appleAppStore = properties.TryGetValue("appleAppStore", out var appleAppStore) ? new Func<AppleAppStoreContent>(() =>

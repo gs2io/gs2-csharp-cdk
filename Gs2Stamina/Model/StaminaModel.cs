@@ -147,39 +147,42 @@ namespace Gs2Cdk.Gs2Stamina.Model
             Dictionary<string, object> properties
         ){
             var model = new StaminaModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["recoverIntervalMinutes"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("recoverIntervalMinutes", out var recoverIntervalMinutes) ? new Func<int>(() =>
+                {
+                    return recoverIntervalMinutes switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("recoverValue", out var recoverValue) ? new Func<int?>(() =>
                 {
-                    return properties["recoverValue"] switch {
+                    return recoverValue switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("initialCapacity", out var initialCapacity) ? new Func<int>(() =>
                 {
-                    return properties["initialCapacity"] switch {
+                    return initialCapacity switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<bool>(() =>
+                })() : default,
+                properties.TryGetValue("isOverflow", out var isOverflow) ? new Func<bool>(() =>
                 {
-                    return properties["isOverflow"] switch {
+                    return isOverflow switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
+                })() : default,
                 new StaminaModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     maxCapacity = new Func<int?>(() =>

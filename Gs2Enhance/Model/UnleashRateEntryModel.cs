@@ -74,22 +74,22 @@ namespace Gs2Cdk.Gs2Enhance.Model
             Dictionary<string, object> properties
         ){
             var model = new UnleashRateEntryModel(
-                new Func<long>(() =>
+                properties.TryGetValue("gradeValue", out var gradeValue) ? new Func<long>(() =>
                 {
-                    return properties["gradeValue"] switch {
+                    return gradeValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("needCount", out var needCount) ? new Func<int>(() =>
                 {
-                    return properties["needCount"] switch {
+                    return needCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new UnleashRateEntryModelOptions {
                 }
             );

@@ -109,32 +109,38 @@ namespace Gs2Cdk.Gs2MegaField.Model
             Dictionary<string, object> properties
         ){
             var model = new Layer(
-                (string)properties["areaModelName"],
-                (string)properties["layerModelName"],
-                new Func<int?>(() =>
+                properties.TryGetValue("areaModelName", out var areaModelName) ? new Func<string>(() =>
                 {
-                    return properties["numberOfMinEntries"] switch {
+                    return (string) areaModelName;
+                })() : default,
+                properties.TryGetValue("layerModelName", out var layerModelName) ? new Func<string>(() =>
+                {
+                    return (string) layerModelName;
+                })() : default,
+                properties.TryGetValue("numberOfMinEntries", out var numberOfMinEntries) ? new Func<int?>(() =>
+                {
+                    return numberOfMinEntries switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("numberOfMaxEntries", out var numberOfMaxEntries) ? new Func<int?>(() =>
                 {
-                    return properties["numberOfMaxEntries"] switch {
+                    return numberOfMaxEntries switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("height", out var height) ? new Func<int>(() =>
                 {
-                    return properties["height"] switch {
+                    return height switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new LayerOptions {
                     root = properties.TryGetValue("root", out var root) ? (string)root : null
                 }

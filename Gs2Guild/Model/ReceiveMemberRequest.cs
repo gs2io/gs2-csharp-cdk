@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2Guild.Model
             Dictionary<string, object> properties
         ){
             var model = new ReceiveMemberRequest(
-                (string)properties["userId"],
-                (string)properties["targetGuildName"],
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
+                properties.TryGetValue("targetGuildName", out var targetGuildName) ? new Func<string>(() =>
+                {
+                    return (string) targetGuildName;
+                })() : default,
                 new ReceiveMemberRequestOptions {
                 }
             );

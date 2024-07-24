@@ -137,31 +137,34 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             Dictionary<string, object> properties
         ){
             var model = new ClusterRankingModel(
-                (string)properties["name"],
-                new Func<ClusterRankingModelClusterType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["clusterType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("clusterType", out var clusterType) ? new Func<ClusterRankingModelClusterType>(() =>
+                {
+                    return clusterType switch {
                         ClusterRankingModelClusterType e => e,
                         string s => ClusterRankingModelClusterTypeExt.New(s),
                         _ => ClusterRankingModelClusterType.Raw
                     };
-                })(),
-                new Func<bool?>(() =>
+                })() : default,
+                properties.TryGetValue("sum", out var sum) ? new Func<bool?>(() =>
                 {
-                    return properties["sum"] switch {
+                    return sum switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
-                new Func<ClusterRankingModelOrderDirection>(() =>
+                })() : default,
+                properties.TryGetValue("orderDirection", out var orderDirection) ? new Func<ClusterRankingModelOrderDirection>(() =>
                 {
-                    return properties["orderDirection"] switch {
+                    return orderDirection switch {
                         ClusterRankingModelOrderDirection e => e,
                         string s => ClusterRankingModelOrderDirectionExt.New(s),
                         _ => ClusterRankingModelOrderDirection.Asc
                     };
-                })(),
+                })() : default,
                 new ClusterRankingModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     minimumValue = new Func<long?>(() =>

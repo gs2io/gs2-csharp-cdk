@@ -63,7 +63,10 @@ namespace Gs2Cdk.Gs2Distributor.Model
             Dictionary<string, object> properties
         ){
             var model = new DistributorModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new DistributorModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     inboxNamespaceId = properties.TryGetValue("inboxNamespaceId", out var inboxNamespaceId) ? (string)inboxNamespaceId : null,

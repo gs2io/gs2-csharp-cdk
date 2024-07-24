@@ -109,26 +109,29 @@ namespace Gs2Cdk.Gs2Idle.Model
             Dictionary<string, object> properties
         ){
             var model = new CategoryModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["rewardIntervalMinutes"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("rewardIntervalMinutes", out var rewardIntervalMinutes) ? new Func<int>(() =>
+                {
+                    return rewardIntervalMinutes switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("defaultMaximumIdleMinutes", out var defaultMaximumIdleMinutes) ? new Func<int>(() =>
                 {
-                    return properties["defaultMaximumIdleMinutes"] switch {
+                    return defaultMaximumIdleMinutes switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<AcquireActionList[]>(() =>
+                })() : default,
+                properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireActionList[]>(() =>
                 {
-                    return properties["acquireActions"] switch {
+                    return acquireActions switch {
                         Dictionary<string, object>[] v => v.Select(AcquireActionList.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ AcquireActionList.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(AcquireActionList.FromProperties).ToArray(),
@@ -136,7 +139,7 @@ namespace Gs2Cdk.Gs2Idle.Model
                         { } v => new []{ v as AcquireActionList },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new CategoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     idlePeriodScheduleId = properties.TryGetValue("idlePeriodScheduleId", out var idlePeriodScheduleId) ? (string)idlePeriodScheduleId : null,

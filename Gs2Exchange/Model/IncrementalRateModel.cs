@@ -207,34 +207,40 @@ namespace Gs2Cdk.Gs2Exchange.Model
             Dictionary<string, object> properties
         ){
             var model = new IncrementalRateModel(
-                (string)properties["name"],
-                new Func<ConsumeAction>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["consumeAction"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("consumeAction", out var consumeAction) ? new Func<ConsumeAction>(() =>
+                {
+                    return consumeAction switch {
                         ConsumeAction v => v,
                         ConsumeAction[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => ConsumeAction.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? ConsumeAction.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<IncrementalRateModelCalculateType>(() =>
+                })() : null,
+                properties.TryGetValue("calculateType", out var calculateType) ? new Func<IncrementalRateModelCalculateType>(() =>
                 {
-                    return properties["calculateType"] switch {
+                    return calculateType switch {
                         IncrementalRateModelCalculateType e => e,
                         string s => IncrementalRateModelCalculateTypeExt.New(s),
                         _ => IncrementalRateModelCalculateType.Linear
                     };
-                })(),
-                (string)properties["exchangeCountId"],
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("exchangeCountId", out var exchangeCountId) ? new Func<string>(() =>
                 {
-                    return properties["maximumExchangeCount"] switch {
+                    return (string) exchangeCountId;
+                })() : default,
+                properties.TryGetValue("maximumExchangeCount", out var maximumExchangeCount) ? new Func<int?>(() =>
+                {
+                    return maximumExchangeCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new IncrementalRateModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     baseValue = new Func<long?>(() =>

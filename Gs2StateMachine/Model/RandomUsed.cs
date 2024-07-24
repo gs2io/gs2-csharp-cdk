@@ -74,22 +74,22 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             Dictionary<string, object> properties
         ){
             var model = new RandomUsed(
-                new Func<long>(() =>
+                properties.TryGetValue("category", out var category) ? new Func<long>(() =>
                 {
-                    return properties["category"] switch {
+                    return category switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<long>(() =>
+                })() : default,
+                properties.TryGetValue("used", out var used) ? new Func<long>(() =>
                 {
-                    return properties["used"] switch {
+                    return used switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RandomUsedOptions {
                 }
             );

@@ -56,7 +56,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             Dictionary<string, object> properties
         ){
             var model = new Inbox(
-                (string)properties["guildName"],
+                properties.TryGetValue("guildName", out var guildName) ? new Func<string>(() =>
+                {
+                    return (string) guildName;
+                })() : default,
                 new InboxOptions {
                     fromUserIds = properties.TryGetValue("fromUserIds", out var fromUserIds) ? new Func<string[]>(() =>
                     {

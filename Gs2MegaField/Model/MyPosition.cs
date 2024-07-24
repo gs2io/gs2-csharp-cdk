@@ -79,34 +79,34 @@ namespace Gs2Cdk.Gs2MegaField.Model
             Dictionary<string, object> properties
         ){
             var model = new MyPosition(
-                new Func<Position>(() =>
+                properties.TryGetValue("position", out var position) ? new Func<Position>(() =>
                 {
-                    return properties["position"] switch {
+                    return position switch {
                         Position v => v,
                         Position[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Position.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Position.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<Vector>(() =>
+                })() : null,
+                properties.TryGetValue("vector", out var vector) ? new Func<Vector>(() =>
                 {
-                    return properties["vector"] switch {
+                    return vector switch {
                         Vector v => v,
                         Vector[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Vector.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Vector.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
-                new Func<float?>(() =>
+                })() : null,
+                properties.TryGetValue("r", out var r) ? new Func<float?>(() =>
                 {
-                    return properties["r"] switch {
+                    return r switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new MyPositionOptions {
                 }
             );

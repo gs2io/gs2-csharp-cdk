@@ -60,10 +60,13 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new SalesItemGroup(
-                (string)properties["name"],
-                new Func<SalesItem[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["salesItems"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("salesItems", out var salesItems) ? new Func<SalesItem[]>(() =>
+                {
+                    return salesItems switch {
                         Dictionary<string, object>[] v => v.Select(SalesItem.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ SalesItem.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(SalesItem.FromProperties).ToArray(),
@@ -71,7 +74,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         { } v => new []{ v as SalesItem },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new SalesItemGroupOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

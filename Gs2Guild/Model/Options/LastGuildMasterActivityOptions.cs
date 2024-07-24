@@ -17,23 +17,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2Guild.Model;
 
 namespace Gs2Cdk.Gs2Guild.Model.Options
 {
-    public class NamespaceOptions {
-        public string description;
-        public NotificationSetting joinNotification;
-        public NotificationSetting leaveNotification;
-        public NotificationSetting changeMemberNotification;
-        public NotificationSetting receiveRequestNotification;
-        public NotificationSetting removeRequestNotification;
-        public ScriptSetting createGuildScript;
-        public ScriptSetting joinGuildScript;
-        public ScriptSetting leaveGuildScript;
-        public ScriptSetting changeRoleScript;
-        public LogSetting logSetting;
+    public class LastGuildMasterActivityOptions {
     }
 }
-

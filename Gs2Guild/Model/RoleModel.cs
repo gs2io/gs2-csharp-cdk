@@ -59,8 +59,14 @@ namespace Gs2Cdk.Gs2Guild.Model
             Dictionary<string, object> properties
         ){
             var model = new RoleModel(
-                (string)properties["name"],
-                (string)properties["policyDocument"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("policyDocument", out var policyDocument) ? new Func<string>(() =>
+                {
+                    return (string) policyDocument;
+                })() : default,
                 new RoleModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

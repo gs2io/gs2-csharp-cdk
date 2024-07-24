@@ -77,16 +77,22 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             Dictionary<string, object> properties
         ){
             var model = new JobEntry(
-                (string)properties["scriptId"],
-                (string)properties["args"],
-                new Func<int?>(() =>
+                properties.TryGetValue("scriptId", out var scriptId) ? new Func<string>(() =>
                 {
-                    return properties["maxTryCount"] switch {
+                    return (string) scriptId;
+                })() : default,
+                properties.TryGetValue("args", out var args) ? new Func<string>(() =>
+                {
+                    return (string) args;
+                })() : default,
+                properties.TryGetValue("maxTryCount", out var maxTryCount) ? new Func<int?>(() =>
+                {
+                    return maxTryCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new JobEntryOptions {
                 }
             );

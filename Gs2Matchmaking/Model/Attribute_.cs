@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new Attribute_(
-                (string)properties["name"],
-                new Func<int?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["value"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<int?>(() =>
+                {
+                    return value switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new AttributeOptions {
                 }
             );

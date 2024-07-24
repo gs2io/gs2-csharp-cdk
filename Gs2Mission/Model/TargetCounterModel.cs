@@ -77,15 +77,18 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new TargetCounterModel(
-                (string)properties["counterName"],
-                new Func<long>(() =>
+                properties.TryGetValue("counterName", out var counterName) ? new Func<string>(() =>
                 {
-                    return properties["value"] switch {
+                    return (string) counterName;
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<long>(() =>
+                {
+                    return value switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new TargetCounterModelOptions {
                     resetType = properties.TryGetValue("resetType", out var resetType) ? TargetCounterModelResetTypeExt.New(resetType as string) : TargetCounterModelResetType.NotReset
                 }

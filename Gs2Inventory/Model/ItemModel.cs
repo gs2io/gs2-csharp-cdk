@@ -101,31 +101,34 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new ItemModel(
-                (string)properties["name"],
-                new Func<long>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["stackingLimit"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("stackingLimit", out var stackingLimit) ? new Func<long>(() =>
+                {
+                    return stackingLimit switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<bool>(() =>
+                })() : default,
+                properties.TryGetValue("allowMultipleStacks", out var allowMultipleStacks) ? new Func<bool>(() =>
                 {
-                    return properties["allowMultipleStacks"] switch {
+                    return allowMultipleStacks switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("sortValue", out var sortValue) ? new Func<int>(() =>
                 {
-                    return properties["sortValue"] switch {
+                    return sortValue switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new ItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

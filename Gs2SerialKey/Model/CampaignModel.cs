@@ -75,15 +75,18 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             Dictionary<string, object> properties
         ){
             var model = new CampaignModel(
-                (string)properties["name"],
-                new Func<bool?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["enableCampaignCode"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("enableCampaignCode", out var enableCampaignCode) ? new Func<bool?>(() =>
+                {
+                    return enableCampaignCode switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
+                })() : default,
                 new CampaignModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

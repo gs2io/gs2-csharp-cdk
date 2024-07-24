@@ -92,22 +92,22 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new DepositTransaction(
-                new Func<float>(() =>
+                properties.TryGetValue("price", out var price) ? new Func<float>(() =>
                 {
-                    return properties["price"] switch {
+                    return price switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("count", out var count) ? new Func<int>(() =>
                 {
-                    return properties["count"] switch {
+                    return count switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new DepositTransactionOptions {
                     currency = properties.TryGetValue("currency", out var currency) ? (string)currency : null,
                     depositedAt = new Func<long?>(() =>

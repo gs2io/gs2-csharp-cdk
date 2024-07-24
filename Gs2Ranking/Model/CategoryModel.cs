@@ -262,31 +262,34 @@ namespace Gs2Cdk.Gs2Ranking.Model
             Dictionary<string, object> properties
         ){
             var model = new CategoryModel(
-                (string)properties["name"],
-                new Func<bool?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["sum"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("sum", out var sum) ? new Func<bool?>(() =>
+                {
+                    return sum switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
-                new Func<CategoryModelOrderDirection>(() =>
+                })() : default,
+                properties.TryGetValue("orderDirection", out var orderDirection) ? new Func<CategoryModelOrderDirection>(() =>
                 {
-                    return properties["orderDirection"] switch {
+                    return orderDirection switch {
                         CategoryModelOrderDirection e => e,
                         string s => CategoryModelOrderDirectionExt.New(s),
                         _ => CategoryModelOrderDirection.Asc
                     };
-                })(),
-                new Func<CategoryModelScope>(() =>
+                })() : default,
+                properties.TryGetValue("scope", out var scope) ? new Func<CategoryModelScope>(() =>
                 {
-                    return properties["scope"] switch {
+                    return scope switch {
                         CategoryModelScope e => e,
                         string s => CategoryModelScopeExt.New(s),
                         _ => CategoryModelScope.Global
                     };
-                })(),
+                })() : default,
                 new CategoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     minimumValue = new Func<long?>(() =>

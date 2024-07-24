@@ -81,8 +81,14 @@ namespace Gs2Cdk.Gs2Inbox.Model
             Dictionary<string, object> properties
         ){
             var model = new GlobalMessage(
-                (string)properties["name"],
-                (string)properties["metadata"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("metadata", out var metadata) ? new Func<string>(() =>
+                {
+                    return (string) metadata;
+                })() : default,
                 new GlobalMessageOptions {
                     readAcquireActions = properties.TryGetValue("readAcquireActions", out var readAcquireActions) ? new Func<AcquireAction[]>(() =>
                     {

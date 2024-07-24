@@ -77,16 +77,22 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             Dictionary<string, object> properties
         ){
             var model = new EmitEvent(
-                (string)properties["event"],
-                (string)properties["parameters"],
-                new Func<long>(() =>
+                properties.TryGetValue("event", out var event_) ? new Func<string>(() =>
                 {
-                    return properties["timestamp"] switch {
+                    return (string) event_;
+                })() : default,
+                properties.TryGetValue("parameters", out var parameters) ? new Func<string>(() =>
+                {
+                    return (string) parameters;
+                })() : default,
+                properties.TryGetValue("timestamp", out var timestamp) ? new Func<long>(() =>
+                {
+                    return timestamp switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new EmitEventOptions {
                 }
             );

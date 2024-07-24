@@ -77,16 +77,22 @@ namespace Gs2Cdk.Gs2Account.Model
             Dictionary<string, object> properties
         ){
             var model = new PlatformUser(
-                new Func<int>(() =>
+                properties.TryGetValue("type", out var type) ? new Func<int>(() =>
                 {
-                    return properties["type"] switch {
+                    return type switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["userIdentifier"],
-                (string)properties["userId"],
+                })() : default,
+                properties.TryGetValue("userIdentifier", out var userIdentifier) ? new Func<string>(() =>
+                {
+                    return (string) userIdentifier;
+                })() : default,
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
                 new PlatformUserOptions {
                 }
             );

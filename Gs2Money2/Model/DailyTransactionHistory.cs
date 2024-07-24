@@ -126,47 +126,50 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new DailyTransactionHistory(
-                new Func<int>(() =>
+                properties.TryGetValue("year", out var year) ? new Func<int>(() =>
                 {
-                    return properties["year"] switch {
+                    return year switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("month", out var month) ? new Func<int>(() =>
                 {
-                    return properties["month"] switch {
+                    return month switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("day", out var day) ? new Func<int>(() =>
                 {
-                    return properties["day"] switch {
+                    return day switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["currency"],
-                new Func<float?>(() =>
+                })() : default,
+                properties.TryGetValue("currency", out var currency) ? new Func<string>(() =>
                 {
-                    return properties["depositAmount"] switch {
+                    return (string) currency;
+                })() : default,
+                properties.TryGetValue("depositAmount", out var depositAmount) ? new Func<float?>(() =>
+                {
+                    return depositAmount switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<float?>(() =>
+                })() : default,
+                properties.TryGetValue("withdrawAmount", out var withdrawAmount) ? new Func<float?>(() =>
                 {
-                    return properties["withdrawAmount"] switch {
+                    return withdrawAmount switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new DailyTransactionHistoryOptions {
                     revision = new Func<long?>(() =>
                     {

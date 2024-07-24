@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Buff.Model
             Dictionary<string, object> properties
         ){
             var model = new OverrideBuffRate(
-                (string)properties["name"],
-                new Func<float>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["rate"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("rate", out var rate) ? new Func<float>(() =>
+                {
+                    return rate switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new OverrideBuffRateOptions {
                 }
             );

@@ -79,14 +79,14 @@ namespace Gs2Cdk.Gs2Log.Model
             Dictionary<string, object> properties
         ){
             var model = new AccessLogCount(
-                new Func<long>(() =>
+                properties.TryGetValue("count", out var count) ? new Func<long>(() =>
                 {
-                    return properties["count"] switch {
+                    return count switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new AccessLogCountOptions {
                     service = properties.TryGetValue("service", out var service) ? (string)service : null,
                     method = properties.TryGetValue("method", out var method) ? (string)method : null,

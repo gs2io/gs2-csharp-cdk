@@ -50,14 +50,14 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new FakeSetting(
-                new Func<FakeSettingAcceptFakeReceipt>(() =>
+                properties.TryGetValue("acceptFakeReceipt", out var acceptFakeReceipt) ? new Func<FakeSettingAcceptFakeReceipt>(() =>
                 {
-                    return properties["acceptFakeReceipt"] switch {
+                    return acceptFakeReceipt switch {
                         FakeSettingAcceptFakeReceipt e => e,
                         string s => FakeSettingAcceptFakeReceiptExt.New(s),
                         _ => FakeSettingAcceptFakeReceipt.Accept
                     };
-                })(),
+                })() : default,
                 new FakeSettingOptions {
                 }
             );

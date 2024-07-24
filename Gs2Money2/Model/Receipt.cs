@@ -62,16 +62,22 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new Receipt(
-                new Func<ReceiptStore>(() =>
+                properties.TryGetValue("Store", out var Store) ? new Func<ReceiptStore>(() =>
                 {
-                    return properties["Store"] switch {
+                    return Store switch {
                         ReceiptStore e => e,
                         string s => ReceiptStoreExt.New(s),
                         _ => ReceiptStore.AppleAppStore
                     };
-                })(),
-                (string)properties["TransactionID"],
-                (string)properties["Payload"],
+                })() : default,
+                properties.TryGetValue("TransactionID", out var TransactionID) ? new Func<string>(() =>
+                {
+                    return (string) TransactionID;
+                })() : default,
+                properties.TryGetValue("Payload", out var Payload) ? new Func<string>(() =>
+                {
+                    return (string) Payload;
+                })() : default,
                 new ReceiptOptions {
                 }
             );

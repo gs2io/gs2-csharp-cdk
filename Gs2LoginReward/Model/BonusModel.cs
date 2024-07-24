@@ -175,23 +175,26 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             Dictionary<string, object> properties
         ){
             var model = new BonusModel(
-                (string)properties["name"],
-                new Func<BonusModelMode>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["mode"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("mode", out var mode) ? new Func<BonusModelMode>(() =>
+                {
+                    return mode switch {
                         BonusModelMode e => e,
                         string s => BonusModelModeExt.New(s),
                         _ => BonusModelMode.Schedule
                     };
-                })(),
-                new Func<BonusModelMissedReceiveRelief>(() =>
+                })() : default,
+                properties.TryGetValue("missedReceiveRelief", out var missedReceiveRelief) ? new Func<BonusModelMissedReceiveRelief>(() =>
                 {
-                    return properties["missedReceiveRelief"] switch {
+                    return missedReceiveRelief switch {
                         BonusModelMissedReceiveRelief e => e,
                         string s => BonusModelMissedReceiveReliefExt.New(s),
                         _ => BonusModelMissedReceiveRelief.Enabled
                     };
-                })(),
+                })() : default,
                 new BonusModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     periodEventId = properties.TryGetValue("periodEventId", out var periodEventId) ? (string)periodEventId : null,

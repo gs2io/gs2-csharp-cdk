@@ -103,15 +103,18 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new DisplayItem(
-                (string)properties["displayItemId"],
-                new Func<DisplayItemType>(() =>
+                properties.TryGetValue("displayItemId", out var displayItemId) ? new Func<string>(() =>
                 {
-                    return properties["type"] switch {
+                    return (string) displayItemId;
+                })() : default,
+                properties.TryGetValue("type", out var type) ? new Func<DisplayItemType>(() =>
+                {
+                    return type switch {
                         DisplayItemType e => e,
                         string s => DisplayItemTypeExt.New(s),
                         _ => DisplayItemType.SalesItem
                     };
-                })(),
+                })() : default,
                 new DisplayItemOptions {
                     salesItem = properties.TryGetValue("salesItem", out var salesItem) ? new Func<SalesItem>(() =>
                     {

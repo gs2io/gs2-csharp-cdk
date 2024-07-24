@@ -74,15 +74,18 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new PrizeLimit(
-                (string)properties["prizeId"],
-                new Func<int>(() =>
+                properties.TryGetValue("prizeId", out var prizeId) ? new Func<string>(() =>
                 {
-                    return properties["drawnCount"] switch {
+                    return (string) prizeId;
+                })() : default,
+                properties.TryGetValue("drawnCount", out var drawnCount) ? new Func<int>(() =>
+                {
+                    return drawnCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new PrizeLimitOptions {
                     revision = new Func<long?>(() =>
                     {

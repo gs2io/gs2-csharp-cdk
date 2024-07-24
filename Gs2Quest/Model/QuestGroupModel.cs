@@ -64,7 +64,10 @@ namespace Gs2Cdk.Gs2Quest.Model
             Dictionary<string, object> properties
         ){
             var model = new QuestGroupModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new QuestGroupModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     quests = properties.TryGetValue("quests", out var quests) ? new Func<QuestModel[]>(() =>

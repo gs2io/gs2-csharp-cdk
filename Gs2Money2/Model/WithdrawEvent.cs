@@ -77,24 +77,24 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new WithdrawEvent(
-                new Func<int>(() =>
+                properties.TryGetValue("slot", out var slot) ? new Func<int>(() =>
                 {
-                    return properties["slot"] switch {
+                    return slot switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<WalletSummary>(() =>
+                })() : default,
+                properties.TryGetValue("status", out var status) ? new Func<WalletSummary>(() =>
                 {
-                    return properties["status"] switch {
+                    return status switch {
                         WalletSummary v => v,
                         WalletSummary[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => WalletSummary.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? WalletSummary.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new WithdrawEventOptions {
                     withdrawDetails = properties.TryGetValue("withdrawDetails", out var withdrawDetails) ? new Func<DepositTransaction[]>(() =>
                     {

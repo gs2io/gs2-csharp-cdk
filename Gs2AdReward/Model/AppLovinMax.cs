@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2AdReward.Model
             Dictionary<string, object> properties
         ){
             var model = new AppLovinMax(
-                (string)properties["allowAdUnitId"],
-                (string)properties["eventKey"],
+                properties.TryGetValue("allowAdUnitId", out var allowAdUnitId) ? new Func<string>(() =>
+                {
+                    return (string) allowAdUnitId;
+                })() : default,
+                properties.TryGetValue("eventKey", out var eventKey) ? new Func<string>(() =>
+                {
+                    return (string) eventKey;
+                })() : default,
                 new AppLovinMaxOptions {
                 }
             );

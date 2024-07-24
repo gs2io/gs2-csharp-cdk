@@ -60,10 +60,13 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new SimpleInventoryModel(
-                (string)properties["name"],
-                new Func<SimpleItemModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["simpleItemModels"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("simpleItemModels", out var simpleItemModels) ? new Func<SimpleItemModel[]>(() =>
+                {
+                    return simpleItemModels switch {
                         Dictionary<string, object>[] v => v.Select(SimpleItemModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ SimpleItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(SimpleItemModel.FromProperties).ToArray(),
@@ -71,7 +74,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
                         { } v => new []{ v as SimpleItemModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new SimpleInventoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

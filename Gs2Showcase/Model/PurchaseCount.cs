@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new PurchaseCount(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["count"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("count", out var count) ? new Func<int>(() =>
+                {
+                    return count switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new PurchaseCountOptions {
                 }
             );

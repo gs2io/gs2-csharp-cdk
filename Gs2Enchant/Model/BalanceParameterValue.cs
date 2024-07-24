@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new BalanceParameterValue(
-                (string)properties["name"],
-                new Func<long>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["value"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<long>(() =>
+                {
+                    return value switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new BalanceParameterValueOptions {
                 }
             );

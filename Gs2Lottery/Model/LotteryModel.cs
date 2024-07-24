@@ -112,23 +112,26 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new LotteryModel(
-                (string)properties["name"],
-                new Func<LotteryModelMode>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["mode"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("mode", out var mode) ? new Func<LotteryModelMode>(() =>
+                {
+                    return mode switch {
                         LotteryModelMode e => e,
                         string s => LotteryModelModeExt.New(s),
                         _ => LotteryModelMode.Normal
                     };
-                })(),
-                new Func<LotteryModelMethod>(() =>
+                })() : default,
+                properties.TryGetValue("method", out var method) ? new Func<LotteryModelMethod>(() =>
                 {
-                    return properties["method"] switch {
+                    return method switch {
                         LotteryModelMethod e => e,
                         string s => LotteryModelMethodExt.New(s),
                         _ => LotteryModelMethod.PrizeTable
                     };
-                })(),
+                })() : default,
                 new LotteryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     prizeTableName = properties.TryGetValue("prizeTableName", out var prizeTableName) ? (string)prizeTableName : null,

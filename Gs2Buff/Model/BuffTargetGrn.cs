@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2Buff.Model
             Dictionary<string, object> properties
         ){
             var model = new BuffTargetGrn(
-                (string)properties["targetModelName"],
-                (string)properties["targetGrn"],
+                properties.TryGetValue("targetModelName", out var targetModelName) ? new Func<string>(() =>
+                {
+                    return (string) targetModelName;
+                })() : default,
+                properties.TryGetValue("targetGrn", out var targetGrn) ? new Func<string>(() =>
+                {
+                    return (string) targetGrn;
+                })() : default,
                 new BuffTargetGrnOptions {
                 }
             );

@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Ranking.Model
             Dictionary<string, object> properties
         ){
             var model = new Scope(
-                (string)properties["name"],
-                new Func<long>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["targetDays"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("targetDays", out var targetDays) ? new Func<long>(() =>
+                {
+                    return targetDays switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new ScopeOptions {
                 }
             );

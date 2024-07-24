@@ -58,7 +58,10 @@ namespace Gs2Cdk.Gs2Formation.Model
             Dictionary<string, object> properties
         ){
             var model = new Slot(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new SlotOptions {
                     propertyId = properties.TryGetValue("propertyId", out var propertyId) ? (string)propertyId : null,
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null

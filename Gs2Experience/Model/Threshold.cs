@@ -53,16 +53,16 @@ namespace Gs2Cdk.Gs2Experience.Model
             Dictionary<string, object> properties
         ){
             var model = new Threshold(
-                new Func<long[]>(() =>
+                properties.TryGetValue("values", out var values) ? new Func<long[]>(() =>
                 {
-                    return properties["values"] switch {
+                    return values switch {
                         long[] v => v.ToArray(),
                         List<long> v => v.ToArray(),
                         object[] v => v.Select(v2 => long.Parse(v2?.ToString())).ToArray(),
                         { } v => new []{ long.Parse(v.ToString()) },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new ThresholdOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

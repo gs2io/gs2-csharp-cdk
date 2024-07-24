@@ -87,23 +87,26 @@ namespace Gs2Cdk.Gs2News.Model
             Dictionary<string, object> properties
         ){
             var model = new Progress(
-                (string)properties["uploadToken"],
-                new Func<int>(() =>
+                properties.TryGetValue("uploadToken", out var uploadToken) ? new Func<string>(() =>
                 {
-                    return properties["generated"] switch {
+                    return (string) uploadToken;
+                })() : default,
+                properties.TryGetValue("generated", out var generated) ? new Func<int>(() =>
+                {
+                    return generated switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("patternCount", out var patternCount) ? new Func<int>(() =>
                 {
-                    return properties["patternCount"] switch {
+                    return patternCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new ProgressOptions {
                     revision = new Func<long?>(() =>
                     {

@@ -51,7 +51,10 @@ namespace Gs2Cdk.Gs2News.Model
             Dictionary<string, object> properties
         ){
             var model = new Output(
-                (string)properties["text"],
+                properties.TryGetValue("text", out var text) ? new Func<string>(() =>
+                {
+                    return (string) text;
+                })() : default,
                 new OutputOptions {
                     revision = new Func<long?>(() =>
                     {

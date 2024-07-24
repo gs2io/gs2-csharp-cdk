@@ -107,19 +107,34 @@ namespace Gs2Cdk.Gs2Log.Model
             Dictionary<string, object> properties
         ){
             var model = new AccessLog(
-                new Func<long>(() =>
+                properties.TryGetValue("timestamp", out var timestamp) ? new Func<long>(() =>
                 {
-                    return properties["timestamp"] switch {
+                    return timestamp switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["requestId"],
-                (string)properties["service"],
-                (string)properties["method"],
-                (string)properties["request"],
-                (string)properties["result"],
+                })() : default,
+                properties.TryGetValue("requestId", out var requestId) ? new Func<string>(() =>
+                {
+                    return (string) requestId;
+                })() : default,
+                properties.TryGetValue("service", out var service) ? new Func<string>(() =>
+                {
+                    return (string) service;
+                })() : default,
+                properties.TryGetValue("method", out var method) ? new Func<string>(() =>
+                {
+                    return (string) method;
+                })() : default,
+                properties.TryGetValue("request", out var request) ? new Func<string>(() =>
+                {
+                    return (string) request;
+                })() : default,
+                properties.TryGetValue("result", out var result) ? new Func<string>(() =>
+                {
+                    return (string) result;
+                })() : default,
                 new AccessLogOptions {
                     userId = properties.TryGetValue("userId", out var userId) ? (string)userId : null
                 }

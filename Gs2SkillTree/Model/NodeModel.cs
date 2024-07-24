@@ -93,10 +93,13 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             Dictionary<string, object> properties
         ){
             var model = new NodeModel(
-                (string)properties["name"],
-                new Func<ConsumeAction[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["releaseConsumeActions"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("releaseConsumeActions", out var releaseConsumeActions) ? new Func<ConsumeAction[]>(() =>
+                {
+                    return releaseConsumeActions switch {
                         Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ ConsumeAction.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
@@ -104,15 +107,15 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                         { } v => new []{ v as ConsumeAction },
                         _ => null
                     };
-                })(),
-                new Func<float?>(() =>
+                })() : null,
+                properties.TryGetValue("restrainReturnRate", out var restrainReturnRate) ? new Func<float?>(() =>
                 {
-                    return properties["restrainReturnRate"] switch {
+                    return restrainReturnRate switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new NodeModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     returnAcquireActions = properties.TryGetValue("returnAcquireActions", out var returnAcquireActions) ? new Func<AcquireAction[]>(() =>

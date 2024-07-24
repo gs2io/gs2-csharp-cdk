@@ -168,15 +168,18 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new MissionGroupModel(
-                (string)properties["name"],
-                new Func<MissionGroupModelResetType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["resetType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("resetType", out var resetType) ? new Func<MissionGroupModelResetType>(() =>
+                {
+                    return resetType switch {
                         MissionGroupModelResetType e => e,
                         string s => MissionGroupModelResetTypeExt.New(s),
                         _ => MissionGroupModelResetType.NotReset
                     };
-                })(),
+                })() : default,
                 new MissionGroupModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     tasks = properties.TryGetValue("tasks", out var tasks) ? new Func<MissionTaskModel[]>(() =>

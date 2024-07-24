@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Grade.Model
             Dictionary<string, object> properties
         ){
             var model = new DefaultGradeModel(
-                (string)properties["propertyIdRegex"],
-                new Func<long>(() =>
+                properties.TryGetValue("propertyIdRegex", out var propertyIdRegex) ? new Func<string>(() =>
                 {
-                    return properties["defaultGradeValue"] switch {
+                    return (string) propertyIdRegex;
+                })() : default,
+                properties.TryGetValue("defaultGradeValue", out var defaultGradeValue) ? new Func<long>(() =>
+                {
+                    return defaultGradeValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new DefaultGradeModelOptions {
                 }
             );

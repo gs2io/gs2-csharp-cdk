@@ -87,30 +87,30 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new WalletSummary(
-                new Func<int?>(() =>
+                properties.TryGetValue("paid", out var paid) ? new Func<int?>(() =>
                 {
-                    return properties["paid"] switch {
+                    return paid switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("free", out var free) ? new Func<int?>(() =>
                 {
-                    return properties["free"] switch {
+                    return free switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("total", out var total) ? new Func<int?>(() =>
                 {
-                    return properties["total"] switch {
+                    return total switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new WalletSummaryOptions {
                 }
             );

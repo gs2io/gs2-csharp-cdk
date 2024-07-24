@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Enhance.Model
             Dictionary<string, object> properties
         ){
             var model = new Material(
-                (string)properties["materialItemSetId"],
-                new Func<int?>(() =>
+                properties.TryGetValue("materialItemSetId", out var materialItemSetId) ? new Func<string>(() =>
                 {
-                    return properties["count"] switch {
+                    return (string) materialItemSetId;
+                })() : default,
+                properties.TryGetValue("count", out var count) ? new Func<int?>(() =>
+                {
+                    return count switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new MaterialOptions {
                 }
             );

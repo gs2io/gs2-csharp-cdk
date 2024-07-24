@@ -74,15 +74,18 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new UnusedBalance(
-                (string)properties["currency"],
-                new Func<float>(() =>
+                properties.TryGetValue("currency", out var currency) ? new Func<string>(() =>
                 {
-                    return properties["balance"] switch {
+                    return (string) currency;
+                })() : default,
+                properties.TryGetValue("balance", out var balance) ? new Func<float>(() =>
+                {
+                    return balance switch {
                         float v => v,
                         string v => float.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new UnusedBalanceOptions {
                     revision = new Func<long?>(() =>
                     {

@@ -48,7 +48,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             Dictionary<string, object> properties
         ){
             var model = new IgnoreUser(
-                (string)properties["userId"],
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
                 new IgnoreUserOptions {
                 }
             );

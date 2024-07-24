@@ -149,15 +149,18 @@ namespace Gs2Cdk.Gs2Limit.Model
             Dictionary<string, object> properties
         ){
             var model = new LimitModel(
-                (string)properties["name"],
-                new Func<LimitModelResetType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["resetType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("resetType", out var resetType) ? new Func<LimitModelResetType>(() =>
+                {
+                    return resetType switch {
                         LimitModelResetType e => e,
                         string s => LimitModelResetTypeExt.New(s),
                         _ => LimitModelResetType.NotReset
                     };
-                })(),
+                })() : default,
                 new LimitModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     resetDayOfMonth = new Func<int?>(() =>

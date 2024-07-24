@@ -73,20 +73,32 @@ namespace Gs2Cdk.Gs2Version.Model
             Dictionary<string, object> properties
         ){
             var model = new SignTargetVersion(
-                (string)properties["region"],
-                (string)properties["ownerId"],
-                (string)properties["namespaceName"],
-                (string)properties["versionName"],
-                new Func<Version_>(() =>
+                properties.TryGetValue("region", out var region) ? new Func<string>(() =>
                 {
-                    return properties["version"] switch {
+                    return (string) region;
+                })() : default,
+                properties.TryGetValue("ownerId", out var ownerId) ? new Func<string>(() =>
+                {
+                    return (string) ownerId;
+                })() : default,
+                properties.TryGetValue("namespaceName", out var namespaceName) ? new Func<string>(() =>
+                {
+                    return (string) namespaceName;
+                })() : default,
+                properties.TryGetValue("versionName", out var versionName) ? new Func<string>(() =>
+                {
+                    return (string) versionName;
+                })() : default,
+                properties.TryGetValue("version", out var version) ? new Func<Version_>(() =>
+                {
+                    return version switch {
                         Version_ v => v,
                         Version_[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => Version_.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? Version_.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new SignTargetVersionOptions {
                 }
             );

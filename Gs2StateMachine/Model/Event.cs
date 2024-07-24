@@ -86,14 +86,14 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             Dictionary<string, object> properties
         ){
             var model = new Event(
-                new Func<EventEventType>(() =>
+                properties.TryGetValue("eventType", out var eventType) ? new Func<EventEventType>(() =>
                 {
-                    return properties["eventType"] switch {
+                    return eventType switch {
                         EventEventType e => e,
                         string s => EventEventTypeExt.New(s),
                         _ => EventEventType.ChangeState
                     };
-                })(),
+                })() : default,
                 new EventOptions {
                     changeStateEvent = properties.TryGetValue("changeStateEvent", out var changeStateEvent) ? new Func<ChangeStateEvent>(() =>
                     {

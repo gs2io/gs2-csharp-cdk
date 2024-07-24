@@ -154,31 +154,34 @@ namespace Gs2Cdk.Gs2Buff.Model
             Dictionary<string, object> properties
         ){
             var model = new BuffEntryModel(
-                (string)properties["name"],
-                new Func<BuffEntryModelExpression>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["expression"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("expression", out var expression) ? new Func<BuffEntryModelExpression>(() =>
+                {
+                    return expression switch {
                         BuffEntryModelExpression e => e,
                         string s => BuffEntryModelExpressionExt.New(s),
                         _ => BuffEntryModelExpression.RateAdd
                     };
-                })(),
-                new Func<BuffEntryModelTargetType>(() =>
+                })() : default,
+                properties.TryGetValue("targetType", out var targetType) ? new Func<BuffEntryModelTargetType>(() =>
                 {
-                    return properties["targetType"] switch {
+                    return targetType switch {
                         BuffEntryModelTargetType e => e,
                         string s => BuffEntryModelTargetTypeExt.New(s),
                         _ => BuffEntryModelTargetType.Model
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("priority", out var priority) ? new Func<int>(() =>
                 {
-                    return properties["priority"] switch {
+                    return priority switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new BuffEntryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     targetModel = properties.TryGetValue("targetModel", out var targetModel) ? new Func<BuffTargetModel>(() =>

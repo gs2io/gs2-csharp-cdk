@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             Dictionary<string, object> properties
         ){
             var model = new StackEntry(
-                (string)properties["stateMachineName"],
-                (string)properties["taskName"],
+                properties.TryGetValue("stateMachineName", out var stateMachineName) ? new Func<string>(() =>
+                {
+                    return (string) stateMachineName;
+                })() : default,
+                properties.TryGetValue("taskName", out var taskName) ? new Func<string>(() =>
+                {
+                    return (string) taskName;
+                })() : default,
                 new StackEntryOptions {
                 }
             );

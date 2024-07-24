@@ -88,10 +88,13 @@ namespace Gs2Cdk.Gs2Quest.Model
             Dictionary<string, object> properties
         ){
             var model = new QuestModel(
-                (string)properties["name"],
-                new Func<Contents[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["contents"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("contents", out var contents) ? new Func<Contents[]>(() =>
+                {
+                    return contents switch {
                         Dictionary<string, object>[] v => v.Select(Contents.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ Contents.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(Contents.FromProperties).ToArray(),
@@ -99,7 +102,7 @@ namespace Gs2Cdk.Gs2Quest.Model
                         { } v => new []{ v as Contents },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new QuestModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null,

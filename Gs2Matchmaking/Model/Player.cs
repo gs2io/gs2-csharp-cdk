@@ -65,8 +65,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new Player(
-                (string)properties["userId"],
-                (string)properties["roleName"],
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
+                properties.TryGetValue("roleName", out var roleName) ? new Func<string>(() =>
+                {
+                    return (string) roleName;
+                })() : default,
                 new PlayerOptions {
                     attributes = properties.TryGetValue("attributes", out var attributes) ? new Func<Attribute_[]>(() =>
                     {

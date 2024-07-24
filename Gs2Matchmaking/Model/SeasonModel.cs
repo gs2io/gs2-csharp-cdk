@@ -89,16 +89,22 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new SeasonModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["maximumParticipants"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("maximumParticipants", out var maximumParticipants) ? new Func<int>(() =>
+                {
+                    return maximumParticipants switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["challengePeriodEventId"],
+                })() : default,
+                properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? new Func<string>(() =>
+                {
+                    return (string) challengePeriodEventId;
+                })() : default,
                 new SeasonModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     experienceModelId = properties.TryGetValue("experienceModelId", out var experienceModelId) ? (string)experienceModelId : null

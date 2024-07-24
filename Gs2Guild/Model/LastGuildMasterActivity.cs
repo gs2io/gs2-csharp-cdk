@@ -18,51 +18,41 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2SeasonRating.Model;
-using Gs2Cdk.Gs2SeasonRating.Model.Options;
+using Gs2Cdk.Gs2Guild.Model;
+using Gs2Cdk.Gs2Guild.Model.Options;
 
-namespace Gs2Cdk.Gs2SeasonRating.Model
+namespace Gs2Cdk.Gs2Guild.Model
 {
-    public class SignedBallot {
-        private string body;
-        private string signature;
+    public class LastGuildMasterActivity {
+        private string userId;
 
-        public SignedBallot(
-            string body,
-            string signature,
-            SignedBallotOptions options = null
+        public LastGuildMasterActivity(
+            string userId,
+            LastGuildMasterActivityOptions options = null
         ){
-            this.body = body;
-            this.signature = signature;
+            this.userId = userId;
         }
 
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
 
-            if (this.body != null) {
-                properties["body"] = this.body;
-            }
-            if (this.signature != null) {
-                properties["signature"] = this.signature;
+            if (this.userId != null) {
+                properties["userId"] = this.userId;
             }
 
             return properties;
         }
 
-        public static SignedBallot FromProperties(
+        public static LastGuildMasterActivity FromProperties(
             Dictionary<string, object> properties
         ){
-            var model = new SignedBallot(
-                properties.TryGetValue("body", out var body) ? new Func<string>(() =>
+            var model = new LastGuildMasterActivity(
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
                 {
-                    return (string) body;
+                    return (string) userId;
                 })() : default,
-                properties.TryGetValue("signature", out var signature) ? new Func<string>(() =>
-                {
-                    return (string) signature;
-                })() : default,
-                new SignedBallotOptions {
+                new LastGuildMasterActivityOptions {
                 }
             );
 

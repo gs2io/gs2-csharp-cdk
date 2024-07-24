@@ -68,15 +68,18 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new VerifyReceiptEvent(
-                (string)properties["contentName"],
-                new Func<VerifyReceiptEventPlatform>(() =>
+                properties.TryGetValue("contentName", out var contentName) ? new Func<string>(() =>
                 {
-                    return properties["platform"] switch {
+                    return (string) contentName;
+                })() : default,
+                properties.TryGetValue("platform", out var platform) ? new Func<VerifyReceiptEventPlatform>(() =>
+                {
+                    return platform switch {
                         VerifyReceiptEventPlatform e => e,
                         string s => VerifyReceiptEventPlatformExt.New(s),
                         _ => VerifyReceiptEventPlatform.AppleAppStore
                     };
-                })(),
+                })() : default,
                 new VerifyReceiptEventOptions {
                     appleAppStoreVerifyReceiptEvent = properties.TryGetValue("appleAppStoreVerifyReceiptEvent", out var appleAppStoreVerifyReceiptEvent) ? new Func<AppleAppStoreVerifyReceiptEvent>(() =>
                     {

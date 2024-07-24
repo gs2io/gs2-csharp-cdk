@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new AcquireCount(
-                (string)properties["itemName"],
-                new Func<long>(() =>
+                properties.TryGetValue("itemName", out var itemName) ? new Func<string>(() =>
                 {
-                    return properties["count"] switch {
+                    return (string) itemName;
+                })() : default,
+                properties.TryGetValue("count", out var count) ? new Func<long>(() =>
+                {
+                    return count switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new AcquireCountOptions {
                 }
             );

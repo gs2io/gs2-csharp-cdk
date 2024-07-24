@@ -68,14 +68,14 @@ namespace Gs2Cdk.Gs2Script.Model
             Dictionary<string, object> properties
         ){
             var model = new RandomStatus(
-                new Func<long>(() =>
+                properties.TryGetValue("seed", out var seed) ? new Func<long>(() =>
                 {
-                    return properties["seed"] switch {
+                    return seed switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RandomStatusOptions {
                     used = properties.TryGetValue("used", out var used) ? new Func<RandomUsed[]>(() =>
                     {

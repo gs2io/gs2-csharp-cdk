@@ -97,33 +97,36 @@ namespace Gs2Cdk.Gs2Formation.Model
             Dictionary<string, object> properties
         ){
             var model = new MoldModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["initialMaxCapacity"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("initialMaxCapacity", out var initialMaxCapacity) ? new Func<int>(() =>
+                {
+                    return initialMaxCapacity switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("maxCapacity", out var maxCapacity) ? new Func<int>(() =>
                 {
-                    return properties["maxCapacity"] switch {
+                    return maxCapacity switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<FormModel>(() =>
+                })() : default,
+                properties.TryGetValue("formModel", out var formModel) ? new Func<FormModel>(() =>
                 {
-                    return properties["formModel"] switch {
+                    return formModel switch {
                         FormModel v => v,
                         FormModel[] v => v.Length > 0 ? v.First() : null,
                         Dictionary<string, object> v => FormModel.FromProperties(v),
                         Dictionary<string, object>[] v => v.Length > 0 ? FormModel.FromProperties(v.First()) : null,
                         _ => null
                     };
-                })(),
+                })() : null,
                 new MoldModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

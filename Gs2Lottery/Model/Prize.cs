@@ -144,23 +144,26 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new Prize(
-                (string)properties["prizeId"],
-                new Func<PrizeType>(() =>
+                properties.TryGetValue("prizeId", out var prizeId) ? new Func<string>(() =>
                 {
-                    return properties["type"] switch {
+                    return (string) prizeId;
+                })() : default,
+                properties.TryGetValue("type", out var type) ? new Func<PrizeType>(() =>
+                {
+                    return type switch {
                         PrizeType e => e,
                         string s => PrizeTypeExt.New(s),
                         _ => PrizeType.Action
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("weight", out var weight) ? new Func<int>(() =>
                 {
-                    return properties["weight"] switch {
+                    return weight switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new PrizeOptions {
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
                     {

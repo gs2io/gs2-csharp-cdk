@@ -65,10 +65,13 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new Showcase(
-                (string)properties["name"],
-                new Func<DisplayItem[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["displayItems"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("displayItems", out var displayItems) ? new Func<DisplayItem[]>(() =>
+                {
+                    return displayItems switch {
                         Dictionary<string, object>[] v => v.Select(DisplayItem.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ DisplayItem.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(DisplayItem.FromProperties).ToArray(),
@@ -76,7 +79,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         { } v => new []{ v as DisplayItem },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new ShowcaseOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null

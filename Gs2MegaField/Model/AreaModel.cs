@@ -59,7 +59,10 @@ namespace Gs2Cdk.Gs2MegaField.Model
             Dictionary<string, object> properties
         ){
             var model = new AreaModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new AreaModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     layerModels = properties.TryGetValue("layerModels", out var layerModels) ? new Func<LayerModel[]>(() =>

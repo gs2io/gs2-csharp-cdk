@@ -34,6 +34,10 @@ namespace Gs2Cdk.Gs2Guild.Model
         private NotificationSetting changeMemberNotification;
         private NotificationSetting receiveRequestNotification;
         private NotificationSetting removeRequestNotification;
+        private ScriptSetting createGuildScript;
+        private ScriptSetting joinGuildScript;
+        private ScriptSetting leaveGuildScript;
+        private ScriptSetting changeRoleScript;
         private LogSetting logSetting;
 
         public Namespace(
@@ -52,6 +56,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.changeMemberNotification = options?.changeMemberNotification;
             this.receiveRequestNotification = options?.receiveRequestNotification;
             this.removeRequestNotification = options?.removeRequestNotification;
+            this.createGuildScript = options?.createGuildScript;
+            this.joinGuildScript = options?.joinGuildScript;
+            this.leaveGuildScript = options?.leaveGuildScript;
+            this.changeRoleScript = options?.changeRoleScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -97,6 +105,22 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.removeRequestNotification != null) {
                 properties["RemoveRequestNotification"] = this.removeRequestNotification?.Properties(
+                );
+            }
+            if (this.createGuildScript != null) {
+                properties["CreateGuildScript"] = this.createGuildScript?.Properties(
+                );
+            }
+            if (this.joinGuildScript != null) {
+                properties["JoinGuildScript"] = this.joinGuildScript?.Properties(
+                );
+            }
+            if (this.leaveGuildScript != null) {
+                properties["LeaveGuildScript"] = this.leaveGuildScript?.Properties(
+                );
+            }
+            if (this.changeRoleScript != null) {
+                properties["ChangeRoleScript"] = this.changeRoleScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

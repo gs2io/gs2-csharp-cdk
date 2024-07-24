@@ -103,31 +103,34 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             Dictionary<string, object> properties
         ){
             var model = new IssueJob(
-                (string)properties["name"],
-                new Func<int?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["issuedCount"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("issuedCount", out var issuedCount) ? new Func<int?>(() =>
+                {
+                    return issuedCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("issueRequestCount", out var issueRequestCount) ? new Func<int>(() =>
                 {
-                    return properties["issueRequestCount"] switch {
+                    return issueRequestCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<IssueJobStatus>(() =>
+                })() : default,
+                properties.TryGetValue("status", out var status) ? new Func<IssueJobStatus>(() =>
                 {
-                    return properties["status"] switch {
+                    return status switch {
                         IssueJobStatus e => e,
                         string s => IssueJobStatusExt.New(s),
                         _ => IssueJobStatus.Processing
                     };
-                })(),
+                })() : default,
                 new IssueJobOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     revision = new Func<long?>(() =>

@@ -68,9 +68,18 @@ namespace Gs2Cdk.Gs2Key.Model
             Dictionary<string, object> properties
         ){
             var model = new GitHubApiKey(
-                (string)properties["name"],
-                (string)properties["apiKey"],
-                (string)properties["encryptionKeyName"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("apiKey", out var apiKey) ? new Func<string>(() =>
+                {
+                    return (string) apiKey;
+                })() : default,
+                properties.TryGetValue("encryptionKeyName", out var encryptionKeyName) ? new Func<string>(() =>
+                {
+                    return (string) encryptionKeyName;
+                })() : default,
                 new GitHubApiKeyOptions {
                     description = properties.TryGetValue("description", out var description) ? (string)description : null,
                     revision = new Func<long?>(() =>

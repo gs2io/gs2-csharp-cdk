@@ -74,14 +74,14 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             Dictionary<string, object> properties
         ){
             var model = new RankingReward(
-                new Func<int>(() =>
+                properties.TryGetValue("thresholdRank", out var thresholdRank) ? new Func<int>(() =>
                 {
-                    return properties["thresholdRank"] switch {
+                    return thresholdRank switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RankingRewardOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     acquireActions = properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>

@@ -69,15 +69,18 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new GameResult(
-                new Func<int>(() =>
+                properties.TryGetValue("rank", out var rank) ? new Func<int>(() =>
                 {
-                    return properties["rank"] switch {
+                    return rank switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["userId"],
+                })() : default,
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
                 new GameResultOptions {
                 }
             );

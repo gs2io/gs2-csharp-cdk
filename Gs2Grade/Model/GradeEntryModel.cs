@@ -83,16 +83,22 @@ namespace Gs2Cdk.Gs2Grade.Model
             Dictionary<string, object> properties
         ){
             var model = new GradeEntryModel(
-                new Func<long>(() =>
+                properties.TryGetValue("rankCapValue", out var rankCapValue) ? new Func<long>(() =>
                 {
-                    return properties["rankCapValue"] switch {
+                    return rankCapValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["propertyIdRegex"],
-                (string)properties["gradeUpPropertyIdRegex"],
+                })() : default,
+                properties.TryGetValue("propertyIdRegex", out var propertyIdRegex) ? new Func<string>(() =>
+                {
+                    return (string) propertyIdRegex;
+                })() : default,
+                properties.TryGetValue("gradeUpPropertyIdRegex", out var gradeUpPropertyIdRegex) ? new Func<string>(() =>
+                {
+                    return (string) gradeUpPropertyIdRegex;
+                })() : default,
                 new GradeEntryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

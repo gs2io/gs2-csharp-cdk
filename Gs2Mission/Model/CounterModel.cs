@@ -65,10 +65,13 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new CounterModel(
-                (string)properties["name"],
-                new Func<CounterScopeModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["scopes"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("scopes", out var scopes) ? new Func<CounterScopeModel[]>(() =>
+                {
+                    return scopes switch {
                         Dictionary<string, object>[] v => v.Select(CounterScopeModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ CounterScopeModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(CounterScopeModel.FromProperties).ToArray(),
@@ -76,7 +79,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                         { } v => new []{ v as CounterScopeModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new CounterModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     challengePeriodEventId = properties.TryGetValue("challengePeriodEventId", out var challengePeriodEventId) ? (string)challengePeriodEventId : null

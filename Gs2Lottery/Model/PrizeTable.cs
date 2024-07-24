@@ -60,10 +60,13 @@ namespace Gs2Cdk.Gs2Lottery.Model
             Dictionary<string, object> properties
         ){
             var model = new PrizeTable(
-                (string)properties["name"],
-                new Func<Prize[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["prizes"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("prizes", out var prizes) ? new Func<Prize[]>(() =>
+                {
+                    return prizes switch {
                         Dictionary<string, object>[] v => v.Select(Prize.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ Prize.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(Prize.FromProperties).ToArray(),
@@ -71,7 +74,7 @@ namespace Gs2Cdk.Gs2Lottery.Model
                         { } v => new []{ v as Prize },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new PrizeTableOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

@@ -128,23 +128,26 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             Dictionary<string, object> properties
         ){
             var model = new GlobalRankingModel(
-                (string)properties["name"],
-                new Func<bool?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["sum"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("sum", out var sum) ? new Func<bool?>(() =>
+                {
+                    return sum switch {
                         bool v => v,
                         string v => bool.Parse(v),
                         _ => false
                     };
-                })(),
-                new Func<GlobalRankingModelOrderDirection>(() =>
+                })() : default,
+                properties.TryGetValue("orderDirection", out var orderDirection) ? new Func<GlobalRankingModelOrderDirection>(() =>
                 {
-                    return properties["orderDirection"] switch {
+                    return orderDirection switch {
                         GlobalRankingModelOrderDirection e => e,
                         string s => GlobalRankingModelOrderDirectionExt.New(s),
                         _ => GlobalRankingModelOrderDirection.Asc
                     };
-                })(),
+                })() : default,
                 new GlobalRankingModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     minimumValue = new Func<long?>(() =>

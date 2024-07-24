@@ -116,18 +116,21 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new RandomShowcase(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["maximumNumberOfChoice"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("maximumNumberOfChoice", out var maximumNumberOfChoice) ? new Func<int>(() =>
+                {
+                    return maximumNumberOfChoice switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<RandomDisplayItemModel[]>(() =>
+                })() : default,
+                properties.TryGetValue("displayItems", out var displayItems) ? new Func<RandomDisplayItemModel[]>(() =>
                 {
-                    return properties["displayItems"] switch {
+                    return displayItems switch {
                         Dictionary<string, object>[] v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ RandomDisplayItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RandomDisplayItemModel.FromProperties).ToArray(),
@@ -135,23 +138,23 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         { } v => new []{ v as RandomDisplayItemModel },
                         _ => null
                     };
-                })(),
-                new Func<long>(() =>
+                })() : null,
+                properties.TryGetValue("baseTimestamp", out var baseTimestamp) ? new Func<long>(() =>
                 {
-                    return properties["baseTimestamp"] switch {
+                    return baseTimestamp switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("resetIntervalHours", out var resetIntervalHours) ? new Func<int>(() =>
                 {
-                    return properties["resetIntervalHours"] switch {
+                    return resetIntervalHours switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RandomShowcaseOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     salesPeriodEventId = properties.TryGetValue("salesPeriodEventId", out var salesPeriodEventId) ? (string)salesPeriodEventId : null

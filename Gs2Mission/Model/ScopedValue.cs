@@ -83,22 +83,22 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new ScopedValue(
-                new Func<ScopedValueResetType>(() =>
+                properties.TryGetValue("resetType", out var resetType) ? new Func<ScopedValueResetType>(() =>
                 {
-                    return properties["resetType"] switch {
+                    return resetType switch {
                         ScopedValueResetType e => e,
                         string s => ScopedValueResetTypeExt.New(s),
                         _ => ScopedValueResetType.NotReset
                     };
-                })(),
-                new Func<long?>(() =>
+                })() : default,
+                properties.TryGetValue("value", out var value) ? new Func<long?>(() =>
                 {
-                    return properties["value"] switch {
+                    return value switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new ScopedValueOptions {
                     nextResetAt = new Func<long?>(() =>
                     {

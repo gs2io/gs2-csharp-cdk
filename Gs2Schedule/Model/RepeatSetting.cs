@@ -208,14 +208,14 @@ namespace Gs2Cdk.Gs2Schedule.Model
             Dictionary<string, object> properties
         ){
             var model = new RepeatSetting(
-                new Func<RepeatSettingRepeatType>(() =>
+                properties.TryGetValue("repeatType", out var repeatType) ? new Func<RepeatSettingRepeatType>(() =>
                 {
-                    return properties["repeatType"] switch {
+                    return repeatType switch {
                         RepeatSettingRepeatType e => e,
                         string s => RepeatSettingRepeatTypeExt.New(s),
                         _ => RepeatSettingRepeatType.Always
                     };
-                })(),
+                })() : default,
                 new RepeatSettingOptions {
                     beginDayOfMonth = new Func<int?>(() =>
                     {

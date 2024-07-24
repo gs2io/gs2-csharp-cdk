@@ -53,7 +53,10 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new BigItemModel(
-                (string)properties["name"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
                 new BigItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

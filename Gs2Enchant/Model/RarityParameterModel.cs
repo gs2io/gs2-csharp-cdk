@@ -93,18 +93,21 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new RarityParameterModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["maximumParameterCount"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("maximumParameterCount", out var maximumParameterCount) ? new Func<int>(() =>
+                {
+                    return maximumParameterCount switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<RarityParameterCountModel[]>(() =>
+                })() : default,
+                properties.TryGetValue("parameterCounts", out var parameterCounts) ? new Func<RarityParameterCountModel[]>(() =>
                 {
-                    return properties["parameterCounts"] switch {
+                    return parameterCounts switch {
                         Dictionary<string, object>[] v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ RarityParameterCountModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RarityParameterCountModel.FromProperties).ToArray(),
@@ -112,10 +115,10 @@ namespace Gs2Cdk.Gs2Enchant.Model
                         { } v => new []{ v as RarityParameterCountModel },
                         _ => null
                     };
-                })(),
-                new Func<RarityParameterValueModel[]>(() =>
+                })() : null,
+                properties.TryGetValue("parameters", out var parameters) ? new Func<RarityParameterValueModel[]>(() =>
                 {
-                    return properties["parameters"] switch {
+                    return parameters switch {
                         Dictionary<string, object>[] v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ RarityParameterValueModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(RarityParameterValueModel.FromProperties).ToArray(),
@@ -123,7 +126,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
                         { } v => new []{ v as RarityParameterValueModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new RarityParameterModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

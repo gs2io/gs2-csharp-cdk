@@ -94,26 +94,29 @@ namespace Gs2Cdk.Gs2Enchant.Model
             Dictionary<string, object> properties
         ){
             var model = new BalanceParameterModel(
-                (string)properties["name"],
-                new Func<long>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["totalValue"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("totalValue", out var totalValue) ? new Func<long>(() =>
+                {
+                    return totalValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<BalanceParameterModelInitialValueStrategy>(() =>
+                })() : default,
+                properties.TryGetValue("initialValueStrategy", out var initialValueStrategy) ? new Func<BalanceParameterModelInitialValueStrategy>(() =>
                 {
-                    return properties["initialValueStrategy"] switch {
+                    return initialValueStrategy switch {
                         BalanceParameterModelInitialValueStrategy e => e,
                         string s => BalanceParameterModelInitialValueStrategyExt.New(s),
                         _ => BalanceParameterModelInitialValueStrategy.Average
                     };
-                })(),
-                new Func<BalanceParameterValueModel[]>(() =>
+                })() : default,
+                properties.TryGetValue("parameters", out var parameters) ? new Func<BalanceParameterValueModel[]>(() =>
                 {
-                    return properties["parameters"] switch {
+                    return parameters switch {
                         Dictionary<string, object>[] v => v.Select(BalanceParameterValueModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ BalanceParameterValueModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(BalanceParameterValueModel.FromProperties).ToArray(),
@@ -121,7 +124,7 @@ namespace Gs2Cdk.Gs2Enchant.Model
                         { } v => new []{ v as BalanceParameterValueModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new BalanceParameterModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

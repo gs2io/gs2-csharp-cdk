@@ -109,26 +109,29 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new InventoryModel(
-                (string)properties["name"],
-                new Func<int>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["initialCapacity"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("initialCapacity", out var initialCapacity) ? new Func<int>(() =>
+                {
+                    return initialCapacity switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("maxCapacity", out var maxCapacity) ? new Func<int>(() =>
                 {
-                    return properties["maxCapacity"] switch {
+                    return maxCapacity switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<ItemModel[]>(() =>
+                })() : default,
+                properties.TryGetValue("itemModels", out var itemModels) ? new Func<ItemModel[]>(() =>
                 {
-                    return properties["itemModels"] switch {
+                    return itemModels switch {
                         Dictionary<string, object>[] v => v.Select(ItemModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ ItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(ItemModel.FromProperties).ToArray(),
@@ -136,7 +139,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
                         { } v => new []{ v as ItemModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new InventoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     protectReferencedItem = new Func<bool?>(() =>

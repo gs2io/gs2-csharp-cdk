@@ -115,20 +115,38 @@ namespace Gs2Cdk.Gs2Log.Model
             Dictionary<string, object> properties
         ){
             var model = new IssueStampSheetLog(
-                new Func<long>(() =>
+                properties.TryGetValue("timestamp", out var timestamp) ? new Func<long>(() =>
                 {
-                    return properties["timestamp"] switch {
+                    return timestamp switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                (string)properties["transactionId"],
-                (string)properties["service"],
-                (string)properties["method"],
-                (string)properties["userId"],
-                (string)properties["action"],
-                (string)properties["args"],
+                })() : default,
+                properties.TryGetValue("transactionId", out var transactionId) ? new Func<string>(() =>
+                {
+                    return (string) transactionId;
+                })() : default,
+                properties.TryGetValue("service", out var service) ? new Func<string>(() =>
+                {
+                    return (string) service;
+                })() : default,
+                properties.TryGetValue("method", out var method) ? new Func<string>(() =>
+                {
+                    return (string) method;
+                })() : default,
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
+                properties.TryGetValue("action", out var action) ? new Func<string>(() =>
+                {
+                    return (string) action;
+                })() : default,
+                properties.TryGetValue("args", out var args) ? new Func<string>(() =>
+                {
+                    return (string) args;
+                })() : default,
                 new IssueStampSheetLogOptions {
                     tasks = properties.TryGetValue("tasks", out var tasks) ? new Func<string[]>(() =>
                     {

@@ -60,10 +60,13 @@ namespace Gs2Cdk.Gs2Inventory.Model
             Dictionary<string, object> properties
         ){
             var model = new BigInventoryModel(
-                (string)properties["name"],
-                new Func<BigItemModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["bigItemModels"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("bigItemModels", out var bigItemModels) ? new Func<BigItemModel[]>(() =>
+                {
+                    return bigItemModels switch {
                         Dictionary<string, object>[] v => v.Select(BigItemModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ BigItemModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(BigItemModel.FromProperties).ToArray(),
@@ -71,7 +74,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
                         { } v => new []{ v as BigItemModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new BigInventoryModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

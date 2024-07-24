@@ -88,23 +88,26 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new RatingModel(
-                (string)properties["name"],
-                new Func<int?>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["initialValue"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("initialValue", out var initialValue) ? new Func<int?>(() =>
+                {
+                    return initialValue switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("volatility", out var volatility) ? new Func<int?>(() =>
                 {
-                    return properties["volatility"] switch {
+                    return volatility switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RatingModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

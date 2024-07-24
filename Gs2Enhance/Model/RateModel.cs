@@ -93,11 +93,26 @@ namespace Gs2Cdk.Gs2Enhance.Model
             Dictionary<string, object> properties
         ){
             var model = new RateModel(
-                (string)properties["name"],
-                (string)properties["targetInventoryModelId"],
-                (string)properties["acquireExperienceSuffix"],
-                (string)properties["materialInventoryModelId"],
-                (string)properties["experienceModelId"],
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
+                {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("targetInventoryModelId", out var targetInventoryModelId) ? new Func<string>(() =>
+                {
+                    return (string) targetInventoryModelId;
+                })() : default,
+                properties.TryGetValue("acquireExperienceSuffix", out var acquireExperienceSuffix) ? new Func<string>(() =>
+                {
+                    return (string) acquireExperienceSuffix;
+                })() : default,
+                properties.TryGetValue("materialInventoryModelId", out var materialInventoryModelId) ? new Func<string>(() =>
+                {
+                    return (string) materialInventoryModelId;
+                })() : default,
+                properties.TryGetValue("experienceModelId", out var experienceModelId) ? new Func<string>(() =>
+                {
+                    return (string) experienceModelId;
+                })() : default,
                 new RateModelOptions {
                     description = properties.TryGetValue("description", out var description) ? (string)description : null,
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,

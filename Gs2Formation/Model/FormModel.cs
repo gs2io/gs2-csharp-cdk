@@ -60,10 +60,13 @@ namespace Gs2Cdk.Gs2Formation.Model
             Dictionary<string, object> properties
         ){
             var model = new FormModel(
-                (string)properties["name"],
-                new Func<SlotModel[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["slots"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("slots", out var slots) ? new Func<SlotModel[]>(() =>
+                {
+                    return slots switch {
                         Dictionary<string, object>[] v => v.Select(SlotModel.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ SlotModel.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(SlotModel.FromProperties).ToArray(),
@@ -71,7 +74,7 @@ namespace Gs2Cdk.Gs2Formation.Model
                         { } v => new []{ v as SlotModel },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new FormModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

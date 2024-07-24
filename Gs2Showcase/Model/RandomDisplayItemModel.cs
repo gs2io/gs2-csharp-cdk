@@ -104,10 +104,13 @@ namespace Gs2Cdk.Gs2Showcase.Model
             Dictionary<string, object> properties
         ){
             var model = new RandomDisplayItemModel(
-                (string)properties["name"],
-                new Func<AcquireAction[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["acquireActions"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireAction[]>(() =>
+                {
+                    return acquireActions switch {
                         Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
                         Dictionary<string, object> v => new []{ AcquireAction.FromProperties(v) },
                         List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
@@ -115,23 +118,23 @@ namespace Gs2Cdk.Gs2Showcase.Model
                         { } v => new []{ v as AcquireAction },
                         _ => null
                     };
-                })(),
-                new Func<int>(() =>
+                })() : null,
+                properties.TryGetValue("stock", out var stock) ? new Func<int>(() =>
                 {
-                    return properties["stock"] switch {
+                    return stock switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int>(() =>
+                })() : default,
+                properties.TryGetValue("weight", out var weight) ? new Func<int>(() =>
                 {
-                    return properties["weight"] switch {
+                    return weight switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new RandomDisplayItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>

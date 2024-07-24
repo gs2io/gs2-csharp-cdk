@@ -60,9 +60,18 @@ namespace Gs2Cdk.Gs2News.Model
             Dictionary<string, object> properties
         ){
             var model = new Content(
-                (string)properties["section"],
-                (string)properties["content"],
-                (string)properties["frontMatter"],
+                properties.TryGetValue("section", out var section) ? new Func<string>(() =>
+                {
+                    return (string) section;
+                })() : default,
+                properties.TryGetValue("content", out var content) ? new Func<string>(() =>
+                {
+                    return (string) content;
+                })() : default,
+                properties.TryGetValue("frontMatter", out var frontMatter) ? new Func<string>(() =>
+                {
+                    return (string) frontMatter;
+                })() : default,
                 new ContentOptions {
                 }
             );

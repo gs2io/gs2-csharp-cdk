@@ -54,8 +54,14 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new SignedBallot(
-                (string)properties["body"],
-                (string)properties["signature"],
+                properties.TryGetValue("body", out var body) ? new Func<string>(() =>
+                {
+                    return (string) body;
+                })() : default,
+                properties.TryGetValue("signature", out var signature) ? new Func<string>(() =>
+                {
+                    return (string) signature;
+                })() : default,
                 new SignedBallotOptions {
                 }
             );

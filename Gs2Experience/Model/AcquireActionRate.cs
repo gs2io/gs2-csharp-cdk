@@ -94,15 +94,18 @@ namespace Gs2Cdk.Gs2Experience.Model
             Dictionary<string, object> properties
         ){
             var model = new AcquireActionRate(
-                (string)properties["name"],
-                new Func<AcquireActionRateMode>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["mode"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("mode", out var mode) ? new Func<AcquireActionRateMode>(() =>
+                {
+                    return mode switch {
                         AcquireActionRateMode e => e,
                         string s => AcquireActionRateModeExt.New(s),
                         _ => AcquireActionRateMode.Double
                     };
-                })(),
+                })() : default,
                 new AcquireActionRateOptions {
                     rates = properties.TryGetValue("rates", out var rates) ? new Func<double[]>(() =>
                     {
