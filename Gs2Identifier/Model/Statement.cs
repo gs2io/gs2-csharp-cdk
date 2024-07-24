@@ -6,22 +6,27 @@ namespace Gs2Cdk.Gs2Identifier.Model
     {
         private readonly string _effect;
         private readonly string[] _actions;
+        private readonly string[] _resources;
 
         public Statement(
             string effect,
-            string[] actions
+            string[] actions,
+            string[] resources = null
         )
         {
             this._effect = effect;
             this._actions = actions;
+            this._resources = resources == null ? new string[]{"*"} : resources;
         }
 
         public static Statement Allow(
-            string[] actions
+            string[] actions,
+            string[] resources = null
         ) {
             return new Statement(
                 "Allow",
-                actions
+                actions,
+                resources
             );
         }
 
@@ -33,11 +38,13 @@ namespace Gs2Cdk.Gs2Identifier.Model
         }
 
         public static Statement Deny(
-            string[] actions
+            string[] actions,
+            string[] resources = null
         ) {
             return new Statement(
                 "Deny",
-                actions
+                actions,
+                resources
             );
         }
 
@@ -52,7 +59,7 @@ namespace Gs2Cdk.Gs2Identifier.Model
             return new Dictionary<string, object>() {
                 {"Effect", _effect},
                 {"Actions", _actions},
-                {"Resources", new string[]{"*"}},
+                {"Resources", _resources},
             };
         }
     }
