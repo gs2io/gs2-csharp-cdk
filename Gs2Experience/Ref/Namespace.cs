@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Experience.Model;
 using Gs2Cdk.Gs2Experience.StampSheet;
+using Gs2Cdk.Gs2Experience.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Experience.Ref
 {
@@ -146,6 +147,44 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 experienceName,
                 propertyId,
                 rankCapValue,
+                userId
+            ));
+        }
+
+        public VerifyRankByUserId VerifyRank(
+            string experienceName,
+            VerifyRankByUserIdVerifyType verifyType,
+            string propertyId,
+            long? rankValue = null,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRankByUserId(
+                this.namespaceName,
+                experienceName,
+                verifyType,
+                propertyId,
+                rankValue,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyRankCapByUserId VerifyRankCap(
+            string experienceName,
+            VerifyRankCapByUserIdVerifyType verifyType,
+            string propertyId,
+            long rankCapValue,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRankCapByUserId(
+                this.namespaceName,
+                experienceName,
+                verifyType,
+                propertyId,
+                rankCapValue,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }
