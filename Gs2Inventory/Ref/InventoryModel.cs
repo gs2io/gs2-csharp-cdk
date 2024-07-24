@@ -138,22 +138,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
-        public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
-            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
-            int currentInventoryMaxCapacity,
-            bool? multiplyValueSpecifyingQuantity = null,
-            string userId = "#{userId}"
-        ){
-            return (new VerifyInventoryCurrentMaxCapacityByUserId(
-                this.namespaceName,
-                this.inventoryName,
-                verifyType,
-                currentInventoryMaxCapacity,
-                multiplyValueSpecifyingQuantity,
-                userId
-            ));
-        }
-
         public ConsumeItemSetByUserId ConsumeItemSet(
             string itemName,
             long consumeCount,
@@ -166,6 +150,22 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 consumeCount,
                 itemSetName,
+                userId
+            ));
+        }
+
+        public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
+            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
+            int currentInventoryMaxCapacity,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyInventoryCurrentMaxCapacityByUserId(
+                this.namespaceName,
+                this.inventoryName,
+                verifyType,
+                currentInventoryMaxCapacity,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

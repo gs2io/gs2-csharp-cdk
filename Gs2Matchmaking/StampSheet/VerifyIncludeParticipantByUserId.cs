@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Matchmaking.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Matchmaking.StampSheet
 {
-    public class VerifyIncludeParticipantByUserId : ConsumeAction {
+    public class VerifyIncludeParticipantByUserId : VerifyAction {
         private string namespaceName;
         private string seasonName;
         private long season;

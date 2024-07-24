@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Dictionary.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Dictionary.StampSheet
 {
-    public class VerifyEntryByUserId : ConsumeAction {
+    public class VerifyEntryByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string entryModelName;

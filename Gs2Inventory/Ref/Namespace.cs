@@ -214,23 +214,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
-        public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
-            string inventoryName,
-            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
-            int currentInventoryMaxCapacity,
-            bool? multiplyValueSpecifyingQuantity = null,
-            string userId = "#{userId}"
-        ){
-            return (new VerifyInventoryCurrentMaxCapacityByUserId(
-                this.namespaceName,
-                inventoryName,
-                verifyType,
-                currentInventoryMaxCapacity,
-                multiplyValueSpecifyingQuantity,
-                userId
-            ));
-        }
-
         public ConsumeItemSetByUserId ConsumeItemSet(
             string inventoryName,
             string itemName,
@@ -244,6 +227,51 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 itemName,
                 consumeCount,
                 itemSetName,
+                userId
+            ));
+        }
+
+        public ConsumeSimpleItemsByUserId ConsumeSimpleItems(
+            string inventoryName,
+            ConsumeCount[] consumeCounts,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeSimpleItemsByUserId(
+                this.namespaceName,
+                inventoryName,
+                consumeCounts,
+                userId
+            ));
+        }
+
+        public ConsumeBigItemByUserId ConsumeBigItem(
+            string inventoryName,
+            string itemName,
+            string consumeCount,
+            string userId = "#{userId}"
+        ){
+            return (new ConsumeBigItemByUserId(
+                this.namespaceName,
+                inventoryName,
+                itemName,
+                consumeCount,
+                userId
+            ));
+        }
+
+        public VerifyInventoryCurrentMaxCapacityByUserId VerifyInventoryCurrentMaxCapacity(
+            string inventoryName,
+            VerifyInventoryCurrentMaxCapacityByUserIdVerifyType verifyType,
+            int currentInventoryMaxCapacity,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyInventoryCurrentMaxCapacityByUserId(
+                this.namespaceName,
+                inventoryName,
+                verifyType,
+                currentInventoryMaxCapacity,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }
@@ -288,19 +316,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
             ));
         }
 
-        public ConsumeSimpleItemsByUserId ConsumeSimpleItems(
-            string inventoryName,
-            ConsumeCount[] consumeCounts,
-            string userId = "#{userId}"
-        ){
-            return (new ConsumeSimpleItemsByUserId(
-                this.namespaceName,
-                inventoryName,
-                consumeCounts,
-                userId
-            ));
-        }
-
         public VerifySimpleItemByUserId VerifySimpleItem(
             string inventoryName,
             string itemName,
@@ -316,21 +331,6 @@ namespace Gs2Cdk.Gs2Inventory.Ref
                 verifyType,
                 count,
                 multiplyValueSpecifyingQuantity,
-                userId
-            ));
-        }
-
-        public ConsumeBigItemByUserId ConsumeBigItem(
-            string inventoryName,
-            string itemName,
-            string consumeCount,
-            string userId = "#{userId}"
-        ){
-            return (new ConsumeBigItemByUserId(
-                this.namespaceName,
-                inventoryName,
-                itemName,
-                consumeCount,
                 userId
             ));
         }

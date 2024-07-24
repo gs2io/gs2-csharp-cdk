@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Enchant.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Enchant.StampSheet
 {
-    public class VerifyRarityParameterStatusByUserId : ConsumeAction {
+    public class VerifyRarityParameterStatusByUserId : VerifyAction {
         private string namespaceName;
         private string parameterName;
         private string userId;

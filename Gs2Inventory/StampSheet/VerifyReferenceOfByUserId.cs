@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Inventory.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Inventory.StampSheet
 {
-    public class VerifyReferenceOfByUserId : ConsumeAction {
+    public class VerifyReferenceOfByUserId : VerifyAction {
         private string namespaceName;
         private string inventoryName;
         private string userId;

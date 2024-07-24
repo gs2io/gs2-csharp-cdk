@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Mission.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Mission.StampSheet
 {
-    public class VerifyCompleteByUserId : ConsumeAction {
+    public class VerifyCompleteByUserId : VerifyAction {
         private string namespaceName;
         private string missionGroupName;
         private string userId;

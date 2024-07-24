@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Limit.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Limit.StampSheet
 {
-    public class VerifyCounterByUserId : ConsumeAction {
+    public class VerifyCounterByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string limitName;

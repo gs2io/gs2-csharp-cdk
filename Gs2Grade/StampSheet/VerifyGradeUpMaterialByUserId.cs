@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Grade.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Grade.StampSheet
 {
-    public class VerifyGradeUpMaterialByUserId : ConsumeAction {
+    public class VerifyGradeUpMaterialByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string gradeName;

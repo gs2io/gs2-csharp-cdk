@@ -103,6 +103,19 @@ namespace Gs2Cdk.Gs2Mission.Ref
             ));
         }
 
+        public DecreaseCounterByUserId DecreaseCounter(
+            string counterName,
+            long value,
+            string userId = "#{userId}"
+        ){
+            return (new DecreaseCounterByUserId(
+                this.namespaceName,
+                counterName,
+                value,
+                userId
+            ));
+        }
+
         public VerifyCompleteByUserId VerifyComplete(
             string missionGroupName,
             VerifyCompleteByUserIdVerifyType verifyType,
@@ -116,19 +129,6 @@ namespace Gs2Cdk.Gs2Mission.Ref
                 verifyType,
                 missionTaskName,
                 multiplyValueSpecifyingQuantity,
-                userId
-            ));
-        }
-
-        public DecreaseCounterByUserId DecreaseCounter(
-            string counterName,
-            long value,
-            string userId = "#{userId}"
-        ){
-            return (new DecreaseCounterByUserId(
-                this.namespaceName,
-                counterName,
-                value,
                 userId
             ));
         }

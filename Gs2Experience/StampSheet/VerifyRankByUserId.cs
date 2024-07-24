@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Experience.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Experience.StampSheet
 {
-    public class VerifyRankByUserId : ConsumeAction {
+    public class VerifyRankByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string experienceName;

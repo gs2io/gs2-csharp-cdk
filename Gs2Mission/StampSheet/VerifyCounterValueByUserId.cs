@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Mission.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Mission.StampSheet
 {
-    public class VerifyCounterValueByUserId : ConsumeAction {
+    public class VerifyCounterValueByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string counterName;

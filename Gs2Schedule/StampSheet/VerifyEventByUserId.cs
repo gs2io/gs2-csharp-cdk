@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Schedule.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Schedule.StampSheet
 {
-    public class VerifyEventByUserId : ConsumeAction {
+    public class VerifyEventByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private string eventName;

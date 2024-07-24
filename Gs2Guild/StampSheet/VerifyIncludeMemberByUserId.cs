@@ -23,7 +23,7 @@ using Gs2Cdk.Gs2Guild.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Guild.StampSheet
 {
-    public class VerifyIncludeMemberByUserId : ConsumeAction {
+    public class VerifyIncludeMemberByUserId : VerifyAction {
         private string namespaceName;
         private string guildModelName;
         private string userId;
