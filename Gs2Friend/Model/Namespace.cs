@@ -39,7 +39,10 @@ namespace Gs2Cdk.Gs2Friend.Model
         private ScriptSetting updateProfileScript;
         private NotificationSetting followNotification;
         private NotificationSetting receiveRequestNotification;
+        private NotificationSetting cancelRequestNotification;
         private NotificationSetting acceptRequestNotification;
+        private NotificationSetting rejectRequestNotification;
+        private NotificationSetting deleteFriendNotification;
         private LogSetting logSetting;
 
         public Namespace(
@@ -63,7 +66,10 @@ namespace Gs2Cdk.Gs2Friend.Model
             this.updateProfileScript = options?.updateProfileScript;
             this.followNotification = options?.followNotification;
             this.receiveRequestNotification = options?.receiveRequestNotification;
+            this.cancelRequestNotification = options?.cancelRequestNotification;
             this.acceptRequestNotification = options?.acceptRequestNotification;
+            this.rejectRequestNotification = options?.rejectRequestNotification;
+            this.deleteFriendNotification = options?.deleteFriendNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -131,8 +137,20 @@ namespace Gs2Cdk.Gs2Friend.Model
                 properties["ReceiveRequestNotification"] = this.receiveRequestNotification?.Properties(
                 );
             }
+            if (this.cancelRequestNotification != null) {
+                properties["CancelRequestNotification"] = this.cancelRequestNotification?.Properties(
+                );
+            }
             if (this.acceptRequestNotification != null) {
                 properties["AcceptRequestNotification"] = this.acceptRequestNotification?.Properties(
+                );
+            }
+            if (this.rejectRequestNotification != null) {
+                properties["RejectRequestNotification"] = this.rejectRequestNotification?.Properties(
+                );
+            }
+            if (this.deleteFriendNotification != null) {
+                properties["DeleteFriendNotification"] = this.deleteFriendNotification?.Properties(
                 );
             }
             if (this.logSetting != null) {

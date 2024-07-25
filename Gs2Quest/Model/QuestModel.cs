@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Quest.Model
         private string metadata;
         private string challengePeriodEventId;
         private AcquireAction[] firstCompleteAcquireActions;
+        private VerifyAction[] verifyActions;
         private ConsumeAction[] consumeActions;
         private AcquireAction[] failedAcquireActions;
         private string[] premiseQuestNames;
@@ -43,6 +44,7 @@ namespace Gs2Cdk.Gs2Quest.Model
             this.metadata = options?.metadata;
             this.challengePeriodEventId = options?.challengePeriodEventId;
             this.firstCompleteAcquireActions = options?.firstCompleteAcquireActions;
+            this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
             this.failedAcquireActions = options?.failedAcquireActions;
             this.premiseQuestNames = options?.premiseQuestNames;
@@ -67,6 +69,10 @@ namespace Gs2Cdk.Gs2Quest.Model
             }
             if (this.firstCompleteAcquireActions != null) {
                 properties["firstCompleteAcquireActions"] = this.firstCompleteAcquireActions.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.verifyActions != null) {
+                properties["verifyActions"] = this.verifyActions.Select(v => v?.Properties(
                         )).ToList();
             }
             if (this.consumeActions != null) {
@@ -113,6 +119,16 @@ namespace Gs2Cdk.Gs2Quest.Model
                             List<AcquireAction> v => v.ToArray(),
                             Dictionary<string, object>[] v => v.Select(AcquireAction.FromProperties).ToArray(),
                             List<Dictionary<string, object>> v => v.Select(AcquireAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    verifyActions = properties.TryGetValue("verifyActions", out var verifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return verifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null,

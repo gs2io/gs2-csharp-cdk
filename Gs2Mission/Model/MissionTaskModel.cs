@@ -31,9 +31,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         private MissionTaskModelVerifyCompleteType? verifyCompleteType;
         private string counterName;
         private long targetValue;
+        private string targetValueString;
         private string metadata;
         private TargetCounterModel targetCounter;
-        private ConsumeAction[] verifyCompleteConsumeActions;
+        private VerifyAction[] verifyCompleteConsumeActions;
         private AcquireAction[] completeAcquireActions;
         private string challengePeriodEventId;
         private string premiseMissionTaskName;
@@ -83,15 +84,15 @@ namespace Gs2Cdk.Gs2Mission.Model
             ));
         }
 
-        public static MissionTaskModel VerifyCompleteTypeIsConsumeActions(
+        public static MissionTaskModel VerifyCompleteTypeIsVerifyActions(
             string name,
             string counterName,
             long targetValue,
-            MissionTaskModelVerifyCompleteTypeIsConsumeActionsOptions options = null
+            MissionTaskModelVerifyCompleteTypeIsVerifyActionsOptions options = null
         ){
             return (new MissionTaskModel(
                 name,
-                MissionTaskModelVerifyCompleteType.ConsumeActions,
+                MissionTaskModelVerifyCompleteType.VerifyActions,
                 counterName,
                 targetValue,
                 new MissionTaskModelOptions {
@@ -103,6 +104,27 @@ namespace Gs2Cdk.Gs2Mission.Model
                     targetResetType = options?.targetResetType ?? MissionTaskModelTargetResetType.NotReset,
                 }
             ));
+        }
+
+
+        public MissionTaskModel(
+            string name,
+            MissionTaskModelVerifyCompleteType verifyCompleteType,
+            string counterName,
+            string targetValue,
+            MissionTaskModelOptions options = null
+        ){
+            this.name = name;
+            this.verifyCompleteType = verifyCompleteType;
+            this.counterName = counterName;
+            this.targetValueString = targetValue;
+            this.metadata = options?.metadata;
+            this.targetCounter = options?.targetCounter;
+            this.verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions;
+            this.completeAcquireActions = options?.completeAcquireActions;
+            this.challengePeriodEventId = options?.challengePeriodEventId;
+            this.premiseMissionTaskName = options?.premiseMissionTaskName;
+            this.targetResetType = options?.targetResetType;
         }
 
         public Dictionary<string, object> Properties(
@@ -144,8 +166,12 @@ namespace Gs2Cdk.Gs2Mission.Model
                 properties["targetResetType"] = this.targetResetType.Value.Str(
                 );
             }
-            if (this.targetValue != null) {
-                properties["targetValue"] = this.targetValue;
+            if (this.targetValueString != null) {
+                properties["targetValue"] = this.targetValueString;
+            } else {
+                if (this.targetValue != null) {
+                    properties["targetValue"] = this.targetValue;
+                }
             }
 
             return properties;
@@ -155,24 +181,30 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new MissionTaskModel(
-                (string)properties["name"],
-                new Func<MissionTaskModelVerifyCompleteType>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["verifyCompleteType"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("verifyCompleteType", out var verifyCompleteType) ? new Func<MissionTaskModelVerifyCompleteType>(() =>
+                {
+                    return verifyCompleteType switch {
                         MissionTaskModelVerifyCompleteType e => e,
                         string s => MissionTaskModelVerifyCompleteTypeExt.New(s),
                         _ => MissionTaskModelVerifyCompleteType.Counter
                     };
-                })(),
-                (string)properties["counterName"],
-                new Func<long>(() =>
+                })() : default,
+                properties.TryGetValue("counterName", out var counterName) ? new Func<string>(() =>
                 {
-                    return properties["targetValue"] switch {
+                    return (string) counterName;
+                })() : default,
+                properties.TryGetValue("targetValue", out var targetValue) ? new Func<long>(() =>
+                {
+                    return targetValue switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new MissionTaskModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     targetCounter = properties.TryGetValue("targetCounter", out var targetCounter) ? new Func<TargetCounterModel>(() =>
@@ -183,13 +215,13 @@ namespace Gs2Cdk.Gs2Mission.Model
                             _ => null
                         };
                     })() : null,
-                    verifyCompleteConsumeActions = properties.TryGetValue("verifyCompleteConsumeActions", out var verifyCompleteConsumeActions) ? new Func<ConsumeAction[]>(() =>
+                    verifyCompleteConsumeActions = properties.TryGetValue("verifyCompleteConsumeActions", out var verifyCompleteConsumeActions) ? new Func<VerifyAction[]>(() =>
                     {
                         return verifyCompleteConsumeActions switch {
-                            ConsumeAction[] v => v,
-                            List<ConsumeAction> v => v.ToArray(),
-                            Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
-                            List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null,

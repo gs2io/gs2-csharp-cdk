@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
         private string name;
         private RateModelTimingType? timingType;
         private string metadata;
+        private VerifyAction[] verifyActions;
         private ConsumeAction[] consumeActions;
         private int? lockTime;
         private string lockTimeString;
@@ -41,6 +42,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             this.name = name;
             this.timingType = timingType;
             this.metadata = options?.metadata;
+            this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
             this.lockTime = options?.lockTime;
             this.acquireActions = options?.acquireActions;
@@ -55,6 +57,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 RateModelTimingType.Immediate,
                 new RateModelOptions {
                     metadata = options?.metadata,
+                    verifyActions = options?.verifyActions,
                     consumeActions = options?.consumeActions,
                     acquireActions = options?.acquireActions,
                 }
@@ -72,6 +75,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 new RateModelOptions {
                     lockTime = lockTime,
                     metadata = options?.metadata,
+                    verifyActions = options?.verifyActions,
                     consumeActions = options?.consumeActions,
                     acquireActions = options?.acquireActions,
                 }
@@ -87,6 +91,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
+            }
+            if (this.verifyActions != null) {
+                properties["verifyActions"] = this.verifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
             if (this.consumeActions != null) {
                 properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
@@ -129,6 +137,16 @@ namespace Gs2Cdk.Gs2Exchange.Model
                 })() : default,
                 new RateModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    verifyActions = properties.TryGetValue("verifyActions", out var verifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return verifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
                     {
                         return consumeActions switch {

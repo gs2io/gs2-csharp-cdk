@@ -25,7 +25,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
     public class MissionTaskModelOptions {
         public string metadata;
         public TargetCounterModel targetCounter;
-        public ConsumeAction[] verifyCompleteConsumeActions;
+        public VerifyAction[] verifyCompleteConsumeActions;
         public AcquireAction[] completeAcquireActions;
         public string challengePeriodEventId;
         public string premiseMissionTaskName;

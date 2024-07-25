@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
 {
     public class RateModelTimingTypeIsAwaitOptions {
         public string metadata;
+        public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
         public AcquireAction[] acquireActions;
     }

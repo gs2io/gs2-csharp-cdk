@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
 {
     public class RateModelOptions {
         public string metadata;
+        public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
         public int? lockTime;
         public string lockTimeString;

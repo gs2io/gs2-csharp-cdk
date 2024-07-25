@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Script.Model
 {
     public class Transaction {
         private string transactionId;
+        private VerifyAction[] verifyActions;
         private ConsumeAction[] consumeActions;
         private AcquireAction[] acquireActions;
 
@@ -32,6 +33,7 @@ namespace Gs2Cdk.Gs2Script.Model
             TransactionOptions options = null
         ){
             this.transactionId = options?.transactionId;
+            this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
             this.acquireActions = options?.acquireActions;
         }
@@ -42,6 +44,10 @@ namespace Gs2Cdk.Gs2Script.Model
 
             if (this.transactionId != null) {
                 properties["transactionId"] = this.transactionId;
+            }
+            if (this.verifyActions != null) {
+                properties["verifyActions"] = this.verifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
             if (this.consumeActions != null) {
                 properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
@@ -61,6 +67,16 @@ namespace Gs2Cdk.Gs2Script.Model
             var model = new Transaction(
                 new TransactionOptions {
                     transactionId = properties.TryGetValue("transactionId", out var transactionId) ? (string)transactionId : null,
+                    verifyActions = properties.TryGetValue("verifyActions", out var verifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return verifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
                     {
                         return consumeActions switch {

@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
         private string resetHourString;
         private BonusModelRepeat? repeat;
         private Reward[] rewards;
+        private VerifyAction[] missedReceiveReliefVerifyActions;
         private ConsumeAction[] missedReceiveReliefConsumeActions;
 
         public BonusModel(
@@ -50,6 +51,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             this.resetHour = options?.resetHour;
             this.repeat = options?.repeat;
             this.rewards = options?.rewards;
+            this.missedReceiveReliefVerifyActions = options?.missedReceiveReliefVerifyActions;
             this.missedReceiveReliefConsumeActions = options?.missedReceiveReliefConsumeActions;
         }
 
@@ -66,6 +68,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                     metadata = options?.metadata,
                     periodEventId = options?.periodEventId,
                     rewards = options?.rewards,
+                    missedReceiveReliefVerifyActions = options?.missedReceiveReliefVerifyActions,
                     missedReceiveReliefConsumeActions = options?.missedReceiveReliefConsumeActions,
                 }
             ));
@@ -86,6 +89,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                     metadata = options?.metadata,
                     periodEventId = options?.periodEventId,
                     rewards = options?.rewards,
+                    missedReceiveReliefVerifyActions = options?.missedReceiveReliefVerifyActions,
                     missedReceiveReliefConsumeActions = options?.missedReceiveReliefConsumeActions,
                 }
             ));
@@ -104,6 +108,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                     metadata = options?.metadata,
                     periodEventId = options?.periodEventId,
                     rewards = options?.rewards,
+                    missedReceiveReliefVerifyActions = options?.missedReceiveReliefVerifyActions,
                     missedReceiveReliefConsumeActions = options?.missedReceiveReliefConsumeActions,
                 }
             ));
@@ -122,6 +127,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                     metadata = options?.metadata,
                     periodEventId = options?.periodEventId,
                     rewards = options?.rewards,
+                    missedReceiveReliefVerifyActions = options?.missedReceiveReliefVerifyActions,
                     missedReceiveReliefConsumeActions = options?.missedReceiveReliefConsumeActions,
                 }
             ));
@@ -162,6 +168,10 @@ namespace Gs2Cdk.Gs2LoginReward.Model
             if (this.missedReceiveRelief != null) {
                 properties["missedReceiveRelief"] = this.missedReceiveRelief.Value.Str(
                 );
+            }
+            if (this.missedReceiveReliefVerifyActions != null) {
+                properties["missedReceiveReliefVerifyActions"] = this.missedReceiveReliefVerifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
             if (this.missedReceiveReliefConsumeActions != null) {
                 properties["missedReceiveReliefConsumeActions"] = this.missedReceiveReliefConsumeActions.Select(v => v?.Properties(
@@ -214,6 +224,16 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                             List<Reward> v => v.ToArray(),
                             Dictionary<string, object>[] v => v.Select(Reward.FromProperties).ToArray(),
                             List<Dictionary<string, object>> v => v.Select(Reward.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    missedReceiveReliefVerifyActions = properties.TryGetValue("missedReceiveReliefVerifyActions", out var missedReceiveReliefVerifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return missedReceiveReliefVerifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null,

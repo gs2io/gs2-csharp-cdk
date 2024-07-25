@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Options
         public string metadata;
         public string periodEventId;
         public Reward[] rewards;
+        public VerifyAction[] missedReceiveReliefVerifyActions;
         public ConsumeAction[] missedReceiveReliefConsumeActions;
     }
 }

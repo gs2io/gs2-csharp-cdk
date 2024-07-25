@@ -23,6 +23,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model.Options
 {
     public class NodeModelOptions {
         public string metadata;
+        public VerifyAction[] releaseVerifyActions;
         public AcquireAction[] returnAcquireActions;
         public string[] premiseNodeNames;
     }

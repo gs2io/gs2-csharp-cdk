@@ -23,6 +23,7 @@ namespace Gs2Cdk.Gs2Script.Model.Options
 {
     public class TransactionOptions {
         public string transactionId;
+        public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
         public AcquireAction[] acquireActions;
     }

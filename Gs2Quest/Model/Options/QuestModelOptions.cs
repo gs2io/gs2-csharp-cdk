@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Quest.Model.Options
         public string metadata;
         public string challengePeriodEventId;
         public AcquireAction[] firstCompleteAcquireActions;
+        public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
         public AcquireAction[] failedAcquireActions;
         public string[] premiseQuestNames;

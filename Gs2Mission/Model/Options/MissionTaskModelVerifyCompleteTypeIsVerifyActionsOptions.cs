@@ -17,15 +17,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Exchange.Model;
-using Gs2Cdk.Gs2Exchange.Model.Enums;
+using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
 
-namespace Gs2Cdk.Gs2Exchange.Model.Options
+namespace Gs2Cdk.Gs2Mission.Model.Options
 {
-    public class RateModelTimingTypeIsImmediateOptions {
+    public class MissionTaskModelVerifyCompleteTypeIsVerifyActionsOptions {
         public string metadata;
-        public VerifyAction[] verifyActions;
-        public ConsumeAction[] consumeActions;
-        public AcquireAction[] acquireActions;
+        public VerifyAction[] verifyCompleteConsumeActions;
+        public AcquireAction[] completeAcquireActions;
+        public string challengePeriodEventId;
+        public string premiseMissionTaskName;
+        public MissionTaskModelTargetResetType targetResetType;
     }
 }

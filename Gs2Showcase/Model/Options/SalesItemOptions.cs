@@ -23,6 +23,7 @@ namespace Gs2Cdk.Gs2Showcase.Model.Options
 {
     public class SalesItemOptions {
         public string metadata;
+        public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
     }
 }

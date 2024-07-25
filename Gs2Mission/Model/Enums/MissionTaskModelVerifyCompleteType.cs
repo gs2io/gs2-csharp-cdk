@@ -20,7 +20,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
     
     public enum MissionTaskModelVerifyCompleteType {
         Counter,
-        ConsumeActions
+        VerifyActions
     }
 
     public static class MissionTaskModelVerifyCompleteTypeExt
@@ -29,8 +29,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             switch (self) {
                 case MissionTaskModelVerifyCompleteType.Counter:
                     return "counter";
-                case MissionTaskModelVerifyCompleteType.ConsumeActions:
-                    return "consumeActions";
+                case MissionTaskModelVerifyCompleteType.VerifyActions:
+                    return "verifyActions";
             }
             return "unknown";
         }
@@ -39,8 +39,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             switch (value) {
                 case "counter":
                     return MissionTaskModelVerifyCompleteType.Counter;
-                case "consumeActions":
-                    return MissionTaskModelVerifyCompleteType.ConsumeActions;
+                case "verifyActions":
+                    return MissionTaskModelVerifyCompleteType.VerifyActions;
             }
             return MissionTaskModelVerifyCompleteType.Counter;
         }

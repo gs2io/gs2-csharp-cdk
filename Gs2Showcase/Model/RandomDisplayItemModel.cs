@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
         private int weight;
         private string weightString;
         private string metadata;
+        private VerifyAction[] verifyActions;
         private ConsumeAction[] consumeActions;
 
         public RandomDisplayItemModel(
@@ -45,6 +46,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.stock = stock;
             this.weight = weight;
             this.metadata = options?.metadata;
+            this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
         }
 
@@ -61,6 +63,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.stockString = stock;
             this.weightString = weight;
             this.metadata = options?.metadata;
+            this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
         }
 
@@ -73,6 +76,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
+            }
+            if (this.verifyActions != null) {
+                properties["verifyActions"] = this.verifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
             if (this.consumeActions != null) {
                 properties["consumeActions"] = this.consumeActions.Select(v => v?.Properties(
@@ -137,6 +144,16 @@ namespace Gs2Cdk.Gs2Showcase.Model
                 })() : default,
                 new RandomDisplayItemModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    verifyActions = properties.TryGetValue("verifyActions", out var verifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return verifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
                     consumeActions = properties.TryGetValue("consumeActions", out var consumeActions) ? new Func<ConsumeAction[]>(() =>
                     {
                         return consumeActions switch {

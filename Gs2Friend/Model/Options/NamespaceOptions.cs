@@ -34,7 +34,10 @@ namespace Gs2Cdk.Gs2Friend.Model.Options
         public ScriptSetting updateProfileScript;
         public NotificationSetting followNotification;
         public NotificationSetting receiveRequestNotification;
+        public NotificationSetting cancelRequestNotification;
         public NotificationSetting acceptRequestNotification;
+        public NotificationSetting rejectRequestNotification;
+        public NotificationSetting deleteFriendNotification;
         public LogSetting logSetting;
     }
 }

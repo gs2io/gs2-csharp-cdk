@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
         private float? restrainReturnRate;
         private string restrainReturnRateString;
         private string metadata;
+        private VerifyAction[] releaseVerifyActions;
         private AcquireAction[] returnAcquireActions;
         private string[] premiseNodeNames;
 
@@ -42,6 +43,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             this.releaseConsumeActions = releaseConsumeActions;
             this.restrainReturnRate = restrainReturnRate;
             this.metadata = options?.metadata;
+            this.releaseVerifyActions = options?.releaseVerifyActions;
             this.returnAcquireActions = options?.returnAcquireActions;
             this.premiseNodeNames = options?.premiseNodeNames;
         }
@@ -57,6 +59,7 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             this.releaseConsumeActions = releaseConsumeActions;
             this.restrainReturnRateString = restrainReturnRate;
             this.metadata = options?.metadata;
+            this.releaseVerifyActions = options?.releaseVerifyActions;
             this.returnAcquireActions = options?.returnAcquireActions;
             this.premiseNodeNames = options?.premiseNodeNames;
         }
@@ -70,6 +73,10 @@ namespace Gs2Cdk.Gs2SkillTree.Model
             }
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
+            }
+            if (this.releaseVerifyActions != null) {
+                properties["releaseVerifyActions"] = this.releaseVerifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
             if (this.releaseConsumeActions != null) {
                 properties["releaseConsumeActions"] = this.releaseConsumeActions.Select(v => v?.Properties(
@@ -118,6 +125,16 @@ namespace Gs2Cdk.Gs2SkillTree.Model
                 })() : default,
                 new NodeModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    releaseVerifyActions = properties.TryGetValue("releaseVerifyActions", out var releaseVerifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return releaseVerifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
                     returnAcquireActions = properties.TryGetValue("returnAcquireActions", out var returnAcquireActions) ? new Func<AcquireAction[]>(() =>
                     {
                         return returnAcquireActions switch {
