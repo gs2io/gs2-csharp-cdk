@@ -29,7 +29,6 @@ namespace Gs2Cdk.Gs2Enhance.Model
         private Stack? stack;
         private string name;
         private string description;
-        private bool? enableDirectEnhance;
         private TransactionSetting transactionSetting;
         private ScriptSetting enhanceScript;
         private LogSetting logSetting;
@@ -45,7 +44,6 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
-            this.enableDirectEnhance = options?.enableDirectEnhance;
             this.transactionSetting = options?.transactionSetting;
             this.enhanceScript = options?.enhanceScript;
             this.logSetting = options?.logSetting;
@@ -74,9 +72,6 @@ namespace Gs2Cdk.Gs2Enhance.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
-            }
-            if (this.enableDirectEnhance != null) {
-                properties["EnableDirectEnhance"] = this.enableDirectEnhance;
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(

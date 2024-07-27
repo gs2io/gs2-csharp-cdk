@@ -24,10 +24,10 @@ namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
     public class NamespaceOptions {
         public string description;
-        public bool? enableDirectEnhance;
         public TransactionSetting transactionSetting;
         public ScriptSetting enhanceScript;
         public LogSetting logSetting;
+        public bool? enableDirectEnhance;
         public string queueNamespaceId;
         public string keyId;
     }
