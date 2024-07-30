@@ -36,7 +36,7 @@ namespace Gs2Cdk.Gs2Identifier.Model
             Stack stack,
             string userName,
             string securityPolicyId
-        ): base("Identifier_AttachSecurityPolicy_" + userName)
+        ): base("Identifier_AttachSecurityPolicy_" + userName + (stack.Exists("Identifier_AttachSecurityPolicy_" + userName) ? "_" + (securityPolicyId[0] == '!' ? securityPolicyId.Split("_")[2] : securityPolicyId.Substring(securityPolicyId.LastIndexOf(":", StringComparison.Ordinal) + 1)) : ""))
         {
             this.stack = stack;
             this.userName = userName;

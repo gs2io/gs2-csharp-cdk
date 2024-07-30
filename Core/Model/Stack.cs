@@ -11,21 +11,27 @@ namespace Gs2Cdk.Core.Model
         private readonly Dictionary<string, string> _outputs;
 
         public Stack() {
-            _resources = new List<CdkResource>();
-            _outputs = new Dictionary<string, string>();
+            this._resources = new List<CdkResource>();
+            this._outputs = new Dictionary<string, string>();
         }
 
         public void AddResource(
             CdkResource resource
         ) {
-            _resources.Add(resource);
+            this._resources.Add(resource);
+        }
+
+        public bool Exists(
+            string resourceName
+        ) {
+            return this._resources.Exists(r => r.ResourceName == resourceName);
         }
 
         public void Output(
             string name,
             string path
         ) {
-            _outputs[name] = path;
+            this._outputs[name] = path;
         }
 
         public Dictionary<string, object> Template() {
