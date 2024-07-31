@@ -126,5 +126,40 @@ namespace Gs2Cdk.Gs2Account.Model
                 null
             ));
         }
+
+        public Namespace MasterData(
+            TakeOverTypeModel[] takeOverTypeModels
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                takeOverTypeModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<TakeOverTypeModel[]>(() =>
+                {
+                    return properties["takeOverTypeModels"] switch {
+                        TakeOverTypeModel[] v => v,
+                        List<TakeOverTypeModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(TakeOverTypeModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(TakeOverTypeModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
     }
 }

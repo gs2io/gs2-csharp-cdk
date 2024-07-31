@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -22,22 +24,16 @@ using Gs2Cdk.Gs2Account.Model;
 
 namespace Gs2Cdk.Gs2Account.Ref
 {
-    public class NamespaceRef {
+    public class TakeOverTypeModelRef {
         private string namespaceName;
+        private int type;
 
-        public NamespaceRef(
-            string namespaceName
-        ){
-            this.namespaceName = namespaceName;
-        }
-
-        public TakeOverTypeModelRef TakeOverTypeModel(
+        public TakeOverTypeModelRef(
+            string namespaceName,
             int type
         ){
-            return (new TakeOverTypeModelRef(
-                this.namespaceName,
-                type
-            ));
+            this.namespaceName = namespaceName;
+            this.type = type;
         }
 
         public string Grn(
@@ -55,7 +51,11 @@ namespace Gs2Cdk.Gs2Account.Ref
                     ).Str(
                     ),
                     "account",
-                    this.namespaceName
+                    this.namespaceName,
+                    "model",
+                    "takeOver",
+                    this.type.ToString(
+                    )
                 }
             )).Str(
             );
