@@ -20,7 +20,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
     
     public enum BuffTargetActionTargetActionName {
         Gs2ExperienceAddExperienceByUserId,
-        Gs2ExperienceSubExperience,
         Gs2ExperienceSubExperienceByUserId,
         Gs2InventoryAcquireBigItemByUserId,
         Gs2InventoryAcquireItemSetByUserId,
@@ -50,8 +49,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
             switch (self) {
                 case BuffTargetActionTargetActionName.Gs2ExperienceAddExperienceByUserId:
                     return "Gs2Experience:AddExperienceByUserId";
-                case BuffTargetActionTargetActionName.Gs2ExperienceSubExperience:
-                    return "Gs2Experience:SubExperience";
                 case BuffTargetActionTargetActionName.Gs2ExperienceSubExperienceByUserId:
                     return "Gs2Experience:SubExperienceByUserId";
                 case BuffTargetActionTargetActionName.Gs2InventoryAcquireBigItemByUserId:
@@ -102,8 +99,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
             switch (value) {
                 case "Gs2Experience:AddExperienceByUserId":
                     return BuffTargetActionTargetActionName.Gs2ExperienceAddExperienceByUserId;
-                case "Gs2Experience:SubExperience":
-                    return BuffTargetActionTargetActionName.Gs2ExperienceSubExperience;
                 case "Gs2Experience:SubExperienceByUserId":
                     return BuffTargetActionTargetActionName.Gs2ExperienceSubExperienceByUserId;
                 case "Gs2Inventory:AcquireBigItemByUserId":

@@ -19,6 +19,7 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Friend.Model;
+using Gs2Cdk.Gs2Friend.StampSheet;
 
 namespace Gs2Cdk.Gs2Friend.Ref
 {
@@ -29,6 +30,21 @@ namespace Gs2Cdk.Gs2Friend.Ref
             string namespaceName
         ){
             this.namespaceName = namespaceName;
+        }
+
+        public UpdateProfileByUserId UpdateProfile(
+            string publicProfile = null,
+            string followerProfile = null,
+            string friendProfile = null,
+            string userId = "#{userId}"
+        ){
+            return (new UpdateProfileByUserId(
+                this.namespaceName,
+                publicProfile,
+                followerProfile,
+                friendProfile,
+                userId
+            ));
         }
 
         public string Grn(
