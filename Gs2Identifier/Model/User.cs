@@ -22,7 +22,6 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2Identifier.Ref;
 using Gs2Cdk.Gs2Identifier.Model;
 using Gs2Cdk.Gs2Identifier.Model.Options;
-using UnityEngine;
 
 namespace Gs2Cdk.Gs2Identifier.Model
 {
