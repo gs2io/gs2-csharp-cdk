@@ -32,11 +32,27 @@ namespace Gs2Cdk.Gs2Identifier.Model
         private readonly string userName;
         private readonly string securityPolicyId;
 
+        private static string SecurityPolicyResourceName(
+            string securityPolicyId
+        ) {
+            if (securityPolicyId[0] == '!') {
+                if (securityPolicyId.StartsWith("!Join")) {
+                    var joinParams = securityPolicyId.Substring("!Join".Length).Trim();
+                    joinParams = joinParams.Substring(joinParams.IndexOf(",", StringComparison.Ordinal)+1).Trim();
+                    joinParams = joinParams.Substring(1, joinParams.Length - 3);
+                    var grnElement = joinParams.Split(",");
+                    return grnElement[grnElement.Length-1];
+                }
+                return securityPolicyId.Split("_")[2];
+            }
+            return securityPolicyId.Substring(securityPolicyId.LastIndexOf(":", StringComparison.Ordinal) + 1);
+        }
+        
         public AttachSecurityPolicy(
             Stack stack,
             string userName,
             string securityPolicyId
-        ): base("Identifier_AttachSecurityPolicy_" + userName + (stack.Exists("Identifier_AttachSecurityPolicy_" + userName) ? "_" + (securityPolicyId[0] == '!' ? securityPolicyId.Split("_")[2] : securityPolicyId.Substring(securityPolicyId.LastIndexOf(":", StringComparison.Ordinal) + 1)) : ""))
+        ): base("Identifier_AttachSecurityPolicy_" + userName + (stack.Exists("Identifier_AttachSecurityPolicy_" + userName) ? "_" + SecurityPolicyResourceName(securityPolicyId) : ""))
         {
             this.stack = stack;
             this.userName = userName;
