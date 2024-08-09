@@ -24,7 +24,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
         Gs2ExperienceExperienceModel,
         Gs2ExperienceStatus,
         Gs2FormationMold,
-        Gs2FormationMoldModel,
         Gs2IdleCategoryModel,
         Gs2IdleStatus,
         Gs2InventoryBigInventoryModel,
@@ -37,16 +36,12 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
         Gs2LimitCounter,
         Gs2LimitLimitModel,
         Gs2LoginRewardBonusModel,
-        Gs2MissionMissionGroupModel,
         Gs2MissionMissionTaskModel,
         Gs2Money2Wallet,
         Gs2MoneyWallet,
-        Gs2QuestQuestGroupModel,
         Gs2QuestQuestModel,
         Gs2ShowcaseDisplayItem,
         Gs2ShowcaseRandomDisplayItemModel,
-        Gs2ShowcaseRandomShowcase,
-        Gs2ShowcaseShowcase,
         Gs2SkillTreeNodeModel,
         Gs2StaminaStamina,
         Gs2StaminaStaminaModel
@@ -66,8 +61,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return "Gs2Experience:Status";
                 case BuffTargetModelTargetModelName.Gs2FormationMold:
                     return "Gs2Formation:Mold";
-                case BuffTargetModelTargetModelName.Gs2FormationMoldModel:
-                    return "Gs2Formation:MoldModel";
                 case BuffTargetModelTargetModelName.Gs2IdleCategoryModel:
                     return "Gs2Idle:CategoryModel";
                 case BuffTargetModelTargetModelName.Gs2IdleStatus:
@@ -92,26 +85,18 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return "Gs2Limit:LimitModel";
                 case BuffTargetModelTargetModelName.Gs2LoginRewardBonusModel:
                     return "Gs2LoginReward:BonusModel";
-                case BuffTargetModelTargetModelName.Gs2MissionMissionGroupModel:
-                    return "Gs2Mission:MissionGroupModel";
                 case BuffTargetModelTargetModelName.Gs2MissionMissionTaskModel:
                     return "Gs2Mission:MissionTaskModel";
                 case BuffTargetModelTargetModelName.Gs2Money2Wallet:
                     return "Gs2Money2:Wallet";
                 case BuffTargetModelTargetModelName.Gs2MoneyWallet:
                     return "Gs2Money:Wallet";
-                case BuffTargetModelTargetModelName.Gs2QuestQuestGroupModel:
-                    return "Gs2Quest:QuestGroupModel";
                 case BuffTargetModelTargetModelName.Gs2QuestQuestModel:
                     return "Gs2Quest:QuestModel";
                 case BuffTargetModelTargetModelName.Gs2ShowcaseDisplayItem:
                     return "Gs2Showcase:DisplayItem";
                 case BuffTargetModelTargetModelName.Gs2ShowcaseRandomDisplayItemModel:
                     return "Gs2Showcase:RandomDisplayItemModel";
-                case BuffTargetModelTargetModelName.Gs2ShowcaseRandomShowcase:
-                    return "Gs2Showcase:RandomShowcase";
-                case BuffTargetModelTargetModelName.Gs2ShowcaseShowcase:
-                    return "Gs2Showcase:Showcase";
                 case BuffTargetModelTargetModelName.Gs2SkillTreeNodeModel:
                     return "Gs2SkillTree:NodeModel";
                 case BuffTargetModelTargetModelName.Gs2StaminaStamina:
@@ -134,8 +119,6 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return BuffTargetModelTargetModelName.Gs2ExperienceStatus;
                 case "Gs2Formation:Mold":
                     return BuffTargetModelTargetModelName.Gs2FormationMold;
-                case "Gs2Formation:MoldModel":
-                    return BuffTargetModelTargetModelName.Gs2FormationMoldModel;
                 case "Gs2Idle:CategoryModel":
                     return BuffTargetModelTargetModelName.Gs2IdleCategoryModel;
                 case "Gs2Idle:Status":
@@ -160,26 +143,18 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
                     return BuffTargetModelTargetModelName.Gs2LimitLimitModel;
                 case "Gs2LoginReward:BonusModel":
                     return BuffTargetModelTargetModelName.Gs2LoginRewardBonusModel;
-                case "Gs2Mission:MissionGroupModel":
-                    return BuffTargetModelTargetModelName.Gs2MissionMissionGroupModel;
                 case "Gs2Mission:MissionTaskModel":
                     return BuffTargetModelTargetModelName.Gs2MissionMissionTaskModel;
                 case "Gs2Money2:Wallet":
                     return BuffTargetModelTargetModelName.Gs2Money2Wallet;
                 case "Gs2Money:Wallet":
                     return BuffTargetModelTargetModelName.Gs2MoneyWallet;
-                case "Gs2Quest:QuestGroupModel":
-                    return BuffTargetModelTargetModelName.Gs2QuestQuestGroupModel;
                 case "Gs2Quest:QuestModel":
                     return BuffTargetModelTargetModelName.Gs2QuestQuestModel;
                 case "Gs2Showcase:DisplayItem":
                     return BuffTargetModelTargetModelName.Gs2ShowcaseDisplayItem;
                 case "Gs2Showcase:RandomDisplayItemModel":
                     return BuffTargetModelTargetModelName.Gs2ShowcaseRandomDisplayItemModel;
-                case "Gs2Showcase:RandomShowcase":
-                    return BuffTargetModelTargetModelName.Gs2ShowcaseRandomShowcase;
-                case "Gs2Showcase:Showcase":
-                    return BuffTargetModelTargetModelName.Gs2ShowcaseShowcase;
                 case "Gs2SkillTree:NodeModel":
                     return BuffTargetModelTargetModelName.Gs2SkillTreeNodeModel;
                 case "Gs2Stamina:Stamina":
@@ -191,4 +166,3 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
         }
     }
 }
-
