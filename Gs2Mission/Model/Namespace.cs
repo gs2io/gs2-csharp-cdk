@@ -27,14 +27,14 @@ namespace Gs2Cdk.Gs2Mission.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting missionCompleteScript;
-        private ScriptSetting counterIncrementScript;
-        private ScriptSetting receiveRewardsScript;
-        private NotificationSetting completeNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting missionCompleteScript;
+        public ScriptSetting counterIncrementScript;
+        public ScriptSetting receiveRewardsScript;
+        public NotificationSetting completeNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

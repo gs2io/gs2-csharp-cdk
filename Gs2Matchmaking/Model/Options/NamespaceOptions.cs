@@ -26,13 +26,13 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
     public class NamespaceOptions {
         public string description;
         public bool? enableRating;
-        public NamespaceEnableDisconnectDetection enableDisconnectDetection;
+        public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;
         public string createGatheringTriggerRealtimeNamespaceId;
         public string createGatheringTriggerScriptId;
         public string completeMatchmakingTriggerRealtimeNamespaceId;
         public string completeMatchmakingTriggerScriptId;
-        public NamespaceEnableCollaborateSeasonRating enableCollaborateSeasonRating;
+        public NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;
         public string collaborateSeasonRatingNamespaceId;
         public int? collaborateSeasonRatingTtl;
         public ScriptSetting changeRatingScript;

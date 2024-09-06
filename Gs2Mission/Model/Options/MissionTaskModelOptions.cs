@@ -29,6 +29,6 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
         public AcquireAction[] completeAcquireActions;
         public string challengePeriodEventId;
         public string premiseMissionTaskName;
-        public MissionTaskModelTargetResetType targetResetType;
+        public MissionTaskModelTargetResetType? targetResetType;
     }
 }

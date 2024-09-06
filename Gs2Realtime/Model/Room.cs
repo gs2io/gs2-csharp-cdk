@@ -27,12 +27,12 @@ namespace Gs2Cdk.Gs2Realtime.Model
 {
     public class Room : CdkResource {
         private Stack? stack;
-        private string ownerId;
-        private string namespaceName;
-        private string name;
-        private string ipAddress;
-        private int? port;
-        private string encryptionKey;
+        public string ownerId;
+        public string namespaceName;
+        public string name;
+        public string ipAddress;
+        public int? port;
+        public string encryptionKey;
 
         public Room(
             Stack stack,

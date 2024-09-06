@@ -28,26 +28,26 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
-        private NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
-        private string description;
-        private bool? enableRating;
-        private NamespaceEnableDisconnectDetection? enableDisconnectDetection;
-        private int? disconnectDetectionTimeoutSeconds;
-        private string createGatheringTriggerRealtimeNamespaceId;
-        private string createGatheringTriggerScriptId;
-        private string completeMatchmakingTriggerRealtimeNamespaceId;
-        private string completeMatchmakingTriggerScriptId;
-        private NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;
-        private string collaborateSeasonRatingNamespaceId;
-        private int? collaborateSeasonRatingTtl;
-        private ScriptSetting changeRatingScript;
-        private NotificationSetting joinNotification;
-        private NotificationSetting leaveNotification;
-        private NotificationSetting completeNotification;
-        private NotificationSetting changeRatingNotification;
-        private LogSetting logSetting;
+        public string name;
+        public NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
+        public NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
+        public string description;
+        public bool? enableRating;
+        public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
+        public int? disconnectDetectionTimeoutSeconds;
+        public string createGatheringTriggerRealtimeNamespaceId;
+        public string createGatheringTriggerScriptId;
+        public string completeMatchmakingTriggerRealtimeNamespaceId;
+        public string completeMatchmakingTriggerScriptId;
+        public NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;
+        public string collaborateSeasonRatingNamespaceId;
+        public int? collaborateSeasonRatingTtl;
+        public ScriptSetting changeRatingScript;
+        public NotificationSetting joinNotification;
+        public NotificationSetting leaveNotification;
+        public NotificationSetting completeNotification;
+        public NotificationSetting changeRatingNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

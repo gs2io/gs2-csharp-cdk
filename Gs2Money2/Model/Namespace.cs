@@ -28,13 +28,13 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private NamespaceCurrencyUsagePriority? currencyUsagePriority;
-        private bool sharedFreeCurrency;
-        private PlatformSetting platformSetting;
-        private string description;
-        private ScriptSetting changeBalanceScript;
-        private LogSetting logSetting;
+        public string name;
+        public NamespaceCurrencyUsagePriority? currencyUsagePriority;
+        public bool sharedFreeCurrency;
+        public PlatformSetting platformSetting;
+        public string description;
+        public ScriptSetting changeBalanceScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

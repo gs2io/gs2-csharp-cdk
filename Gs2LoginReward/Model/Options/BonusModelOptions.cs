@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model.Options
         public string periodEventId;
         public int? resetHour;
         public string resetHourString;
-        public BonusModelRepeat repeat;
+        public BonusModelRepeat? repeat;
         public Reward[] rewards;
         public VerifyAction[] missedReceiveReliefVerifyActions;
         public ConsumeAction[] missedReceiveReliefConsumeActions;

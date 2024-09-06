@@ -27,10 +27,10 @@ namespace Gs2Cdk.Gs2Datastore.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private LogSetting logSetting;
-        private ScriptSetting doneUploadScript;
+        public string name;
+        public string description;
+        public LogSetting logSetting;
+        public ScriptSetting doneUploadScript;
 
         public Namespace(
             Stack stack,

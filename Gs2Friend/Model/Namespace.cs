@@ -27,23 +27,23 @@ namespace Gs2Cdk.Gs2Friend.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private ScriptSetting followScript;
-        private ScriptSetting unfollowScript;
-        private ScriptSetting sendRequestScript;
-        private ScriptSetting cancelRequestScript;
-        private ScriptSetting acceptRequestScript;
-        private ScriptSetting rejectRequestScript;
-        private ScriptSetting deleteFriendScript;
-        private ScriptSetting updateProfileScript;
-        private NotificationSetting followNotification;
-        private NotificationSetting receiveRequestNotification;
-        private NotificationSetting cancelRequestNotification;
-        private NotificationSetting acceptRequestNotification;
-        private NotificationSetting rejectRequestNotification;
-        private NotificationSetting deleteFriendNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public ScriptSetting followScript;
+        public ScriptSetting unfollowScript;
+        public ScriptSetting sendRequestScript;
+        public ScriptSetting cancelRequestScript;
+        public ScriptSetting acceptRequestScript;
+        public ScriptSetting rejectRequestScript;
+        public ScriptSetting deleteFriendScript;
+        public ScriptSetting updateProfileScript;
+        public NotificationSetting followNotification;
+        public NotificationSetting receiveRequestNotification;
+        public NotificationSetting cancelRequestNotification;
+        public NotificationSetting acceptRequestNotification;
+        public NotificationSetting rejectRequestNotification;
+        public NotificationSetting deleteFriendNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

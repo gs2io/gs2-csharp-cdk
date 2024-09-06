@@ -27,15 +27,15 @@ namespace Gs2Cdk.Gs2Experience.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private string rankCapScriptId;
-        private ScriptSetting changeExperienceScript;
-        private ScriptSetting changeRankScript;
-        private ScriptSetting changeRankCapScript;
-        private string overflowExperienceScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public string rankCapScriptId;
+        public ScriptSetting changeExperienceScript;
+        public ScriptSetting changeRankScript;
+        public ScriptSetting changeRankCapScript;
+        public string overflowExperienceScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

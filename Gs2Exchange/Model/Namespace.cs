@@ -27,14 +27,14 @@ namespace Gs2Cdk.Gs2Exchange.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private bool? enableAwaitExchange;
-        private bool? enableDirectExchange;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting exchangeScript;
-        private ScriptSetting incrementalExchangeScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public bool? enableAwaitExchange;
+        public bool? enableDirectExchange;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting exchangeScript;
+        public ScriptSetting incrementalExchangeScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

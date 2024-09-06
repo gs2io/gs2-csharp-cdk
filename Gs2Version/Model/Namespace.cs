@@ -27,12 +27,12 @@ namespace Gs2Cdk.Gs2Version.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string assumeUserId;
-        private string description;
-        private ScriptSetting acceptVersionScript;
-        private string checkVersionTriggerScriptId;
-        private LogSetting logSetting;
+        public string name;
+        public string assumeUserId;
+        public string description;
+        public ScriptSetting acceptVersionScript;
+        public string checkVersionTriggerScriptId;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

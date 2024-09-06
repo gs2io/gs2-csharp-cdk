@@ -27,15 +27,15 @@ namespace Gs2Cdk.Gs2Inbox.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private bool? isAutomaticDeletingEnabled;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting receiveMessageScript;
-        private ScriptSetting readMessageScript;
-        private ScriptSetting deleteMessageScript;
-        private NotificationSetting receiveNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public bool? isAutomaticDeletingEnabled;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting receiveMessageScript;
+        public ScriptSetting readMessageScript;
+        public ScriptSetting deleteMessageScript;
+        public NotificationSetting receiveNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

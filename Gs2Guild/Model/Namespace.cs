@@ -27,18 +27,18 @@ namespace Gs2Cdk.Gs2Guild.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private NotificationSetting joinNotification;
-        private NotificationSetting leaveNotification;
-        private NotificationSetting changeMemberNotification;
-        private NotificationSetting receiveRequestNotification;
-        private NotificationSetting removeRequestNotification;
-        private ScriptSetting createGuildScript;
-        private ScriptSetting joinGuildScript;
-        private ScriptSetting leaveGuildScript;
-        private ScriptSetting changeRoleScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public NotificationSetting joinNotification;
+        public NotificationSetting leaveNotification;
+        public NotificationSetting changeMemberNotification;
+        public NotificationSetting receiveRequestNotification;
+        public NotificationSetting removeRequestNotification;
+        public ScriptSetting createGuildScript;
+        public ScriptSetting joinGuildScript;
+        public ScriptSetting leaveGuildScript;
+        public ScriptSetting changeRoleScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

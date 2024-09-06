@@ -33,8 +33,8 @@ namespace Gs2Cdk.Gs2Schedule.Model.Options
         public string repeatBeginDayOfMonthString;
         public int? repeatEndDayOfMonth;
         public string repeatEndDayOfMonthString;
-        public EventRepeatBeginDayOfWeek repeatBeginDayOfWeek;
-        public EventRepeatEndDayOfWeek repeatEndDayOfWeek;
+        public EventRepeatBeginDayOfWeek? repeatBeginDayOfWeek;
+        public EventRepeatEndDayOfWeek? repeatEndDayOfWeek;
         public int? repeatBeginHour;
         public string repeatBeginHourString;
         public int? repeatEndHour;

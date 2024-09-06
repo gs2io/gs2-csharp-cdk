@@ -27,9 +27,9 @@ namespace Gs2Cdk.Gs2Key.Model
 {
     public class Key : CdkResource {
         private Stack? stack;
-        private string namespaceName;
-        private string name;
-        private string description;
+        public string namespaceName;
+        public string name;
+        public string description;
 
         public Key(
             Stack stack,

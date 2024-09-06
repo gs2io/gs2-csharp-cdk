@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2Showcase.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting buyScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting buyScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

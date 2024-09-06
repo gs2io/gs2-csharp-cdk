@@ -27,10 +27,10 @@ namespace Gs2Cdk.Gs2Gateway.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private string firebaseSecret;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public string firebaseSecret;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

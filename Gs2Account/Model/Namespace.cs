@@ -27,15 +27,15 @@ namespace Gs2Cdk.Gs2Account.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private bool? changePasswordIfTakeOver;
-        private bool? differentUserIdForLoginAndDataRetention;
-        private ScriptSetting createAccountScript;
-        private ScriptSetting authenticationScript;
-        private ScriptSetting createTakeOverScript;
-        private ScriptSetting doTakeOverScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public bool? changePasswordIfTakeOver;
+        public bool? differentUserIdForLoginAndDataRetention;
+        public ScriptSetting createAccountScript;
+        public ScriptSetting authenticationScript;
+        public ScriptSetting createTakeOverScript;
+        public ScriptSetting doTakeOverScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

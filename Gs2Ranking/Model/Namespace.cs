@@ -27,9 +27,9 @@ namespace Gs2Cdk.Gs2Ranking.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

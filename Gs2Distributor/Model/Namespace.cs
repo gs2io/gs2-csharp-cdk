@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2Distributor.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private string assumeUserId;
-        private NotificationSetting autoRunStampSheetNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public string assumeUserId;
+        public NotificationSetting autoRunStampSheetNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

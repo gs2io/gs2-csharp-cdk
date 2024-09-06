@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
         public MissionTaskModel[] tasks;
         public int? resetDayOfMonth;
         public string resetDayOfMonthString;
-        public MissionGroupModelResetDayOfWeek resetDayOfWeek;
+        public MissionGroupModelResetDayOfWeek? resetDayOfWeek;
         public int? resetHour;
         public string resetHourString;
         public string completeNotificationNamespaceId;

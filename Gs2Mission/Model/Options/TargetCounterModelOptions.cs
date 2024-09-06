@@ -23,6 +23,6 @@ using Gs2Cdk.Gs2Mission.Model.Enums;
 namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class TargetCounterModelOptions {
-        public TargetCounterModelResetType resetType;
+        public TargetCounterModelResetType? resetType;
     }
 }

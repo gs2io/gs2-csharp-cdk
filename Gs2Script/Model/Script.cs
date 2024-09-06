@@ -27,10 +27,10 @@ namespace Gs2Cdk.Gs2Script.Model
 {
     public class Script : CdkResource {
         private Stack? stack;
-        private string namespaceName;
-        private string name;
-        private string script;
-        private string description;
+        public string namespaceName;
+        public string name;
+        public string script;
+        public string description;
 
         public Script(
             Stack stack,

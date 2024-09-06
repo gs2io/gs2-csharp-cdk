@@ -27,16 +27,16 @@ namespace Gs2Cdk.Gs2Inventory.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private ScriptSetting acquireScript;
-        private ScriptSetting overflowScript;
-        private ScriptSetting consumeScript;
-        private ScriptSetting simpleItemAcquireScript;
-        private ScriptSetting simpleItemConsumeScript;
-        private ScriptSetting bigItemAcquireScript;
-        private ScriptSetting bigItemConsumeScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public ScriptSetting acquireScript;
+        public ScriptSetting overflowScript;
+        public ScriptSetting consumeScript;
+        public ScriptSetting simpleItemAcquireScript;
+        public ScriptSetting simpleItemConsumeScript;
+        public ScriptSetting bigItemAcquireScript;
+        public ScriptSetting bigItemConsumeScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

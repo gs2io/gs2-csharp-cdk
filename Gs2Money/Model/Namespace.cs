@@ -28,18 +28,18 @@ namespace Gs2Cdk.Gs2Money.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private NamespacePriority? priority;
-        private bool shareFree;
-        private NamespaceCurrency? currency;
-        private string description;
-        private string appleKey;
-        private string googleKey;
-        private bool? enableFakeReceipt;
-        private ScriptSetting createWalletScript;
-        private ScriptSetting depositScript;
-        private ScriptSetting withdrawScript;
-        private LogSetting logSetting;
+        public string name;
+        public NamespacePriority? priority;
+        public bool shareFree;
+        public NamespaceCurrency? currency;
+        public string description;
+        public string appleKey;
+        public string googleKey;
+        public bool? enableFakeReceipt;
+        public ScriptSetting createWalletScript;
+        public ScriptSetting depositScript;
+        public ScriptSetting withdrawScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

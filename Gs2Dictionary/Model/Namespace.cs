@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2Dictionary.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private ScriptSetting entryScript;
-        private string duplicateEntryScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public ScriptSetting entryScript;
+        public string duplicateEntryScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

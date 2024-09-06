@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2JobQueue.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private NotificationSetting pushNotification;
-        private NotificationSetting runNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public NotificationSetting pushNotification;
+        public NotificationSetting runNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

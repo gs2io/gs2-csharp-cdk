@@ -27,11 +27,11 @@ namespace Gs2Cdk.Gs2Enhance.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting enhanceScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting enhanceScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

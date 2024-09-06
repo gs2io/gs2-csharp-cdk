@@ -27,16 +27,16 @@ namespace Gs2Cdk.Gs2Chat.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private bool? allowCreateRoom;
-        private ScriptSetting postMessageScript;
-        private ScriptSetting createRoomScript;
-        private ScriptSetting deleteRoomScript;
-        private ScriptSetting subscribeRoomScript;
-        private ScriptSetting unsubscribeRoomScript;
-        private NotificationSetting postNotification;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public bool? allowCreateRoom;
+        public ScriptSetting postMessageScript;
+        public ScriptSetting createRoomScript;
+        public ScriptSetting deleteRoomScript;
+        public ScriptSetting subscribeRoomScript;
+        public ScriptSetting unsubscribeRoomScript;
+        public NotificationSetting postNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

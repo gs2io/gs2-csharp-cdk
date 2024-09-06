@@ -27,15 +27,15 @@ namespace Gs2Cdk.Gs2AdReward.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private AdMob admob;
-        private UnityAd unityAd;
-        private AppLovinMax[] appLovinMaxes;
-        private string description;
-        private ScriptSetting acquirePointScript;
-        private ScriptSetting consumePointScript;
-        private NotificationSetting changePointNotification;
-        private LogSetting logSetting;
+        public string name;
+        public AdMob admob;
+        public UnityAd unityAd;
+        public AppLovinMax[] appLovinMaxes;
+        public string description;
+        public ScriptSetting acquirePointScript;
+        public ScriptSetting consumePointScript;
+        public NotificationSetting changePointNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

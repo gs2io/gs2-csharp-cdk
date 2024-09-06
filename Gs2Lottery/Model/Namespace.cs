@@ -27,12 +27,12 @@ namespace Gs2Cdk.Gs2Lottery.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private string lotteryTriggerScriptId;
-        private string choicePrizeTableScriptId;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public string lotteryTriggerScriptId;
+        public string choicePrizeTableScriptId;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

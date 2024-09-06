@@ -25,7 +25,7 @@ namespace Gs2Cdk.Gs2Log.Model.Options
 {
     public class NamespaceOptions {
         public string description;
-        public NamespaceType type;
+        public NamespaceType? type;
         public string gcpCredentialJson;
         public string bigQueryDatasetName;
         public int? logExpireDays;

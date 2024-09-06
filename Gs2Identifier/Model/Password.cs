@@ -28,8 +28,8 @@ namespace Gs2Cdk.Gs2Identifier.Model
 {
     public class Password : CdkResource {
         private Stack? stack;
-        private string userName;
-        private string password;
+        public string userName;
+        public string password;
 
         public Password(
             Stack stack,

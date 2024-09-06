@@ -27,13 +27,13 @@ namespace Gs2Cdk.Gs2Formation.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting updateMoldScript;
-        private ScriptSetting updateFormScript;
-        private ScriptSetting updatePropertyFormScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting updateMoldScript;
+        public ScriptSetting updateFormScript;
+        public ScriptSetting updatePropertyFormScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

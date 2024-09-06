@@ -27,10 +27,10 @@ namespace Gs2Cdk.Gs2Buff.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private ScriptSetting applyBuffScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public ScriptSetting applyBuffScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

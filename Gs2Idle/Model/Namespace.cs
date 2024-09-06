@@ -27,12 +27,12 @@ namespace Gs2Cdk.Gs2Idle.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting receiveScript;
-        private string overrideAcquireActionsScriptId;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting receiveScript;
+        public string overrideAcquireActionsScriptId;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

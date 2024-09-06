@@ -28,16 +28,16 @@ namespace Gs2Cdk.Gs2Log.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private NamespaceType? type;
-        private string gcpCredentialJson;
-        private string bigQueryDatasetName;
-        private int? logExpireDays;
-        private string awsRegion;
-        private string awsAccessKeyId;
-        private string awsSecretAccessKey;
-        private string firehoseStreamName;
+        public string name;
+        public string description;
+        public NamespaceType? type;
+        public string gcpCredentialJson;
+        public string bigQueryDatasetName;
+        public int? logExpireDays;
+        public string awsRegion;
+        public string awsAccessKeyId;
+        public string awsSecretAccessKey;
+        public string firehoseStreamName;
 
         public Namespace(
             Stack stack,

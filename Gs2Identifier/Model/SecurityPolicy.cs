@@ -27,9 +27,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
 {
     public class SecurityPolicy : CdkResource {
         private Stack? stack;
-        private string name;
-        private Policy? policy;
-        private string description;
+        public string name;
+        public Policy? policy;
+        public string description;
 
         public SecurityPolicy(
             Stack stack,

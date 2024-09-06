@@ -25,7 +25,7 @@ namespace Gs2Cdk.Gs2StateMachine.Model.Options
 {
     public class NamespaceOptions {
         public string description;
-        public NamespaceSupportSpeculativeExecution supportSpeculativeExecution;
+        public NamespaceSupportSpeculativeExecution? supportSpeculativeExecution;
         public TransactionSetting transactionSetting;
         public ScriptSetting startScript;
         public ScriptSetting passScript;

@@ -28,12 +28,12 @@ namespace Gs2Cdk.Gs2Realtime.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private NamespaceServerType? serverType;
-        private NamespaceServerSpec? serverSpec;
-        private string description;
-        private NotificationSetting createNotification;
-        private LogSetting logSetting;
+        public string name;
+        public NamespaceServerType? serverType;
+        public NamespaceServerSpec? serverSpec;
+        public string description;
+        public NotificationSetting createNotification;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

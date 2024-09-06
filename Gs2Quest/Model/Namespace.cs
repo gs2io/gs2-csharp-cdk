@@ -27,13 +27,13 @@ namespace Gs2Cdk.Gs2Quest.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting startQuestScript;
-        private ScriptSetting completeQuestScript;
-        private ScriptSetting failedQuestScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting startQuestScript;
+        public ScriptSetting completeQuestScript;
+        public ScriptSetting failedQuestScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

@@ -27,12 +27,12 @@ namespace Gs2Cdk.Gs2SkillTree.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private TransactionSetting transactionSetting;
-        private ScriptSetting releaseScript;
-        private ScriptSetting restrainScript;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting releaseScript;
+        public ScriptSetting restrainScript;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,

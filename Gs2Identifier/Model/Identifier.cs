@@ -27,7 +27,7 @@ namespace Gs2Cdk.Gs2Identifier.Model
 {
     public class Identifier : CdkResource {
         private Stack? stack;
-        private string userName;
+        public string userName;
 
         public Identifier(
             Stack stack,

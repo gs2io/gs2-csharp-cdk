@@ -110,25 +110,34 @@ namespace Gs2Cdk.Gs2Auth.Model
             Dictionary<string, object> properties
         ){
             var model = new AccessToken(
-                (string)properties["ownerId"],
-                (string)properties["userId"],
-                (string)properties["realUserId"],
-                new Func<long?>(() =>
+                properties.TryGetValue("ownerId", out var ownerId) ? new Func<string>(() =>
                 {
-                    return properties["expire"] switch {
+                    return (string) ownerId;
+                })() : default,
+                properties.TryGetValue("userId", out var userId) ? new Func<string>(() =>
+                {
+                    return (string) userId;
+                })() : default,
+                properties.TryGetValue("realUserId", out var realUserId) ? new Func<string>(() =>
+                {
+                    return (string) realUserId;
+                })() : default,
+                properties.TryGetValue("expire", out var expire) ? new Func<long?>(() =>
+                {
+                    return expire switch {
                         long v => v,
                         string v => long.Parse(v),
                         _ => 0
                     };
-                })(),
-                new Func<int?>(() =>
+                })() : default,
+                properties.TryGetValue("timeOffset", out var timeOffset) ? new Func<int?>(() =>
                 {
-                    return properties["timeOffset"] switch {
+                    return timeOffset switch {
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
                     };
-                })(),
+                })() : default,
                 new AccessTokenOptions {
                     federationFromUserId = properties.TryGetValue("federationFromUserId", out var federationFromUserId) ? (string)federationFromUserId : null,
                     federationPolicyDocument = properties.TryGetValue("federationPolicyDocument", out var federationPolicyDocument) ? (string)federationPolicyDocument : null
