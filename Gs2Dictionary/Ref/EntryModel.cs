@@ -26,14 +26,14 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
 {
     public class EntryModelRef {
         private string namespaceName;
-        private string entryModelName;
+        private string entryName;
 
         public EntryModelRef(
             string namespaceName,
-            string entryModelName
+            string entryName
         ){
             this.namespaceName = namespaceName;
-            this.entryModelName = entryModelName;
+            this.entryName = entryName;
         }
 
         public AddEntriesByUserId AddEntries(
@@ -59,12 +59,13 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
         }
 
         public VerifyEntryByUserId VerifyEntry(
+            string entryModelName,
             VerifyEntryByUserIdVerifyType verifyType,
             string userId = "#{userId}"
         ){
             return (new VerifyEntryByUserId(
                 this.namespaceName,
-                this.entryModelName,
+                entryModelName,
                 verifyType,
                 userId
             ));
@@ -87,7 +88,7 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
                     "dictionary",
                     this.namespaceName,
                     "model",
-                    this.entryModelName
+                    this.entryName
                 }
             )).Str(
             );

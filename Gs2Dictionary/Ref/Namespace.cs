@@ -34,11 +34,11 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
         }
 
         public EntryModelRef EntryModel(
-            string entryModelName
+            string entryName
         ){
             return (new EntryModelRef(
                 this.namespaceName,
-                entryModelName
+                entryName
             ));
         }
 

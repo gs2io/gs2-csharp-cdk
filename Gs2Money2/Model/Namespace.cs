@@ -33,7 +33,8 @@ namespace Gs2Cdk.Gs2Money2.Model
         public bool sharedFreeCurrency;
         public PlatformSetting platformSetting;
         public string description;
-        public ScriptSetting changeBalanceScript;
+        public ScriptSetting depositBalanceScript;
+        public ScriptSetting withdrawBalanceScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -53,7 +54,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.sharedFreeCurrency = sharedFreeCurrency;
             this.platformSetting = platformSetting;
             this.description = options?.description;
-            this.changeBalanceScript = options?.changeBalanceScript;
+            this.depositBalanceScript = options?.depositBalanceScript;
+            this.withdrawBalanceScript = options?.withdrawBalanceScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -92,8 +94,12 @@ namespace Gs2Cdk.Gs2Money2.Model
                 properties["PlatformSetting"] = this.platformSetting?.Properties(
                 );
             }
-            if (this.changeBalanceScript != null) {
-                properties["ChangeBalanceScript"] = this.changeBalanceScript?.Properties(
+            if (this.depositBalanceScript != null) {
+                properties["DepositBalanceScript"] = this.depositBalanceScript?.Properties(
+                );
+            }
+            if (this.withdrawBalanceScript != null) {
+                properties["WithdrawBalanceScript"] = this.withdrawBalanceScript?.Properties(
                 );
             }
             if (this.logSetting != null) {
