@@ -26,29 +26,69 @@ namespace Gs2Cdk.Gs2Mission.Model
 {
     public class TargetCounterModel {
         private string counterName;
+        private TargetCounterModelScopeType? scopeType;
         private long value;
         private string valueString;
         private TargetCounterModelResetType? resetType;
+        private string conditionName;
 
         public TargetCounterModel(
             string counterName,
+            TargetCounterModelScopeType scopeType,
             long value,
             TargetCounterModelOptions options = null
         ){
             this.counterName = counterName;
+            this.scopeType = scopeType;
             this.value = value;
             this.resetType = options?.resetType;
+            this.conditionName = options?.conditionName;
+        }
+
+        public static TargetCounterModel ScopeTypeIsResetTiming(
+            string counterName,
+            long value,
+            TargetCounterModelScopeTypeIsResetTimingOptions options = null
+        ){
+            return (new TargetCounterModel(
+                counterName,
+                TargetCounterModelScopeType.ResetTiming,
+                value,
+                new TargetCounterModelOptions {
+                    resetType = options?.resetType,
+                }
+            ));
+        }
+
+        public static TargetCounterModel ScopeTypeIsVerifyAction(
+            string counterName,
+            long value,
+            string conditionName,
+            TargetCounterModelScopeTypeIsVerifyActionOptions options = null
+        ){
+            return (new TargetCounterModel(
+                counterName,
+                TargetCounterModelScopeType.VerifyAction,
+                value,
+                new TargetCounterModelOptions {
+                    conditionName = conditionName,
+                    resetType = options?.resetType,
+                }
+            ));
         }
 
 
         public TargetCounterModel(
             string counterName,
+            TargetCounterModelScopeType scopeType,
             string value,
             TargetCounterModelOptions options = null
         ){
             this.counterName = counterName;
+            this.scopeType = scopeType;
             this.valueString = value;
             this.resetType = options?.resetType;
+            this.conditionName = options?.conditionName;
         }
 
         public Dictionary<string, object> Properties(
@@ -58,9 +98,16 @@ namespace Gs2Cdk.Gs2Mission.Model
             if (this.counterName != null) {
                 properties["counterName"] = this.counterName;
             }
+            if (this.scopeType != null) {
+                properties["scopeType"] = this.scopeType.Value.Str(
+                );
+            }
             if (this.resetType != null) {
                 properties["resetType"] = this.resetType.Value.Str(
                 );
+            }
+            if (this.conditionName != null) {
+                properties["conditionName"] = this.conditionName;
             }
             if (this.valueString != null) {
                 properties["value"] = this.valueString;
@@ -81,6 +128,14 @@ namespace Gs2Cdk.Gs2Mission.Model
                 {
                     return (string) counterName;
                 })() : default,
+                properties.TryGetValue("scopeType", out var scopeType) ? new Func<TargetCounterModelScopeType>(() =>
+                {
+                    return scopeType switch {
+                        TargetCounterModelScopeType e => e,
+                        string s => TargetCounterModelScopeTypeExt.New(s),
+                        _ => TargetCounterModelScopeType.ResetTiming
+                    };
+                })() : default,
                 properties.TryGetValue("value", out var value) ? new Func<long>(() =>
                 {
                     return value switch {
@@ -90,7 +145,8 @@ namespace Gs2Cdk.Gs2Mission.Model
                     };
                 })() : default,
                 new TargetCounterModelOptions {
-                    resetType = properties.TryGetValue("resetType", out var resetType) ? TargetCounterModelResetTypeExt.New(resetType as string) : TargetCounterModelResetType.NotReset
+                    resetType = properties.TryGetValue("resetType", out var resetType) ? TargetCounterModelResetTypeExt.New(resetType as string) : TargetCounterModelResetType.NotReset,
+                    conditionName = properties.TryGetValue("conditionName", out var conditionName) ? (string)conditionName : null
                 }
             );
 

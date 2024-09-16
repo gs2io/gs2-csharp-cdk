@@ -17,10 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
 
-namespace Gs2Cdk.Gs2Account.Model.Options
+namespace Gs2Cdk.Gs2Mission.Model.Options
 {
-    public class BanStatusOptions {
+    public class CounterScopeModelScopeTypeIsVerifyActionOptions {
     }
 }

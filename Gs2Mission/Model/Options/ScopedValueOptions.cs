@@ -23,6 +23,8 @@ using Gs2Cdk.Gs2Mission.Model.Enums;
 namespace Gs2Cdk.Gs2Mission.Model.Options
 {
     public class ScopedValueOptions {
+        public ScopedValueResetType? resetType;
+        public string conditionName;
         public long? nextResetAt;
         public string nextResetAtString;
     }

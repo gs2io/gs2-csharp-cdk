@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +138,9 @@ namespace Gs2Cdk.Gs2Mission.Ref
         public VerifyCounterValueByUserId VerifyCounterValue(
             string counterName,
             VerifyCounterValueByUserIdVerifyType verifyType,
-            VerifyCounterValueByUserIdResetType resetType,
+            VerifyCounterValueByUserIdScopeType? scopeType = null,
+            VerifyCounterValueByUserIdResetType? resetType = null,
+            string conditionName = null,
             long? value = null,
             bool? multiplyValueSpecifyingQuantity = null,
             string userId = "#{userId}"
@@ -145,7 +149,9 @@ namespace Gs2Cdk.Gs2Mission.Ref
                 this.namespaceName,
                 counterName,
                 verifyType,
+                scopeType,
                 resetType,
+                conditionName,
                 value,
                 multiplyValueSpecifyingQuantity,
                 userId

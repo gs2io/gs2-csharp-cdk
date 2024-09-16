@@ -17,19 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Mission.Model;
-using Gs2Cdk.Gs2Mission.Model.Enums;
+using Gs2Cdk.Gs2Exchange.Model;
 
-namespace Gs2Cdk.Gs2Mission.Model.Options
+namespace Gs2Cdk.Gs2Exchange.Model.Options
 {
-    public class CounterScopeModelOptions {
-        public CounterScopeModelResetType? resetType;
-        public int? resetDayOfMonth;
-        public string resetDayOfMonthString;
-        public CounterScopeModelResetDayOfWeek? resetDayOfWeek;
-        public int? resetHour;
-        public string resetHourString;
-        public string conditionName;
-        public VerifyAction condition;
+    public class LogCostOptions {
+        public double[] subs;
     }
 }

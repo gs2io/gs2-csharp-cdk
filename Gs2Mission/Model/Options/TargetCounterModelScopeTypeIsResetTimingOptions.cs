@@ -16,19 +16,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Mission.Model;
+using Gs2Cdk.Gs2Mission.Model.Enums;
 
-namespace Gs2Cdk.Gs2Account.Ref
+namespace Gs2Cdk.Gs2Mission.Model.Options
 {
-    public class BanStatusRef {
-        private string name;
-
-        public BanStatusRef(
-            string name
-        ){
-            this.name = name;
-        }
+    public class TargetCounterModelScopeTypeIsResetTimingOptions {
+        public TargetCounterModelResetType? resetType;
     }
 }

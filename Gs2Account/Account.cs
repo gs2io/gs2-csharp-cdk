@@ -26,13 +26,5 @@ namespace Gs2Cdk.Gs2Account
                 namespaceName
             ));
         }
-
-        public static BanStatusRef BanStatus(
-            string name
-        ){
-            return (new BanStatusRef(
-                name
-            ));
-        }
     }
 }

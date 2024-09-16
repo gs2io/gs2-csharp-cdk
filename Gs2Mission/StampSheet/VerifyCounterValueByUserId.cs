@@ -28,7 +28,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
         private string userId;
         private string counterName;
         private VerifyCounterValueByUserIdVerifyType? verifyType;
+        private VerifyCounterValueByUserIdScopeType? scopeType;
         private VerifyCounterValueByUserIdResetType? resetType;
+        private string conditionName;
         private long? value;
         private string valueString;
         private bool? multiplyValueSpecifyingQuantity;
@@ -40,7 +42,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             string namespaceName,
             string counterName,
             VerifyCounterValueByUserIdVerifyType verifyType,
-            VerifyCounterValueByUserIdResetType resetType,
+            VerifyCounterValueByUserIdScopeType? scopeType = null,
+            VerifyCounterValueByUserIdResetType? resetType = null,
+            string conditionName = null,
             long? value = null,
             bool? multiplyValueSpecifyingQuantity = null,
             string timeOffsetToken = null,
@@ -50,7 +54,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             this.namespaceName = namespaceName;
             this.counterName = counterName;
             this.verifyType = verifyType;
+            this.scopeType = scopeType;
             this.resetType = resetType;
+            this.conditionName = conditionName;
             this.value = value;
             this.multiplyValueSpecifyingQuantity = multiplyValueSpecifyingQuantity;
             this.timeOffsetToken = timeOffsetToken;
@@ -62,7 +68,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             string namespaceName,
             string counterName,
             VerifyCounterValueByUserIdVerifyType verifyType,
-            VerifyCounterValueByUserIdResetType resetType,
+            VerifyCounterValueByUserIdScopeType? scopeType = null,
+            VerifyCounterValueByUserIdResetType? resetType = null,
+            string conditionName = null,
             string value = null,
             string multiplyValueSpecifyingQuantity = null,
             string timeOffsetToken = null,
@@ -72,7 +80,9 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
             this.namespaceName = namespaceName;
             this.counterName = counterName;
             this.verifyType = verifyType;
+            this.scopeType = scopeType;
             this.resetType = resetType;
+            this.conditionName = conditionName;
             this.valueString = value;
             this.multiplyValueSpecifyingQuantityString = multiplyValueSpecifyingQuantity;
             this.timeOffsetToken = timeOffsetToken;
@@ -96,9 +106,16 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                 properties["verifyType"] = this.verifyType.Value.Str(
                 );
             }
+            if (this.scopeType != null) {
+                properties["scopeType"] = this.scopeType.Value.Str(
+                );
+            }
             if (this.resetType != null) {
                 properties["resetType"] = this.resetType.Value.Str(
                 );
+            }
+            if (this.conditionName != null) {
+                properties["conditionName"] = this.conditionName;
             }
             if (this.valueString != null) {
                 properties["value"] = this.valueString;
@@ -134,13 +151,25 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                             _ => VerifyCounterValueByUserIdVerifyType.Less
                         };
                     })(),
-                    new Func<VerifyCounterValueByUserIdResetType>(() =>
+                    new Func<VerifyCounterValueByUserIdScopeType?>(() =>
                     {
-                        return properties["resetType"] switch {
+                        return properties.TryGetValue("scopeType", out var scopeType) ? scopeType switch {
+                            VerifyCounterValueByUserIdScopeType e => e,
+                            string s => VerifyCounterValueByUserIdScopeTypeExt.New(s),
+                            _ => VerifyCounterValueByUserIdScopeType.ResetTiming
+                        } : null;
+                    })(),
+                    new Func<VerifyCounterValueByUserIdResetType?>(() =>
+                    {
+                        return properties.TryGetValue("resetType", out var resetType) ? resetType switch {
                             VerifyCounterValueByUserIdResetType e => e,
                             string s => VerifyCounterValueByUserIdResetTypeExt.New(s),
                             _ => VerifyCounterValueByUserIdResetType.NotReset
-                        };
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("conditionName", out var conditionName) ? conditionName as string : null;
                     })(),
                     new Func<long?>(() =>
                     {
@@ -182,13 +211,25 @@ namespace Gs2Cdk.Gs2Mission.StampSheet
                             _ => VerifyCounterValueByUserIdVerifyType.Less
                         };
                     })(),
-                    new Func<VerifyCounterValueByUserIdResetType>(() =>
+                    new Func<VerifyCounterValueByUserIdScopeType?>(() =>
                     {
-                        return properties["resetType"] switch {
+                        return properties.TryGetValue("scopeType", out var scopeType) ? scopeType switch {
+                            VerifyCounterValueByUserIdScopeType e => e,
+                            string s => VerifyCounterValueByUserIdScopeTypeExt.New(s),
+                            _ => VerifyCounterValueByUserIdScopeType.ResetTiming
+                        } : null;
+                    })(),
+                    new Func<VerifyCounterValueByUserIdResetType?>(() =>
+                    {
+                        return properties.TryGetValue("resetType", out var resetType) ? resetType switch {
                             VerifyCounterValueByUserIdResetType e => e,
                             string s => VerifyCounterValueByUserIdResetTypeExt.New(s),
                             _ => VerifyCounterValueByUserIdResetType.NotReset
-                        };
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("conditionName", out var conditionName) ? conditionName.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

@@ -25,39 +25,73 @@ using Gs2Cdk.Gs2Mission.Model.Options;
 namespace Gs2Cdk.Gs2Mission.Model
 {
     public class CounterScopeModel {
+        private CounterScopeModelScopeType? scopeType;
         private CounterScopeModelResetType? resetType;
         private int? resetDayOfMonth;
         private string resetDayOfMonthString;
         private CounterScopeModelResetDayOfWeek? resetDayOfWeek;
         private int? resetHour;
         private string resetHourString;
+        private string conditionName;
+        private VerifyAction condition;
 
         public CounterScopeModel(
-            CounterScopeModelResetType resetType,
+            CounterScopeModelScopeType scopeType,
             CounterScopeModelOptions options = null
         ){
-            this.resetType = resetType;
+            this.scopeType = scopeType;
+            this.resetType = options?.resetType;
             this.resetDayOfMonth = options?.resetDayOfMonth;
             this.resetDayOfWeek = options?.resetDayOfWeek;
             this.resetHour = options?.resetHour;
+            this.conditionName = options?.conditionName;
+            this.condition = options?.condition;
+        }
+
+        public static CounterScopeModel ScopeTypeIsResetTiming(
+            CounterScopeModelResetType resetType,
+            CounterScopeModelScopeTypeIsResetTimingOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelScopeType.ResetTiming,
+                new CounterScopeModelOptions {
+                    resetType = resetType,
+                }
+            ));
+        }
+
+        public static CounterScopeModel ScopeTypeIsVerifyAction(
+            string conditionName,
+            VerifyAction condition,
+            CounterScopeModelScopeTypeIsVerifyActionOptions options = null
+        ){
+            return (new CounterScopeModel(
+                CounterScopeModelScopeType.VerifyAction,
+                new CounterScopeModelOptions {
+                    conditionName = conditionName,
+                    condition = condition,
+                }
+            ));
         }
 
         public static CounterScopeModel ResetTypeIsNotReset(
+            CounterScopeModelScopeType scopeType,
             CounterScopeModelResetTypeIsNotResetOptions options = null
         ){
             return (new CounterScopeModel(
-                CounterScopeModelResetType.NotReset,
+                scopeType,
                 new CounterScopeModelOptions {
                 }
             ));
         }
 
         public static CounterScopeModel ResetTypeIsDaily(
+            CounterScopeModelScopeType scopeType,
             int? resetHour,
             CounterScopeModelResetTypeIsDailyOptions options = null
         ){
             return (new CounterScopeModel(
-                CounterScopeModelResetType.Daily,
+                scopeType,
                 new CounterScopeModelOptions {
                     resetHour = resetHour,
                 }
@@ -65,12 +99,13 @@ namespace Gs2Cdk.Gs2Mission.Model
         }
 
         public static CounterScopeModel ResetTypeIsWeekly(
+            CounterScopeModelScopeType scopeType,
             CounterScopeModelResetDayOfWeek resetDayOfWeek,
             int? resetHour,
             CounterScopeModelResetTypeIsWeeklyOptions options = null
         ){
             return (new CounterScopeModel(
-                CounterScopeModelResetType.Weekly,
+                scopeType,
                 new CounterScopeModelOptions {
                     resetDayOfWeek = resetDayOfWeek,
                     resetHour = resetHour,
@@ -79,12 +114,13 @@ namespace Gs2Cdk.Gs2Mission.Model
         }
 
         public static CounterScopeModel ResetTypeIsMonthly(
+            CounterScopeModelScopeType scopeType,
             int? resetDayOfMonth,
             int? resetHour,
             CounterScopeModelResetTypeIsMonthlyOptions options = null
         ){
             return (new CounterScopeModel(
-                CounterScopeModelResetType.Monthly,
+                scopeType,
                 new CounterScopeModelOptions {
                     resetDayOfMonth = resetDayOfMonth,
                     resetHour = resetHour,
@@ -96,6 +132,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         ){
             var properties = new Dictionary<string, object>();
 
+            if (this.scopeType != null) {
+                properties["scopeType"] = this.scopeType.Value.Str(
+                );
+            }
             if (this.resetType != null) {
                 properties["resetType"] = this.resetType.Value.Str(
                 );
@@ -118,6 +158,13 @@ namespace Gs2Cdk.Gs2Mission.Model
                     properties["resetHour"] = this.resetHour;
                 }
             }
+            if (this.conditionName != null) {
+                properties["conditionName"] = this.conditionName;
+            }
+            if (this.condition != null) {
+                properties["condition"] = this.condition?.Properties(
+                );
+            }
 
             return properties;
         }
@@ -126,15 +173,16 @@ namespace Gs2Cdk.Gs2Mission.Model
             Dictionary<string, object> properties
         ){
             var model = new CounterScopeModel(
-                properties.TryGetValue("resetType", out var resetType) ? new Func<CounterScopeModelResetType>(() =>
+                properties.TryGetValue("scopeType", out var scopeType) ? new Func<CounterScopeModelScopeType>(() =>
                 {
-                    return resetType switch {
-                        CounterScopeModelResetType e => e,
-                        string s => CounterScopeModelResetTypeExt.New(s),
-                        _ => CounterScopeModelResetType.NotReset
+                    return scopeType switch {
+                        CounterScopeModelScopeType e => e,
+                        string s => CounterScopeModelScopeTypeExt.New(s),
+                        _ => CounterScopeModelScopeType.ResetTiming
                     };
                 })() : default,
                 new CounterScopeModelOptions {
+                    resetType = properties.TryGetValue("resetType", out var resetType) ? CounterScopeModelResetTypeExt.New(resetType as string) : CounterScopeModelResetType.NotReset,
                     resetDayOfMonth = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("resetDayOfMonth", out var resetDayOfMonth) ? resetDayOfMonth switch {
@@ -151,7 +199,16 @@ namespace Gs2Cdk.Gs2Mission.Model
                             string v => int.Parse(v),
                             _ => null
                         } : null;
-                    })()
+                    })(),
+                    conditionName = properties.TryGetValue("conditionName", out var conditionName) ? (string)conditionName : null,
+                    condition = properties.TryGetValue("condition", out var condition) ? new Func<VerifyAction>(() =>
+                    {
+                        return condition switch {
+                            VerifyAction v => v,
+                            Dictionary<string, object> v => VerifyAction.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 

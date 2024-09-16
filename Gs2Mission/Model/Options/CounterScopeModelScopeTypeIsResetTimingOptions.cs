@@ -22,14 +22,6 @@ using Gs2Cdk.Gs2Mission.Model.Enums;
 
 namespace Gs2Cdk.Gs2Mission.Model.Options
 {
-    public class CounterScopeModelOptions {
-        public CounterScopeModelResetType? resetType;
-        public int? resetDayOfMonth;
-        public string resetDayOfMonthString;
-        public CounterScopeModelResetDayOfWeek? resetDayOfWeek;
-        public int? resetHour;
-        public string resetHourString;
-        public string conditionName;
-        public VerifyAction condition;
+    public class CounterScopeModelScopeTypeIsResetTimingOptions {
     }
 }
