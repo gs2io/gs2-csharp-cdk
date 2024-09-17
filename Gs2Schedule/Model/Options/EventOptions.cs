@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ using Gs2Cdk.Gs2Schedule.Model.Enums;
 namespace Gs2Cdk.Gs2Schedule.Model.Options
 {
     public class EventOptions {
+        public EventRepeatType? repeatType;
         public string metadata;
         public long? absoluteBegin;
         public string absoluteBeginString;
