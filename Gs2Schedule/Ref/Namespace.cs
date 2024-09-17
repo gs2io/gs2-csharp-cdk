@@ -59,6 +59,21 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             ));
         }
 
+        public VerifyTriggerByUserId VerifyTrigger(
+            string triggerName,
+            VerifyTriggerByUserIdVerifyType verifyType,
+            int? elapsedMinutes = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyTriggerByUserId(
+                this.namespaceName,
+                triggerName,
+                verifyType,
+                elapsedMinutes,
+                userId
+            ));
+        }
+
         public VerifyEventByUserId VerifyEvent(
             string eventName,
             VerifyEventByUserIdVerifyType verifyType,

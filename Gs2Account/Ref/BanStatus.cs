@@ -13,26 +13,22 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using Gs2Cdk.Gs2Account.Ref;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Gs2Cdk.Gs2Account
+using Gs2Cdk.Core.Func;
+using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2Account.Model;
+
+namespace Gs2Cdk.Gs2Account.Ref
 {
-    public class Account {
+    public class BanStatusRef {
+        private string name;
 
-        public static NamespaceRef Namespace(
-            string namespaceName
-        ){
-            return (new NamespaceRef(
-                namespaceName
-            ));
-        }
-
-        public static BanStatusRef BanStatus(
+        public BanStatusRef(
             string name
         ){
-            return (new BanStatusRef(
-                name
-            ));
+            this.name = name;
         }
     }
 }
