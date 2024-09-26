@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Script.Model.Options
 {
     public class ScriptOptions {
         public string description;
+        public bool? disableStringNumberToNumber;
     }
 }
 

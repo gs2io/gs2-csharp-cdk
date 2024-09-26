@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Script.Model
         public string name;
         public string script;
         public string description;
+        public bool? disableStringNumberToNumber;
 
         public Script(
             Stack stack,
@@ -47,6 +48,7 @@ namespace Gs2Cdk.Gs2Script.Model
             this.name = name;
             this.script = script;
             this.description = options?.description;
+            this.disableStringNumberToNumber = options?.disableStringNumberToNumber;
             stack.AddResource(
                 this
             );
@@ -78,6 +80,9 @@ namespace Gs2Cdk.Gs2Script.Model
             }
             if (this.script != null) {
                 properties["Script"] = this.script;
+            }
+            if (this.disableStringNumberToNumber != null) {
+                properties["DisableStringNumberToNumber"] = this.disableStringNumberToNumber;
             }
 
             return properties;

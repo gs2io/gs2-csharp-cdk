@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Chat.Model
         public string name;
         public string description;
         public bool? allowCreateRoom;
+        public int? messageLifeTimeDays;
         public ScriptSetting postMessageScript;
         public ScriptSetting createRoomScript;
         public ScriptSetting deleteRoomScript;
@@ -50,6 +51,7 @@ namespace Gs2Cdk.Gs2Chat.Model
             this.name = name;
             this.description = options?.description;
             this.allowCreateRoom = options?.allowCreateRoom;
+            this.messageLifeTimeDays = options?.messageLifeTimeDays;
             this.postMessageScript = options?.postMessageScript;
             this.createRoomScript = options?.createRoomScript;
             this.deleteRoomScript = options?.deleteRoomScript;
@@ -85,6 +87,9 @@ namespace Gs2Cdk.Gs2Chat.Model
             }
             if (this.allowCreateRoom != null) {
                 properties["AllowCreateRoom"] = this.allowCreateRoom;
+            }
+            if (this.messageLifeTimeDays != null) {
+                properties["MessageLifeTimeDays"] = this.messageLifeTimeDays;
             }
             if (this.postMessageScript != null) {
                 properties["PostMessageScript"] = this.postMessageScript?.Properties(
