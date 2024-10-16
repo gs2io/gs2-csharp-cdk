@@ -118,12 +118,12 @@ namespace Gs2Cdk.Gs2Quest.Model
         }
 
         public Namespace MasterData(
-            QuestGroupModel[] questGroupModels
+            QuestGroupModel[] groups
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                questGroupModels
+                groups
             )).AddDependsOn(
                 this
             );
@@ -138,7 +138,7 @@ namespace Gs2Cdk.Gs2Quest.Model
                 this.name,
                 new Func<QuestGroupModel[]>(() =>
                 {
-                    return properties["questGroupModels"] switch {
+                    return properties["groups"] switch {
                         QuestGroupModel[] v => v,
                         List<QuestGroupModel> v => v.ToArray(),
                         Dictionary<string, object>[] v => v.Select(QuestGroupModel.FromProperties).ToArray(),

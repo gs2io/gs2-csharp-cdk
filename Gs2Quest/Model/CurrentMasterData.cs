@@ -24,18 +24,18 @@ namespace Gs2Cdk.Gs2Quest.Model
     public class CurrentMasterData : CdkResource {
         private string version= "2019-05-14";
         private string namespaceName;
-        private QuestGroupModel[] questGroupModels;
+        private QuestGroupModel[] groups;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            QuestGroupModel[] questGroupModels
+            QuestGroupModel[] groups
         ): base(
             "Quest_CurrentQuestMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
-            this.questGroupModels = questGroupModels;
+            this.groups = groups;
             stack.AddResource(
                 this
             );
@@ -57,8 +57,8 @@ namespace Gs2Cdk.Gs2Quest.Model
             var settings = new Dictionary<string, object>();
 
             settings["version"] = this.version;
-            if (this.questGroupModels != null) {
-                settings["questGroupModels"] = this.questGroupModels.Select(v => v?.Properties(
+            if (this.groups != null) {
+                settings["groups"] = this.groups.Select(v => v?.Properties(
                         )).ToList();
             }
 

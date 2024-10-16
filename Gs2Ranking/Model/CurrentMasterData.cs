@@ -24,18 +24,18 @@ namespace Gs2Cdk.Gs2Ranking.Model
     public class CurrentMasterData : CdkResource {
         private string version= "2019-09-17";
         private string namespaceName;
-        private CategoryModel[] categoryModels;
+        private CategoryModel[] categories;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            CategoryModel[] categoryModels
+            CategoryModel[] categories
         ): base(
             "Ranking_CurrentRankingMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
-            this.categoryModels = categoryModels;
+            this.categories = categories;
             stack.AddResource(
                 this
             );
@@ -57,8 +57,8 @@ namespace Gs2Cdk.Gs2Ranking.Model
             var settings = new Dictionary<string, object>();
 
             settings["version"] = this.version;
-            if (this.categoryModels != null) {
-                settings["categoryModels"] = this.categoryModels.Select(v => v?.Properties(
+            if (this.categories != null) {
+                settings["categories"] = this.categories.Select(v => v?.Properties(
                         )).ToList();
             }
 

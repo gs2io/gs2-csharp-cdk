@@ -19,6 +19,7 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Script.Model;
+using Gs2Cdk.Gs2Script.StampSheet;
 
 namespace Gs2Cdk.Gs2Script.Ref
 {
@@ -29,6 +30,20 @@ namespace Gs2Cdk.Gs2Script.Ref
             string namespaceName
         ){
             this.namespaceName = namespaceName;
+        }
+
+        public InvokeScript InvokeScript(
+            string scriptId,
+            string args = null,
+            RandomStatus randomStatus = null,
+            string userId = "#{userId}"
+        ){
+            return (new InvokeScript(
+                scriptId,
+                args,
+                randomStatus,
+                userId
+            ));
         }
 
         public string Grn(

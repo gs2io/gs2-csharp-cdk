@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2SerialKey.Model;
 using Gs2Cdk.Gs2SerialKey.StampSheet;
+using Gs2Cdk.Gs2SerialKey.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2SerialKey.Ref
 {
@@ -59,6 +60,19 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
             return (new UseByUserId(
                 this.namespaceName,
                 code,
+                userId
+            ));
+        }
+
+        public VerifyCodeByUserId VerifyCode(
+            string code,
+            VerifyCodeByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyCodeByUserId(
+                this.namespaceName,
+                code,
+                verifyType,
                 userId
             ));
         }

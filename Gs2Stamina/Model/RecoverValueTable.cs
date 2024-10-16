@@ -67,18 +67,24 @@ namespace Gs2Cdk.Gs2Stamina.Model
             Dictionary<string, object> properties
         ){
             var model = new RecoverValueTable(
-                (string)properties["name"],
-                (string)properties["experienceModelId"],
-                new Func<int[]>(() =>
+                properties.TryGetValue("name", out var name) ? new Func<string>(() =>
                 {
-                    return properties["values"] switch {
+                    return (string) name;
+                })() : default,
+                properties.TryGetValue("experienceModelId", out var experienceModelId) ? new Func<string>(() =>
+                {
+                    return (string) experienceModelId;
+                })() : default,
+                properties.TryGetValue("values", out var values) ? new Func<int[]>(() =>
+                {
+                    return values switch {
                         int[] v => v.ToArray(),
                         List<int> v => v.ToArray(),
-                        object[] v => v.Select(v2 => int.Parse(v2?.ToString())).ToArray(),
+                        object[] v => v.Select(v2 => int.Parse(v2.ToString())).ToArray(),
                         { } v => new []{ int.Parse(v.ToString()) },
                         _ => null
                     };
-                })(),
+                })() : null,
                 new RecoverValueTableOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }

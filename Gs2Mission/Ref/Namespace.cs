@@ -105,6 +105,19 @@ namespace Gs2Cdk.Gs2Mission.Ref
             ));
         }
 
+        public BatchReceiveByUserId BatchReceive(
+            string missionGroupName,
+            string[] missionTaskNames,
+            string userId = "#{userId}"
+        ){
+            return (new BatchReceiveByUserId(
+                this.namespaceName,
+                missionGroupName,
+                missionTaskNames,
+                userId
+            ));
+        }
+
         public DecreaseCounterByUserId DecreaseCounter(
             string counterName,
             long value,

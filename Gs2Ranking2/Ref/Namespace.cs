@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Ranking2.Model;
 using Gs2Cdk.Gs2Ranking2.StampSheet;
+using Gs2Cdk.Gs2Ranking2.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Ranking2.Ref
 {
@@ -83,6 +84,65 @@ namespace Gs2Cdk.Gs2Ranking2.Ref
                 rankingName,
                 clusterName,
                 season,
+                userId
+            ));
+        }
+
+        public VerifyGlobalRankingScoreByUserId VerifyGlobalRankingScore(
+            string rankingName,
+            VerifyGlobalRankingScoreByUserIdVerifyType verifyType,
+            long score,
+            long? season = null,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyGlobalRankingScoreByUserId(
+                this.namespaceName,
+                rankingName,
+                verifyType,
+                score,
+                season,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyClusterRankingScoreByUserId VerifyClusterRankingScore(
+            string rankingName,
+            string clusterName,
+            VerifyClusterRankingScoreByUserIdVerifyType verifyType,
+            long score,
+            long? season = null,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyClusterRankingScoreByUserId(
+                this.namespaceName,
+                rankingName,
+                clusterName,
+                verifyType,
+                score,
+                season,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifySubscribeRankingScoreByUserId VerifySubscribeRankingScore(
+            string rankingName,
+            VerifySubscribeRankingScoreByUserIdVerifyType verifyType,
+            long score,
+            long? season = null,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifySubscribeRankingScoreByUserId(
+                this.namespaceName,
+                rankingName,
+                verifyType,
+                score,
+                season,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

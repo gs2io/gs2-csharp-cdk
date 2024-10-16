@@ -94,12 +94,12 @@ namespace Gs2Cdk.Gs2Ranking.Model
         }
 
         public Namespace MasterData(
-            CategoryModel[] categoryModels
+            CategoryModel[] categories
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                categoryModels
+                categories
             )).AddDependsOn(
                 this
             );
@@ -114,7 +114,7 @@ namespace Gs2Cdk.Gs2Ranking.Model
                 this.name,
                 new Func<CategoryModel[]>(() =>
                 {
-                    return properties["categoryModels"] switch {
+                    return properties["categories"] switch {
                         CategoryModel[] v => v,
                         List<CategoryModel> v => v.ToArray(),
                         Dictionary<string, object>[] v => v.Select(CategoryModel.FromProperties).ToArray(),

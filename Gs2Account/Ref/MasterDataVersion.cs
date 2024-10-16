@@ -12,32 +12,26 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
- *
- * deny overwrite
  */
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
+using Gs2Cdk.Gs2Account.Model;
 
-namespace Gs2Cdk.Gs2Identifier.Model
+namespace Gs2Cdk.Gs2Account.Ref
 {
-    public class ProjectToken {
-	    private readonly string _token;
+    public class MasterDataVersionRef {
+        private string namespaceName;
+        private string objectKey;
 
-        public ProjectToken(
-            string token = null
-        )
-        {
-        }
-
-        public Dictionary<string, object> Properties() {
-            var properties = new Dictionary<string, object>();
-            if (this._token != null) {
-                properties["Token"] = this._token;
-            }
-            return properties;
+        public MasterDataVersionRef(
+            string namespaceName,
+            string objectKey
+        ){
+            this.namespaceName = namespaceName;
+            this.objectKey = objectKey;
         }
     }
 }

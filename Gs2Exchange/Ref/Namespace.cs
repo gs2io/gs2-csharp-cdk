@@ -87,21 +87,6 @@ namespace Gs2Cdk.Gs2Exchange.Ref
             ));
         }
 
-        public UnlockIncrementalExchangeByUserId UnlockIncrementalExchange(
-            string rateName,
-            string lockTransactionId,
-            string timeOffsetToken = null,
-            string userId = "#{userId}"
-        ){
-            return (new UnlockIncrementalExchangeByUserId(
-                this.namespaceName,
-                rateName,
-                lockTransactionId,
-                timeOffsetToken,
-                userId
-            ));
-        }
-
         public CreateAwaitByUserId CreateAwait(
             string rateName,
             int? count = null,
@@ -114,6 +99,25 @@ namespace Gs2Cdk.Gs2Exchange.Ref
                 rateName,
                 count,
                 config,
+                timeOffsetToken,
+                userId
+            ));
+        }
+
+        public SkipByUserId Skip(
+            string awaitName = null,
+            SkipByUserIdSkipType? skipType = null,
+            int? minutes = null,
+            float? rate = null,
+            string timeOffsetToken = null,
+            string userId = "#{userId}"
+        ){
+            return (new SkipByUserId(
+                this.namespaceName,
+                awaitName,
+                skipType,
+                minutes,
+                rate,
                 timeOffsetToken,
                 userId
             ));

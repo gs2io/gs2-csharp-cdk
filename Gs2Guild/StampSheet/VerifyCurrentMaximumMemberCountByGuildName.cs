@@ -25,7 +25,7 @@ using Gs2Cdk.Gs2Guild.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Guild.StampSheet
 {
-    public class VerifyCurrentMaximumMemberCountByGuildName : ConsumeAction {
+    public class VerifyCurrentMaximumMemberCountByGuildName : VerifyAction {
         private string namespaceName;
         private string guildModelName;
         private string guildName;

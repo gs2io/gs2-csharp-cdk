@@ -24,19 +24,22 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Gs2StateMachine.Integration;
 using Gs2Cdk.Gs2StateMachine.Ref;
 using Gs2Cdk.Gs2StateMachine.Model;
+using Gs2Cdk.Gs2StateMachine.Model.Enums;
 using Gs2Cdk.Gs2StateMachine.Model.Options;
 
 namespace Gs2Cdk.Gs2StateMachine.Model
 {
     public class Namespace : CdkResource {
         private Stack? stack;
-        private string name;
-        private string description;
-        private ScriptSetting startScript;
-        private ScriptSetting passScript;
-        private ScriptSetting errorScript;
-        private long? lowestStateMachineVersion;
-        private LogSetting logSetting;
+        public string name;
+        public string description;
+        public NamespaceSupportSpeculativeExecution? supportSpeculativeExecution;
+        public TransactionSetting transactionSetting;
+        public ScriptSetting startScript;
+        public ScriptSetting passScript;
+        public ScriptSetting errorScript;
+        public long? lowestStateMachineVersion;
+        public LogSetting logSetting;
 
         public Namespace(
             Stack stack,
@@ -49,6 +52,8 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.supportSpeculativeExecution = options?.supportSpeculativeExecution;
+            this.transactionSetting = options?.transactionSetting;
             this.startScript = options?.startScript;
             this.passScript = options?.passScript;
             this.errorScript = options?.errorScript;
@@ -79,6 +84,14 @@ namespace Gs2Cdk.Gs2StateMachine.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.supportSpeculativeExecution != null) {
+                properties["SupportSpeculativeExecution"] = this.supportSpeculativeExecution.Value.Str(
+                );
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.startScript != null) {
                 properties["StartScript"] = this.startScript?.Properties(
