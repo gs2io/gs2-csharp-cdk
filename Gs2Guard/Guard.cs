@@ -13,28 +13,18 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-using System.Collections.Generic;
-using System.Linq;
+using Gs2Cdk.Gs2Guard.Ref;
 
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
-
-namespace Gs2Cdk.Gs2Account.Ref
+namespace Gs2Cdk.Gs2Guard
 {
-    public class MasterDataVersionRef {
-        private string namespaceName;
-        private string objectKey;
-        private string versionId;
+    public class Guard {
 
-        public MasterDataVersionRef(
-            string namespaceName,
-            string objectKey,
-            string versionId
+        public static NamespaceRef Namespace(
+            string namespaceName
         ){
-            this.namespaceName = namespaceName;
-            this.objectKey = objectKey;
-            this.versionId = versionId;
+            return (new NamespaceRef(
+                namespaceName
+            ));
         }
     }
 }

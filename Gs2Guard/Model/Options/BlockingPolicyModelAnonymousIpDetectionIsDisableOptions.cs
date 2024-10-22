@@ -16,25 +16,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Guard.Model;
+using Gs2Cdk.Gs2Guard.Model.Enums;
 
-namespace Gs2Cdk.Gs2Account.Ref
+namespace Gs2Cdk.Gs2Guard.Model.Options
 {
-    public class MasterDataVersionRef {
-        private string namespaceName;
-        private string objectKey;
-        private string versionId;
-
-        public MasterDataVersionRef(
-            string namespaceName,
-            string objectKey,
-            string versionId
-        ){
-            this.namespaceName = namespaceName;
-            this.objectKey = objectKey;
-            this.versionId = versionId;
-        }
+    public class BlockingPolicyModelAnonymousIpDetectionIsDisableOptions {
+        public string[] ipAddresses;
     }
 }

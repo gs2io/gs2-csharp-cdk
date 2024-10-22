@@ -18,9 +18,9 @@ using System.Linq;
 
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Lottery.Model;
 
-namespace Gs2Cdk.Gs2Account.Ref
+namespace Gs2Cdk.Gs2Lottery.Ref
 {
     public class MasterDataVersionRef {
         private string namespaceName;

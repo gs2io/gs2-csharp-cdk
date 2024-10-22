@@ -18,23 +18,38 @@ using System.Linq;
 
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Guard.Model;
 
-namespace Gs2Cdk.Gs2Account.Ref
+namespace Gs2Cdk.Gs2Guard.Ref
 {
-    public class MasterDataVersionRef {
+    public class NamespaceRef {
         private string namespaceName;
-        private string objectKey;
-        private string versionId;
 
-        public MasterDataVersionRef(
-            string namespaceName,
-            string objectKey,
-            string versionId
+        public NamespaceRef(
+            string namespaceName
         ){
             this.namespaceName = namespaceName;
-            this.objectKey = objectKey;
-            this.versionId = versionId;
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
+                ":",
+                new []
+                {
+                    "grn",
+                    "gs2",
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
+                    "guard",
+                    this.namespaceName
+                }
+            )).Str(
+            );
         }
     }
 }
