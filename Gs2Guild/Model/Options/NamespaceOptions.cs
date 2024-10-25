@@ -24,12 +24,14 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public NotificationSetting changeNotification;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
         public NotificationSetting changeMemberNotification;
         public NotificationSetting receiveRequestNotification;
         public NotificationSetting removeRequestNotification;
         public ScriptSetting createGuildScript;
+        public ScriptSetting updateGuildScript;
         public ScriptSetting joinGuildScript;
         public ScriptSetting leaveGuildScript;
         public ScriptSetting changeRoleScript;

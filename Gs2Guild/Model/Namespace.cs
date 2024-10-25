@@ -29,12 +29,14 @@ namespace Gs2Cdk.Gs2Guild.Model
         private Stack? stack;
         public string name;
         public string description;
+        public NotificationSetting changeNotification;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
         public NotificationSetting changeMemberNotification;
         public NotificationSetting receiveRequestNotification;
         public NotificationSetting removeRequestNotification;
         public ScriptSetting createGuildScript;
+        public ScriptSetting updateGuildScript;
         public ScriptSetting joinGuildScript;
         public ScriptSetting leaveGuildScript;
         public ScriptSetting changeRoleScript;
@@ -51,12 +53,14 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.changeNotification = options?.changeNotification;
             this.joinNotification = options?.joinNotification;
             this.leaveNotification = options?.leaveNotification;
             this.changeMemberNotification = options?.changeMemberNotification;
             this.receiveRequestNotification = options?.receiveRequestNotification;
             this.removeRequestNotification = options?.removeRequestNotification;
             this.createGuildScript = options?.createGuildScript;
+            this.updateGuildScript = options?.updateGuildScript;
             this.joinGuildScript = options?.joinGuildScript;
             this.leaveGuildScript = options?.leaveGuildScript;
             this.changeRoleScript = options?.changeRoleScript;
@@ -87,6 +91,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             if (this.description != null) {
                 properties["Description"] = this.description;
             }
+            if (this.changeNotification != null) {
+                properties["ChangeNotification"] = this.changeNotification?.Properties(
+                );
+            }
             if (this.joinNotification != null) {
                 properties["JoinNotification"] = this.joinNotification?.Properties(
                 );
@@ -109,6 +117,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.createGuildScript != null) {
                 properties["CreateGuildScript"] = this.createGuildScript?.Properties(
+                );
+            }
+            if (this.updateGuildScript != null) {
+                properties["UpdateGuildScript"] = this.updateGuildScript?.Properties(
                 );
             }
             if (this.joinGuildScript != null) {

@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Core.Func;
+using Gs2Cdk.Gs2Guard.Model;
 using Gs2Cdk.Gs2Identifier.Ref;
 using Gs2Cdk.Gs2Identifier.Model;
 using Gs2Cdk.Gs2Identifier.Model.Options;
@@ -73,6 +76,38 @@ namespace Gs2Cdk.Gs2Identifier.Model
                 this.userName,
                 clientId
             ));
+        }
+
+        public Identifier Attach(
+            Namespace guardNamespace
+        ){
+            (new AttachGuard(
+                this.stack,
+                this.userName,
+                this.GetAttrClientId().Str(),
+                guardNamespace.GetAttrNamespaceId().Str()
+            )).AddDependsOn(
+                this
+            ).AddDependsOn(
+                guardNamespace
+            );
+
+            return this;
+        }
+
+        public Identifier AttachGrn(
+            string guardNamespaceGrn
+        ){
+            (new AttachGuard(
+                this.stack,
+                this.userName,
+                this.GetAttrClientId().Str(),
+                guardNamespaceGrn
+            )).AddDependsOn(
+                this
+            );
+
+            return this;
         }
 
         public GetAttr GetAttrClientId(
