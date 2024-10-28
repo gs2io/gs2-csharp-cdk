@@ -26,5 +26,6 @@ namespace Gs2Cdk.Gs2Account.Model.Options
         public string appleTeamId;
         public string appleKeyId;
         public string applePrivateKeyPem;
+        public string doneEndpointUrl;
     }
 }

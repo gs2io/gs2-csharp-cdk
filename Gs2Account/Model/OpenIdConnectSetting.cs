@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Account.Model
         private string appleTeamId;
         private string appleKeyId;
         private string applePrivateKeyPem;
+        private string doneEndpointUrl;
 
         public OpenIdConnectSetting(
             string configurationPath,
@@ -42,6 +43,7 @@ namespace Gs2Cdk.Gs2Account.Model
             this.appleTeamId = options?.appleTeamId;
             this.appleKeyId = options?.appleKeyId;
             this.applePrivateKeyPem = options?.applePrivateKeyPem;
+            this.doneEndpointUrl = options?.doneEndpointUrl;
         }
 
         public Dictionary<string, object> Properties(
@@ -66,6 +68,9 @@ namespace Gs2Cdk.Gs2Account.Model
             if (this.applePrivateKeyPem != null) {
                 properties["applePrivateKeyPem"] = this.applePrivateKeyPem;
             }
+            if (this.doneEndpointUrl != null) {
+                properties["doneEndpointUrl"] = this.doneEndpointUrl;
+            }
 
             return properties;
         }
@@ -86,7 +91,8 @@ namespace Gs2Cdk.Gs2Account.Model
                     clientSecret = properties.TryGetValue("clientSecret", out var clientSecret) ? (string)clientSecret : null,
                     appleTeamId = properties.TryGetValue("appleTeamId", out var appleTeamId) ? (string)appleTeamId : null,
                     appleKeyId = properties.TryGetValue("appleKeyId", out var appleKeyId) ? (string)appleKeyId : null,
-                    applePrivateKeyPem = properties.TryGetValue("applePrivateKeyPem", out var applePrivateKeyPem) ? (string)applePrivateKeyPem : null
+                    applePrivateKeyPem = properties.TryGetValue("applePrivateKeyPem", out var applePrivateKeyPem) ? (string)applePrivateKeyPem : null,
+                    doneEndpointUrl = properties.TryGetValue("doneEndpointUrl", out var doneEndpointUrl) ? (string)doneEndpointUrl : null
                 }
             );
 
