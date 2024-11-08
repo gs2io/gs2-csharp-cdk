@@ -109,6 +109,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
             string propertyId,
             string rateName,
             AcquireAction[] acquireActions = null,
+            float? baseRate = null,
             string userId = "#{userId}"
         ){
             return (new MultiplyAcquireActionsByUserId(
@@ -117,6 +118,7 @@ namespace Gs2Cdk.Gs2Experience.Ref
                 propertyId,
                 rateName,
                 acquireActions,
+                baseRate,
                 userId
             ));
         }
