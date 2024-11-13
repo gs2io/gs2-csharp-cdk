@@ -28,6 +28,7 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
         private string userId;
         private string code;
         private VerifyCodeByUserIdVerifyType? verifyType;
+        private string campaignModelName;
         private string timeOffsetToken;
 
 
@@ -35,6 +36,7 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             string namespaceName,
             string code,
             VerifyCodeByUserIdVerifyType verifyType,
+            string campaignModelName = null,
             string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
@@ -42,6 +44,7 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             this.namespaceName = namespaceName;
             this.code = code;
             this.verifyType = verifyType;
+            this.campaignModelName = campaignModelName;
             this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
@@ -58,6 +61,9 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
             }
             if (this.code != null) {
                 properties["code"] = this.code;
+            }
+            if (this.campaignModelName != null) {
+                properties["campaignModelName"] = this.campaignModelName;
             }
             if (this.verifyType != null) {
                 properties["verifyType"] = this.verifyType.Value.Str(
@@ -85,6 +91,10 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
                     })(),
                     new Func<string>(() =>
                     {
+                        return properties.TryGetValue("campaignModelName", out var campaignModelName) ? campaignModelName as string : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
                         return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
                     })(),
                     new Func<string>(() =>
@@ -103,6 +113,10 @@ namespace Gs2Cdk.Gs2SerialKey.StampSheet
                             string s => VerifyCodeByUserIdVerifyTypeExt.New(s),
                             _ => VerifyCodeByUserIdVerifyType.Active
                         };
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("campaignModelName", out var campaignModelName) ? campaignModelName.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

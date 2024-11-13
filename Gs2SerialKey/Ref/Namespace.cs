@@ -53,6 +53,17 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
             ));
         }
 
+        public IssueOnce IssueOnce(
+            string campaignModelName,
+            string metadata = null
+        ){
+            return (new IssueOnce(
+                this.namespaceName,
+                campaignModelName,
+                metadata
+            ));
+        }
+
         public UseByUserId Use(
             string code,
             string userId = "#{userId}"
@@ -67,12 +78,14 @@ namespace Gs2Cdk.Gs2SerialKey.Ref
         public VerifyCodeByUserId VerifyCode(
             string code,
             VerifyCodeByUserIdVerifyType verifyType,
+            string campaignModelName = null,
             string userId = "#{userId}"
         ){
             return (new VerifyCodeByUserId(
                 this.namespaceName,
                 code,
                 verifyType,
+                campaignModelName,
                 userId
             ));
         }
