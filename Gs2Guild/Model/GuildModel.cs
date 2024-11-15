@@ -37,6 +37,10 @@ namespace Gs2Cdk.Gs2Guild.Model
         private int? rejoinCoolTimeMinutes;
         private string rejoinCoolTimeMinutesString;
         private string metadata;
+        private int? maxConcurrentJoinGuilds;
+        private string maxConcurrentJoinGuildsString;
+        private int? maxConcurrentGuildMasterCount;
+        private string maxConcurrentGuildMasterCountString;
 
         public GuildModel(
             string name,
@@ -58,6 +62,8 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.guildMemberDefaultRole = guildMemberDefaultRole;
             this.rejoinCoolTimeMinutes = rejoinCoolTimeMinutes;
             this.metadata = options?.metadata;
+            this.maxConcurrentJoinGuilds = options?.maxConcurrentJoinGuilds;
+            this.maxConcurrentGuildMasterCount = options?.maxConcurrentGuildMasterCount;
         }
 
 
@@ -81,6 +87,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.guildMemberDefaultRole = guildMemberDefaultRole;
             this.rejoinCoolTimeMinutesString = rejoinCoolTimeMinutes;
             this.metadata = options?.metadata;
+            this.maxConcurrentJoinGuilds = options?.maxConcurrentJoinGuilds;
+            this.maxConcurrentJoinGuildsString = options?.maxConcurrentJoinGuildsString;
+            this.maxConcurrentGuildMasterCount = options?.maxConcurrentGuildMasterCount;
+            this.maxConcurrentGuildMasterCountString = options?.maxConcurrentGuildMasterCountString;
         }
 
         public Dictionary<string, object> Properties(
@@ -129,6 +139,20 @@ namespace Gs2Cdk.Gs2Guild.Model
             } else {
                 if (this.rejoinCoolTimeMinutes != null) {
                     properties["rejoinCoolTimeMinutes"] = this.rejoinCoolTimeMinutes;
+                }
+            }
+            if (this.maxConcurrentJoinGuildsString != null) {
+                properties["maxConcurrentJoinGuilds"] = this.maxConcurrentJoinGuildsString;
+            } else {
+                if (this.maxConcurrentJoinGuilds != null) {
+                    properties["maxConcurrentJoinGuilds"] = this.maxConcurrentJoinGuilds;
+                }
+            }
+            if (this.maxConcurrentGuildMasterCountString != null) {
+                properties["maxConcurrentGuildMasterCount"] = this.maxConcurrentGuildMasterCountString;
+            } else {
+                if (this.maxConcurrentGuildMasterCount != null) {
+                    properties["maxConcurrentGuildMasterCount"] = this.maxConcurrentGuildMasterCount;
                 }
             }
 
@@ -195,7 +219,23 @@ namespace Gs2Cdk.Gs2Guild.Model
                     };
                 })() : default,
                 new GuildModelOptions {
-                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    maxConcurrentJoinGuilds = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("maxConcurrentJoinGuilds", out var maxConcurrentJoinGuilds) ? maxConcurrentJoinGuilds switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    maxConcurrentGuildMasterCount = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("maxConcurrentGuildMasterCount", out var maxConcurrentGuildMasterCount) ? maxConcurrentGuildMasterCount switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

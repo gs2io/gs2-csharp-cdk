@@ -23,5 +23,9 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
 {
     public class GuildModelOptions {
         public string metadata;
+        public int? maxConcurrentJoinGuilds;
+        public string maxConcurrentJoinGuildsString;
+        public int? maxConcurrentGuildMasterCount;
+        public string maxConcurrentGuildMasterCountString;
     }
 }
