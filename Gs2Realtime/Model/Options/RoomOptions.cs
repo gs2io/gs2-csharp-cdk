@@ -23,9 +23,6 @@ using Gs2Cdk.Gs2Realtime.Model;
 namespace Gs2Cdk.Gs2Realtime.Model.Options
 {
     public class RoomOptions {
-        public string ipAddress;
-        public int? port;
-        public string encryptionKey;
     }
 }
 

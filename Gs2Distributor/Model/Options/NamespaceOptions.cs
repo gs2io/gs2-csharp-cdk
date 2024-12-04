@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Distributor.Model.Options
         public string description;
         public string assumeUserId;
         public NotificationSetting autoRunStampSheetNotification;
+        public NotificationSetting autoRunTransactionNotification;
         public LogSetting logSetting;
     }
 }

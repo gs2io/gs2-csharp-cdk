@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
         public string description;
         public string assumeUserId;
         public NotificationSetting autoRunStampSheetNotification;
+        public NotificationSetting autoRunTransactionNotification;
         public LogSetting logSetting;
 
         public Namespace(
@@ -46,6 +47,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
             this.description = options?.description;
             this.assumeUserId = options?.assumeUserId;
             this.autoRunStampSheetNotification = options?.autoRunStampSheetNotification;
+            this.autoRunTransactionNotification = options?.autoRunTransactionNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -78,6 +80,10 @@ namespace Gs2Cdk.Gs2Distributor.Model
             }
             if (this.autoRunStampSheetNotification != null) {
                 properties["AutoRunStampSheetNotification"] = this.autoRunStampSheetNotification?.Properties(
+                );
+            }
+            if (this.autoRunTransactionNotification != null) {
+                properties["AutoRunTransactionNotification"] = this.autoRunTransactionNotification?.Properties(
                 );
             }
             if (this.logSetting != null) {
