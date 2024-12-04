@@ -24,10 +24,10 @@ namespace Gs2Cdk.Core.Model
             var properties = new Dictionary<string, object>();
             properties["EnableAutoRun"] = true;
             if (this._enableAtomicCommit) {
-                properties["EnableAtomicCommit"] = this._transactionUseDistributor;
+                properties["EnableAtomicCommit"] = this._enableAtomicCommit;
             }
             if (this._transactionUseDistributor) {
-                properties["TransactionUseDistributor"] = this._distributorNamespaceId;
+                properties["TransactionUseDistributor"] = this._transactionUseDistributor;
             }
             if (this._acquireActionUseJobQueue) {
                 properties["AcquireActionUseJobQueue"] = this._acquireActionUseJobQueue;
