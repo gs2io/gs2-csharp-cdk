@@ -31,5 +31,6 @@ namespace Gs2Cdk.Gs2Version.Model.Options
         public bool? needSignature;
         public string needSignatureString;
         public string signatureKeyId;
+        public VersionModelApproveRequirement? approveRequirement;
     }
 }

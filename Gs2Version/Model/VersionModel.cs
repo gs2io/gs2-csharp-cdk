@@ -36,6 +36,7 @@ namespace Gs2Cdk.Gs2Version.Model
         private bool? needSignature;
         private string needSignatureString;
         private string signatureKeyId;
+        private VersionModelApproveRequirement? approveRequirement;
 
         public VersionModel(
             string name,
@@ -53,6 +54,7 @@ namespace Gs2Cdk.Gs2Version.Model
             this.scheduleVersions = options?.scheduleVersions;
             this.needSignature = options?.needSignature;
             this.signatureKeyId = options?.signatureKeyId;
+            this.approveRequirement = options?.approveRequirement;
         }
 
         public static VersionModel TypeIsSimple(
@@ -112,6 +114,7 @@ namespace Gs2Cdk.Gs2Version.Model
         public static VersionModel ScopeIsActive(
             string name,
             VersionModelType type,
+            VersionModelApproveRequirement approveRequirement,
             VersionModelScopeIsActiveOptions options = null
         ){
             return (new VersionModel(
@@ -119,6 +122,7 @@ namespace Gs2Cdk.Gs2Version.Model
                 VersionModelScope.Active,
                 type,
                 new VersionModelOptions {
+                    approveRequirement = approveRequirement,
                     metadata = options?.metadata,
                     scheduleVersions = options?.scheduleVersions,
                 }
@@ -168,6 +172,10 @@ namespace Gs2Cdk.Gs2Version.Model
             }
             if (this.signatureKeyId != null) {
                 properties["signatureKeyId"] = this.signatureKeyId;
+            }
+            if (this.approveRequirement != null) {
+                properties["approveRequirement"] = this.approveRequirement.Value.Str(
+                );
             }
 
             return properties;
@@ -241,7 +249,8 @@ namespace Gs2Cdk.Gs2Version.Model
                             _ => null
                         } : null;
                     })(),
-                    signatureKeyId = properties.TryGetValue("signatureKeyId", out var signatureKeyId) ? (string)signatureKeyId : null
+                    signatureKeyId = properties.TryGetValue("signatureKeyId", out var signatureKeyId) ? (string)signatureKeyId : null,
+                    approveRequirement = properties.TryGetValue("approveRequirement", out var approveRequirement) ? VersionModelApproveRequirementExt.New(approveRequirement as string) : VersionModelApproveRequirement.Required
                 }
             );
 

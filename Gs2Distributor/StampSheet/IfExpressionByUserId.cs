@@ -22,7 +22,7 @@ using Gs2Cdk.Gs2Distributor.Model;
 
 namespace Gs2Cdk.Gs2Distributor.StampSheet
 {
-    public class IfExpressionByUserId : ConsumeAction {
+    public class IfExpressionByUserId : VerifyAction {
         private string namespaceName;
         private string userId;
         private VerifyAction condition;
