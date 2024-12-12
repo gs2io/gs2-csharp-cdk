@@ -17,7 +17,7 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public Dictionary<string, object> Properties() {
             return new Dictionary<string, object>() {
                 {"Version", _version},
-                {"Statements", _statements.Select(v => v.Properties())},
+                {"Statements", _statements.Select(v => v.Properties()).ToArray()},
             };
         }
 
