@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Ranking2.Model
         private bool? sum;
         private string sumString;
         private ClusterRankingModelOrderDirection? orderDirection;
+        private ClusterRankingModelRewardCalculationIndex? rewardCalculationIndex;
         private string metadata;
         private long? minimumValue;
         private string minimumValueString;
@@ -44,12 +45,14 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             ClusterRankingModelClusterType clusterType,
             bool? sum,
             ClusterRankingModelOrderDirection orderDirection,
+            ClusterRankingModelRewardCalculationIndex rewardCalculationIndex,
             ClusterRankingModelOptions options = null
         ){
             this.name = name;
             this.clusterType = clusterType;
             this.sum = sum;
             this.orderDirection = orderDirection;
+            this.rewardCalculationIndex = rewardCalculationIndex;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.maximumValue = options?.maximumValue;
@@ -64,12 +67,14 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             ClusterRankingModelClusterType clusterType,
             string sum,
             ClusterRankingModelOrderDirection orderDirection,
+            ClusterRankingModelRewardCalculationIndex rewardCalculationIndex,
             ClusterRankingModelOptions options = null
         ){
             this.name = name;
             this.clusterType = clusterType;
             this.sumString = sum;
             this.orderDirection = orderDirection;
+            this.rewardCalculationIndex = rewardCalculationIndex;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.minimumValueString = options?.minimumValueString;
@@ -129,6 +134,10 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             if (this.accessPeriodEventId != null) {
                 properties["accessPeriodEventId"] = this.accessPeriodEventId;
             }
+            if (this.rewardCalculationIndex != null) {
+                properties["rewardCalculationIndex"] = this.rewardCalculationIndex.Value.Str(
+                );
+            }
 
             return properties;
         }
@@ -163,6 +172,14 @@ namespace Gs2Cdk.Gs2Ranking2.Model
                         ClusterRankingModelOrderDirection e => e,
                         string s => ClusterRankingModelOrderDirectionExt.New(s),
                         _ => ClusterRankingModelOrderDirection.Asc
+                    };
+                })() : default,
+                properties.TryGetValue("rewardCalculationIndex", out var rewardCalculationIndex) ? new Func<ClusterRankingModelRewardCalculationIndex>(() =>
+                {
+                    return rewardCalculationIndex switch {
+                        ClusterRankingModelRewardCalculationIndex e => e,
+                        string s => ClusterRankingModelRewardCalculationIndexExt.New(s),
+                        _ => ClusterRankingModelRewardCalculationIndex.Rank
                     };
                 })() : default,
                 new ClusterRankingModelOptions {

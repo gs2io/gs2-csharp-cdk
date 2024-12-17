@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Ranking2.Model
         private bool? sum;
         private string sumString;
         private GlobalRankingModelOrderDirection? orderDirection;
+        private GlobalRankingModelRewardCalculationIndex? rewardCalculationIndex;
         private string metadata;
         private long? minimumValue;
         private string minimumValueString;
@@ -42,11 +43,13 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             string name,
             bool? sum,
             GlobalRankingModelOrderDirection orderDirection,
+            GlobalRankingModelRewardCalculationIndex rewardCalculationIndex,
             GlobalRankingModelOptions options = null
         ){
             this.name = name;
             this.sum = sum;
             this.orderDirection = orderDirection;
+            this.rewardCalculationIndex = rewardCalculationIndex;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.maximumValue = options?.maximumValue;
@@ -60,11 +63,13 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             string name,
             string sum,
             GlobalRankingModelOrderDirection orderDirection,
+            GlobalRankingModelRewardCalculationIndex rewardCalculationIndex,
             GlobalRankingModelOptions options = null
         ){
             this.name = name;
             this.sumString = sum;
             this.orderDirection = orderDirection;
+            this.rewardCalculationIndex = rewardCalculationIndex;
             this.metadata = options?.metadata;
             this.minimumValue = options?.minimumValue;
             this.minimumValueString = options?.minimumValueString;
@@ -120,6 +125,10 @@ namespace Gs2Cdk.Gs2Ranking2.Model
             if (this.accessPeriodEventId != null) {
                 properties["accessPeriodEventId"] = this.accessPeriodEventId;
             }
+            if (this.rewardCalculationIndex != null) {
+                properties["rewardCalculationIndex"] = this.rewardCalculationIndex.Value.Str(
+                );
+            }
 
             return properties;
         }
@@ -146,6 +155,14 @@ namespace Gs2Cdk.Gs2Ranking2.Model
                         GlobalRankingModelOrderDirection e => e,
                         string s => GlobalRankingModelOrderDirectionExt.New(s),
                         _ => GlobalRankingModelOrderDirection.Asc
+                    };
+                })() : default,
+                properties.TryGetValue("rewardCalculationIndex", out var rewardCalculationIndex) ? new Func<GlobalRankingModelRewardCalculationIndex>(() =>
+                {
+                    return rewardCalculationIndex switch {
+                        GlobalRankingModelRewardCalculationIndex e => e,
+                        string s => GlobalRankingModelRewardCalculationIndexExt.New(s),
+                        _ => GlobalRankingModelRewardCalculationIndex.Rank
                     };
                 })() : default,
                 new GlobalRankingModelOptions {
