@@ -22,5 +22,6 @@ using Gs2Cdk.Gs2Guild.Model;
 namespace Gs2Cdk.Gs2Guild.Model.Options
 {
     public class ReceiveMemberRequestOptions {
+        public string metadata;
     }
 }

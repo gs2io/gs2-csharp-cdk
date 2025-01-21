@@ -29,6 +29,8 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
         public int? attribute3;
         public int? attribute4;
         public int? attribute5;
+        public string metadata;
+        public string memberMetadata;
         public RoleModel[] customRoles;
         public string guildMemberDefaultRole;
         public string timeOffsetToken;

@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Guild.Model
     public class Member {
         private string userId;
         private string roleName;
+        private string metadata;
 
         public Member(
             string userId,
@@ -34,6 +35,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         ){
             this.userId = userId;
             this.roleName = roleName;
+            this.metadata = options?.metadata;
         }
 
         public Dictionary<string, object> Properties(
@@ -45,6 +47,9 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.roleName != null) {
                 properties["roleName"] = this.roleName;
+            }
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
 
             return properties;
@@ -63,6 +68,7 @@ namespace Gs2Cdk.Gs2Guild.Model
                     return (string) roleName;
                 })() : default,
                 new MemberOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );
 

@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Guild.Model
     public class ReceiveMemberRequest {
         private string userId;
         private string targetGuildName;
+        private string metadata;
 
         public ReceiveMemberRequest(
             string userId,
@@ -34,6 +35,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         ){
             this.userId = userId;
             this.targetGuildName = targetGuildName;
+            this.metadata = options?.metadata;
         }
 
         public Dictionary<string, object> Properties(
@@ -45,6 +47,9 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.targetGuildName != null) {
                 properties["targetGuildName"] = this.targetGuildName;
+            }
+            if (this.metadata != null) {
+                properties["metadata"] = this.metadata;
             }
 
             return properties;
@@ -63,6 +68,7 @@ namespace Gs2Cdk.Gs2Guild.Model
                     return (string) targetGuildName;
                 })() : default,
                 new ReceiveMemberRequestOptions {
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
                 }
             );
 

@@ -26,6 +26,7 @@ namespace Gs2Cdk.Gs2Guild.Model
     public class Inbox {
         private string guildName;
         private string[] fromUserIds;
+        private ReceiveMemberRequest[] receiveMemberRequests;
         private long? revision;
         private string revisionString;
 
@@ -35,6 +36,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         ){
             this.guildName = guildName;
             this.fromUserIds = options?.fromUserIds;
+            this.receiveMemberRequests = options?.receiveMemberRequests;
             this.revision = options?.revision;
         }
 
@@ -47,6 +49,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.fromUserIds != null) {
                 properties["fromUserIds"] = this.fromUserIds;
+            }
+            if (this.receiveMemberRequests != null) {
+                properties["receiveMemberRequests"] = this.receiveMemberRequests.Select(v => v?.Properties(
+                        )).ToList();
             }
 
             return properties;
@@ -66,6 +72,16 @@ namespace Gs2Cdk.Gs2Guild.Model
                         return fromUserIds switch {
                             string[] v => v.ToArray(),
                             List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    receiveMemberRequests = properties.TryGetValue("receiveMemberRequests", out var receiveMemberRequests) ? new Func<ReceiveMemberRequest[]>(() =>
+                    {
+                        return receiveMemberRequests switch {
+                            ReceiveMemberRequest[] v => v,
+                            List<ReceiveMemberRequest> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ReceiveMemberRequest.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ReceiveMemberRequest.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null,

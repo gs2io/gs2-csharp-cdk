@@ -17,14 +17,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Guild.Model;
+using Gs2Cdk.Gs2Distributor.Model;
 
-namespace Gs2Cdk.Gs2Guild.Model.Options
+namespace Gs2Cdk.Gs2Distributor.Model.Options
 {
-    public class InboxOptions {
-        public string[] fromUserIds;
-        public ReceiveMemberRequest[] receiveMemberRequests;
-        public long? revision;
-        public string revisionString;
+    public class BatchResultPayloadOptions {
     }
 }
