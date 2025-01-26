@@ -22,7 +22,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
         NotReset,
         Daily,
         Weekly,
-        Monthly
+        Monthly,
+        Days
     }
 
     public static class CounterScopeModelResetTypeExt
@@ -37,6 +38,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
                     return "weekly";
                 case CounterScopeModelResetType.Monthly:
                     return "monthly";
+                case CounterScopeModelResetType.Days:
+                    return "days";
             }
             return "unknown";
         }
@@ -51,6 +54,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
                     return CounterScopeModelResetType.Weekly;
                 case "monthly":
                     return CounterScopeModelResetType.Monthly;
+                case "days":
+                    return CounterScopeModelResetType.Days;
             }
             return CounterScopeModelResetType.NotReset;
         }

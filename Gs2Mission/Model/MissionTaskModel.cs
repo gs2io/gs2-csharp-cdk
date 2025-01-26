@@ -43,14 +43,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         public MissionTaskModel(
             string name,
             MissionTaskModelVerifyCompleteType verifyCompleteType,
-            string counterName,
-            long targetValue,
             MissionTaskModelOptions options = null
         ){
             this.name = name;
             this.verifyCompleteType = verifyCompleteType;
-            this.counterName = counterName;
-            this.targetValue = targetValue;
             this.metadata = options?.metadata;
             this.targetCounter = options?.targetCounter;
             this.verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions;
@@ -62,16 +58,12 @@ namespace Gs2Cdk.Gs2Mission.Model
 
         public static MissionTaskModel VerifyCompleteTypeIsCounter(
             string name,
-            string counterName,
-            long targetValue,
             TargetCounterModel targetCounter,
             MissionTaskModelVerifyCompleteTypeIsCounterOptions options = null
         ){
             return (new MissionTaskModel(
                 name,
                 MissionTaskModelVerifyCompleteType.Counter,
-                counterName,
-                targetValue,
                 new MissionTaskModelOptions {
                     targetCounter = targetCounter,
                     metadata = options?.metadata,
@@ -79,54 +71,29 @@ namespace Gs2Cdk.Gs2Mission.Model
                     completeAcquireActions = options?.completeAcquireActions,
                     challengePeriodEventId = options?.challengePeriodEventId,
                     premiseMissionTaskName = options?.premiseMissionTaskName,
-                    targetResetType = options?.targetResetType ?? MissionTaskModelTargetResetType.NotReset,
+                    targetResetType = options?.targetResetType,
                 }
             ));
         }
 
         public static MissionTaskModel VerifyCompleteTypeIsVerifyActions(
             string name,
-            string counterName,
-            long targetValue,
             MissionTaskModelVerifyCompleteTypeIsVerifyActionsOptions options = null
         ){
             return (new MissionTaskModel(
                 name,
                 MissionTaskModelVerifyCompleteType.VerifyActions,
-                counterName,
-                targetValue,
                 new MissionTaskModelOptions {
                     metadata = options?.metadata,
                     verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions,
                     completeAcquireActions = options?.completeAcquireActions,
                     challengePeriodEventId = options?.challengePeriodEventId,
                     premiseMissionTaskName = options?.premiseMissionTaskName,
-                    targetResetType = options?.targetResetType ?? MissionTaskModelTargetResetType.NotReset,
+                    targetResetType = options?.targetResetType,
                 }
             ));
         }
-
-
-        public MissionTaskModel(
-            string name,
-            MissionTaskModelVerifyCompleteType verifyCompleteType,
-            string counterName,
-            string targetValue,
-            MissionTaskModelOptions options = null
-        ){
-            this.name = name;
-            this.verifyCompleteType = verifyCompleteType;
-            this.counterName = counterName;
-            this.targetValueString = targetValue;
-            this.metadata = options?.metadata;
-            this.targetCounter = options?.targetCounter;
-            this.verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions;
-            this.completeAcquireActions = options?.completeAcquireActions;
-            this.challengePeriodEventId = options?.challengePeriodEventId;
-            this.premiseMissionTaskName = options?.premiseMissionTaskName;
-            this.targetResetType = options?.targetResetType;
-        }
-
+        
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -193,21 +160,26 @@ namespace Gs2Cdk.Gs2Mission.Model
                         _ => MissionTaskModelVerifyCompleteType.Counter
                     };
                 })() : default,
-                properties.TryGetValue("counterName", out var counterName) ? new Func<string>(() =>
-                {
-                    return (string) counterName;
-                })() : default,
-                properties.TryGetValue("targetValue", out var targetValue) ? new Func<long>(() =>
-                {
-                    return targetValue switch {
-                        long v => v,
-                        string v => long.Parse(v),
-                        _ => 0
-                    };
-                })() : default,
                 new MissionTaskModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
-                    targetCounter = properties.TryGetValue("targetCounter", out var targetCounter) ? new Func<TargetCounterModel>(() =>
+                    targetCounter = properties.TryGetValue("counterName", out var counterName) && properties.TryGetValue("targetValue", out var targetValue) ? new Func<TargetCounterModel>(() =>
+                    {
+                        return new TargetCounterModel(
+                            new Func<string>(() =>
+                            {
+                                return (string)counterName;
+                            })(), 
+                            TargetCounterModelScopeType.ResetTiming, 
+                            new Func<long>(() =>
+                            {
+                                return targetValue switch {
+                                    long v => v,
+                                    string v => long.Parse(v),
+                                    _ => 0
+                                };
+                            })()
+                        );
+                    })() : properties.TryGetValue("targetCounter", out var targetCounter) ? new Func<TargetCounterModel>(() =>
                     {
                         return targetCounter switch {
                             TargetCounterModel v => v,

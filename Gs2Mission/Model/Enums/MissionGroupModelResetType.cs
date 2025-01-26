@@ -22,7 +22,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
         NotReset,
         Daily,
         Weekly,
-        Monthly
+        Monthly,
+        Days
     }
 
     public static class MissionGroupModelResetTypeExt
@@ -37,6 +38,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
                     return "weekly";
                 case MissionGroupModelResetType.Monthly:
                     return "monthly";
+                case MissionGroupModelResetType.Days:
+                    return "days";
             }
             return "unknown";
         }
@@ -51,6 +54,8 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
                     return MissionGroupModelResetType.Weekly;
                 case "monthly":
                     return MissionGroupModelResetType.Monthly;
+                case "days":
+                    return MissionGroupModelResetType.Days;
             }
             return MissionGroupModelResetType.NotReset;
         }

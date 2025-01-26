@@ -35,6 +35,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         private int? resetHour;
         private string resetHourString;
         private string completeNotificationNamespaceId;
+        private long? anchorTimestamp;
+        private string anchorTimestampString;
+        private int? days;
+        private string daysString;
 
         public MissionGroupModel(
             string name,
@@ -49,6 +53,8 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.resetDayOfWeek = options?.resetDayOfWeek;
             this.resetHour = options?.resetHour;
             this.completeNotificationNamespaceId = options?.completeNotificationNamespaceId;
+            this.anchorTimestamp = options?.anchorTimestamp;
+            this.days = options?.days;
         }
 
         public static MissionGroupModel ResetTypeIsNotReset(
@@ -121,6 +127,25 @@ namespace Gs2Cdk.Gs2Mission.Model
             ));
         }
 
+        public static MissionGroupModel ResetTypeIsDays(
+            string name,
+            long? anchorTimestamp,
+            int? days,
+            MissionGroupModelResetTypeIsDaysOptions options = null
+        ){
+            return (new MissionGroupModel(
+                name,
+                MissionGroupModelResetType.Days,
+                new MissionGroupModelOptions {
+                    anchorTimestamp = anchorTimestamp,
+                    days = days,
+                    metadata = options?.metadata,
+                    tasks = options?.tasks,
+                    completeNotificationNamespaceId = options?.completeNotificationNamespaceId,
+                }
+            ));
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -159,6 +184,20 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
             if (this.completeNotificationNamespaceId != null) {
                 properties["completeNotificationNamespaceId"] = this.completeNotificationNamespaceId;
+            }
+            if (this.anchorTimestampString != null) {
+                properties["anchorTimestamp"] = this.anchorTimestampString;
+            } else {
+                if (this.anchorTimestamp != null) {
+                    properties["anchorTimestamp"] = this.anchorTimestamp;
+                }
+            }
+            if (this.daysString != null) {
+                properties["days"] = this.daysString;
+            } else {
+                if (this.days != null) {
+                    properties["days"] = this.days;
+                }
             }
 
             return properties;
@@ -209,7 +248,23 @@ namespace Gs2Cdk.Gs2Mission.Model
                             _ => null
                         } : null;
                     })(),
-                    completeNotificationNamespaceId = properties.TryGetValue("completeNotificationNamespaceId", out var completeNotificationNamespaceId) ? (string)completeNotificationNamespaceId : null
+                    completeNotificationNamespaceId = properties.TryGetValue("completeNotificationNamespaceId", out var completeNotificationNamespaceId) ? (string)completeNotificationNamespaceId : null,
+                    anchorTimestamp = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("anchorTimestamp", out var anchorTimestamp) ? anchorTimestamp switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    days = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("days", out var days) ? days switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

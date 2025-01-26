@@ -22,7 +22,8 @@ namespace Gs2Cdk.Gs2Mission.StampSheet.Enums
         NotReset,
         Daily,
         Weekly,
-        Monthly
+        Monthly,
+        Days
     }
 
     public static class VerifyCounterValueByUserIdResetTypeExt
@@ -37,6 +38,8 @@ namespace Gs2Cdk.Gs2Mission.StampSheet.Enums
                     return "weekly";
                 case VerifyCounterValueByUserIdResetType.Monthly:
                     return "monthly";
+                case VerifyCounterValueByUserIdResetType.Days:
+                    return "days";
             }
             return "unknown";
         }
@@ -51,6 +54,8 @@ namespace Gs2Cdk.Gs2Mission.StampSheet.Enums
                     return VerifyCounterValueByUserIdResetType.Weekly;
                 case "monthly":
                     return VerifyCounterValueByUserIdResetType.Monthly;
+                case "days":
+                    return VerifyCounterValueByUserIdResetType.Days;
             }
             return VerifyCounterValueByUserIdResetType.NotReset;
         }

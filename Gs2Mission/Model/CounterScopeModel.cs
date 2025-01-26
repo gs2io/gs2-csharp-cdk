@@ -34,6 +34,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         private string resetHourString;
         private string conditionName;
         private VerifyAction condition;
+        private long? anchorTimestamp;
+        private string anchorTimestampString;
+        private int? days;
+        private string daysString;
 
         public CounterScopeModel(
             CounterScopeModelScopeType scopeType,
@@ -46,6 +50,8 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.resetHour = options?.resetHour;
             this.conditionName = options?.conditionName;
             this.condition = options?.condition;
+            this.anchorTimestamp = options?.anchorTimestamp;
+            this.days = options?.days;
         }
 
         public static CounterScopeModel ScopeTypeIsResetTiming(
@@ -128,6 +134,21 @@ namespace Gs2Cdk.Gs2Mission.Model
             ));
         }
 
+        public static CounterScopeModel ResetTypeIsDays(
+            CounterScopeModelScopeType scopeType,
+            long? anchorTimestamp,
+            int? days,
+            CounterScopeModelResetTypeIsDaysOptions options = null
+        ){
+            return (new CounterScopeModel(
+                scopeType,
+                new CounterScopeModelOptions {
+                    anchorTimestamp = anchorTimestamp,
+                    days = days,
+                }
+            ));
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -164,6 +185,20 @@ namespace Gs2Cdk.Gs2Mission.Model
             if (this.condition != null) {
                 properties["condition"] = this.condition?.Properties(
                 );
+            }
+            if (this.anchorTimestampString != null) {
+                properties["anchorTimestamp"] = this.anchorTimestampString;
+            } else {
+                if (this.anchorTimestamp != null) {
+                    properties["anchorTimestamp"] = this.anchorTimestamp;
+                }
+            }
+            if (this.daysString != null) {
+                properties["days"] = this.daysString;
+            } else {
+                if (this.days != null) {
+                    properties["days"] = this.days;
+                }
             }
 
             return properties;
@@ -208,7 +243,23 @@ namespace Gs2Cdk.Gs2Mission.Model
                             Dictionary<string, object> v => VerifyAction.FromProperties(v),
                             _ => null
                         };
-                    })() : null
+                    })() : null,
+                    anchorTimestamp = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("anchorTimestamp", out var anchorTimestamp) ? anchorTimestamp switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    days = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("days", out var days) ? days switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 

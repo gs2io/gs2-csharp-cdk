@@ -31,5 +31,9 @@ namespace Gs2Cdk.Gs2Mission.Model.Options
         public int? resetHour;
         public string resetHourString;
         public string completeNotificationNamespaceId;
+        public long? anchorTimestamp;
+        public string anchorTimestampString;
+        public int? days;
+        public string daysString;
     }
 }
