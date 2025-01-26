@@ -31,6 +31,8 @@ namespace Gs2Cdk.Gs2Account.Model
         private string appleKeyId;
         private string applePrivateKeyPem;
         private string doneEndpointUrl;
+        private ScopeValue[] additionalScopeValues;
+        private string[] additionalReturnValues;
 
         public OpenIdConnectSetting(
             string configurationPath,
@@ -44,6 +46,8 @@ namespace Gs2Cdk.Gs2Account.Model
             this.appleKeyId = options?.appleKeyId;
             this.applePrivateKeyPem = options?.applePrivateKeyPem;
             this.doneEndpointUrl = options?.doneEndpointUrl;
+            this.additionalScopeValues = options?.additionalScopeValues;
+            this.additionalReturnValues = options?.additionalReturnValues;
         }
 
         public Dictionary<string, object> Properties(
@@ -71,6 +75,13 @@ namespace Gs2Cdk.Gs2Account.Model
             if (this.doneEndpointUrl != null) {
                 properties["doneEndpointUrl"] = this.doneEndpointUrl;
             }
+            if (this.additionalScopeValues != null) {
+                properties["additionalScopeValues"] = this.additionalScopeValues.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.additionalReturnValues != null) {
+                properties["additionalReturnValues"] = this.additionalReturnValues;
+            }
 
             return properties;
         }
@@ -92,7 +103,25 @@ namespace Gs2Cdk.Gs2Account.Model
                     appleTeamId = properties.TryGetValue("appleTeamId", out var appleTeamId) ? (string)appleTeamId : null,
                     appleKeyId = properties.TryGetValue("appleKeyId", out var appleKeyId) ? (string)appleKeyId : null,
                     applePrivateKeyPem = properties.TryGetValue("applePrivateKeyPem", out var applePrivateKeyPem) ? (string)applePrivateKeyPem : null,
-                    doneEndpointUrl = properties.TryGetValue("doneEndpointUrl", out var doneEndpointUrl) ? (string)doneEndpointUrl : null
+                    doneEndpointUrl = properties.TryGetValue("doneEndpointUrl", out var doneEndpointUrl) ? (string)doneEndpointUrl : null,
+                    additionalScopeValues = properties.TryGetValue("additionalScopeValues", out var additionalScopeValues) ? new Func<ScopeValue[]>(() =>
+                    {
+                        return additionalScopeValues switch {
+                            ScopeValue[] v => v,
+                            List<ScopeValue> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(ScopeValue.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(ScopeValue.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    additionalReturnValues = properties.TryGetValue("additionalReturnValues", out var additionalReturnValues) ? new Func<string[]>(() =>
+                    {
+                        return additionalReturnValues switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 

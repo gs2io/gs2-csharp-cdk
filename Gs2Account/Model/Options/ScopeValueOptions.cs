@@ -21,13 +21,7 @@ using Gs2Cdk.Gs2Account.Model;
 
 namespace Gs2Cdk.Gs2Account.Model.Options
 {
-    public class OpenIdConnectSettingOptions {
-        public string clientSecret;
-        public string appleTeamId;
-        public string appleKeyId;
-        public string applePrivateKeyPem;
-        public string doneEndpointUrl;
-        public ScopeValue[] additionalScopeValues;
-        public string[] additionalReturnValues;
+    public class ScopeValueOptions {
+        public string value;
     }
 }
