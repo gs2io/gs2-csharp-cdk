@@ -36,7 +36,7 @@ namespace Gs2Cdk.Core.Model
             var model = new NotificationSetting(
                 new NotificationSettingOptions{
                     gatewayNamespaceId = properties.TryGetValue("gatewayNamespaceId", out var gatewayNamespaceId) ? (string)gatewayNamespaceId : null,
-                    enableTransferMobileNotification = properties.TryGetValue("gatewayNamespaceId", out var enableTransferMobileNotification) ? (bool?)enableTransferMobileNotification : null,
+                    enableTransferMobileNotification = properties.TryGetValue("enableTransferMobileNotification", out var enableTransferMobileNotification) ? (bool?)enableTransferMobileNotification : null,
                     sound = properties.TryGetValue("sound", out var sound) ? (string)sound : null,
                 }
             );

@@ -38,5 +38,17 @@ namespace Gs2Cdk.Core.Model
             }
             return properties;
         }
+        
+        public static ScriptSetting FromProperties(
+            Dictionary<string, object> properties
+        ) {
+            var model = new ScriptSetting(
+                properties.TryGetValue("triggerScriptId", out var triggerScriptId) ? (string)triggerScriptId : null,
+                properties.TryGetValue("doneTriggerTargetType", out var doneTriggerTargetType) ? (string)doneTriggerTargetType : null,
+                properties.TryGetValue("doneTriggerScriptId", out var doneTriggerScriptId) ? (string)doneTriggerScriptId : null,
+                properties.TryGetValue("doneTriggerQueueNamespaceId", out var doneTriggerQueueNamespaceId) ? (string)doneTriggerQueueNamespaceId : null
+            );
+            return model;
+        }
     }
 }

@@ -46,9 +46,9 @@ namespace Gs2Cdk.Core.Model
         ) {
             var model = new TransactionSetting(
                 new TransactionSettingOptions {
-                    enableAtomicCommit = properties.TryGetValue("EnableAtomicCommit", out var enableAtomicCommit) ? (bool?) enableAtomicCommit : null,
-                    transactionUseDistributor = properties.TryGetValue("TransactionUseDistributor", out var transactionUseDistributor) ? (bool?) transactionUseDistributor : null,
-                    acquireActionUseJobQueue = properties.TryGetValue("AcquireActionUseJobQueue", out var acquireActionUseJobQueue) ? (bool?) acquireActionUseJobQueue : null,
+                    enableAtomicCommit = properties.TryGetValue("enableAtomicCommit", out var enableAtomicCommit) ? (bool?) enableAtomicCommit : null,
+                    transactionUseDistributor = properties.TryGetValue("transactionUseDistributor", out var transactionUseDistributor) ? (bool?) transactionUseDistributor : null,
+                    acquireActionUseJobQueue = properties.TryGetValue("acquireActionUseJobQueue", out var acquireActionUseJobQueue) ? (bool?) acquireActionUseJobQueue : null,
                     distributorNamespaceId = properties.TryGetValue("distributorNamespaceId", out var distributorNamespaceId) ? (string)distributorNamespaceId : null,
                     queueNamespaceId = properties.TryGetValue("queueNamespaceId", out var queueNamespaceId) ? (string)queueNamespaceId : null,
                 }
