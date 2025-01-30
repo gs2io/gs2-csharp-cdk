@@ -33,6 +33,10 @@ namespace Gs2Cdk.Gs2Limit.Model
         private LimitModelResetDayOfWeek? resetDayOfWeek;
         private int? resetHour;
         private string resetHourString;
+        private long? anchorTimestamp;
+        private string anchorTimestampString;
+        private int? days;
+        private string daysString;
 
         public LimitModel(
             string name,
@@ -45,6 +49,8 @@ namespace Gs2Cdk.Gs2Limit.Model
             this.resetDayOfMonth = options?.resetDayOfMonth;
             this.resetDayOfWeek = options?.resetDayOfWeek;
             this.resetHour = options?.resetHour;
+            this.anchorTimestamp = options?.anchorTimestamp;
+            this.days = options?.days;
         }
 
         public static LimitModel ResetTypeIsNotReset(
@@ -109,6 +115,23 @@ namespace Gs2Cdk.Gs2Limit.Model
             ));
         }
 
+        public static LimitModel ResetTypeIsDays(
+            string name,
+            long? anchorTimestamp,
+            int? days,
+            LimitModelResetTypeIsDaysOptions options = null
+        ){
+            return (new LimitModel(
+                name,
+                LimitModelResetType.Days,
+                new LimitModelOptions {
+                    anchorTimestamp = anchorTimestamp,
+                    days = days,
+                    metadata = options?.metadata,
+                }
+            ));
+        }
+
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -139,6 +162,20 @@ namespace Gs2Cdk.Gs2Limit.Model
             } else {
                 if (this.resetHour != null) {
                     properties["resetHour"] = this.resetHour;
+                }
+            }
+            if (this.anchorTimestampString != null) {
+                properties["anchorTimestamp"] = this.anchorTimestampString;
+            } else {
+                if (this.anchorTimestamp != null) {
+                    properties["anchorTimestamp"] = this.anchorTimestamp;
+                }
+            }
+            if (this.daysString != null) {
+                properties["days"] = this.daysString;
+            } else {
+                if (this.days != null) {
+                    properties["days"] = this.days;
                 }
             }
 
@@ -175,6 +212,22 @@ namespace Gs2Cdk.Gs2Limit.Model
                     resetHour = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("resetHour", out var resetHour) ? resetHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    anchorTimestamp = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("anchorTimestamp", out var anchorTimestamp) ? anchorTimestamp switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
+                    days = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("days", out var days) ? days switch {
                             int v => v,
                             string v => int.Parse(v),
                             _ => null

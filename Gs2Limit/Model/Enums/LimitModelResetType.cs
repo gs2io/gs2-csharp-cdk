@@ -22,7 +22,8 @@ namespace Gs2Cdk.Gs2Limit.Model.Enums
         NotReset,
         Daily,
         Weekly,
-        Monthly
+        Monthly,
+        Days
     }
 
     public static class LimitModelResetTypeExt
@@ -37,6 +38,8 @@ namespace Gs2Cdk.Gs2Limit.Model.Enums
                     return "weekly";
                 case LimitModelResetType.Monthly:
                     return "monthly";
+                case LimitModelResetType.Days:
+                    return "days";
             }
             return "unknown";
         }
@@ -51,6 +54,8 @@ namespace Gs2Cdk.Gs2Limit.Model.Enums
                     return LimitModelResetType.Weekly;
                 case "monthly":
                     return LimitModelResetType.Monthly;
+                case "days":
+                    return LimitModelResetType.Days;
             }
             return LimitModelResetType.NotReset;
         }

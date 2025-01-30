@@ -22,16 +22,7 @@ using Gs2Cdk.Gs2Limit.Model.Enums;
 
 namespace Gs2Cdk.Gs2Limit.Model.Options
 {
-    public class LimitModelOptions {
+    public class LimitModelResetTypeIsDaysOptions {
         public string metadata;
-        public int? resetDayOfMonth;
-        public string resetDayOfMonthString;
-        public LimitModelResetDayOfWeek? resetDayOfWeek;
-        public int? resetHour;
-        public string resetHourString;
-        public long? anchorTimestamp;
-        public string anchorTimestampString;
-        public int? days;
-        public string daysString;
     }
 }
