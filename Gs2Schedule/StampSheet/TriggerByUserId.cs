@@ -28,8 +28,9 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
         private string triggerName;
         private string userId;
         private TriggerByUserIdTriggerStrategy? triggerStrategy;
-        private int ttl;
+        private int? ttl;
         private string ttlString;
+        private string eventId;
         private string timeOffsetToken;
 
 
@@ -37,7 +38,8 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             string namespaceName,
             string triggerName,
             TriggerByUserIdTriggerStrategy triggerStrategy,
-            int ttl,
+            int? ttl = null,
+            string eventId = null,
             string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             this.triggerName = triggerName;
             this.triggerStrategy = triggerStrategy;
             this.ttl = ttl;
+            this.eventId = eventId;
             this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
@@ -55,7 +58,8 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             string namespaceName,
             string triggerName,
             TriggerByUserIdTriggerStrategy triggerStrategy,
-            string ttl,
+            string ttl = null,
+            string eventId = null,
             string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
@@ -64,6 +68,7 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
             this.triggerName = triggerName;
             this.triggerStrategy = triggerStrategy;
             this.ttlString = ttl;
+            this.eventId = eventId;
             this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
@@ -92,6 +97,9 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                     properties["ttl"] = this.ttl;
                 }
             }
+            if (this.eventId != null) {
+                properties["eventId"] = this.eventId;
+            }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
             }
@@ -112,16 +120,20 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                             _ => TriggerByUserIdTriggerStrategy.Renew
                         };
                     })(),
-                    new Func<int>(() =>
+                    new Func<int?>(() =>
                     {
-                        return properties["ttl"] switch {
+                        return properties.TryGetValue("ttl", out var ttl) ? ttl switch {
                             long v => (int)v,
                             int v => (int)v,
                             float v => (int)v,
                             double v => (int)v,
                             string v => int.Parse(v),
                             _ => 0
-                        };
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("eventId", out var eventId) ? eventId as string : null;
                     })(),
                     new Func<string>(() =>
                     {
@@ -144,7 +156,14 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet
                             _ => TriggerByUserIdTriggerStrategy.Renew
                         };
                     })(),
-                    properties["ttl"].ToString(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("ttl", out var ttl) ? ttl.ToString() : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("eventId", out var eventId) ? eventId.ToString() : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken.ToString() : null;

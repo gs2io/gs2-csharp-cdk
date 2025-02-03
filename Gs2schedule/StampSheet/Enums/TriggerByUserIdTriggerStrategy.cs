@@ -21,7 +21,10 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
     public enum TriggerByUserIdTriggerStrategy {
         Renew,
         Extend,
-        Drop
+        Drop,
+        RepeatCycleEnd,
+        RepeatCycleNextStart,
+        AbsoluteEnd
     }
 
     public static class TriggerByUserIdTriggerStrategyExt
@@ -34,6 +37,12 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
                     return "extend";
                 case TriggerByUserIdTriggerStrategy.Drop:
                     return "drop";
+                case TriggerByUserIdTriggerStrategy.RepeatCycleEnd:
+                    return "repeatCycleEnd";
+                case TriggerByUserIdTriggerStrategy.RepeatCycleNextStart:
+                    return "repeatCycleNextStart";
+                case TriggerByUserIdTriggerStrategy.AbsoluteEnd:
+                    return "absoluteEnd";
             }
             return "unknown";
         }
@@ -46,6 +55,12 @@ namespace Gs2Cdk.Gs2Schedule.StampSheet.Enums
                     return TriggerByUserIdTriggerStrategy.Extend;
                 case "drop":
                     return TriggerByUserIdTriggerStrategy.Drop;
+                case "repeatCycleEnd":
+                    return TriggerByUserIdTriggerStrategy.RepeatCycleEnd;
+                case "repeatCycleNextStart":
+                    return TriggerByUserIdTriggerStrategy.RepeatCycleNextStart;
+                case "absoluteEnd":
+                    return TriggerByUserIdTriggerStrategy.AbsoluteEnd;
             }
             return TriggerByUserIdTriggerStrategy.Renew;
         }

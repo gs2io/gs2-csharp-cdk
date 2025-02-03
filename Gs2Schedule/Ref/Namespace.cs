@@ -36,7 +36,8 @@ namespace Gs2Cdk.Gs2Schedule.Ref
         public TriggerByUserId Trigger(
             string triggerName,
             TriggerByUserIdTriggerStrategy triggerStrategy,
-            int ttl,
+            int? ttl = null,
+            string eventId = null,
             string userId = "#{userId}"
         ){
             return (new TriggerByUserId(
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Schedule.Ref
                 triggerName,
                 triggerStrategy,
                 ttl,
+                eventId,
                 userId
             ));
         }

@@ -167,3 +167,4 @@ namespace Gs2Cdk.Gs2Buff.Model.Enums
     }
 }
 
+
