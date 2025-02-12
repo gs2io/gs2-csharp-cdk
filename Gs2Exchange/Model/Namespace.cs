@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
         public TransactionSetting transactionSetting;
         public ScriptSetting exchangeScript;
         public ScriptSetting incrementalExchangeScript;
+        public ScriptSetting acquireAwaitScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -52,6 +53,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             this.transactionSetting = options?.transactionSetting;
             this.exchangeScript = options?.exchangeScript;
             this.incrementalExchangeScript = options?.incrementalExchangeScript;
+            this.acquireAwaitScript = options?.acquireAwaitScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -95,6 +97,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.incrementalExchangeScript != null) {
                 properties["IncrementalExchangeScript"] = this.incrementalExchangeScript?.Properties(
+                );
+            }
+            if (this.acquireAwaitScript != null) {
+                properties["AcquireAwaitScript"] = this.acquireAwaitScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Exchange.Model.Options
         public TransactionSetting transactionSetting;
         public ScriptSetting exchangeScript;
         public ScriptSetting incrementalExchangeScript;
+        public ScriptSetting acquireAwaitScript;
         public LogSetting logSetting;
         public string queueNamespaceId;
         public string keyId;
