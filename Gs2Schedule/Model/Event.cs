@@ -310,14 +310,14 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 new EventOptions {
                     repeatType = new Func<EventRepeatType?>(() =>
                     {
-                        return properties.TryGetValue("repeatType", out var repeatType) ? new Func<EventRepeatType>(() =>
+                        return properties.TryGetValue("repeatType", out var repeatType) ? new Func<EventRepeatType?>(() =>
                         {
                             return repeatType switch {
                                 EventRepeatType e => e,
                                 string s => EventRepeatTypeExt.New(s),
-                                _ => EventRepeatType.Always
+                                _ => null
                             };
-                        })() : default;
+                        })() : null;
                     })(),
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     absoluteBegin = new Func<long?>(() =>
