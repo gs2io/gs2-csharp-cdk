@@ -44,7 +44,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
             return "unknown";
         }
 
-        public static TargetCounterModelResetType New(string value) {
+        public static TargetCounterModelResetType? New(string value) {
             switch (value) {
                 case "notReset":
                     return TargetCounterModelResetType.NotReset;
@@ -57,7 +57,7 @@ namespace Gs2Cdk.Gs2Mission.Model.Enums
                 case "days":
                     return TargetCounterModelResetType.Days;
             }
-            return TargetCounterModelResetType.NotReset;
+            return null;
         }
     }
 }

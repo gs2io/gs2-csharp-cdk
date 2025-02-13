@@ -441,9 +441,9 @@ namespace Gs2Cdk.Gs2Guard.Model
                         };
                     })() : null,
                     locationRestriction = properties.TryGetValue("locationRestriction", out var locationRestriction) ? BlockingPolicyModelLocationRestrictionExt.New(locationRestriction as string) : BlockingPolicyModelLocationRestriction.Allow,
-                    anonymousIpRestriction = properties.TryGetValue("anonymousIpRestriction", out var anonymousIpRestriction) ? BlockingPolicyModelAnonymousIpRestrictionExt.New(anonymousIpRestriction as string) : BlockingPolicyModelAnonymousIpRestriction.Deny,
-                    hostingProviderIpRestriction = properties.TryGetValue("hostingProviderIpRestriction", out var hostingProviderIpRestriction) ? BlockingPolicyModelHostingProviderIpRestrictionExt.New(hostingProviderIpRestriction as string) : BlockingPolicyModelHostingProviderIpRestriction.Deny,
-                    reputationIpRestriction = properties.TryGetValue("reputationIpRestriction", out var reputationIpRestriction) ? BlockingPolicyModelReputationIpRestrictionExt.New(reputationIpRestriction as string) : BlockingPolicyModelReputationIpRestriction.Deny,
+                    anonymousIpRestriction = properties.TryGetValue("anonymousIpRestriction", out var anonymousIpRestriction) ? BlockingPolicyModelAnonymousIpRestrictionExt.New(anonymousIpRestriction as string) : null,
+                    hostingProviderIpRestriction = properties.TryGetValue("hostingProviderIpRestriction", out var hostingProviderIpRestriction) ? BlockingPolicyModelHostingProviderIpRestrictionExt.New(hostingProviderIpRestriction as string) : null,
+                    reputationIpRestriction = properties.TryGetValue("reputationIpRestriction", out var reputationIpRestriction) ? BlockingPolicyModelReputationIpRestrictionExt.New(reputationIpRestriction as string) : null,
                     ipAddresses = properties.TryGetValue("ipAddresses", out var ipAddresses) ? new Func<string[]>(() =>
                     {
                         return ipAddresses switch {

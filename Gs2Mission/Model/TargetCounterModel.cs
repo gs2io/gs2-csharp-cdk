@@ -145,7 +145,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                     };
                 })() : default,
                 new TargetCounterModelOptions {
-                    resetType = properties.TryGetValue("resetType", out var resetType) ? TargetCounterModelResetTypeExt.New(resetType as string) : TargetCounterModelResetType.NotReset,
+                    resetType = properties.TryGetValue("resetType", out var resetType) ? TargetCounterModelResetTypeExt.New(resetType as string) : null,
                     conditionName = properties.TryGetValue("conditionName", out var conditionName) ? (string)conditionName : null
                 }
             );

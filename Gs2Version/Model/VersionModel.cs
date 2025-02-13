@@ -250,7 +250,7 @@ namespace Gs2Cdk.Gs2Version.Model
                         } : null;
                     })(),
                     signatureKeyId = properties.TryGetValue("signatureKeyId", out var signatureKeyId) ? (string)signatureKeyId : null,
-                    approveRequirement = properties.TryGetValue("approveRequirement", out var approveRequirement) ? VersionModelApproveRequirementExt.New(approveRequirement as string) : VersionModelApproveRequirement.Required
+                    approveRequirement = properties.TryGetValue("approveRequirement", out var approveRequirement) ? VersionModelApproveRequirementExt.New(approveRequirement as string) : null
                 }
             );
 
