@@ -208,7 +208,7 @@ namespace Gs2Cdk.Gs2Limit.Model
                             _ => null
                         } : null;
                     })(),
-                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? LimitModelResetDayOfWeekExt.New(resetDayOfWeek as string) : LimitModelResetDayOfWeek.Sunday,
+                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? LimitModelResetDayOfWeekExt.New(resetDayOfWeek as string) : null,
                     resetHour = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("resetHour", out var resetHour) ? resetHour switch {

@@ -440,7 +440,7 @@ namespace Gs2Cdk.Gs2Guard.Model
                             _ => null
                         };
                     })() : null,
-                    locationRestriction = properties.TryGetValue("locationRestriction", out var locationRestriction) ? BlockingPolicyModelLocationRestrictionExt.New(locationRestriction as string) : BlockingPolicyModelLocationRestriction.Allow,
+                    locationRestriction = properties.TryGetValue("locationRestriction", out var locationRestriction) ? BlockingPolicyModelLocationRestrictionExt.New(locationRestriction as string) : null,
                     anonymousIpRestriction = properties.TryGetValue("anonymousIpRestriction", out var anonymousIpRestriction) ? BlockingPolicyModelAnonymousIpRestrictionExt.New(anonymousIpRestriction as string) : null,
                     hostingProviderIpRestriction = properties.TryGetValue("hostingProviderIpRestriction", out var hostingProviderIpRestriction) ? BlockingPolicyModelHostingProviderIpRestrictionExt.New(hostingProviderIpRestriction as string) : null,
                     reputationIpRestriction = properties.TryGetValue("reputationIpRestriction", out var reputationIpRestriction) ? BlockingPolicyModelReputationIpRestrictionExt.New(reputationIpRestriction as string) : null,
@@ -452,7 +452,7 @@ namespace Gs2Cdk.Gs2Guard.Model
                             _ => null
                         };
                     })() : null,
-                    ipAddressRestriction = properties.TryGetValue("ipAddressRestriction", out var ipAddressRestriction) ? BlockingPolicyModelIpAddressRestrictionExt.New(ipAddressRestriction as string) : BlockingPolicyModelIpAddressRestriction.Allow
+                    ipAddressRestriction = properties.TryGetValue("ipAddressRestriction", out var ipAddressRestriction) ? BlockingPolicyModelIpAddressRestrictionExt.New(ipAddressRestriction as string) : null
                 }
             );
 

@@ -239,7 +239,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                             _ => null
                         } : null;
                     })(),
-                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? MissionGroupModelResetDayOfWeekExt.New(resetDayOfWeek as string) : MissionGroupModelResetDayOfWeek.Sunday,
+                    resetDayOfWeek = properties.TryGetValue("resetDayOfWeek", out var resetDayOfWeek) ? MissionGroupModelResetDayOfWeekExt.New(resetDayOfWeek as string) : null,
                     resetHour = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("resetHour", out var resetHour) ? resetHour switch {

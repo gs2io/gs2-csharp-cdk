@@ -216,7 +216,7 @@ namespace Gs2Cdk.Gs2LoginReward.Model
                             _ => null
                         } : null;
                     })(),
-                    repeat = properties.TryGetValue("repeat", out var repeat) ? BonusModelRepeatExt.New(repeat as string) : BonusModelRepeat.Enabled,
+                    repeat = properties.TryGetValue("repeat", out var repeat) ? BonusModelRepeatExt.New(repeat as string) : null,
                     rewards = properties.TryGetValue("rewards", out var rewards) ? new Func<Reward[]>(() =>
                     {
                         return rewards switch {

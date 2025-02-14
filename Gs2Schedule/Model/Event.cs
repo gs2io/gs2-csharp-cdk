@@ -353,8 +353,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
                             _ => null
                         } : null;
                     })(),
-                    repeatBeginDayOfWeek = properties.TryGetValue("repeatBeginDayOfWeek", out var repeatBeginDayOfWeek) ? EventRepeatBeginDayOfWeekExt.New(repeatBeginDayOfWeek as string) : EventRepeatBeginDayOfWeek.Sunday,
-                    repeatEndDayOfWeek = properties.TryGetValue("repeatEndDayOfWeek", out var repeatEndDayOfWeek) ? EventRepeatEndDayOfWeekExt.New(repeatEndDayOfWeek as string) : EventRepeatEndDayOfWeek.Sunday,
+                    repeatBeginDayOfWeek = properties.TryGetValue("repeatBeginDayOfWeek", out var repeatBeginDayOfWeek) ? EventRepeatBeginDayOfWeekExt.New(repeatBeginDayOfWeek as string) : null,
+                    repeatEndDayOfWeek = properties.TryGetValue("repeatEndDayOfWeek", out var repeatEndDayOfWeek) ? EventRepeatEndDayOfWeekExt.New(repeatEndDayOfWeek as string) : null,
                     repeatBeginHour = new Func<int?>(() =>
                     {
                         return properties.TryGetValue("repeatBeginHour", out var repeatBeginHour) ? repeatBeginHour switch {
