@@ -17,21 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Money2.Model;
 
-namespace Gs2Cdk.Gs2Account.Model.Options
+namespace Gs2Cdk.Gs2Money2.Model.Options
 {
-    public class NamespaceOptions {
-        public string description;
-        public bool? changePasswordIfTakeOver;
-        public bool? differentUserIdForLoginAndDataRetention;
-        public ScriptSetting createAccountScript;
-        public ScriptSetting authenticationScript;
-        public ScriptSetting createTakeOverScript;
-        public ScriptSetting doTakeOverScript;
-        public ScriptSetting banScript;
-        public LogSetting logSetting;
+    public class AppleAppStoreSubscriptionContentOptions {
+        public string subscriptionGroupIdentifier;
     }
 }
-

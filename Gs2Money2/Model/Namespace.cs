@@ -35,6 +35,11 @@ namespace Gs2Cdk.Gs2Money2.Model
         public string description;
         public ScriptSetting depositBalanceScript;
         public ScriptSetting withdrawBalanceScript;
+        public string subscribeScript;
+        public string renewScript;
+        public string unsubscribeScript;
+        public ScriptSetting takeOverScript;
+        public NotificationSetting changeSubscriptionStatusNotification;
         public LogSetting logSetting;
 
         public Namespace(
@@ -56,6 +61,11 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.description = options?.description;
             this.depositBalanceScript = options?.depositBalanceScript;
             this.withdrawBalanceScript = options?.withdrawBalanceScript;
+            this.subscribeScript = options?.subscribeScript;
+            this.renewScript = options?.renewScript;
+            this.unsubscribeScript = options?.unsubscribeScript;
+            this.takeOverScript = options?.takeOverScript;
+            this.changeSubscriptionStatusNotification = options?.changeSubscriptionStatusNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -102,6 +112,23 @@ namespace Gs2Cdk.Gs2Money2.Model
                 properties["WithdrawBalanceScript"] = this.withdrawBalanceScript?.Properties(
                 );
             }
+            if (this.subscribeScript != null) {
+                properties["SubscribeScript"] = this.subscribeScript;
+            }
+            if (this.renewScript != null) {
+                properties["RenewScript"] = this.renewScript;
+            }
+            if (this.unsubscribeScript != null) {
+                properties["UnsubscribeScript"] = this.unsubscribeScript;
+            }
+            if (this.takeOverScript != null) {
+                properties["TakeOverScript"] = this.takeOverScript?.Properties(
+                );
+            }
+            if (this.changeSubscriptionStatusNotification != null) {
+                properties["ChangeSubscriptionStatusNotification"] = this.changeSubscriptionStatusNotification?.Properties(
+                );
+            }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
                 );
@@ -127,12 +154,14 @@ namespace Gs2Cdk.Gs2Money2.Model
         }
 
         public Namespace MasterData(
-            StoreContentModel[] storeContentModels
+            StoreContentModel[] storeContentModels,
+            StoreSubscriptionContentModel[] storeSubscriptionContentModels
         ){
             (new CurrentMasterData(
                 this.stack,
                 this.name,
-                storeContentModels
+                storeContentModels,
+                storeSubscriptionContentModels
             )).AddDependsOn(
                 this
             );
@@ -152,6 +181,16 @@ namespace Gs2Cdk.Gs2Money2.Model
                         List<StoreContentModel> v => v.ToArray(),
                         Dictionary<string, object>[] v => v.Select(StoreContentModel.FromProperties).ToArray(),
                         List<Dictionary<string, object>> v => v.Select(StoreContentModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })(),
+                new Func<StoreSubscriptionContentModel[]>(() =>
+                {
+                    return properties["storeSubscriptionContentModels"] switch {
+                        StoreSubscriptionContentModel[] v => v,
+                        List<StoreSubscriptionContentModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(StoreSubscriptionContentModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(StoreSubscriptionContentModel.FromProperties).ToArray(),
                         _ => null,
                     };
                 })()

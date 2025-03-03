@@ -24,5 +24,6 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
     public class GooglePlaySettingOptions {
         public string packageName;
         public string publicKey;
+        public string credentialsJSON;
     }
 }

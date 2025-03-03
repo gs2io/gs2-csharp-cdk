@@ -25,17 +25,20 @@ namespace Gs2Cdk.Gs2Money2.Model
         private string version= "2024-06-20";
         private string namespaceName;
         private StoreContentModel[] storeContentModels;
+        private StoreSubscriptionContentModel[] storeSubscriptionContentModels;
 
         public CurrentMasterData(
             Stack stack,
             string namespaceName,
-            StoreContentModel[] storeContentModels
+            StoreContentModel[] storeContentModels,
+            StoreSubscriptionContentModel[] storeSubscriptionContentModels
         ): base(
             "Money2_CurrentModelMaster_" + namespaceName
         ){
 
             this.namespaceName = namespaceName;
             this.storeContentModels = storeContentModels;
+            this.storeSubscriptionContentModels = storeSubscriptionContentModels;
             stack.AddResource(
                 this
             );
@@ -59,6 +62,10 @@ namespace Gs2Cdk.Gs2Money2.Model
             settings["version"] = this.version;
             if (this.storeContentModels != null) {
                 settings["storeContentModels"] = this.storeContentModels.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.storeSubscriptionContentModels != null) {
+                settings["storeSubscriptionContentModels"] = this.storeSubscriptionContentModels.Select(v => v?.Properties(
                         )).ToList();
             }
 

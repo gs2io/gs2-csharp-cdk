@@ -27,6 +27,11 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
         public string description;
         public ScriptSetting depositBalanceScript;
         public ScriptSetting withdrawBalanceScript;
+        public string subscribeScript;
+        public string renewScript;
+        public string unsubscribeScript;
+        public ScriptSetting takeOverScript;
+        public NotificationSetting changeSubscriptionStatusNotification;
         public LogSetting logSetting;
     }
 }

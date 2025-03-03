@@ -17,21 +17,18 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Money2.Model;
+using Gs2Cdk.Gs2Money2.Model.Enums;
 
-namespace Gs2Cdk.Gs2Account.Model.Options
+namespace Gs2Cdk.Gs2Money2.Model.Options
 {
-    public class NamespaceOptions {
-        public string description;
-        public bool? changePasswordIfTakeOver;
-        public bool? differentUserIdForLoginAndDataRetention;
-        public ScriptSetting createAccountScript;
-        public ScriptSetting authenticationScript;
-        public ScriptSetting createTakeOverScript;
-        public ScriptSetting doTakeOverScript;
-        public ScriptSetting banScript;
-        public LogSetting logSetting;
+    public class SubscribeTransactionOptions {
+        public string userId;
+        public long? lastAllocatedAt;
+        public string lastAllocatedAtString;
+        public long? lastTakeOverAt;
+        public string lastTakeOverAtString;
+        public long? revision;
+        public string revisionString;
     }
 }
-

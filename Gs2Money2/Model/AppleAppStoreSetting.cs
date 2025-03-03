@@ -25,11 +25,17 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class AppleAppStoreSetting {
         private string bundleId;
+        private string issuerId;
+        private string keyId;
+        private string privateKeyPem;
 
         public AppleAppStoreSetting(
             AppleAppStoreSettingOptions options = null
         ){
             this.bundleId = options?.bundleId;
+            this.issuerId = options?.issuerId;
+            this.keyId = options?.keyId;
+            this.privateKeyPem = options?.privateKeyPem;
         }
 
         public Dictionary<string, object> Properties(
@@ -38,6 +44,15 @@ namespace Gs2Cdk.Gs2Money2.Model
 
             if (this.bundleId != null) {
                 properties["bundleId"] = this.bundleId;
+            }
+            if (this.issuerId != null) {
+                properties["issuerId"] = this.issuerId;
+            }
+            if (this.keyId != null) {
+                properties["keyId"] = this.keyId;
+            }
+            if (this.privateKeyPem != null) {
+                properties["privateKeyPem"] = this.privateKeyPem;
             }
 
             return properties;
@@ -48,7 +63,10 @@ namespace Gs2Cdk.Gs2Money2.Model
         ){
             var model = new AppleAppStoreSetting(
                 new AppleAppStoreSettingOptions {
-                    bundleId = properties.TryGetValue("bundleId", out var bundleId) ? (string)bundleId : null
+                    bundleId = properties.TryGetValue("bundleId", out var bundleId) ? (string)bundleId : null,
+                    issuerId = properties.TryGetValue("issuerId", out var issuerId) ? (string)issuerId : null,
+                    keyId = properties.TryGetValue("keyId", out var keyId) ? (string)keyId : null,
+                    privateKeyPem = properties.TryGetValue("privateKeyPem", out var privateKeyPem) ? (string)privateKeyPem : null
                 }
             );
 

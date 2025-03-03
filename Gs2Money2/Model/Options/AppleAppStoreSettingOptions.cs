@@ -23,5 +23,8 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
 {
     public class AppleAppStoreSettingOptions {
         public string bundleId;
+        public string issuerId;
+        public string keyId;
+        public string privateKeyPem;
     }
 }
