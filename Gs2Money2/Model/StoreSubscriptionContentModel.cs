@@ -19,6 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money2.Model;
+using Gs2Cdk.Gs2Money2.Model.Enums;
 using Gs2Cdk.Gs2Money2.Model.Options;
 
 namespace Gs2Cdk.Gs2Money2.Model
@@ -27,9 +28,12 @@ namespace Gs2Cdk.Gs2Money2.Model
         private string name;
         private string scheduleNamespaceId;
         private string triggerName;
+        private StoreSubscriptionContentModelTriggerExtendMode? triggerExtendMode;
         private int? reallocateSpanDays;
         private string reallocateSpanDaysString;
         private string metadata;
+        private int? rollupHour;
+        private string rollupHourString;
         private AppleAppStoreSubscriptionContent appleAppStore;
         private GooglePlaySubscriptionContent googlePlay;
 
@@ -37,16 +41,63 @@ namespace Gs2Cdk.Gs2Money2.Model
             string name,
             string scheduleNamespaceId,
             string triggerName,
+            StoreSubscriptionContentModelTriggerExtendMode triggerExtendMode,
             int? reallocateSpanDays,
             StoreSubscriptionContentModelOptions options = null
         ){
             this.name = name;
             this.scheduleNamespaceId = scheduleNamespaceId;
             this.triggerName = triggerName;
+            this.triggerExtendMode = triggerExtendMode;
             this.reallocateSpanDays = reallocateSpanDays;
             this.metadata = options?.metadata;
+            this.rollupHour = options?.rollupHour;
             this.appleAppStore = options?.appleAppStore;
             this.googlePlay = options?.googlePlay;
+        }
+
+        public static StoreSubscriptionContentModel TriggerExtendModeIsJust(
+            string name,
+            string scheduleNamespaceId,
+            string triggerName,
+            int? reallocateSpanDays,
+            StoreSubscriptionContentModelTriggerExtendModeIsJustOptions options = null
+        ){
+            return (new StoreSubscriptionContentModel(
+                name,
+                scheduleNamespaceId,
+                triggerName,
+                StoreSubscriptionContentModelTriggerExtendMode.Just,
+                reallocateSpanDays,
+                new StoreSubscriptionContentModelOptions {
+                    metadata = options?.metadata,
+                    appleAppStore = options?.appleAppStore,
+                    googlePlay = options?.googlePlay,
+                }
+            ));
+        }
+
+        public static StoreSubscriptionContentModel TriggerExtendModeIsRollupHour(
+            string name,
+            string scheduleNamespaceId,
+            string triggerName,
+            int? reallocateSpanDays,
+            int? rollupHour,
+            StoreSubscriptionContentModelTriggerExtendModeIsRollupHourOptions options = null
+        ){
+            return (new StoreSubscriptionContentModel(
+                name,
+                scheduleNamespaceId,
+                triggerName,
+                StoreSubscriptionContentModelTriggerExtendMode.RollupHour,
+                reallocateSpanDays,
+                new StoreSubscriptionContentModelOptions {
+                    rollupHour = rollupHour,
+                    metadata = options?.metadata,
+                    appleAppStore = options?.appleAppStore,
+                    googlePlay = options?.googlePlay,
+                }
+            ));
         }
 
 
@@ -54,14 +105,18 @@ namespace Gs2Cdk.Gs2Money2.Model
             string name,
             string scheduleNamespaceId,
             string triggerName,
+            StoreSubscriptionContentModelTriggerExtendMode triggerExtendMode,
             string reallocateSpanDays,
             StoreSubscriptionContentModelOptions options = null
         ){
             this.name = name;
             this.scheduleNamespaceId = scheduleNamespaceId;
             this.triggerName = triggerName;
+            this.triggerExtendMode = triggerExtendMode;
             this.reallocateSpanDaysString = reallocateSpanDays;
             this.metadata = options?.metadata;
+            this.rollupHour = options?.rollupHour;
+            this.rollupHourString = options?.rollupHourString;
             this.appleAppStore = options?.appleAppStore;
             this.googlePlay = options?.googlePlay;
         }
@@ -81,6 +136,17 @@ namespace Gs2Cdk.Gs2Money2.Model
             }
             if (this.triggerName != null) {
                 properties["triggerName"] = this.triggerName;
+            }
+            if (this.triggerExtendMode != null) {
+                properties["triggerExtendMode"] = this.triggerExtendMode.Value.Str(
+                );
+            }
+            if (this.rollupHourString != null) {
+                properties["rollupHour"] = this.rollupHourString;
+            } else {
+                if (this.rollupHour != null) {
+                    properties["rollupHour"] = this.rollupHour;
+                }
             }
             if (this.reallocateSpanDaysString != null) {
                 properties["reallocateSpanDays"] = this.reallocateSpanDaysString;
@@ -117,6 +183,14 @@ namespace Gs2Cdk.Gs2Money2.Model
                 {
                     return (string) triggerName;
                 })() : default,
+                properties.TryGetValue("triggerExtendMode", out var triggerExtendMode) ? new Func<StoreSubscriptionContentModelTriggerExtendMode>(() =>
+                {
+                    return triggerExtendMode switch {
+                        StoreSubscriptionContentModelTriggerExtendMode e => e,
+                        string s => StoreSubscriptionContentModelTriggerExtendModeExt.New(s),
+                        _ => StoreSubscriptionContentModelTriggerExtendMode.Just
+                    };
+                })() : default,
                 properties.TryGetValue("reallocateSpanDays", out var reallocateSpanDays) ? new Func<int?>(() =>
                 {
                     return reallocateSpanDays switch {
@@ -127,6 +201,14 @@ namespace Gs2Cdk.Gs2Money2.Model
                 })() : default,
                 new StoreSubscriptionContentModelOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    rollupHour = new Func<int?>(() =>
+                    {
+                        return properties.TryGetValue("rollupHour", out var rollupHour) ? rollupHour switch {
+                            int v => v,
+                            string v => int.Parse(v),
+                            _ => null
+                        } : null;
+                    })(),
                     appleAppStore = properties.TryGetValue("appleAppStore", out var appleAppStore) ? new Func<AppleAppStoreSubscriptionContent>(() =>
                     {
                         return appleAppStore switch {

@@ -18,14 +18,13 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money2.Model;
+using Gs2Cdk.Gs2Money2.Model.Enums;
 
 namespace Gs2Cdk.Gs2Money2.Model.Options
 {
-    public class AppleAppStoreSettingOptions {
-        public string bundleId;
-        public string sharedSecretKey;
-        public string issuerId;
-        public string keyId;
-        public string privateKeyPem;
+    public class StoreSubscriptionContentModelTriggerExtendModeIsJustOptions {
+        public string metadata;
+        public AppleAppStoreSubscriptionContent appleAppStore;
+        public GooglePlaySubscriptionContent googlePlay;
     }
 }

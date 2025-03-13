@@ -26,14 +26,12 @@ namespace Gs2Cdk.Gs2Money2.Model
     public class GooglePlaySetting {
         private string packageName;
         private string publicKey;
-        private string credentialsJSON;
 
         public GooglePlaySetting(
             GooglePlaySettingOptions options = null
         ){
             this.packageName = options?.packageName;
             this.publicKey = options?.publicKey;
-            this.credentialsJSON = options?.credentialsJSON;
         }
 
         public Dictionary<string, object> Properties(
@@ -46,9 +44,6 @@ namespace Gs2Cdk.Gs2Money2.Model
             if (this.publicKey != null) {
                 properties["publicKey"] = this.publicKey;
             }
-            if (this.credentialsJSON != null) {
-                properties["credentialsJSON"] = this.credentialsJSON;
-            }
 
             return properties;
         }
@@ -59,8 +54,7 @@ namespace Gs2Cdk.Gs2Money2.Model
             var model = new GooglePlaySetting(
                 new GooglePlaySettingOptions {
                     packageName = properties.TryGetValue("packageName", out var packageName) ? (string)packageName : null,
-                    publicKey = properties.TryGetValue("publicKey", out var publicKey) ? (string)publicKey : null,
-                    credentialsJSON = properties.TryGetValue("credentialsJSON", out var credentialsJSON) ? (string)credentialsJSON : null
+                    publicKey = properties.TryGetValue("publicKey", out var publicKey) ? (string)publicKey : null
                 }
             );
 

@@ -18,11 +18,14 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Money2.Model;
+using Gs2Cdk.Gs2Money2.Model.Enums;
 
 namespace Gs2Cdk.Gs2Money2.Model.Options
 {
     public class StoreSubscriptionContentModelOptions {
         public string metadata;
+        public int? rollupHour;
+        public string rollupHourString;
         public AppleAppStoreSubscriptionContent appleAppStore;
         public GooglePlaySubscriptionContent googlePlay;
     }

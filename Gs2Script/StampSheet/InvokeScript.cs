@@ -29,6 +29,8 @@ namespace Gs2Cdk.Gs2Script.StampSheet
         private string userId;
         private string args;
         private RandomStatus randomStatus;
+        private bool? forceUseDistributor;
+        private string forceUseDistributorString;
         private string timeOffsetToken;
 
 
@@ -36,13 +38,33 @@ namespace Gs2Cdk.Gs2Script.StampSheet
             string scriptId = null,
             string args = null,
             RandomStatus randomStatus = null,
+            bool? forceUseDistributor = null,
             string timeOffsetToken = null,
             string userId = "#{userId}"
         ){
 
-            this.scriptId = scriptId;
+            this.userId = userId;
             this.args = args;
             this.randomStatus = randomStatus;
+            this.forceUseDistributor = forceUseDistributor;
+            this.timeOffsetToken = timeOffsetToken;
+            this.userId = userId;
+        }
+
+
+        public InvokeScript(
+            string scriptId = null,
+            string args = null,
+            RandomStatus randomStatus = null,
+            string forceUseDistributor = null,
+            string timeOffsetToken = null,
+            string userId = "#{userId}"
+        ){
+
+            this.userId = userId;
+            this.args = args;
+            this.randomStatus = randomStatus;
+            this.forceUseDistributorString = forceUseDistributor;
             this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
         }
@@ -64,6 +86,13 @@ namespace Gs2Cdk.Gs2Script.StampSheet
                 properties["randomStatus"] = this.randomStatus?.Properties(
                 );
             }
+            if (this.forceUseDistributorString != null) {
+                properties["forceUseDistributor"] = this.forceUseDistributorString;
+            } else {
+                if (this.forceUseDistributor != null) {
+                    properties["forceUseDistributor"] = this.forceUseDistributor;
+                }
+            }
             if (this.timeOffsetToken != null) {
                 properties["timeOffsetToken"] = this.timeOffsetToken;
             }
@@ -76,7 +105,7 @@ namespace Gs2Cdk.Gs2Script.StampSheet
                 return new InvokeScript(
                     new Func<string>(() =>
                     {
-                        return properties.TryGetValue("scriptId", out var scriptId) ? scriptId as string : null;
+                        return properties.TryGetValue("userId", out var userId) ? userId as string : null;
                     })(),
                     new Func<string>(() =>
                     {
@@ -92,6 +121,14 @@ namespace Gs2Cdk.Gs2Script.StampSheet
                             _ => null
                         } : null;
                     })(),
+                    new Func<bool?>(() =>
+                    {
+                        return properties.TryGetValue("forceUseDistributor", out var forceUseDistributor) ? forceUseDistributor switch {
+                            bool v => v,
+                            string v => bool.Parse(v),
+                            _ => false
+                        } : null;
+                    })(),
                     new Func<string>(() =>
                     {
                         return properties.TryGetValue("timeOffsetToken", out var timeOffsetToken) ? timeOffsetToken as string : null;
@@ -105,7 +142,7 @@ namespace Gs2Cdk.Gs2Script.StampSheet
                 return new InvokeScript(
                     new Func<string>(() =>
                     {
-                        return properties.TryGetValue("scriptId", out var scriptId) ? scriptId.ToString() : null;
+                        return properties.TryGetValue("userId", out var userId) ? userId.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {
@@ -120,6 +157,10 @@ namespace Gs2Cdk.Gs2Script.StampSheet
                             Dictionary<string, object>[] v => v.Length > 0 ? RandomStatus.FromProperties(v.First()) : null,
                             _ => null
                         } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("forceUseDistributor", out var forceUseDistributor) ? forceUseDistributor.ToString() : null;
                     })(),
                     new Func<string>(() =>
                     {

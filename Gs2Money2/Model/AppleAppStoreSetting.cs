@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class AppleAppStoreSetting {
         private string bundleId;
+        private string sharedSecretKey;
         private string issuerId;
         private string keyId;
         private string privateKeyPem;
@@ -33,6 +34,7 @@ namespace Gs2Cdk.Gs2Money2.Model
             AppleAppStoreSettingOptions options = null
         ){
             this.bundleId = options?.bundleId;
+            this.sharedSecretKey = options?.sharedSecretKey;
             this.issuerId = options?.issuerId;
             this.keyId = options?.keyId;
             this.privateKeyPem = options?.privateKeyPem;
@@ -44,6 +46,9 @@ namespace Gs2Cdk.Gs2Money2.Model
 
             if (this.bundleId != null) {
                 properties["bundleId"] = this.bundleId;
+            }
+            if (this.sharedSecretKey != null) {
+                properties["sharedSecretKey"] = this.sharedSecretKey;
             }
             if (this.issuerId != null) {
                 properties["issuerId"] = this.issuerId;
@@ -64,6 +69,7 @@ namespace Gs2Cdk.Gs2Money2.Model
             var model = new AppleAppStoreSetting(
                 new AppleAppStoreSettingOptions {
                     bundleId = properties.TryGetValue("bundleId", out var bundleId) ? (string)bundleId : null,
+                    sharedSecretKey = properties.TryGetValue("sharedSecretKey", out var sharedSecretKey) ? (string)sharedSecretKey : null,
                     issuerId = properties.TryGetValue("issuerId", out var issuerId) ? (string)issuerId : null,
                     keyId = properties.TryGetValue("keyId", out var keyId) ? (string)keyId : null,
                     privateKeyPem = properties.TryGetValue("privateKeyPem", out var privateKeyPem) ? (string)privateKeyPem : null
