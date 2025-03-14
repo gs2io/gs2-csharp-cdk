@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -80,14 +82,16 @@ namespace Gs2Cdk.Gs2Identifier.Model
 
 
         public User Attach(
-            SecurityPolicy securityPolicy
+            SecurityPolicy securityPolicy,
+            bool compatibility = true
         ){
             (new AttachSecurityPolicy(
                 this.stack,
                 this.name,
                 securityPolicy.GetAttrSecurityPolicyId(
                 ).Str(
-                )
+                ),
+                compatibility
             )).AddDependsOn(
                 this
             ).AddDependsOn(
@@ -98,12 +102,14 @@ namespace Gs2Cdk.Gs2Identifier.Model
         }
 
         public User AttachGrn(
-            string securityPolicyGrn
+            string securityPolicyGrn,
+            bool compatibility = true
         ){
             (new AttachSecurityPolicy(
                 this.stack,
                 this.name,
-                securityPolicyGrn
+                securityPolicyGrn,
+                compatibility
             )).AddDependsOn(
                 this
             );

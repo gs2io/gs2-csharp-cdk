@@ -51,8 +51,9 @@ namespace Gs2Cdk.Gs2Identifier.Model
         public AttachSecurityPolicy(
             Stack stack,
             string userName,
-            string securityPolicyId
-        ): base("Identifier_AttachSecurityPolicy_" + userName + (stack.Exists("Identifier_AttachSecurityPolicy_" + userName) ? "_" + SecurityPolicyResourceName(securityPolicyId) : ""))
+            string securityPolicyId,
+            bool compatibility = true
+        ): base("Identifier_AttachSecurityPolicy_" + userName + (!compatibility || stack.Exists("Identifier_AttachSecurityPolicy_" + userName) ? "_" + SecurityPolicyResourceName(securityPolicyId) : ""))
         {
             this.stack = stack;
             this.userName = userName;
