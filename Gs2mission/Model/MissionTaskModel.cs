@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -41,14 +43,10 @@ namespace Gs2Cdk.Gs2Mission.Model
         public MissionTaskModel(
             string name,
             MissionTaskModelVerifyCompleteType verifyCompleteType,
-            string counterName,
-            long targetValue,
             MissionTaskModelOptions options = null
         ){
             this.name = name;
             this.verifyCompleteType = verifyCompleteType;
-            this.counterName = counterName;
-            this.targetValue = targetValue;
             this.metadata = options?.metadata;
             this.targetCounter = options?.targetCounter;
             this.verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions;
@@ -60,16 +58,12 @@ namespace Gs2Cdk.Gs2Mission.Model
 
         public static MissionTaskModel VerifyCompleteTypeIsCounter(
             string name,
-            string counterName,
-            long targetValue,
             TargetCounterModel targetCounter,
             MissionTaskModelVerifyCompleteTypeIsCounterOptions options = null
         ){
             return (new MissionTaskModel(
                 name,
                 MissionTaskModelVerifyCompleteType.Counter,
-                counterName,
-                targetValue,
                 new MissionTaskModelOptions {
                     targetCounter = targetCounter,
                     metadata = options?.metadata,
@@ -84,15 +78,11 @@ namespace Gs2Cdk.Gs2Mission.Model
 
         public static MissionTaskModel VerifyCompleteTypeIsVerifyActions(
             string name,
-            string counterName,
-            long targetValue,
             MissionTaskModelVerifyCompleteTypeIsVerifyActionsOptions options = null
         ){
             return (new MissionTaskModel(
                 name,
                 MissionTaskModelVerifyCompleteType.VerifyActions,
-                counterName,
-                targetValue,
                 new MissionTaskModelOptions {
                     metadata = options?.metadata,
                     verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions,
@@ -103,28 +93,7 @@ namespace Gs2Cdk.Gs2Mission.Model
                 }
             ));
         }
-
-
-        public MissionTaskModel(
-            string name,
-            MissionTaskModelVerifyCompleteType verifyCompleteType,
-            string counterName,
-            string targetValue,
-            MissionTaskModelOptions options = null
-        ){
-            this.name = name;
-            this.verifyCompleteType = verifyCompleteType;
-            this.counterName = counterName;
-            this.targetValueString = targetValue;
-            this.metadata = options?.metadata;
-            this.targetCounter = options?.targetCounter;
-            this.verifyCompleteConsumeActions = options?.verifyCompleteConsumeActions;
-            this.completeAcquireActions = options?.completeAcquireActions;
-            this.challengePeriodEventId = options?.challengePeriodEventId;
-            this.premiseMissionTaskName = options?.premiseMissionTaskName;
-            this.targetResetType = options?.targetResetType;
-        }
-
+        
         public Dictionary<string, object> Properties(
         ){
             var properties = new Dictionary<string, object>();
@@ -189,18 +158,6 @@ namespace Gs2Cdk.Gs2Mission.Model
                         MissionTaskModelVerifyCompleteType e => e,
                         string s => MissionTaskModelVerifyCompleteTypeExt.New(s),
                         _ => MissionTaskModelVerifyCompleteType.Counter
-                    };
-                })() : default,
-                properties.TryGetValue("counterName", out var counterName) ? new Func<string>(() =>
-                {
-                    return (string) counterName;
-                })() : default,
-                properties.TryGetValue("targetValue", out var targetValue) ? new Func<long>(() =>
-                {
-                    return targetValue switch {
-                        long v => v,
-                        string v => long.Parse(v),
-                        _ => 0
                     };
                 })() : default,
                 new MissionTaskModelOptions {
