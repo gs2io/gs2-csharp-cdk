@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
         private string name;
         private EventScheduleType? scheduleType;
         private RepeatSetting repeatSetting;
-        private EventRepeatType? repeatType;
         private string metadata;
         private long? absoluteBegin;
         private string absoluteBeginString;
@@ -50,13 +51,11 @@ namespace Gs2Cdk.Gs2Schedule.Model
             string name,
             EventScheduleType scheduleType,
             RepeatSetting repeatSetting,
-            EventRepeatType repeatType,
             EventOptions options = null
         ){
             this.name = name;
             this.scheduleType = scheduleType;
             this.repeatSetting = repeatSetting;
-            this.repeatType = repeatType;
             this.metadata = options?.metadata;
             this.absoluteBegin = options?.absoluteBegin;
             this.absoluteEnd = options?.absoluteEnd;
@@ -72,14 +71,12 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event ScheduleTypeIsAbsolute(
             string name,
             RepeatSetting repeatSetting,
-            EventRepeatType repeatType,
             EventScheduleTypeIsAbsoluteOptions options = null
         ){
             return (new Event(
                 name,
                 EventScheduleType.Absolute,
                 repeatSetting,
-                repeatType,
                 new EventOptions {
                     metadata = options?.metadata,
                     absoluteBegin = options?.absoluteBegin,
@@ -91,7 +88,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
         public static Event ScheduleTypeIsRelative(
             string name,
             RepeatSetting repeatSetting,
-            EventRepeatType repeatType,
             string relativeTriggerName,
             EventScheduleTypeIsRelativeOptions options = null
         ){
@@ -99,105 +95,8 @@ namespace Gs2Cdk.Gs2Schedule.Model
                 name,
                 EventScheduleType.Relative,
                 repeatSetting,
-                repeatType,
                 new EventOptions {
                     relativeTriggerName = relativeTriggerName,
-                    metadata = options?.metadata,
-                    absoluteBegin = options?.absoluteBegin,
-                    absoluteEnd = options?.absoluteEnd,
-                }
-            ));
-        }
-
-        public static Event RepeatTypeIsAlways(
-            string name,
-            EventScheduleType scheduleType,
-            RepeatSetting repeatSetting,
-            EventRepeatTypeIsAlwaysOptions options = null
-        ){
-            return (new Event(
-                name,
-                scheduleType,
-                repeatSetting,
-                EventRepeatType.Always,
-                new EventOptions {
-                    metadata = options?.metadata,
-                    absoluteBegin = options?.absoluteBegin,
-                    absoluteEnd = options?.absoluteEnd,
-                }
-            ));
-        }
-
-        public static Event RepeatTypeIsDaily(
-            string name,
-            EventScheduleType scheduleType,
-            RepeatSetting repeatSetting,
-            int? repeatBeginHour,
-            int? repeatEndHour,
-            EventRepeatTypeIsDailyOptions options = null
-        ){
-            return (new Event(
-                name,
-                scheduleType,
-                repeatSetting,
-                EventRepeatType.Daily,
-                new EventOptions {
-                    repeatBeginHour = repeatBeginHour,
-                    repeatEndHour = repeatEndHour,
-                    metadata = options?.metadata,
-                    absoluteBegin = options?.absoluteBegin,
-                    absoluteEnd = options?.absoluteEnd,
-                }
-            ));
-        }
-
-        public static Event RepeatTypeIsWeekly(
-            string name,
-            EventScheduleType scheduleType,
-            RepeatSetting repeatSetting,
-            EventRepeatBeginDayOfWeek repeatBeginDayOfWeek,
-            EventRepeatEndDayOfWeek repeatEndDayOfWeek,
-            int? repeatBeginHour,
-            int? repeatEndHour,
-            EventRepeatTypeIsWeeklyOptions options = null
-        ){
-            return (new Event(
-                name,
-                scheduleType,
-                repeatSetting,
-                EventRepeatType.Weekly,
-                new EventOptions {
-                    repeatBeginDayOfWeek = repeatBeginDayOfWeek,
-                    repeatEndDayOfWeek = repeatEndDayOfWeek,
-                    repeatBeginHour = repeatBeginHour,
-                    repeatEndHour = repeatEndHour,
-                    metadata = options?.metadata,
-                    absoluteBegin = options?.absoluteBegin,
-                    absoluteEnd = options?.absoluteEnd,
-                }
-            ));
-        }
-
-        public static Event RepeatTypeIsMonthly(
-            string name,
-            EventScheduleType scheduleType,
-            RepeatSetting repeatSetting,
-            int? repeatBeginDayOfMonth,
-            int? repeatEndDayOfMonth,
-            int? repeatBeginHour,
-            int? repeatEndHour,
-            EventRepeatTypeIsMonthlyOptions options = null
-        ){
-            return (new Event(
-                name,
-                scheduleType,
-                repeatSetting,
-                EventRepeatType.Monthly,
-                new EventOptions {
-                    repeatBeginDayOfMonth = repeatBeginDayOfMonth,
-                    repeatEndDayOfMonth = repeatEndDayOfMonth,
-                    repeatBeginHour = repeatBeginHour,
-                    repeatEndHour = repeatEndHour,
                     metadata = options?.metadata,
                     absoluteBegin = options?.absoluteBegin,
                     absoluteEnd = options?.absoluteEnd,
@@ -238,10 +137,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
             }
             if (this.repeatSetting != null) {
                 properties["repeatSetting"] = this.repeatSetting?.Properties(
-                );
-            }
-            if (this.repeatType != null) {
-                properties["repeatType"] = this.repeatType.Value.Str(
                 );
             }
             if (this.repeatBeginDayOfMonthString != null) {
@@ -310,14 +205,6 @@ namespace Gs2Cdk.Gs2Schedule.Model
                         _ => null
                     };
                 })() : null,
-                properties.TryGetValue("repeatType", out var repeatType) ? new Func<EventRepeatType>(() =>
-                {
-                    return repeatType switch {
-                        EventRepeatType e => e,
-                        string s => EventRepeatTypeExt.New(s),
-                        _ => EventRepeatType.Always
-                    };
-                })() : default,
                 new EventOptions {
                     metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
                     absoluteBegin = new Func<long?>(() =>
