@@ -19,6 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Idle.Model;
+using Gs2Cdk.Gs2Idle.Model.Enums;
 using Gs2Cdk.Gs2Idle.Model.Options;
 
 namespace Gs2Cdk.Gs2Idle.Model
@@ -29,6 +30,7 @@ namespace Gs2Cdk.Gs2Idle.Model
         private string rewardIntervalMinutesString;
         private int defaultMaximumIdleMinutes;
         private string defaultMaximumIdleMinutesString;
+        private CategoryModelRewardResetMode? rewardResetMode;
         private AcquireActionList[] acquireActions;
         private string metadata;
         private string idlePeriodScheduleId;
@@ -38,12 +40,14 @@ namespace Gs2Cdk.Gs2Idle.Model
             string name,
             int rewardIntervalMinutes,
             int defaultMaximumIdleMinutes,
+            CategoryModelRewardResetMode rewardResetMode,
             AcquireActionList[] acquireActions,
             CategoryModelOptions options = null
         ){
             this.name = name;
             this.rewardIntervalMinutes = rewardIntervalMinutes;
             this.defaultMaximumIdleMinutes = defaultMaximumIdleMinutes;
+            this.rewardResetMode = rewardResetMode;
             this.acquireActions = acquireActions;
             this.metadata = options?.metadata;
             this.idlePeriodScheduleId = options?.idlePeriodScheduleId;
@@ -55,12 +59,14 @@ namespace Gs2Cdk.Gs2Idle.Model
             string name,
             string rewardIntervalMinutes,
             string defaultMaximumIdleMinutes,
+            CategoryModelRewardResetMode rewardResetMode,
             AcquireActionList[] acquireActions,
             CategoryModelOptions options = null
         ){
             this.name = name;
             this.rewardIntervalMinutesString = rewardIntervalMinutes;
             this.defaultMaximumIdleMinutesString = defaultMaximumIdleMinutes;
+            this.rewardResetMode = rewardResetMode;
             this.acquireActions = acquireActions;
             this.metadata = options?.metadata;
             this.idlePeriodScheduleId = options?.idlePeriodScheduleId;
@@ -90,6 +96,10 @@ namespace Gs2Cdk.Gs2Idle.Model
                 if (this.defaultMaximumIdleMinutes != null) {
                     properties["defaultMaximumIdleMinutes"] = this.defaultMaximumIdleMinutes;
                 }
+            }
+            if (this.rewardResetMode != null) {
+                properties["rewardResetMode"] = this.rewardResetMode.Value.Str(
+                );
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
@@ -127,6 +137,14 @@ namespace Gs2Cdk.Gs2Idle.Model
                         int v => v,
                         string v => int.Parse(v),
                         _ => 0
+                    };
+                })() : default,
+                properties.TryGetValue("rewardResetMode", out var rewardResetMode) ? new Func<CategoryModelRewardResetMode>(() =>
+                {
+                    return rewardResetMode switch {
+                        CategoryModelRewardResetMode e => e,
+                        string s => CategoryModelRewardResetModeExt.New(s),
+                        _ => CategoryModelRewardResetMode.Reset
                     };
                 })() : default,
                 properties.TryGetValue("acquireActions", out var acquireActions) ? new Func<AcquireActionList[]>(() =>
