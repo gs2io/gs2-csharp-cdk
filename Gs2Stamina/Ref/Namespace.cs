@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Stamina.Model;
 using Gs2Cdk.Gs2Stamina.StampSheet;
+using Gs2Cdk.Gs2Stamina.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Stamina.Ref
 {
@@ -128,6 +129,91 @@ namespace Gs2Cdk.Gs2Stamina.Ref
                 this.namespaceName,
                 staminaName,
                 consumeValue,
+                userId
+            ));
+        }
+
+        public VerifyStaminaValueByUserId VerifyStaminaValue(
+            string staminaName,
+            VerifyStaminaValueByUserIdVerifyType verifyType,
+            int value,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStaminaValueByUserId(
+                this.namespaceName,
+                staminaName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyStaminaMaxValueByUserId VerifyStaminaMaxValue(
+            string staminaName,
+            VerifyStaminaMaxValueByUserIdVerifyType verifyType,
+            int value,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStaminaMaxValueByUserId(
+                this.namespaceName,
+                staminaName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyStaminaRecoverIntervalMinutesByUserId VerifyStaminaRecoverIntervalMinutes(
+            string staminaName,
+            VerifyStaminaRecoverIntervalMinutesByUserIdVerifyType verifyType,
+            int value,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStaminaRecoverIntervalMinutesByUserId(
+                this.namespaceName,
+                staminaName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyStaminaRecoverValueByUserId VerifyStaminaRecoverValue(
+            string staminaName,
+            VerifyStaminaRecoverValueByUserIdVerifyType verifyType,
+            int value,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStaminaRecoverValueByUserId(
+                this.namespaceName,
+                staminaName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity,
+                userId
+            ));
+        }
+
+        public VerifyStaminaOverflowValueByUserId VerifyStaminaOverflowValue(
+            string staminaName,
+            VerifyStaminaOverflowValueByUserIdVerifyType verifyType,
+            int value,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStaminaOverflowValueByUserId(
+                this.namespaceName,
+                staminaName,
+                verifyType,
+                value,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }

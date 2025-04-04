@@ -25,14 +25,14 @@ namespace Gs2Cdk.Gs2Money2.Model
 {
     public class UnusedBalance {
         private string currency;
-        private float balance;
+        private double balance;
         private string balanceString;
         private long? revision;
         private string revisionString;
 
         public UnusedBalance(
             string currency,
-            float balance,
+            double balance,
             UnusedBalanceOptions options = null
         ){
             this.currency = currency;
@@ -78,11 +78,11 @@ namespace Gs2Cdk.Gs2Money2.Model
                 {
                     return (string) currency;
                 })() : default,
-                properties.TryGetValue("balance", out var balance) ? new Func<float>(() =>
+                properties.TryGetValue("balance", out var balance) ? new Func<double>(() =>
                 {
                     return balance switch {
-                        float v => v,
-                        string v => float.Parse(v),
+                        double v => v,
+                        string v => double.Parse(v),
                         _ => 0
                     };
                 })() : default,

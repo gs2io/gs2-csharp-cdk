@@ -24,7 +24,7 @@ using Gs2Cdk.Gs2Money2.Model.Options;
 namespace Gs2Cdk.Gs2Money2.Model
 {
     public class DepositTransaction {
-        private float price;
+        private double price;
         private string priceString;
         private int count;
         private string countString;
@@ -33,7 +33,7 @@ namespace Gs2Cdk.Gs2Money2.Model
         private string depositedAtString;
 
         public DepositTransaction(
-            float price,
+            double price,
             int count,
             DepositTransactionOptions options = null
         ){
@@ -92,11 +92,11 @@ namespace Gs2Cdk.Gs2Money2.Model
             Dictionary<string, object> properties
         ){
             var model = new DepositTransaction(
-                properties.TryGetValue("price", out var price) ? new Func<float>(() =>
+                properties.TryGetValue("price", out var price) ? new Func<double>(() =>
                 {
                     return price switch {
-                        float v => v,
-                        string v => float.Parse(v),
+                        double v => v,
+                        string v => double.Parse(v),
                         _ => 0
                     };
                 })() : default,

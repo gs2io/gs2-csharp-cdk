@@ -36,14 +36,12 @@ namespace Gs2Cdk.Gs2Script.Ref
             string scriptId,
             string args = null,
             RandomStatus randomStatus = null,
-            bool? forceUseDistributor = null,
             string userId = "#{userId}"
         ){
             return (new InvokeScript(
                 scriptId,
                 args,
                 randomStatus,
-                forceUseDistributor,
                 userId
             ));
         }

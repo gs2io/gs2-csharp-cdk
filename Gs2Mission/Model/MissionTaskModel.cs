@@ -38,7 +38,6 @@ namespace Gs2Cdk.Gs2Mission.Model
         private AcquireAction[] completeAcquireActions;
         private string challengePeriodEventId;
         private string premiseMissionTaskName;
-        private MissionTaskModelTargetResetType? targetResetType;
 
         public MissionTaskModel(
             string name,
@@ -53,7 +52,6 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.completeAcquireActions = options?.completeAcquireActions;
             this.challengePeriodEventId = options?.challengePeriodEventId;
             this.premiseMissionTaskName = options?.premiseMissionTaskName;
-            this.targetResetType = options?.targetResetType;
         }
 
         public static MissionTaskModel VerifyCompleteTypeIsCounter(
@@ -128,17 +126,6 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
             if (this.counterName != null) {
                 properties["counterName"] = this.counterName;
-            }
-            if (this.targetResetType != null) {
-                properties["targetResetType"] = this.targetResetType.Value.Str(
-                );
-            }
-            if (this.targetValueString != null) {
-                properties["targetValue"] = this.targetValueString;
-            } else {
-                if (this.targetValue != null) {
-                    properties["targetValue"] = this.targetValue;
-                }
             }
 
             return properties;

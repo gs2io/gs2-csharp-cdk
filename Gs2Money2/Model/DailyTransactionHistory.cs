@@ -31,9 +31,9 @@ namespace Gs2Cdk.Gs2Money2.Model
         private int day;
         private string dayString;
         private string currency;
-        private float? depositAmount;
+        private double? depositAmount;
         private string depositAmountString;
-        private float? withdrawAmount;
+        private double? withdrawAmount;
         private string withdrawAmountString;
         private long? revision;
         private string revisionString;
@@ -43,8 +43,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             int month,
             int day,
             string currency,
-            float? depositAmount,
-            float? withdrawAmount,
+            double? depositAmount,
+            double? withdrawAmount,
             DailyTransactionHistoryOptions options = null
         ){
             this.year = year;
@@ -154,19 +154,19 @@ namespace Gs2Cdk.Gs2Money2.Model
                 {
                     return (string) currency;
                 })() : default,
-                properties.TryGetValue("depositAmount", out var depositAmount) ? new Func<float?>(() =>
+                properties.TryGetValue("depositAmount", out var depositAmount) ? new Func<double?>(() =>
                 {
                     return depositAmount switch {
-                        float v => v,
-                        string v => float.Parse(v),
+                        double v => v,
+                        string v => double.Parse(v),
                         _ => 0
                     };
                 })() : default,
-                properties.TryGetValue("withdrawAmount", out var withdrawAmount) ? new Func<float?>(() =>
+                properties.TryGetValue("withdrawAmount", out var withdrawAmount) ? new Func<double?>(() =>
                 {
                     return withdrawAmount switch {
-                        float v => v,
-                        string v => float.Parse(v),
+                        double v => v,
+                        string v => double.Parse(v),
                         _ => 0
                     };
                 })() : default,
