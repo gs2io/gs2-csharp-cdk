@@ -35,6 +35,10 @@ namespace Gs2Cdk.Gs2Money2.Model
         private string depositAmountString;
         private double? withdrawAmount;
         private string withdrawAmountString;
+        private long? issueCount;
+        private string issueCountString;
+        private long? consumeCount;
+        private string consumeCountString;
         private long? revision;
         private string revisionString;
 
@@ -45,6 +49,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             string currency,
             double? depositAmount,
             double? withdrawAmount,
+            long? issueCount,
+            long? consumeCount,
             DailyTransactionHistoryOptions options = null
         ){
             this.year = year;
@@ -53,6 +59,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.currency = currency;
             this.depositAmount = depositAmount;
             this.withdrawAmount = withdrawAmount;
+            this.issueCount = issueCount;
+            this.consumeCount = consumeCount;
             this.revision = options?.revision;
         }
 
@@ -64,6 +72,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             string currency,
             string depositAmount,
             string withdrawAmount,
+            string issueCount,
+            string consumeCount,
             DailyTransactionHistoryOptions options = null
         ){
             this.yearString = year;
@@ -72,6 +82,8 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.currency = currency;
             this.depositAmountString = depositAmount;
             this.withdrawAmountString = withdrawAmount;
+            this.issueCountString = issueCount;
+            this.consumeCountString = consumeCount;
             this.revision = options?.revision;
             this.revisionString = options?.revisionString;
         }
@@ -116,6 +128,20 @@ namespace Gs2Cdk.Gs2Money2.Model
             } else {
                 if (this.withdrawAmount != null) {
                     properties["withdrawAmount"] = this.withdrawAmount;
+                }
+            }
+            if (this.issueCountString != null) {
+                properties["issueCount"] = this.issueCountString;
+            } else {
+                if (this.issueCount != null) {
+                    properties["issueCount"] = this.issueCount;
+                }
+            }
+            if (this.consumeCountString != null) {
+                properties["consumeCount"] = this.consumeCountString;
+            } else {
+                if (this.consumeCount != null) {
+                    properties["consumeCount"] = this.consumeCount;
                 }
             }
 
@@ -167,6 +193,22 @@ namespace Gs2Cdk.Gs2Money2.Model
                     return withdrawAmount switch {
                         double v => v,
                         string v => double.Parse(v),
+                        _ => 0
+                    };
+                })() : default,
+                properties.TryGetValue("issueCount", out var issueCount) ? new Func<long?>(() =>
+                {
+                    return issueCount switch {
+                        long v => v,
+                        string v => long.Parse(v),
+                        _ => 0
+                    };
+                })() : default,
+                properties.TryGetValue("consumeCount", out var consumeCount) ? new Func<long?>(() =>
+                {
+                    return consumeCount switch {
+                        long v => v,
+                        string v => long.Parse(v),
                         _ => 0
                     };
                 })() : default,
