@@ -38,6 +38,7 @@ namespace Gs2Cdk.Gs2Log.Model
         public string awsAccessKeyId;
         public string awsSecretAccessKey;
         public string firehoseStreamName;
+        public NamespaceFirehoseCompressData? firehoseCompressData;
 
         public Namespace(
             Stack stack,
@@ -58,6 +59,7 @@ namespace Gs2Cdk.Gs2Log.Model
             this.awsAccessKeyId = options?.awsAccessKeyId;
             this.awsSecretAccessKey = options?.awsSecretAccessKey;
             this.firehoseStreamName = options?.firehoseStreamName;
+            this.firehoseCompressData = options?.firehoseCompressData;
             stack.AddResource(
                 this
             );
@@ -108,6 +110,10 @@ namespace Gs2Cdk.Gs2Log.Model
             }
             if (this.firehoseStreamName != null) {
                 properties["FirehoseStreamName"] = this.firehoseStreamName;
+            }
+            if (this.firehoseCompressData != null) {
+                properties["FirehoseCompressData"] = this.firehoseCompressData.Value.Str(
+                );
             }
 
             return properties;

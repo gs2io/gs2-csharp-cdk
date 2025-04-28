@@ -33,6 +33,7 @@ namespace Gs2Cdk.Gs2Log.Model.Options
         public string awsAccessKeyId;
         public string awsSecretAccessKey;
         public string firehoseStreamName;
+        public NamespaceFirehoseCompressData? firehoseCompressData;
     }
 }
 
