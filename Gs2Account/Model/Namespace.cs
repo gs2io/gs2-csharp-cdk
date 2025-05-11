@@ -36,6 +36,7 @@ namespace Gs2Cdk.Gs2Account.Model
         public ScriptSetting createTakeOverScript;
         public ScriptSetting doTakeOverScript;
         public ScriptSetting banScript;
+        public ScriptSetting unBanScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -56,6 +57,7 @@ namespace Gs2Cdk.Gs2Account.Model
             this.createTakeOverScript = options?.createTakeOverScript;
             this.doTakeOverScript = options?.doTakeOverScript;
             this.banScript = options?.banScript;
+            this.unBanScript = options?.unBanScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -107,6 +109,10 @@ namespace Gs2Cdk.Gs2Account.Model
             }
             if (this.banScript != null) {
                 properties["BanScript"] = this.banScript?.Properties(
+                );
+            }
+            if (this.unBanScript != null) {
+                properties["UnBanScript"] = this.unBanScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

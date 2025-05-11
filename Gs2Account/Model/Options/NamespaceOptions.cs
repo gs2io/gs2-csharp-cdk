@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Account.Model.Options
         public ScriptSetting createTakeOverScript;
         public ScriptSetting doTakeOverScript;
         public ScriptSetting banScript;
+        public ScriptSetting unBanScript;
         public LogSetting logSetting;
     }
 }
