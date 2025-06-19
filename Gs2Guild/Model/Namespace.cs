@@ -40,6 +40,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         public ScriptSetting joinGuildScript;
         public ScriptSetting leaveGuildScript;
         public ScriptSetting changeRoleScript;
+        public ScriptSetting deleteGuildScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -64,6 +65,7 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.joinGuildScript = options?.joinGuildScript;
             this.leaveGuildScript = options?.leaveGuildScript;
             this.changeRoleScript = options?.changeRoleScript;
+            this.deleteGuildScript = options?.deleteGuildScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -133,6 +135,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.changeRoleScript != null) {
                 properties["ChangeRoleScript"] = this.changeRoleScript?.Properties(
+                );
+            }
+            if (this.deleteGuildScript != null) {
+                properties["DeleteGuildScript"] = this.deleteGuildScript?.Properties(
                 );
             }
             if (this.logSetting != null) {

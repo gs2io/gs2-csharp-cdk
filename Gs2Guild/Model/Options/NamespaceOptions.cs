@@ -35,6 +35,7 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
         public ScriptSetting joinGuildScript;
         public ScriptSetting leaveGuildScript;
         public ScriptSetting changeRoleScript;
+        public ScriptSetting deleteGuildScript;
         public LogSetting logSetting;
     }
 }

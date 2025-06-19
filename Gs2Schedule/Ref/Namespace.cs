@@ -50,6 +50,19 @@ namespace Gs2Cdk.Gs2Schedule.Ref
             ));
         }
 
+        public ExtendTriggerByUserId ExtendTrigger(
+            string triggerName,
+            int extendSeconds,
+            string userId = "#{userId}"
+        ){
+            return (new ExtendTriggerByUserId(
+                this.namespaceName,
+                triggerName,
+                extendSeconds,
+                userId
+            ));
+        }
+
         public DeleteTriggerByUserId DeleteTrigger(
             string triggerName,
             string userId = "#{userId}"
