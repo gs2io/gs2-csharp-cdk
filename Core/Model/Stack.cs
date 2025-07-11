@@ -52,7 +52,24 @@ namespace Gs2Cdk.Core.Model
                 .WithQuotingNecessaryStrings()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
-            return new Regex("['\"]!(.*) (.*)['\"]").Replace(serializer.Serialize(Template()), "!$1 $2");
+            var yaml = serializer.Serialize(Template());
+            
+            var lines = yaml.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i];
+                if (line.Contains(": \"!") || line.Contains(": '!"))
+                {
+                    var match = Regex.Match(line, @"^(\s*)(.*?:\s*)['""](![\w:]+\s+.+)['""]$");
+                    if (match.Success)
+                    {
+                        lines[i] = match.Groups[1].Value + match.Groups[2].Value + match.Groups[3].Value;
+                    }
+                }
+            }
+            yaml = string.Join("\n", lines);
+            
+            return yaml;
         }
 
     }
