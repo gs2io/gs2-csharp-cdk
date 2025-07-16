@@ -38,6 +38,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         public ScriptSetting createGuildScript;
         public ScriptSetting updateGuildScript;
         public ScriptSetting joinGuildScript;
+        public ScriptSetting receiveJoinRequestScript;
         public ScriptSetting leaveGuildScript;
         public ScriptSetting changeRoleScript;
         public ScriptSetting deleteGuildScript;
@@ -63,6 +64,7 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.createGuildScript = options?.createGuildScript;
             this.updateGuildScript = options?.updateGuildScript;
             this.joinGuildScript = options?.joinGuildScript;
+            this.receiveJoinRequestScript = options?.receiveJoinRequestScript;
             this.leaveGuildScript = options?.leaveGuildScript;
             this.changeRoleScript = options?.changeRoleScript;
             this.deleteGuildScript = options?.deleteGuildScript;
@@ -127,6 +129,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.joinGuildScript != null) {
                 properties["JoinGuildScript"] = this.joinGuildScript?.Properties(
+                );
+            }
+            if (this.receiveJoinRequestScript != null) {
+                properties["ReceiveJoinRequestScript"] = this.receiveJoinRequestScript?.Properties(
                 );
             }
             if (this.leaveGuildScript != null) {

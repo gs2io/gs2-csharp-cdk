@@ -22,19 +22,49 @@ using Gs2Cdk.Gs2Showcase.Model;
 
 namespace Gs2Cdk.Gs2Showcase.Ref
 {
-    public class DisplayItemRef {
+    public class ShowcaseRef {
         private string namespaceName;
         private string showcaseName;
-        private string displayItemId;
 
-        public DisplayItemRef(
+        public ShowcaseRef(
             string namespaceName,
-            string showcaseName,
-            string displayItemId
+            string showcaseName
         ){
             this.namespaceName = namespaceName;
             this.showcaseName = showcaseName;
-            this.displayItemId = displayItemId;
+        }
+
+        public DisplayItemRef DisplayItem(
+            string displayItemId
+        ){
+            return (new DisplayItemRef(
+                this.namespaceName,
+                this.showcaseName,
+                displayItemId
+            ));
+        }
+
+        public string Grn(
+        ){
+            return (new Join(
+                ":",
+                new []
+                {
+                    "grn",
+                    "gs2",
+                    GetAttr.Region(
+                    ).Str(
+                    ),
+                    GetAttr.OwnerId(
+                    ).Str(
+                    ),
+                    "showcase",
+                    this.namespaceName,
+                    "showcase",
+                    this.showcaseName
+                }
+            )).Str(
+            );
         }
     }
 }
