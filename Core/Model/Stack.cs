@@ -53,8 +53,8 @@ namespace Gs2Cdk.Core.Model
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
             var yaml = serializer.Serialize(Template());
-            
-            var lines = yaml.Split('\n');
+           
+            var lines = yaml.Split(System.Environment.NewLine);
             for (int i = 0; i < lines.Length; i++)
             {
                 var line = lines[i];
@@ -67,7 +67,7 @@ namespace Gs2Cdk.Core.Model
                     }
                 }
             }
-            yaml = string.Join("\n", lines);
+            yaml = string.Join(System.Environment.NewLine, lines);
             
             return yaml;
         }
