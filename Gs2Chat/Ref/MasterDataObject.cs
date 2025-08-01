@@ -22,43 +22,16 @@ using Gs2Cdk.Gs2Chat.Model;
 
 namespace Gs2Cdk.Gs2Chat.Ref
 {
-    public class NamespaceRef {
+    public class MasterDataObjectRef {
         private string namespaceName;
+        private string objectKey;
 
-        public NamespaceRef(
-            string namespaceName
+        public MasterDataObjectRef(
+            string namespaceName,
+            string objectKey
         ){
             this.namespaceName = namespaceName;
-        }
-
-        public CategoryModelRef CategoryModel(
-            int category
-        ){
-            return (new CategoryModelRef(
-                this.namespaceName,
-                category
-            ));
-        }
-
-        public string Grn(
-        ){
-            return (new Join(
-                ":",
-                new []
-                {
-                    "grn",
-                    "gs2",
-                    GetAttr.Region(
-                    ).Str(
-                    ),
-                    GetAttr.OwnerId(
-                    ).Str(
-                    ),
-                    "chat",
-                    this.namespaceName
-                }
-            )).Str(
-            );
+            this.objectKey = objectKey;
         }
     }
 }

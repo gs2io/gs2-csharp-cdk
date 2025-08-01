@@ -12,6 +12,8 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
+ *
+ * deny overwrite
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -22,22 +24,16 @@ using Gs2Cdk.Gs2Chat.Model;
 
 namespace Gs2Cdk.Gs2Chat.Ref
 {
-    public class NamespaceRef {
+    public class CategoryModelRef {
         private string namespaceName;
+        private int category;
 
-        public NamespaceRef(
-            string namespaceName
-        ){
-            this.namespaceName = namespaceName;
-        }
-
-        public CategoryModelRef CategoryModel(
+        public CategoryModelRef(
+            string namespaceName,
             int category
         ){
-            return (new CategoryModelRef(
-                this.namespaceName,
-                category
-            ));
+            this.namespaceName = namespaceName;
+            this.category = category;
         }
 
         public string Grn(
@@ -55,7 +51,9 @@ namespace Gs2Cdk.Gs2Chat.Ref
                     ).Str(
                     ),
                     "chat",
-                    this.namespaceName
+                    this.namespaceName,
+                    "model",
+                    this.category.ToString()
                 }
             )).Str(
             );

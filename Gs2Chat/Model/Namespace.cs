@@ -138,5 +138,40 @@ namespace Gs2Cdk.Gs2Chat.Model
                 null
             ));
         }
+
+        public Namespace MasterData(
+            CategoryModel[] categoryModels
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                categoryModels
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
+
+        public Namespace MasterData(
+            Dictionary<string, object> properties
+        ){
+            (new CurrentMasterData(
+                this.stack,
+                this.name,
+                new Func<CategoryModel[]>(() =>
+                {
+                    return properties["categoryModels"] switch {
+                        CategoryModel[] v => v,
+                        List<CategoryModel> v => v.ToArray(),
+                        Dictionary<string, object>[] v => v.Select(CategoryModel.FromProperties).ToArray(),
+                        List<Dictionary<string, object>> v => v.Select(CategoryModel.FromProperties).ToArray(),
+                        _ => null,
+                    };
+                })()
+            )).AddDependsOn(
+                this
+            );
+            return this;
+        }
     }
 }
