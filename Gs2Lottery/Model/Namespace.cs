@@ -31,7 +31,6 @@ namespace Gs2Cdk.Gs2Lottery.Model
         public string description;
         public TransactionSetting transactionSetting;
         public string lotteryTriggerScriptId;
-        public string choicePrizeTableScriptId;
         public LogSetting logSetting;
 
         public Namespace(
@@ -47,7 +46,6 @@ namespace Gs2Cdk.Gs2Lottery.Model
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
             this.lotteryTriggerScriptId = options?.lotteryTriggerScriptId;
-            this.choicePrizeTableScriptId = options?.choicePrizeTableScriptId;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -81,9 +79,6 @@ namespace Gs2Cdk.Gs2Lottery.Model
             }
             if (this.lotteryTriggerScriptId != null) {
                 properties["LotteryTriggerScriptId"] = this.lotteryTriggerScriptId;
-            }
-            if (this.choicePrizeTableScriptId != null) {
-                properties["ChoicePrizeTableScriptId"] = this.choicePrizeTableScriptId;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(

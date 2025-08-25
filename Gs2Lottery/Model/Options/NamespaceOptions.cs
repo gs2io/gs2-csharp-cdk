@@ -26,7 +26,6 @@ namespace Gs2Cdk.Gs2Lottery.Model.Options
         public string description;
         public TransactionSetting transactionSetting;
         public string lotteryTriggerScriptId;
-        public string choicePrizeTableScriptId;
         public LogSetting logSetting;
         public string queueNamespaceId;
         public string keyId;
