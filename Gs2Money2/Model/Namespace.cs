@@ -35,6 +35,7 @@ namespace Gs2Cdk.Gs2Money2.Model
         public string description;
         public ScriptSetting depositBalanceScript;
         public ScriptSetting withdrawBalanceScript;
+        public ScriptSetting verifyReceiptScript;
         public string subscribeScript;
         public string renewScript;
         public string unsubscribeScript;
@@ -61,6 +62,7 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.description = options?.description;
             this.depositBalanceScript = options?.depositBalanceScript;
             this.withdrawBalanceScript = options?.withdrawBalanceScript;
+            this.verifyReceiptScript = options?.verifyReceiptScript;
             this.subscribeScript = options?.subscribeScript;
             this.renewScript = options?.renewScript;
             this.unsubscribeScript = options?.unsubscribeScript;
@@ -110,6 +112,10 @@ namespace Gs2Cdk.Gs2Money2.Model
             }
             if (this.withdrawBalanceScript != null) {
                 properties["WithdrawBalanceScript"] = this.withdrawBalanceScript?.Properties(
+                );
+            }
+            if (this.verifyReceiptScript != null) {
+                properties["VerifyReceiptScript"] = this.verifyReceiptScript?.Properties(
                 );
             }
             if (this.subscribeScript != null) {
