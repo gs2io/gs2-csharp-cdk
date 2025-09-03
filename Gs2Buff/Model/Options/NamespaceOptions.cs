@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Buff.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting applyBuffScript;
         public LogSetting logSetting;
     }

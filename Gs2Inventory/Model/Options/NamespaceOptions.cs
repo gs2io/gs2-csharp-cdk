@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Inventory.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting acquireScript;
         public ScriptSetting overflowScript;
         public ScriptSetting consumeScript;

@@ -33,6 +33,7 @@ namespace Gs2Cdk.Gs2Money.Model
         public bool shareFree;
         public NamespaceCurrency? currency;
         public string description;
+        public TransactionSetting transactionSetting;
         public string appleKey;
         public string googleKey;
         public bool? enableFakeReceipt;
@@ -58,6 +59,7 @@ namespace Gs2Cdk.Gs2Money.Model
             this.shareFree = shareFree;
             this.currency = currency;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.appleKey = options?.appleKey;
             this.googleKey = options?.googleKey;
             this.enableFakeReceipt = options?.enableFakeReceipt;
@@ -90,6 +92,10 @@ namespace Gs2Cdk.Gs2Money.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.priority != null) {
                 properties["Priority"] = this.priority.Value.Str(

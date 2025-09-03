@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Friend.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting followScript;
         public ScriptSetting unfollowScript;
         public ScriptSetting sendRequestScript;
@@ -56,6 +57,7 @@ namespace Gs2Cdk.Gs2Friend.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.followScript = options?.followScript;
             this.unfollowScript = options?.unfollowScript;
             this.sendRequestScript = options?.sendRequestScript;
@@ -96,6 +98,10 @@ namespace Gs2Cdk.Gs2Friend.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.followScript != null) {
                 properties["FollowScript"] = this.followScript?.Properties(

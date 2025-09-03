@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Account.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public bool? changePasswordIfTakeOver;
         public bool? differentUserIdForLoginAndDataRetention;
         public ScriptSetting createAccountScript;

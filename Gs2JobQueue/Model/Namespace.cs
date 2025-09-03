@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2JobQueue.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public NotificationSetting pushNotification;
         public NotificationSetting runNotification;
         public LogSetting logSetting;
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.pushNotification = options?.pushNotification;
             this.runNotification = options?.runNotification;
             this.logSetting = options?.logSetting;
@@ -72,6 +74,10 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             properties["EnableAutoRun"] = true;
             if (this.pushNotification != null) {

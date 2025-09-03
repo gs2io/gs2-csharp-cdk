@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Friend.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting followScript;
         public ScriptSetting unfollowScript;
         public ScriptSetting sendRequestScript;

@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Chat.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public bool? allowCreateRoom;
         public int? messageLifeTimeDays;
         public ScriptSetting postMessageScript;
@@ -50,6 +51,7 @@ namespace Gs2Cdk.Gs2Chat.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.allowCreateRoom = options?.allowCreateRoom;
             this.messageLifeTimeDays = options?.messageLifeTimeDays;
             this.postMessageScript = options?.postMessageScript;
@@ -84,6 +86,10 @@ namespace Gs2Cdk.Gs2Chat.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.allowCreateRoom != null) {
                 properties["AllowCreateRoom"] = this.allowCreateRoom;

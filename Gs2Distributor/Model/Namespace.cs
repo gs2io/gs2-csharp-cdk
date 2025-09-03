@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public string assumeUserId;
         public NotificationSetting autoRunStampSheetNotification;
         public NotificationSetting autoRunTransactionNotification;
@@ -45,6 +46,7 @@ namespace Gs2Cdk.Gs2Distributor.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.assumeUserId = options?.assumeUserId;
             this.autoRunStampSheetNotification = options?.autoRunStampSheetNotification;
             this.autoRunTransactionNotification = options?.autoRunTransactionNotification;
@@ -74,6 +76,10 @@ namespace Gs2Cdk.Gs2Distributor.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.assumeUserId != null) {
                 properties["AssumeUserId"] = this.assumeUserId;

@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Money.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public string appleKey;
         public string googleKey;
         public bool? enableFakeReceipt;

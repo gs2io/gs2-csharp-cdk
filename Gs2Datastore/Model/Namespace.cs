@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Datastore.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public LogSetting logSetting;
         public ScriptSetting doneUploadScript;
 
@@ -43,6 +44,7 @@ namespace Gs2Cdk.Gs2Datastore.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.logSetting = options?.logSetting;
             this.doneUploadScript = options?.doneUploadScript;
             stack.AddResource(
@@ -70,6 +72,10 @@ namespace Gs2Cdk.Gs2Datastore.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(

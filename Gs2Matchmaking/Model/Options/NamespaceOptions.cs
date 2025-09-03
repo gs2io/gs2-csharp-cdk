@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public bool? enableRating;
         public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;

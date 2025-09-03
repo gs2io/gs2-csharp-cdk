@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Version.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting acceptVersionScript;
         public string checkVersionTriggerScriptId;
         public LogSetting logSetting;

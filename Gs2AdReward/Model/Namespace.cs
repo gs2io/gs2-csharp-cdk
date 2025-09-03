@@ -28,10 +28,11 @@ namespace Gs2Cdk.Gs2AdReward.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         public string name;
+        public string description;
+        public TransactionSetting transactionSetting;
         public AdMob admob;
         public UnityAd unityAd;
         public AppLovinMax[] appLovinMaxes;
-        public string description;
         public ScriptSetting acquirePointScript;
         public ScriptSetting consumePointScript;
         public NotificationSetting changePointNotification;
@@ -47,10 +48,11 @@ namespace Gs2Cdk.Gs2AdReward.Model
 
             this.stack = stack;
             this.name = name;
+            this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.admob = options?.admob;
             this.unityAd = options?.unityAd;
             this.appLovinMaxes = options?.appLovinMaxes;
-            this.description = options?.description;
             this.acquirePointScript = options?.acquirePointScript;
             this.consumePointScript = options?.consumePointScript;
             this.changePointNotification = options?.changePointNotification;
@@ -78,6 +80,13 @@ namespace Gs2Cdk.Gs2AdReward.Model
             if (this.name != null) {
                 properties["Name"] = this.name;
             }
+            if (this.description != null) {
+                properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
             if (this.admob != null) {
                 properties["Admob"] = this.admob?.Properties(
                 );
@@ -89,9 +98,6 @@ namespace Gs2Cdk.Gs2AdReward.Model
             if (this.appLovinMaxes != null) {
                 properties["AppLovinMaxes"] = this.appLovinMaxes.Select(v => v?.Properties(
                         )).ToList();
-            }
-            if (this.description != null) {
-                properties["Description"] = this.description;
             }
             if (this.acquirePointScript != null) {
                 properties["AcquirePointScript"] = this.acquirePointScript?.Properties(

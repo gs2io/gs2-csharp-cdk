@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Chat.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public bool? allowCreateRoom;
         public int? messageLifeTimeDays;
         public ScriptSetting postMessageScript;

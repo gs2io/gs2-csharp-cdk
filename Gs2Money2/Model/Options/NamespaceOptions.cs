@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Money2.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting depositBalanceScript;
         public ScriptSetting withdrawBalanceScript;
         public ScriptSetting verifyReceiptScript;

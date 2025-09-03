@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public string overflowTriggerScript;
         public LogSetting logSetting;
 
@@ -43,6 +44,7 @@ namespace Gs2Cdk.Gs2Stamina.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.overflowTriggerScript = options?.overflowTriggerScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -70,6 +72,10 @@ namespace Gs2Cdk.Gs2Stamina.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.overflowTriggerScript != null) {
                 properties["OverflowTriggerScript"] = this.overflowTriggerScript;

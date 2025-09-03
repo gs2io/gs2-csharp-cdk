@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting acquireScript;
         public ScriptSetting overflowScript;
         public ScriptSetting consumeScript;
@@ -49,6 +50,7 @@ namespace Gs2Cdk.Gs2Inventory.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.acquireScript = options?.acquireScript;
             this.overflowScript = options?.overflowScript;
             this.consumeScript = options?.consumeScript;
@@ -82,6 +84,10 @@ namespace Gs2Cdk.Gs2Inventory.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.acquireScript != null) {
                 properties["AcquireScript"] = this.acquireScript?.Properties(

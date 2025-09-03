@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Datastore.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public LogSetting logSetting;
         public ScriptSetting doneUploadScript;
     }

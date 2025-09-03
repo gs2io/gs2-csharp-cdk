@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         private Stack? stack;
         public string name;
         public string description;
+        public TransactionSetting transactionSetting;
         public NotificationSetting changeNotification;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
@@ -55,6 +56,7 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.stack = stack;
             this.name = name;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.changeNotification = options?.changeNotification;
             this.joinNotification = options?.joinNotification;
             this.leaveNotification = options?.leaveNotification;
@@ -94,6 +96,10 @@ namespace Gs2Cdk.Gs2Guild.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.changeNotification != null) {
                 properties["ChangeNotification"] = this.changeNotification?.Properties(

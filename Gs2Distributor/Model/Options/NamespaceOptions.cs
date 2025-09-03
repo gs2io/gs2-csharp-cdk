@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Distributor.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public string assumeUserId;
         public NotificationSetting autoRunStampSheetNotification;
         public NotificationSetting autoRunTransactionNotification;

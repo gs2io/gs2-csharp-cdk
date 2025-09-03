@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
 {
     public class NamespaceEnableCollaborateSeasonRatingIsDisableOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting changeRatingScript;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;

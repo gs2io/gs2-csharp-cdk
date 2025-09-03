@@ -32,6 +32,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         public NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
         public NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         public string description;
+        public TransactionSetting transactionSetting;
         public bool? enableRating;
         public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;
@@ -64,6 +65,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.createGatheringTriggerType = createGatheringTriggerType;
             this.completeMatchmakingTriggerType = completeMatchmakingTriggerType;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.enableRating = options?.enableRating;
             this.enableDisconnectDetection = options?.enableDisconnectDetection;
             this.disconnectDetectionTimeoutSeconds = options?.disconnectDetectionTimeoutSeconds;
@@ -105,6 +107,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.enableRating != null) {
                 properties["EnableRating"] = this.enableRating;

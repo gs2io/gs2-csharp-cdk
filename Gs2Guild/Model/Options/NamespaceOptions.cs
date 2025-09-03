@@ -24,6 +24,7 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public NotificationSetting changeNotification;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;

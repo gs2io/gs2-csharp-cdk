@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Version.Model
         public string name;
         public string assumeUserId;
         public string description;
+        public TransactionSetting transactionSetting;
         public ScriptSetting acceptVersionScript;
         public string checkVersionTriggerScriptId;
         public LogSetting logSetting;
@@ -47,6 +48,7 @@ namespace Gs2Cdk.Gs2Version.Model
             this.name = name;
             this.assumeUserId = assumeUserId;
             this.description = options?.description;
+            this.transactionSetting = options?.transactionSetting;
             this.acceptVersionScript = options?.acceptVersionScript;
             this.checkVersionTriggerScriptId = options?.checkVersionTriggerScriptId;
             this.logSetting = options?.logSetting;
@@ -75,6 +77,10 @@ namespace Gs2Cdk.Gs2Version.Model
             }
             if (this.description != null) {
                 properties["Description"] = this.description;
+            }
+            if (this.transactionSetting != null) {
+                properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
             }
             if (this.assumeUserId != null) {
                 properties["AssumeUserId"] = this.assumeUserId;

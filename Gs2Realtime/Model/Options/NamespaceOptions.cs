@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Realtime.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        public TransactionSetting transactionSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
     }
