@@ -16,26 +16,59 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gs2Cdk.Core.Model;
 
 namespace Gs2Cdk.Core.StampSheet
 {
     public class Void : AcquireAction {
+        private Config[] config;
 
-        public Void(){
+        public Void(
+            Config[] config = null
+        ){
+            this.config = config;
         }
 
         public override Dictionary<string, object> Request(
         ){
             var properties = new Dictionary<string, object>();
+            if (this.config != null) {
+                properties["config"] = this.config.Select(v => v?.Properties(
+                )).ToList();
+            }
             return properties;
         }
 
         public static Void FromProperties(Dictionary<string, object> properties) {
             try {
-                return new Void();
+                return new Void(
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })()
+                );
             } catch (Exception e) when (e is FormatException || e is OverflowException) {
-                return new Void();
+                return new Void(
+                    new Func<Config[]>(() =>
+                    {
+                        return properties.TryGetValue("config", out var config) ? config switch {
+                            Dictionary<string, object>[] v => v.Select(Config.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ Config.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(Config.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as Config).ToArray(),
+                            { } v => new []{ v as Config },
+                            _ => null
+                        } : null;
+                    })()
+                );
             }
         }
 
