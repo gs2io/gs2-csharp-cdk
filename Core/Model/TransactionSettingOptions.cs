@@ -6,6 +6,7 @@ namespace Gs2Cdk.Core.Model
     {
         public bool? enableAtomicCommit;
         public bool? transactionUseDistributor;
+        public bool? commitScriptResultInUseDistributor;
         public bool? acquireActionUseJobQueue;
         public string distributorNamespaceId;
         public string queueNamespaceId;
