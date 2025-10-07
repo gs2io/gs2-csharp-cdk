@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Guild.Model.Options
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
         public NotificationSetting changeMemberNotification;
+        public bool? changeMemberNotificationIgnoreChangeMetadata;
         public NotificationSetting receiveRequestNotification;
         public NotificationSetting removeRequestNotification;
         public ScriptSetting createGuildScript;

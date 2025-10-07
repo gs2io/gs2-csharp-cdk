@@ -7,5 +7,6 @@ namespace Gs2Cdk.Core.Model
         public string gatewayNamespaceId;
         public bool? enableTransferMobileNotification;
         public string sound;
+        public string enable;
     }
 }

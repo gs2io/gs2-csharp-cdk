@@ -34,6 +34,7 @@ namespace Gs2Cdk.Gs2Guild.Model
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
         public NotificationSetting changeMemberNotification;
+        public bool? changeMemberNotificationIgnoreChangeMetadata;
         public NotificationSetting receiveRequestNotification;
         public NotificationSetting removeRequestNotification;
         public ScriptSetting createGuildScript;
@@ -61,6 +62,7 @@ namespace Gs2Cdk.Gs2Guild.Model
             this.joinNotification = options?.joinNotification;
             this.leaveNotification = options?.leaveNotification;
             this.changeMemberNotification = options?.changeMemberNotification;
+            this.changeMemberNotificationIgnoreChangeMetadata = options?.changeMemberNotificationIgnoreChangeMetadata;
             this.receiveRequestNotification = options?.receiveRequestNotification;
             this.removeRequestNotification = options?.removeRequestNotification;
             this.createGuildScript = options?.createGuildScript;
@@ -116,6 +118,9 @@ namespace Gs2Cdk.Gs2Guild.Model
             if (this.changeMemberNotification != null) {
                 properties["ChangeMemberNotification"] = this.changeMemberNotification?.Properties(
                 );
+            }
+            if (this.changeMemberNotificationIgnoreChangeMetadata != null) {
+                properties["ChangeMemberNotificationIgnoreChangeMetadata"] = this.changeMemberNotificationIgnoreChangeMetadata;
             }
             if (this.receiveRequestNotification != null) {
                 properties["ReceiveRequestNotification"] = this.receiveRequestNotification?.Properties(

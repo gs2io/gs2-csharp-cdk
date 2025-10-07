@@ -7,6 +7,7 @@ namespace Gs2Cdk.Core.Model
         private readonly string _gatewayNamespaceId;
         private readonly bool? _enableTransferMobileNotification;
         private readonly string _sound;
+        private readonly string? _enable;
 
         public NotificationSetting(
             NotificationSettingOptions options = null
@@ -14,6 +15,7 @@ namespace Gs2Cdk.Core.Model
             this._gatewayNamespaceId = options?.gatewayNamespaceId;
             this._enableTransferMobileNotification = options?.enableTransferMobileNotification;
             this._sound = options?.sound;
+            this._enable = options?.enable;
         }
 
         public Dictionary<string, object> Properties() {
@@ -27,6 +29,9 @@ namespace Gs2Cdk.Core.Model
             if (this._sound != null) {
                 properties["Sound"] = this._sound;
             }
+            if (this._enable != null) {
+                properties["Enable"] = this._enable;
+            }
             return properties;
         }
 
@@ -38,6 +43,7 @@ namespace Gs2Cdk.Core.Model
                     gatewayNamespaceId = properties.TryGetValue("gatewayNamespaceId", out var gatewayNamespaceId) ? (string)gatewayNamespaceId : null,
                     enableTransferMobileNotification = properties.TryGetValue("enableTransferMobileNotification", out var enableTransferMobileNotification) ? (bool?)enableTransferMobileNotification : null,
                     sound = properties.TryGetValue("sound", out var sound) ? (string)sound : null,
+                    enable = properties.TryGetValue("enable", out var enable) ? (string)enable : null,
                 }
             );
             return model;
