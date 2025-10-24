@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Limit.Model
         public string name;
         public string description;
         public TransactionSetting transactionSetting;
+        public ScriptSetting countUpScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Limit.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.countUpScript = options?.countUpScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -73,6 +75,10 @@ namespace Gs2Cdk.Gs2Limit.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.countUpScript != null) {
+                properties["CountUpScript"] = this.countUpScript?.Properties(
                 );
             }
             if (this.logSetting != null) {
