@@ -29,8 +29,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
         public bool? enableRating;
         public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;
+        public NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
         public string createGatheringTriggerRealtimeNamespaceId;
         public string createGatheringTriggerScriptId;
+        public NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         public string completeMatchmakingTriggerRealtimeNamespaceId;
         public string completeMatchmakingTriggerScriptId;
         public NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;

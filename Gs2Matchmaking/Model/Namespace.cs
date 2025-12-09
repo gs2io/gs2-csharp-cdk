@@ -29,15 +29,15 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
     public class Namespace : CdkResource {
         private Stack? stack;
         public string name;
-        public NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
-        public NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         public string description;
         public TransactionSetting transactionSetting;
         public bool? enableRating;
         public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;
+        public NamespaceCreateGatheringTriggerType? createGatheringTriggerType;
         public string createGatheringTriggerRealtimeNamespaceId;
         public string createGatheringTriggerScriptId;
+        public NamespaceCompleteMatchmakingTriggerType? completeMatchmakingTriggerType;
         public string completeMatchmakingTriggerRealtimeNamespaceId;
         public string completeMatchmakingTriggerScriptId;
         public NamespaceEnableCollaborateSeasonRating? enableCollaborateSeasonRating;
@@ -53,8 +53,6 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         public Namespace(
             Stack stack,
             string name,
-            NamespaceCreateGatheringTriggerType createGatheringTriggerType,
-            NamespaceCompleteMatchmakingTriggerType completeMatchmakingTriggerType,
             NamespaceOptions options = null
         ): base(
             "Matchmaking_Namespace_" + name
@@ -62,15 +60,15 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
 
             this.stack = stack;
             this.name = name;
-            this.createGatheringTriggerType = createGatheringTriggerType;
-            this.completeMatchmakingTriggerType = completeMatchmakingTriggerType;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
             this.enableRating = options?.enableRating;
             this.enableDisconnectDetection = options?.enableDisconnectDetection;
             this.disconnectDetectionTimeoutSeconds = options?.disconnectDetectionTimeoutSeconds;
+            this.createGatheringTriggerType = options?.createGatheringTriggerType;
             this.createGatheringTriggerRealtimeNamespaceId = options?.createGatheringTriggerRealtimeNamespaceId;
             this.createGatheringTriggerScriptId = options?.createGatheringTriggerScriptId;
+            this.completeMatchmakingTriggerType = options?.completeMatchmakingTriggerType;
             this.completeMatchmakingTriggerRealtimeNamespaceId = options?.completeMatchmakingTriggerRealtimeNamespaceId;
             this.completeMatchmakingTriggerScriptId = options?.completeMatchmakingTriggerScriptId;
             this.enableCollaborateSeasonRating = options?.enableCollaborateSeasonRating;
