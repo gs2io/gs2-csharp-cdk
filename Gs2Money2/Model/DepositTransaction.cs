@@ -77,13 +77,6 @@ namespace Gs2Cdk.Gs2Money2.Model
                     properties["count"] = this.count;
                 }
             }
-            if (this.depositedAtString != null) {
-                properties["depositedAt"] = this.depositedAtString;
-            } else {
-                if (this.depositedAt != null) {
-                    properties["depositedAt"] = this.depositedAt;
-                }
-            }
 
             return properties;
         }
