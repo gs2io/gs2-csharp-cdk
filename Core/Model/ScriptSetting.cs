@@ -1,25 +1,24 @@
 using System.Collections.Generic;
 
+using Gs2Cdk.Core.Model.Enums;
+
 namespace Gs2Cdk.Core.Model
 {
     public class ScriptSetting
     {
         private readonly string _triggerScriptId;
-        private readonly string _doneTriggerTargetType;
+        private readonly ScriptSettingDoneTriggerTargetType? _doneTriggerTargetType;
         private readonly string _doneTriggerScriptId;
         private readonly string _doneTriggerQueueNamespaceId;
 
         public ScriptSetting(
-                string triggerScriptId = null,
-                string doneTriggerTargetType = null,
-                string doneTriggerScriptId = null,
-                string doneTriggerQueueNamespaceId = null
+            ScriptSettingOptions options = null
         )
         {
-            this._triggerScriptId = triggerScriptId;
-            this._doneTriggerTargetType = doneTriggerTargetType;
-            this._doneTriggerScriptId = doneTriggerScriptId;
-            this._doneTriggerQueueNamespaceId = doneTriggerQueueNamespaceId;
+            this._triggerScriptId = options?.triggerScriptId;
+            this._doneTriggerTargetType = options?.doneTriggerTargetType;
+            this._doneTriggerScriptId = options?.doneTriggerScriptId;
+            this._doneTriggerQueueNamespaceId = options?.doneTriggerQueueNamespaceId;
         }
 
         public Dictionary<string, object> Properties() {
@@ -43,10 +42,12 @@ namespace Gs2Cdk.Core.Model
             Dictionary<string, object> properties
         ) {
             var model = new ScriptSetting(
-                properties.TryGetValue("triggerScriptId", out var triggerScriptId) ? (string)triggerScriptId : null,
-                properties.TryGetValue("doneTriggerTargetType", out var doneTriggerTargetType) ? (string)doneTriggerTargetType : null,
-                properties.TryGetValue("doneTriggerScriptId", out var doneTriggerScriptId) ? (string)doneTriggerScriptId : null,
-                properties.TryGetValue("doneTriggerQueueNamespaceId", out var doneTriggerQueueNamespaceId) ? (string)doneTriggerQueueNamespaceId : null
+                new ScriptSettingOptions{
+                    triggerScriptId = properties.TryGetValue("triggerScriptId", out var triggerScriptId) ? (string)triggerScriptId : null,
+                    doneTriggerTargetType = properties.TryGetValue("doneTriggerTargetType", out var doneTriggerTargetType) ? (ScriptSettingDoneTriggerTargetType?)doneTriggerTargetType : null,
+                    doneTriggerScriptId = properties.TryGetValue("doneTriggerScriptId", out var doneTriggerScriptId) ? (string)doneTriggerScriptId : null,
+                    doneTriggerQueueNamespaceId = properties.TryGetValue("doneTriggerQueueNamespaceId", out var doneTriggerQueueNamespaceId) ? (string)doneTriggerQueueNamespaceId : null
+                }
             );
             return model;
         }

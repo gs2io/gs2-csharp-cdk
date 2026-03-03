@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using Gs2Cdk.Core.Model.Enums;
+
 namespace Gs2Cdk.Core.Model
 {
     public class NotificationSetting
@@ -7,7 +9,7 @@ namespace Gs2Cdk.Core.Model
         private readonly string _gatewayNamespaceId;
         private readonly bool? _enableTransferMobileNotification;
         private readonly string _sound;
-        private readonly string? _enable;
+        private readonly NotificationSettingEnable? _enable;
 
         public NotificationSetting(
             NotificationSettingOptions options = null
@@ -43,7 +45,7 @@ namespace Gs2Cdk.Core.Model
                     gatewayNamespaceId = properties.TryGetValue("gatewayNamespaceId", out var gatewayNamespaceId) ? (string)gatewayNamespaceId : null,
                     enableTransferMobileNotification = properties.TryGetValue("enableTransferMobileNotification", out var enableTransferMobileNotification) ? (bool?)enableTransferMobileNotification : null,
                     sound = properties.TryGetValue("sound", out var sound) ? (string)sound : null,
-                    enable = properties.TryGetValue("enable", out var enable) ? (string)enable : null,
+                    enable = properties.TryGetValue("enable", out var enable) ? (NotificationSettingEnable)enable : NotificationSettingEnable.Enabled,
                 }
             );
             return model;
