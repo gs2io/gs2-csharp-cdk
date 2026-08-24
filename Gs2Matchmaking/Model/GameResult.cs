@@ -24,12 +24,12 @@ using Gs2Cdk.Gs2Matchmaking.Model.Options;
 namespace Gs2Cdk.Gs2Matchmaking.Model
 {
     public class GameResult {
-        private int rank;
+        private int? rank;
         private string rankString;
         private string userId;
 
         public GameResult(
-            int rank,
+            int? rank,
             string userId,
             GameResultOptions options = null
         ){
@@ -69,7 +69,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             Dictionary<string, object> properties
         ){
             var model = new GameResult(
-                properties.TryGetValue("rank", out var rank) ? new Func<int>(() =>
+                properties.TryGetValue("rank", out var rank) ? new Func<int?>(() =>
                 {
                     return rank switch {
                         int v => v,
