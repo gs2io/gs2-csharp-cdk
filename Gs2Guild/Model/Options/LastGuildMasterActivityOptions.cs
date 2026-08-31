@@ -22,5 +22,7 @@ using Gs2Cdk.Gs2Guild.Model;
 namespace Gs2Cdk.Gs2Guild.Model.Options
 {
     public class LastGuildMasterActivityOptions {
+        public long? revision;
+        public string revisionString;
     }
 }

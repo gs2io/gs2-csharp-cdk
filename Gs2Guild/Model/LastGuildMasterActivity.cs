@@ -25,12 +25,15 @@ namespace Gs2Cdk.Gs2Guild.Model
 {
     public class LastGuildMasterActivity {
         private string userId;
+        private long? revision;
+        private string revisionString;
 
         public LastGuildMasterActivity(
             string userId,
             LastGuildMasterActivityOptions options = null
         ){
             this.userId = userId;
+            this.revision = options?.revision;
         }
 
         public Dictionary<string, object> Properties(
@@ -53,6 +56,14 @@ namespace Gs2Cdk.Gs2Guild.Model
                     return (string) userId;
                 })() : default,
                 new LastGuildMasterActivityOptions {
+                    revision = new Func<long?>(() =>
+                    {
+                        return properties.TryGetValue("revision", out var revision) ? revision switch {
+                            long v => v,
+                            string v => long.Parse(v),
+                            _ => null
+                        } : null;
+                    })()
                 }
             );
 
