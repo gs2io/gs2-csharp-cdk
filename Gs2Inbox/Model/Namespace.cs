@@ -30,7 +30,9 @@ namespace Gs2Cdk.Gs2Inbox.Model
         public string name;
         public string description;
         public bool? isAutomaticDeletingEnabled;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting receiveMessageScript;
         public ScriptSetting readMessageScript;
         public ScriptSetting deleteMessageScript;
@@ -50,6 +52,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
             this.description = options?.description;
             this.isAutomaticDeletingEnabled = options?.isAutomaticDeletingEnabled;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.receiveMessageScript = options?.receiveMessageScript;
             this.readMessageScript = options?.readMessageScript;
             this.deleteMessageScript = options?.deleteMessageScript;
@@ -86,6 +89,10 @@ namespace Gs2Cdk.Gs2Inbox.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.receiveMessageScript != null) {

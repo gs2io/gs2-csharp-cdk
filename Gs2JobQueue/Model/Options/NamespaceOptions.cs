@@ -24,7 +24,9 @@ namespace Gs2Cdk.Gs2JobQueue.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public bool? enableAutoRun;
         public NotificationSetting pushNotification;
         public NotificationSetting runNotification;

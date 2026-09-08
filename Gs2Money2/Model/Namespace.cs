@@ -33,7 +33,9 @@ namespace Gs2Cdk.Gs2Money2.Model
         public bool sharedFreeCurrency;
         public PlatformSetting platformSetting;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting depositBalanceScript;
         public ScriptSetting withdrawBalanceScript;
         public ScriptSetting verifyReceiptScript;
@@ -62,6 +64,7 @@ namespace Gs2Cdk.Gs2Money2.Model
             this.platformSetting = platformSetting;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.depositBalanceScript = options?.depositBalanceScript;
             this.withdrawBalanceScript = options?.withdrawBalanceScript;
             this.verifyReceiptScript = options?.verifyReceiptScript;
@@ -103,6 +106,10 @@ namespace Gs2Cdk.Gs2Money2.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.sharedFreeCurrency != null) {

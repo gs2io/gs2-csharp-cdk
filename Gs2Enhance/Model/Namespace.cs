@@ -29,9 +29,13 @@ namespace Gs2Cdk.Gs2Enhance.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting enhanceScript;
         public LogSetting logSetting;
+        [System.Obsolete]
+        public bool? enableDirectEnhance;
 
         public Namespace(
             Stack stack,
@@ -45,8 +49,10 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.enhanceScript = options?.enhanceScript;
             this.logSetting = options?.logSetting;
+            this.enableDirectEnhance = options?.enableDirectEnhance;
             stack.AddResource(
                 this
             );
@@ -77,6 +83,10 @@ namespace Gs2Cdk.Gs2Enhance.Model
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
                 );
             }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
+                );
+            }
             if (this.enhanceScript != null) {
                 properties["EnhanceScript"] = this.enhanceScript?.Properties(
                 );
@@ -84,6 +94,9 @@ namespace Gs2Cdk.Gs2Enhance.Model
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
                 );
+            }
+            if (this.enableDirectEnhance != null) {
+                properties["EnableDirectEnhance"] = this.enableDirectEnhance;
             }
 
             return properties;

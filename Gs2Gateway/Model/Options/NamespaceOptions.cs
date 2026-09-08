@@ -24,7 +24,9 @@ namespace Gs2Cdk.Gs2Gateway.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public string firebaseSecret;
         public LogSetting logSetting;
     }

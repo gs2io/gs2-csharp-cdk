@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2Idle.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting receiveScript;
         public string overrideAcquireActionsScriptId;
         public LogSetting logSetting;
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2Idle.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.receiveScript = options?.receiveScript;
             this.overrideAcquireActionsScriptId = options?.overrideAcquireActionsScriptId;
             this.logSetting = options?.logSetting;
@@ -77,6 +80,10 @@ namespace Gs2Cdk.Gs2Idle.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.receiveScript != null) {

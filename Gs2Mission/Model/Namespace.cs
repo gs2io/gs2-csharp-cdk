@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2Mission.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting missionCompleteScript;
         public ScriptSetting counterIncrementScript;
         public ScriptSetting receiveRewardsScript;
@@ -48,6 +50,7 @@ namespace Gs2Cdk.Gs2Mission.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.missionCompleteScript = options?.missionCompleteScript;
             this.counterIncrementScript = options?.counterIncrementScript;
             this.receiveRewardsScript = options?.receiveRewardsScript;
@@ -81,6 +84,10 @@ namespace Gs2Cdk.Gs2Mission.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.missionCompleteScript != null) {

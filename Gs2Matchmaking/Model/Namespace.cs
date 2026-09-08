@@ -30,7 +30,9 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public bool? enableRating;
         public NamespaceEnableDisconnectDetection? enableDisconnectDetection;
         public int? disconnectDetectionTimeoutSeconds;
@@ -62,6 +64,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.enableRating = options?.enableRating;
             this.enableDisconnectDetection = options?.enableDisconnectDetection;
             this.disconnectDetectionTimeoutSeconds = options?.disconnectDetectionTimeoutSeconds;
@@ -108,6 +111,10 @@ namespace Gs2Cdk.Gs2Matchmaking.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.enableRating != null) {

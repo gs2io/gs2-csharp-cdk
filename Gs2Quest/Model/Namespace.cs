@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2Quest.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting startQuestScript;
         public ScriptSetting completeQuestScript;
         public ScriptSetting failedQuestScript;
@@ -47,6 +49,7 @@ namespace Gs2Cdk.Gs2Quest.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.startQuestScript = options?.startQuestScript;
             this.completeQuestScript = options?.completeQuestScript;
             this.failedQuestScript = options?.failedQuestScript;
@@ -79,6 +82,10 @@ namespace Gs2Cdk.Gs2Quest.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.startQuestScript != null) {

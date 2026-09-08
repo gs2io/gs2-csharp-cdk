@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2JobQueue.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public NotificationSetting pushNotification;
         public NotificationSetting runNotification;
         public LogSetting logSetting;
@@ -46,6 +48,7 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.pushNotification = options?.pushNotification;
             this.runNotification = options?.runNotification;
             this.logSetting = options?.logSetting;
@@ -77,6 +80,10 @@ namespace Gs2Cdk.Gs2JobQueue.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             properties["EnableAutoRun"] = true;

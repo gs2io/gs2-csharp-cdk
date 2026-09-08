@@ -25,7 +25,9 @@ namespace Gs2Cdk.Gs2Inbox.Model.Options
     public class NamespaceOptions {
         public string description;
         public bool? isAutomaticDeletingEnabled;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting receiveMessageScript;
         public ScriptSetting readMessageScript;
         public ScriptSetting deleteMessageScript;

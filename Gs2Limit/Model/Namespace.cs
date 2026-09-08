@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2Limit.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting countUpScript;
         public LogSetting logSetting;
 
@@ -45,6 +47,7 @@ namespace Gs2Cdk.Gs2Limit.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.countUpScript = options?.countUpScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -75,6 +78,10 @@ namespace Gs2Cdk.Gs2Limit.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.countUpScript != null) {

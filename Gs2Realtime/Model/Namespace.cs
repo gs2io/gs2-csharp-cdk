@@ -32,7 +32,9 @@ namespace Gs2Cdk.Gs2Realtime.Model
         public NamespaceServerType? serverType;
         public NamespaceServerSpec? serverSpec;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
 
@@ -52,6 +54,7 @@ namespace Gs2Cdk.Gs2Realtime.Model
             this.serverSpec = serverSpec;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.createNotification = options?.createNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -82,6 +85,10 @@ namespace Gs2Cdk.Gs2Realtime.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.serverType != null) {

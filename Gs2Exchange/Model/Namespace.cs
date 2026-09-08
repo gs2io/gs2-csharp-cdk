@@ -31,7 +31,9 @@ namespace Gs2Cdk.Gs2Exchange.Model
         public string description;
         public bool? enableAwaitExchange;
         public bool? enableDirectExchange;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting exchangeScript;
         public ScriptSetting incrementalExchangeScript;
         public ScriptSetting acquireAwaitScript;
@@ -51,6 +53,7 @@ namespace Gs2Cdk.Gs2Exchange.Model
             this.enableAwaitExchange = options?.enableAwaitExchange;
             this.enableDirectExchange = options?.enableDirectExchange;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.exchangeScript = options?.exchangeScript;
             this.incrementalExchangeScript = options?.incrementalExchangeScript;
             this.acquireAwaitScript = options?.acquireAwaitScript;
@@ -89,6 +92,10 @@ namespace Gs2Cdk.Gs2Exchange.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.exchangeScript != null) {

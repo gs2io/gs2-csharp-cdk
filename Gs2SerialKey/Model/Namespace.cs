@@ -29,7 +29,9 @@ namespace Gs2Cdk.Gs2SerialKey.Model
         private Stack? stack;
         public string name;
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public LogSetting logSetting;
 
         public Namespace(
@@ -44,6 +46,7 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             this.name = name;
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
+            this.transactionSettingV2 = options?.transactionSettingV2;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -73,6 +76,10 @@ namespace Gs2Cdk.Gs2SerialKey.Model
             }
             if (this.transactionSetting != null) {
                 properties["TransactionSetting"] = this.transactionSetting?.Properties(
+                );
+            }
+            if (this.transactionSettingV2 != null) {
+                properties["TransactionSettingV2"] = this.transactionSettingV2?.Properties(
                 );
             }
             if (this.logSetting != null) {

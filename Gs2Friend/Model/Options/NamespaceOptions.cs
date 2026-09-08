@@ -24,7 +24,9 @@ namespace Gs2Cdk.Gs2Friend.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting followScript;
         public ScriptSetting unfollowScript;
         public ScriptSetting sendRequestScript;

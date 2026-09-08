@@ -24,7 +24,9 @@ namespace Gs2Cdk.Gs2Showcase.Model.Options
 {
     public class NamespaceOptions {
         public string description;
+        [System.Obsolete]
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting buyScript;
         public string queueNamespaceId;
         public string keyId;

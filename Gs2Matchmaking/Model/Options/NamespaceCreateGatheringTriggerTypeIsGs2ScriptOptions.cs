@@ -25,6 +25,7 @@ namespace Gs2Cdk.Gs2Matchmaking.Model.Options
     public class NamespaceCreateGatheringTriggerTypeIsGs2ScriptOptions {
         public string description;
         public TransactionSetting transactionSetting;
+        public TransactionSettingV2 transactionSettingV2;
         public ScriptSetting changeRatingScript;
         public NotificationSetting joinNotification;
         public NotificationSetting leaveNotification;
