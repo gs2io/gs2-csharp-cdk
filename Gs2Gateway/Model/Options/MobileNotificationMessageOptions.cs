@@ -21,8 +21,9 @@ using Gs2Cdk.Gs2Gateway.Model;
 
 namespace Gs2Cdk.Gs2Gateway.Model.Options
 {
-    public class SendNotificationEntryOptions {
-        public string sound;
-        public MobileNotificationMessage[] mobileNotificationMessages;
+    public class MobileNotificationMessageOptions {
+        public string locale;
+        public string title;
+        public string message;
     }
 }

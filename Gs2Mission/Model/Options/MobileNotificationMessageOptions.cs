@@ -17,12 +17,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Gs2Gateway.Model;
+using Gs2Cdk.Gs2Mission.Model;
 
-namespace Gs2Cdk.Gs2Gateway.Model.Options
+namespace Gs2Cdk.Gs2Mission.Model.Options
 {
-    public class SendNotificationEntryOptions {
-        public string sound;
-        public MobileNotificationMessage[] mobileNotificationMessages;
+    public class MobileNotificationMessageOptions {
+        public string locale;
+        public string title;
+        public string message;
     }
 }

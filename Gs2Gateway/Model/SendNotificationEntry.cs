@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Gateway.Model
         private bool? enableTransferMobileNotification;
         private string enableTransferMobileNotificationString;
         private string sound;
+        private MobileNotificationMessage[] mobileNotificationMessages;
 
         public SendNotificationEntry(
             string userId,
@@ -46,6 +47,7 @@ namespace Gs2Cdk.Gs2Gateway.Model
             this.payload = payload;
             this.enableTransferMobileNotification = enableTransferMobileNotification;
             this.sound = options?.sound;
+            this.mobileNotificationMessages = options?.mobileNotificationMessages;
         }
 
 
@@ -63,6 +65,7 @@ namespace Gs2Cdk.Gs2Gateway.Model
             this.payload = payload;
             this.enableTransferMobileNotificationString = enableTransferMobileNotification;
             this.sound = options?.sound;
+            this.mobileNotificationMessages = options?.mobileNotificationMessages;
         }
 
         public Dictionary<string, object> Properties(
@@ -90,6 +93,10 @@ namespace Gs2Cdk.Gs2Gateway.Model
             }
             if (this.sound != null) {
                 properties["sound"] = this.sound;
+            }
+            if (this.mobileNotificationMessages != null) {
+                properties["mobileNotificationMessages"] = this.mobileNotificationMessages.Select(v => v?.Properties(
+                        )).ToList();
             }
 
             return properties;
@@ -124,7 +131,17 @@ namespace Gs2Cdk.Gs2Gateway.Model
                     };
                 })() : default,
                 new SendNotificationEntryOptions {
-                    sound = properties.TryGetValue("sound", out var sound) ? (string)sound : null
+                    sound = properties.TryGetValue("sound", out var sound) ? (string)sound : null,
+                    mobileNotificationMessages = properties.TryGetValue("mobileNotificationMessages", out var mobileNotificationMessages) ? new Func<MobileNotificationMessage[]>(() =>
+                    {
+                        return mobileNotificationMessages switch {
+                            MobileNotificationMessage[] v => v,
+                            List<MobileNotificationMessage> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(MobileNotificationMessage.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(MobileNotificationMessage.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 
