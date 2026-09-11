@@ -27,7 +27,9 @@ namespace Gs2Cdk.Gs2Gateway.Model.Options
         [System.Obsolete]
         public TransactionSetting transactionSetting;
         public TransactionSettingV2 transactionSettingV2;
+        [System.Obsolete]
         public string firebaseSecret;
+        public string firebaseProjectId;
         public LogSetting logSetting;
     }
 }

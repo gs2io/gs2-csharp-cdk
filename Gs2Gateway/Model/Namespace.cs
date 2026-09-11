@@ -32,7 +32,9 @@ namespace Gs2Cdk.Gs2Gateway.Model
         [System.Obsolete]
         public TransactionSetting transactionSetting;
         public TransactionSettingV2 transactionSettingV2;
+        [System.Obsolete]
         public string firebaseSecret;
+        public string firebaseProjectId;
         public LogSetting logSetting;
 
         public Namespace(
@@ -49,6 +51,7 @@ namespace Gs2Cdk.Gs2Gateway.Model
             this.transactionSetting = options?.transactionSetting;
             this.transactionSettingV2 = options?.transactionSettingV2;
             this.firebaseSecret = options?.firebaseSecret;
+            this.firebaseProjectId = options?.firebaseProjectId;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -86,6 +89,9 @@ namespace Gs2Cdk.Gs2Gateway.Model
             }
             if (this.firebaseSecret != null) {
                 properties["FirebaseSecret"] = this.firebaseSecret;
+            }
+            if (this.firebaseProjectId != null) {
+                properties["FirebaseProjectId"] = this.firebaseProjectId;
             }
             if (this.logSetting != null) {
                 properties["LogSetting"] = this.logSetting?.Properties(
