@@ -17,13 +17,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Gs2Cdk.Core.Model;
-using Gs2Cdk.Core.Func;
-using Gs2Cdk.Gs2Identifier.Model;
-using Gs2Cdk.Gs2Identifier.Model.Enums;
+using Gs2Cdk.Gs2Distributor.Model;
 
-namespace Gs2Cdk.Gs2Identifier.Model.Options
+namespace Gs2Cdk.Gs2Distributor.Model.Options
 {
-    public class IdentifierOptions {
+    public class UserDataEntryOptions {
     }
 }
-
