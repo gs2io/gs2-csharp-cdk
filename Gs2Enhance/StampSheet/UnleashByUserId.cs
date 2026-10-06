@@ -28,6 +28,8 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
         private string userId;
         private string targetItemSetId;
         private string[] materials;
+        private string recipeName;
+        private UnleashMaterialSelection[] recipeMaterials;
         private Config[] config;
         private string timeOffsetToken;
 
@@ -36,7 +38,9 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             string namespaceName,
             string rateName,
             string targetItemSetId,
-            string[] materials,
+            string[] materials = null,
+            string recipeName = null,
+            UnleashMaterialSelection[] recipeMaterials = null,
             Config[] config = null,
             string timeOffsetToken = null,
             string userId = "#{userId}"
@@ -46,6 +50,8 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             this.rateName = rateName;
             this.targetItemSetId = targetItemSetId;
             this.materials = materials;
+            this.recipeName = recipeName;
+            this.recipeMaterials = recipeMaterials;
             this.config = config;
             this.timeOffsetToken = timeOffsetToken;
             this.userId = userId;
@@ -70,6 +76,13 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
             if (this.materials != null) {
                 properties["materials"] = this.materials;
             }
+            if (this.recipeName != null) {
+                properties["recipeName"] = this.recipeName;
+            }
+            if (this.recipeMaterials != null) {
+                properties["recipeMaterials"] = this.recipeMaterials.Select(v => v?.Properties(
+                        )).ToList();
+            }
             if (this.config != null) {
                 properties["config"] = this.config.Select(v => v?.Properties(
                         )).ToList();
@@ -89,13 +102,28 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                     (string)properties["targetItemSetId"],
                     new Func<string[]>(() =>
                     {
-                        return properties["materials"] switch {
+                        return properties.TryGetValue("materials", out var materials) ? materials switch {
                             string[] v => v.ToArray(),
                             List<string> v => v.ToArray(),
                             object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
                             { } v => new []{ v.ToString() },
                             _ => null
-                        };
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("recipeName", out var recipeName) ? recipeName as string : null;
+                    })(),
+                    new Func<UnleashMaterialSelection[]>(() =>
+                    {
+                        return properties.TryGetValue("recipeMaterials", out var recipeMaterials) ? recipeMaterials switch {
+                            Dictionary<string, object>[] v => v.Select(UnleashMaterialSelection.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ UnleashMaterialSelection.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(UnleashMaterialSelection.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as UnleashMaterialSelection).ToArray(),
+                            { } v => new []{ v as UnleashMaterialSelection },
+                            _ => null
+                        } : null;
                     })(),
                     new Func<Config[]>(() =>
                     {
@@ -124,13 +152,28 @@ namespace Gs2Cdk.Gs2Enhance.StampSheet
                     properties["targetItemSetId"].ToString(),
                     new Func<string[]>(() =>
                     {
-                        return properties["materials"] switch {
+                        return properties.TryGetValue("materials", out var materials) ? materials switch {
                             string[] v => v.ToArray(),
                             List<string> v => v.ToArray(),
                             object[] v => v.Select(v2 => v2?.ToString()).ToArray(),
                             { } v => new []{ v.ToString() },
                             _ => null
-                        };
+                        } : null;
+                    })(),
+                    new Func<string>(() =>
+                    {
+                        return properties.TryGetValue("recipeName", out var recipeName) ? recipeName.ToString() : null;
+                    })(),
+                    new Func<UnleashMaterialSelection[]>(() =>
+                    {
+                        return properties.TryGetValue("recipeMaterials", out var recipeMaterials) ? recipeMaterials switch {
+                            Dictionary<string, object>[] v => v.Select(UnleashMaterialSelection.FromProperties).ToArray(),
+                            Dictionary<string, object> v => new []{ UnleashMaterialSelection.FromProperties(v) },
+                            List<Dictionary<string, object>> v => v.Select(UnleashMaterialSelection.FromProperties).ToArray(),
+                            object[] v => v.Select(v2 => v2 as UnleashMaterialSelection).ToArray(),
+                            { } v => new []{ v as UnleashMaterialSelection },
+                            _ => null
+                        } : null;
                     })(),
                     new Func<Config[]>(() =>
                     {

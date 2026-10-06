@@ -18,12 +18,12 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enhance.Model;
+using Gs2Cdk.Gs2Enhance.Model.Enums;
 
 namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
-    public class UnleashRateModelOptions {
-        public string description;
-        public string metadata;
-        public string[] groupKeyHierarchy;
+    public class UnleashMaterialOptions {
+        public UnleashIndividualMaterialSetting individualSetting;
+        public UnleashQuantityMaterialSetting quantitySetting;
     }
 }

@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
         private UnleashRateEntryModel[] gradeEntries;
         private string description;
         private string metadata;
+        private string[] groupKeyHierarchy;
 
         public UnleashRateModel(
             string name,
@@ -44,6 +45,7 @@ namespace Gs2Cdk.Gs2Enhance.Model
             this.gradeEntries = gradeEntries;
             this.description = options?.description;
             this.metadata = options?.metadata;
+            this.groupKeyHierarchy = options?.groupKeyHierarchy;
         }
 
         public Dictionary<string, object> Properties(
@@ -64,6 +66,9 @@ namespace Gs2Cdk.Gs2Enhance.Model
             }
             if (this.gradeModelId != null) {
                 properties["gradeModelId"] = this.gradeModelId;
+            }
+            if (this.groupKeyHierarchy != null) {
+                properties["groupKeyHierarchy"] = this.groupKeyHierarchy;
             }
             if (this.gradeEntries != null) {
                 properties["gradeEntries"] = this.gradeEntries.Select(v => v?.Properties(
@@ -102,7 +107,15 @@ namespace Gs2Cdk.Gs2Enhance.Model
                 })() : null,
                 new UnleashRateModelOptions {
                     description = properties.TryGetValue("description", out var description) ? (string)description : null,
-                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    groupKeyHierarchy = properties.TryGetValue("groupKeyHierarchy", out var groupKeyHierarchy) ? new Func<string[]>(() =>
+                    {
+                        return groupKeyHierarchy switch {
+                            string[] v => v.ToArray(),
+                            List<string> v => v.ToArray(),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 

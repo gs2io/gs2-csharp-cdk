@@ -18,9 +18,13 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Enhance.Model;
+using Gs2Cdk.Gs2Enhance.Model.Enums;
 
 namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
     public class UnleashRateEntryModelOptions {
+        public int? needCount;
+        public string needCountString;
+        public UnleashRecipe[] recipes;
     }
 }

@@ -21,9 +21,8 @@ using Gs2Cdk.Gs2Enhance.Model;
 
 namespace Gs2Cdk.Gs2Enhance.Model.Options
 {
-    public class UnleashRateModelOptions {
-        public string description;
+    public class UnleashRecipeOptions {
         public string metadata;
-        public string[] groupKeyHierarchy;
+        public string[] targetGroupKeys;
     }
 }
