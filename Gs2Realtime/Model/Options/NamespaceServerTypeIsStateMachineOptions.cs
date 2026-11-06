@@ -26,7 +26,7 @@ namespace Gs2Cdk.Gs2Realtime.Model.Options
         public string description;
         public TransactionSetting transactionSetting;
         public TransactionSettingV2 transactionSettingV2;
-        public long? stateMachineVersion;
+        public SyncSetting syncSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
         public long? revision;

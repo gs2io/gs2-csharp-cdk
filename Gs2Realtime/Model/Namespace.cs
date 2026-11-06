@@ -35,9 +35,8 @@ namespace Gs2Cdk.Gs2Realtime.Model
         [System.Obsolete]
         public TransactionSetting transactionSetting;
         public TransactionSettingV2 transactionSettingV2;
-        public string objectCatalog;
-        public string stateMachineNamespaceId;
-        public long? stateMachineVersion;
+        public SyncSetting syncSetting;
+        public StateMachineSetting stateMachineSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
 
@@ -58,9 +57,8 @@ namespace Gs2Cdk.Gs2Realtime.Model
             this.description = options?.description;
             this.transactionSetting = options?.transactionSetting;
             this.transactionSettingV2 = options?.transactionSettingV2;
-            this.objectCatalog = options?.objectCatalog;
-            this.stateMachineNamespaceId = options?.stateMachineNamespaceId;
-            this.stateMachineVersion = options?.stateMachineVersion;
+            this.syncSetting = options?.syncSetting;
+            this.stateMachineSetting = options?.stateMachineSetting;
             this.createNotification = options?.createNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -105,14 +103,13 @@ namespace Gs2Cdk.Gs2Realtime.Model
                 properties["ServerSpec"] = this.serverSpec.Value.Str(
                 );
             }
-            if (this.objectCatalog != null) {
-                properties["ObjectCatalog"] = this.objectCatalog;
+            if (this.syncSetting != null) {
+                properties["SyncSetting"] = this.syncSetting?.Properties(
+                );
             }
-            if (this.stateMachineNamespaceId != null) {
-                properties["StateMachineNamespaceId"] = this.stateMachineNamespaceId;
-            }
-            if (this.stateMachineVersion != null) {
-                properties["StateMachineVersion"] = this.stateMachineVersion;
+            if (this.stateMachineSetting != null) {
+                properties["StateMachineSetting"] = this.stateMachineSetting?.Properties(
+                );
             }
             if (this.createNotification != null) {
                 properties["CreateNotification"] = this.createNotification?.Properties(

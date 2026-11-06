@@ -28,9 +28,8 @@ namespace Gs2Cdk.Gs2Realtime.Model.Options
         [System.Obsolete]
         public TransactionSetting transactionSetting;
         public TransactionSettingV2 transactionSettingV2;
-        public string objectCatalog;
-        public string stateMachineNamespaceId;
-        public long? stateMachineVersion;
+        public SyncSetting syncSetting;
+        public StateMachineSetting stateMachineSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
     }
