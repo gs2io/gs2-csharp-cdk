@@ -19,7 +19,9 @@ namespace Gs2Cdk.Gs2Realtime.Model.Enums
 {
     
     public enum NamespaceServerType {
-        Relay
+        Relay,
+        Sync,
+        StateMachine
     }
 
     public static class NamespaceServerTypeExt
@@ -28,6 +30,10 @@ namespace Gs2Cdk.Gs2Realtime.Model.Enums
             switch (self) {
                 case NamespaceServerType.Relay:
                     return "relay";
+                case NamespaceServerType.Sync:
+                    return "sync";
+                case NamespaceServerType.StateMachine:
+                    return "stateMachine";
             }
             return "unknown";
         }
@@ -36,6 +42,10 @@ namespace Gs2Cdk.Gs2Realtime.Model.Enums
             switch (value) {
                 case "relay":
                     return NamespaceServerType.Relay;
+                case "sync":
+                    return NamespaceServerType.Sync;
+                case "stateMachine":
+                    return NamespaceServerType.StateMachine;
             }
             return NamespaceServerType.Relay;
         }
