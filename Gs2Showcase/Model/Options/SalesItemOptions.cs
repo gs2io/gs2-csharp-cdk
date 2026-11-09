@@ -25,5 +25,6 @@ namespace Gs2Cdk.Gs2Showcase.Model.Options
         public string metadata;
         public VerifyAction[] verifyActions;
         public ConsumeAction[] consumeActions;
+        public Bonus[] bonuses;
     }
 }

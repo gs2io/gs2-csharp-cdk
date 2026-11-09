@@ -29,6 +29,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
         private string metadata;
         private VerifyAction[] verifyActions;
         private ConsumeAction[] consumeActions;
+        private Bonus[] bonuses;
 
         public SalesItem(
             string name,
@@ -40,6 +41,7 @@ namespace Gs2Cdk.Gs2Showcase.Model
             this.metadata = options?.metadata;
             this.verifyActions = options?.verifyActions;
             this.consumeActions = options?.consumeActions;
+            this.bonuses = options?.bonuses;
         }
 
         public Dictionary<string, object> Properties(
@@ -62,6 +64,10 @@ namespace Gs2Cdk.Gs2Showcase.Model
             }
             if (this.acquireActions != null) {
                 properties["acquireActions"] = this.acquireActions.Select(v => v?.Properties(
+                        )).ToList();
+            }
+            if (this.bonuses != null) {
+                properties["bonuses"] = this.bonuses.Select(v => v?.Properties(
                         )).ToList();
             }
 
@@ -106,6 +112,16 @@ namespace Gs2Cdk.Gs2Showcase.Model
                             List<ConsumeAction> v => v.ToArray(),
                             Dictionary<string, object>[] v => v.Select(ConsumeAction.FromProperties).ToArray(),
                             List<Dictionary<string, object>> v => v.Select(ConsumeAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null,
+                    bonuses = properties.TryGetValue("bonuses", out var bonuses) ? new Func<Bonus[]>(() =>
+                    {
+                        return bonuses switch {
+                            Bonus[] v => v,
+                            List<Bonus> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(Bonus.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(Bonus.FromProperties).ToArray(),
                             _ => null
                         };
                     })() : null
