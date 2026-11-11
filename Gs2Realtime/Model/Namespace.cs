@@ -37,6 +37,7 @@ namespace Gs2Cdk.Gs2Realtime.Model
         public TransactionSettingV2 transactionSettingV2;
         public SyncSetting syncSetting;
         public StateMachineSetting stateMachineSetting;
+        public ParticipantSetting participantSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
 
@@ -59,6 +60,7 @@ namespace Gs2Cdk.Gs2Realtime.Model
             this.transactionSettingV2 = options?.transactionSettingV2;
             this.syncSetting = options?.syncSetting;
             this.stateMachineSetting = options?.stateMachineSetting;
+            this.participantSetting = options?.participantSetting;
             this.createNotification = options?.createNotification;
             this.logSetting = options?.logSetting;
             stack.AddResource(
@@ -109,6 +111,10 @@ namespace Gs2Cdk.Gs2Realtime.Model
             }
             if (this.stateMachineSetting != null) {
                 properties["StateMachineSetting"] = this.stateMachineSetting?.Properties(
+                );
+            }
+            if (this.participantSetting != null) {
+                properties["ParticipantSetting"] = this.participantSetting?.Properties(
                 );
             }
             if (this.createNotification != null) {

@@ -30,6 +30,7 @@ namespace Gs2Cdk.Gs2Realtime.Model.Options
         public TransactionSettingV2 transactionSettingV2;
         public SyncSetting syncSetting;
         public StateMachineSetting stateMachineSetting;
+        public ParticipantSetting participantSetting;
         public NotificationSetting createNotification;
         public LogSetting logSetting;
     }
