@@ -35,6 +35,10 @@ namespace Gs2Cdk.Gs2Account.Model.Options
         public ScriptSetting doTakeOverScript;
         public ScriptSetting banScript;
         public ScriptSetting unBanScript;
+        public AccountDeletionSetting accountDeletionSetting;
+        public ScriptSetting requestDeletionScript;
+        public ScriptSetting cancelDeletionScript;
+        public ScriptSetting executeDeletionScript;
         public LogSetting logSetting;
     }
 }

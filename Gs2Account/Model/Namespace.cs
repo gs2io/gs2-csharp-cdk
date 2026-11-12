@@ -40,6 +40,10 @@ namespace Gs2Cdk.Gs2Account.Model
         public ScriptSetting doTakeOverScript;
         public ScriptSetting banScript;
         public ScriptSetting unBanScript;
+        public AccountDeletionSetting accountDeletionSetting;
+        public ScriptSetting requestDeletionScript;
+        public ScriptSetting cancelDeletionScript;
+        public ScriptSetting executeDeletionScript;
         public LogSetting logSetting;
 
         public Namespace(
@@ -63,6 +67,10 @@ namespace Gs2Cdk.Gs2Account.Model
             this.doTakeOverScript = options?.doTakeOverScript;
             this.banScript = options?.banScript;
             this.unBanScript = options?.unBanScript;
+            this.accountDeletionSetting = options?.accountDeletionSetting;
+            this.requestDeletionScript = options?.requestDeletionScript;
+            this.cancelDeletionScript = options?.cancelDeletionScript;
+            this.executeDeletionScript = options?.executeDeletionScript;
             this.logSetting = options?.logSetting;
             stack.AddResource(
                 this
@@ -126,6 +134,22 @@ namespace Gs2Cdk.Gs2Account.Model
             }
             if (this.unBanScript != null) {
                 properties["UnBanScript"] = this.unBanScript?.Properties(
+                );
+            }
+            if (this.accountDeletionSetting != null) {
+                properties["AccountDeletionSetting"] = this.accountDeletionSetting?.Properties(
+                );
+            }
+            if (this.requestDeletionScript != null) {
+                properties["RequestDeletionScript"] = this.requestDeletionScript?.Properties(
+                );
+            }
+            if (this.cancelDeletionScript != null) {
+                properties["CancelDeletionScript"] = this.cancelDeletionScript?.Properties(
+                );
+            }
+            if (this.executeDeletionScript != null) {
+                properties["ExecuteDeletionScript"] = this.executeDeletionScript?.Properties(
                 );
             }
             if (this.logSetting != null) {
