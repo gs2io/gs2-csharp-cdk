@@ -18,10 +18,13 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Account.Model.Enums;
 
 namespace Gs2Cdk.Gs2Account.Model.Options
 {
     public class TakeOverTypeModelOptions {
         public string metadata;
+        public OpenIdConnectSetting openIdConnectSetting;
+        public IssuedCodeSetting issuedCodeSetting;
     }
 }

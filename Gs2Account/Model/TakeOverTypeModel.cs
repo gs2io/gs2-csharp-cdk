@@ -19,6 +19,7 @@ using System.Linq;
 
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Account.Model;
+using Gs2Cdk.Gs2Account.Model.Enums;
 using Gs2Cdk.Gs2Account.Model.Options;
 
 namespace Gs2Cdk.Gs2Account.Model
@@ -26,28 +27,64 @@ namespace Gs2Cdk.Gs2Account.Model
     public class TakeOverTypeModel {
         private int type;
         private string typeString;
-        private OpenIdConnectSetting openIdConnectSetting;
+        private TakeOverTypeModelTakeOverMethod? takeOverMethod;
         private string metadata;
+        private OpenIdConnectSetting openIdConnectSetting;
+        private IssuedCodeSetting issuedCodeSetting;
 
         public TakeOverTypeModel(
             int type,
-            OpenIdConnectSetting openIdConnectSetting,
+            TakeOverTypeModelTakeOverMethod takeOverMethod,
             TakeOverTypeModelOptions options = null
         ){
             this.type = type;
-            this.openIdConnectSetting = openIdConnectSetting;
+            this.takeOverMethod = takeOverMethod;
             this.metadata = options?.metadata;
+            this.openIdConnectSetting = options?.openIdConnectSetting;
+            this.issuedCodeSetting = options?.issuedCodeSetting;
+        }
+
+        public static TakeOverTypeModel TakeOverMethodIsOpenIdConnect(
+            int type,
+            OpenIdConnectSetting openIdConnectSetting,
+            TakeOverTypeModelTakeOverMethodIsOpenIdConnectOptions options = null
+        ){
+            return (new TakeOverTypeModel(
+                type,
+                TakeOverTypeModelTakeOverMethod.OpenIdConnect,
+                new TakeOverTypeModelOptions {
+                    openIdConnectSetting = openIdConnectSetting,
+                    metadata = options?.metadata,
+                }
+            ));
+        }
+
+        public static TakeOverTypeModel TakeOverMethodIsIssuedCode(
+            int type,
+            IssuedCodeSetting issuedCodeSetting,
+            TakeOverTypeModelTakeOverMethodIsIssuedCodeOptions options = null
+        ){
+            return (new TakeOverTypeModel(
+                type,
+                TakeOverTypeModelTakeOverMethod.IssuedCode,
+                new TakeOverTypeModelOptions {
+                    issuedCodeSetting = issuedCodeSetting,
+                    metadata = options?.metadata,
+                }
+            ));
         }
 
 
         public TakeOverTypeModel(
             string type,
-            OpenIdConnectSetting openIdConnectSetting,
+            TakeOverTypeModelTakeOverMethod takeOverMethod,
             TakeOverTypeModelOptions options = null
         ){
             this.typeString = type;
-            this.openIdConnectSetting = openIdConnectSetting;
+            this.takeOverMethod = takeOverMethod;
             this.metadata = options?.metadata;
+            this.openIdConnectSetting = options?.openIdConnectSetting;
+            this.issuedCodeSetting = options?.issuedCodeSetting;
         }
 
         public Dictionary<string, object> Properties(
@@ -64,8 +101,16 @@ namespace Gs2Cdk.Gs2Account.Model
             if (this.metadata != null) {
                 properties["metadata"] = this.metadata;
             }
+            if (this.takeOverMethod != null) {
+                properties["takeOverMethod"] = this.takeOverMethod.Value.Str(
+                );
+            }
             if (this.openIdConnectSetting != null) {
                 properties["openIdConnectSetting"] = this.openIdConnectSetting?.Properties(
+                );
+            }
+            if (this.issuedCodeSetting != null) {
+                properties["issuedCodeSetting"] = this.issuedCodeSetting?.Properties(
                 );
             }
 
@@ -84,18 +129,32 @@ namespace Gs2Cdk.Gs2Account.Model
                         _ => 0
                     };
                 })() : default,
-                properties.TryGetValue("openIdConnectSetting", out var openIdConnectSetting) ? new Func<OpenIdConnectSetting>(() =>
+                properties.TryGetValue("takeOverMethod", out var takeOverMethod) ? new Func<TakeOverTypeModelTakeOverMethod>(() =>
                 {
-                    return openIdConnectSetting switch {
-                        OpenIdConnectSetting v => v,
-                        OpenIdConnectSetting[] v => v.Length > 0 ? v.First() : null,
-                        Dictionary<string, object> v => OpenIdConnectSetting.FromProperties(v),
-                        Dictionary<string, object>[] v => v.Length > 0 ? OpenIdConnectSetting.FromProperties(v.First()) : null,
-                        _ => null
+                    return takeOverMethod switch {
+                        TakeOverTypeModelTakeOverMethod e => e,
+                        string s => TakeOverTypeModelTakeOverMethodExt.New(s),
+                        _ => TakeOverTypeModelTakeOverMethod.OpenIdConnect
                     };
-                })() : null,
+                })() : default,
                 new TakeOverTypeModelOptions {
-                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null
+                    metadata = properties.TryGetValue("metadata", out var metadata) ? (string)metadata : null,
+                    openIdConnectSetting = properties.TryGetValue("openIdConnectSetting", out var openIdConnectSetting) ? new Func<OpenIdConnectSetting>(() =>
+                    {
+                        return openIdConnectSetting switch {
+                            OpenIdConnectSetting v => v,
+                            Dictionary<string, object> v => OpenIdConnectSetting.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null,
+                    issuedCodeSetting = properties.TryGetValue("issuedCodeSetting", out var issuedCodeSetting) ? new Func<IssuedCodeSetting>(() =>
+                    {
+                        return issuedCodeSetting switch {
+                            IssuedCodeSetting v => v,
+                            Dictionary<string, object> v => IssuedCodeSetting.FromProperties(v),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 
