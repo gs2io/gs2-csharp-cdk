@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2AdReward.Model;
 using Gs2Cdk.Gs2AdReward.StampSheet;
+using Gs2Cdk.Gs2AdReward.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2AdReward.Ref
 {
@@ -50,6 +51,21 @@ namespace Gs2Cdk.Gs2AdReward.Ref
             return (new ConsumePointByUserId(
                 this.namespaceName,
                 point,
+                userId
+            ));
+        }
+
+        public VerifyPointByUserId VerifyPoint(
+            VerifyPointByUserIdVerifyType verifyType,
+            long point,
+            bool? multiplyValueSpecifyingQuantity = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyPointByUserId(
+                this.namespaceName,
+                verifyType,
+                point,
+                multiplyValueSpecifyingQuantity,
                 userId
             ));
         }
