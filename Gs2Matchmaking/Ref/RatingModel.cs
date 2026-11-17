@@ -19,6 +19,8 @@ using System.Linq;
 using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Matchmaking.Model;
+using Gs2Cdk.Gs2Matchmaking.StampSheet;
+using Gs2Cdk.Gs2Matchmaking.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Matchmaking.Ref
 {
@@ -32,6 +34,20 @@ namespace Gs2Cdk.Gs2Matchmaking.Ref
         ){
             this.namespaceName = namespaceName;
             this.ratingName = ratingName;
+        }
+
+        public VerifyRatingByUserId VerifyRating(
+            VerifyRatingByUserIdVerifyType verifyType,
+            float rateValue,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRatingByUserId(
+                this.namespaceName,
+                this.ratingName,
+                verifyType,
+                rateValue,
+                userId
+            ));
         }
 
         public string Grn(

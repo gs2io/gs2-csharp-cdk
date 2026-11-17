@@ -70,6 +70,21 @@ namespace Gs2Cdk.Gs2Matchmaking.Ref
             ));
         }
 
+        public VerifyRatingByUserId VerifyRating(
+            string ratingName,
+            VerifyRatingByUserIdVerifyType verifyType,
+            float rateValue,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyRatingByUserId(
+                this.namespaceName,
+                ratingName,
+                verifyType,
+                rateValue,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(
