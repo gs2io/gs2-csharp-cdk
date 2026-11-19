@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2SkillTree.Model;
 using Gs2Cdk.Gs2SkillTree.StampSheet;
+using Gs2Cdk.Gs2SkillTree.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2SkillTree.Ref
 {
@@ -63,6 +64,21 @@ namespace Gs2Cdk.Gs2SkillTree.Ref
                 this.namespaceName,
                 propertyId,
                 nodeModelNames,
+                userId
+            ));
+        }
+
+        public VerifyStatusByUserId VerifyStatus(
+            string propertyId,
+            string nodeModelName,
+            VerifyStatusByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyStatusByUserId(
+                this.namespaceName,
+                propertyId,
+                nodeModelName,
+                verifyType,
                 userId
             ));
         }
