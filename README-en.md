@@ -1,4 +1,4 @@
-[⇒日本語のREADMEへ](README.md)
+[日本語](README.md) | **English** | [한국어](README-ko.md)
 
 # GS2-CSharp-CDK
 
