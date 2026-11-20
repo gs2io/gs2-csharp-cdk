@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Quest.Model;
 using Gs2Cdk.Gs2Quest.StampSheet;
+using Gs2Cdk.Gs2Quest.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Quest.Ref
 {
@@ -61,6 +62,21 @@ namespace Gs2Cdk.Gs2Quest.Ref
         ){
             return (new DeleteProgressByUserId(
                 this.namespaceName,
+                userId
+            ));
+        }
+
+        public VerifyCompletedQuestListByUserId VerifyCompletedQuestList(
+            string questGroupName,
+            string questName,
+            VerifyCompletedQuestListByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyCompletedQuestListByUserId(
+                this.namespaceName,
+                questGroupName,
+                questName,
+                verifyType,
                 userId
             ));
         }
