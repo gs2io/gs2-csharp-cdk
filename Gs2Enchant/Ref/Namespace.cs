@@ -126,6 +126,25 @@ namespace Gs2Cdk.Gs2Enchant.Ref
             ));
         }
 
+        public VerifyBalanceParameterStatusByUserId VerifyBalanceParameterStatus(
+            string parameterName,
+            string propertyId,
+            string parameterValueName,
+            VerifyBalanceParameterStatusByUserIdVerifyType verifyType,
+            long parameterValue,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyBalanceParameterStatusByUserId(
+                this.namespaceName,
+                parameterName,
+                propertyId,
+                parameterValueName,
+                verifyType,
+                parameterValue,
+                userId
+            ));
+        }
+
         public VerifyRarityParameterStatusByUserId VerifyRarityParameterStatus(
             string parameterName,
             string propertyId,
