@@ -70,6 +70,21 @@ namespace Gs2Cdk.Gs2Dictionary.Ref
             ));
         }
 
+        public VerifyEntryCountByUserId VerifyEntryCount(
+            VerifyEntryCountByUserIdVerifyType verifyType,
+            int count,
+            string[] entryModelNames = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyEntryCountByUserId(
+                this.namespaceName,
+                verifyType,
+                count,
+                entryModelNames,
+                userId
+            ));
+        }
+
         public string Grn(
         ){
             return (new Join(

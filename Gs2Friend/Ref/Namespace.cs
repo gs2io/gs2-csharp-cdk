@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Friend.Model;
 using Gs2Cdk.Gs2Friend.StampSheet;
+using Gs2Cdk.Gs2Friend.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Friend.Ref
 {
@@ -43,6 +44,45 @@ namespace Gs2Cdk.Gs2Friend.Ref
                 publicProfile,
                 followerProfile,
                 friendProfile,
+                userId
+            ));
+        }
+
+        public VerifyFollowByUserId VerifyFollow(
+            string targetUserId,
+            VerifyFollowByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyFollowByUserId(
+                this.namespaceName,
+                targetUserId,
+                verifyType,
+                userId
+            ));
+        }
+
+        public VerifyFriendByUserId VerifyFriend(
+            string targetUserId,
+            VerifyFriendByUserIdVerifyType verifyType,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyFriendByUserId(
+                this.namespaceName,
+                targetUserId,
+                verifyType,
+                userId
+            ));
+        }
+
+        public VerifyFriendCountByUserId VerifyFriendCount(
+            VerifyFriendCountByUserIdVerifyType verifyType,
+            int count,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyFriendCountByUserId(
+                this.namespaceName,
+                verifyType,
+                count,
                 userId
             ));
         }
