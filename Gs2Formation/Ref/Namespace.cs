@@ -20,6 +20,7 @@ using Gs2Cdk.Core.Func;
 using Gs2Cdk.Core.Model;
 using Gs2Cdk.Gs2Formation.Model;
 using Gs2Cdk.Gs2Formation.StampSheet;
+using Gs2Cdk.Gs2Formation.StampSheet.Enums;
 
 namespace Gs2Cdk.Gs2Formation.Ref
 {
@@ -134,6 +135,29 @@ namespace Gs2Cdk.Gs2Formation.Ref
                 this.namespaceName,
                 moldModelName,
                 capacity,
+                userId
+            ));
+        }
+
+        public VerifyFormByUserId VerifyForm(
+            string moldModelName,
+            int index,
+            string propertyIdRegex,
+            VerifyFormByUserIdVerifyType verifyType,
+            int count,
+            string slotName = null,
+            VerifyFormByUserIdCountType? countType = null,
+            string userId = "#{userId}"
+        ){
+            return (new VerifyFormByUserId(
+                this.namespaceName,
+                moldModelName,
+                index,
+                propertyIdRegex,
+                verifyType,
+                count,
+                slotName,
+                countType,
                 userId
             ));
         }
