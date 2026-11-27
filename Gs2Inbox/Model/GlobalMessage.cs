@@ -31,6 +31,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
         private long? expiresAt;
         private string expiresAtString;
         private string messageReceptionPeriodEventId;
+        private VerifyAction[] verifyActions;
 
         public GlobalMessage(
             string name,
@@ -43,6 +44,7 @@ namespace Gs2Cdk.Gs2Inbox.Model
             this.expiresTimeSpan = options?.expiresTimeSpan;
             this.expiresAt = options?.expiresAt;
             this.messageReceptionPeriodEventId = options?.messageReceptionPeriodEventId;
+            this.verifyActions = options?.verifyActions;
         }
 
         public Dictionary<string, object> Properties(
@@ -72,6 +74,10 @@ namespace Gs2Cdk.Gs2Inbox.Model
             }
             if (this.messageReceptionPeriodEventId != null) {
                 properties["messageReceptionPeriodEventId"] = this.messageReceptionPeriodEventId;
+            }
+            if (this.verifyActions != null) {
+                properties["verifyActions"] = this.verifyActions.Select(v => v?.Properties(
+                        )).ToList();
             }
 
             return properties;
@@ -116,7 +122,17 @@ namespace Gs2Cdk.Gs2Inbox.Model
                             _ => null
                         } : null;
                     })(),
-                    messageReceptionPeriodEventId = properties.TryGetValue("messageReceptionPeriodEventId", out var messageReceptionPeriodEventId) ? (string)messageReceptionPeriodEventId : null
+                    messageReceptionPeriodEventId = properties.TryGetValue("messageReceptionPeriodEventId", out var messageReceptionPeriodEventId) ? (string)messageReceptionPeriodEventId : null,
+                    verifyActions = properties.TryGetValue("verifyActions", out var verifyActions) ? new Func<VerifyAction[]>(() =>
+                    {
+                        return verifyActions switch {
+                            VerifyAction[] v => v,
+                            List<VerifyAction> v => v.ToArray(),
+                            Dictionary<string, object>[] v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            List<Dictionary<string, object>> v => v.Select(VerifyAction.FromProperties).ToArray(),
+                            _ => null
+                        };
+                    })() : null
                 }
             );
 
